@@ -30,6 +30,7 @@ exports.GetGmConfig = void 0;
 const path_1 = __importDefault(require("path"));
 const gmDefaultConfig_1 = require("./gmDefaultConfig");
 const GmWriteDefaultConfig_1 = require("./GmWriteDefaultConfig");
+require("ts-node/register");
 class GetGmConfig {
     static async getConfig() {
         try {
