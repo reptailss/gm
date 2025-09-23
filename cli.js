@@ -3,7 +3,6 @@
 const { execSync } = require('child_process')
 const { resolve } = require('path')
 
-// Всі команди як функції
 const commands = {
     'g-crud': () => execSync(`node ${resolve(__dirname, 'dist', 'commands', 'gCrudModule.js')}`, { stdio: 'inherit' }),
     'create-app': (appName) => {
@@ -23,8 +22,6 @@ try {
         console.log(`Unknown command: ${command}`)
         process.exit(1)
     }
-
-    // Другий аргумент для create-app (назва апки)
     const commandArgs = args[1]
     commands[command](commandArgs)
 
