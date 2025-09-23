@@ -4,7 +4,7 @@ const {execSync} = require('child_process')
 const {resolve} = require('path')
 
 
-const gCrudModule = `ts-node ${resolve(__dirname, 'dist', 'commands', 'gCrudModule.js')}`
+const gCrudModule = `node ${resolve(__dirname, 'dist', 'commands', 'gCrudModule.js')}`
 
 
 const commands = {
