@@ -1,0 +1,40 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@codeBuilder/*": [
+        "src/codeBuilder/*"
+      ],
+      "@config/*": [
+        "src/config/*"
+      ],
+      "@crud/*": [
+        "src/crud/*"
+      ],
+      "@decorators/*": [
+        "src/decorators/*"
+      ],
+      "@export/*": [
+        "src/export/*"
+      ],
+      "@helpers/*": [
+        "src/helpers/*"
+      ],
+      "@imports/*": [
+        "src/imports/*"
+      ],
+      "@modules/*": [
+        "src/modules/*"
+      ],
+      "@render/*": [
+        "src/render/*"
+      ],
+      "@services/*": [
+        "src/services/*"
+      ],
+      "@writeModule/*": [
+        "src/writeModule/*"
+      ]
+    }
+  }
+}

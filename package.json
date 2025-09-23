@@ -1,0 +1,41 @@
+{
+  "name": "gm",
+  "version": "0.0.1",
+  "description": "Gm code generator",
+  "main": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "scripts": {
+    "build": "tspc --build tsconfig.build.json",
+    "copy-templates": "copyfiles -u 1 templates/**/* dist/templates",
+    "copy-static": "copyfiles -u 1 static/**/* dist/static",
+    "build-lib": "npm run build && npm run copy-templates && npm run copy-static",
+    "dev": "nodemon ./src/dev.ts",
+    "g-crud": "node ./dist/commands/gCrudModule.js",
+    "type-check": "tsc --noEmit"
+  },
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "gm": "cli.js"
+  },
+  "type": "commonjs",
+  "author": "One soft",
+  "license": "ISC",
+  "dependencies": {
+    "@prettier/sync": "^0.5.2",
+    "ejs": "^3.1.10",
+    "json5": "^2.2.3"
+  },
+  "devDependencies": {
+    "@types/ejs": "^3.1.5",
+    "@types/node": "22.7.6",
+    "copyfiles": "^2.4.1",
+    "nodemon": "2.0.20",
+    "ts-node": "10.9.2",
+    "ts-patch": "^3.3.0",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "5.4.2",
+    "typescript-transform-paths": "^3.5.5"
+  }
+}
