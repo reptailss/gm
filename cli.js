@@ -1,16 +1,18 @@
 #!/usr/bin/env node
 
-const {execSync} = require('child_process')
-const {resolve} = require('path')
+const { execSync } = require('child_process')
+const { resolve } = require('path')
 
-
-const gCrudModule = `node ${resolve(__dirname, 'dist', 'commands', 'gCrudModule.js')}`
-const createApp = `node ${resolve(__dirname, 'dist', 'commands', 'createApp.js')}`
-
-
+// Всі команди як функції
 const commands = {
-    'g-crud': gCrudModule,
-    'create-app': createApp,
+    'g-crud': () => execSync(`node ${resolve(__dirname, 'dist', 'commands', 'gCrudModule.js')}`, { stdio: 'inherit' }),
+    'create-app': (appName) => {
+        if (!appName) {
+            console.error('Please provide an app name: create-app <appName>')
+            process.exit(1)
+        }
+        execSync(`node ${resolve(__dirname, 'dist', 'commands', 'createApp.js')} ${appName}`, { stdio: 'inherit' })
+    },
 }
 
 const args = process.argv.slice(2)
@@ -22,18 +24,9 @@ try {
         process.exit(1)
     }
 
-    if (command === 'create-app') {
-        const appName = args[1]
-        if (!appName) {
-            console.error('Please provide an app name: create-app <appName>')
-            process.exit(1)
-        }
-        execSync(commands[command](appName), { stdio: 'inherit' })
-    } else {
-        execSync(commands[command], { stdio: 'inherit' })
-    }
-
-    execSync(commands[command], {stdio: 'inherit'})
+    // Другий аргумент для create-app (назва апки)
+    const commandArgs = args[1]
+    commands[command](commandArgs)
 
 } catch (error) {
     console.error('Error executing command:', error)
