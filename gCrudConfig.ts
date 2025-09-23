@@ -27,10 +27,10 @@ const noSqlByYearAndMonth: GmNoSqlModelConfig = {
 export default function buildGmConfig(): GmConfig {
     return {
         dtoName: {
-            singular: 'User',
-            plural: 'Users',
+            singular: 'Test',
+            plural: 'Test',
         },
-        moduleName: 'Users',
+        moduleName: 'Test',
         model: sqlByDynamicDomain,
         hasSeparated: true,
         endpoints: {

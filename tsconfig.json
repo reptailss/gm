@@ -60,6 +60,9 @@
       ],
       "@createApp/*": [
         "src/createApp/*"
+      ],
+      "os-core-ts": [
+        "src/os-core.ts"
       ]
     },
     "plugins": [
@@ -78,8 +81,8 @@
     ]
   },
   "include": [
+    "src/global.d.ts",
     "src/**/*",
-    "src/**/*.d.ts",
     "commands"
   ],
   "exclude": [

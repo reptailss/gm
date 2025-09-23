@@ -1,16 +1,16 @@
 #!/usr/bin/env node
 
-const { execSync } = require('child_process')
-const { resolve } = require('path')
+const {execSync} = require('child_process')
+const {resolve} = require('path')
 
 const commands = {
-    'g-crud': () => execSync(`node ${resolve(__dirname, 'dist', 'commands', 'gCrudModule.js')}`, { stdio: 'inherit' }),
+    'g-crud': () => execSync(`node  ${resolve(__dirname, 'dist', 'commands', 'gCrudModule.js')}`, {stdio: 'inherit'}),
     'create-app': (appName) => {
         if (!appName) {
             console.error('Please provide an app name: create-app <appName>')
             process.exit(1)
         }
-        execSync(`node ${resolve(__dirname, 'dist', 'commands', 'createApp.js')} ${appName}`, { stdio: 'inherit' })
+        execSync(`node ${resolve(__dirname, 'dist', 'commands', 'createApp.js')} ${appName}`, {stdio: 'inherit'})
     },
 }
 

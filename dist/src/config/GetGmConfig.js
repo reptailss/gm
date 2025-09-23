@@ -41,6 +41,7 @@ class GetGmConfig {
             return gmDefaultConfig_1.gmDefaultConfig.default;
         }
         catch (error) {
+            console.log(error, 'error import config');
             GmWriteDefaultConfig_1.GmWriteDefaultConfig.write();
             return gmDefaultConfig_1.gmDefaultConfig.default;
         }
