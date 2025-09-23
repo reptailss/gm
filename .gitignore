@@ -22,15 +22,6 @@ node_modules/
 # Maven
 target/
 logs/
-packages/example/swagger-build/
-packages/example/dist/
-packages/example/logs/
-packages/example/files/
-packages/example/package-lock.json
-
-packages/docs/node_modules/
-packages/docs/build/
-packages/docs/package-lock.json
 
 
 # JetBrains IDE
