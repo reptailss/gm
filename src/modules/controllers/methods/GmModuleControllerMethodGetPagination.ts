@@ -6,7 +6,7 @@ import {GmServicePaginationQueryParamsType} from '@services/paginationTypes/GmSe
 import {GmModuleDto} from '@modules/dto/GmModuleDto'
 import {GmServiceUserInfoType} from '@services/userInfo/GmServiceUserInfoType'
 import {GmModuleRoutePaths} from '@modules/routePaths/GmModuleRoutePaths'
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 import {IGmModuleServiceApiGetPagination} from '@modules/services/interfaces/gmModuleServiceClassCurdApi'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmSwaggerInfoDec} from '@decorators/controllerDecorators/GmSwaggerInfoDec'

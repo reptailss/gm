@@ -1,4 +1,4 @@
-import { GmConfig } from "../../config/types";
+import { GmConfig } from "../../os-core";
 import { GmImport } from "../../imports/types";
 import { IGmServiceFn } from "../../services/inetfaces/gmServiceFn";
 import { GmBodyElement, GmFileWriteMode, GmModuleClassMethodProp, GmModuleClassMethodPropDecorator, GmModuleClassVar, GmModuleConstructorProp, GmModuleDirType, GmModuleFnProp, GmModuleParentInfo, GmModulePropsType } from "../types";

@@ -37,6 +37,9 @@
       ],
       "@createApp/*": [
         "src/createApp/*"
+      ],
+      "os-core-ts": [
+        "src/os-core.ts"
       ]
     }
   }

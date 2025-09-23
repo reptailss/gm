@@ -1,7 +1,7 @@
 import { GmModuleServiceClassBySqlStaticDb } from "../../bases/GmModuleServiceClassBySqlStaticDb";
 import { GmModuleServiceClassAll, GmModuleServiceClassCreate, GmModuleServiceClassDelete, GmModuleServiceClassGet, GmModuleServiceClassGetAll, GmModuleServiceClassUpdate } from "../../../interfaces/gmModuleServiceClassCurd";
 import { IGmModuleServiceApiAll, IGmModuleServiceApiCreate, IGmModuleServiceApiDelete, IGmModuleServiceApiGet, IGmModuleServiceApiGetPagination, IGmModuleServiceApiUpdate } from "../../../interfaces/gmModuleServiceClassCurdApi";
-import { GmConfig } from "../../../../../config/types";
+import { GmConfig } from "../../../../../os-core";
 type AllCallVarNames = {
     create: CreateCallVarNames;
     update: UpdateCallVarNames;

@@ -1,6 +1,6 @@
 import { GmAbstractModuleClassMethod } from "../../abstractModule/GmAbstractModuleClassMethod";
 import { IGmModuleClassMethod } from "../../interfaces/gmModule";
-import { GmConfig } from "../../../config/types";
+import { GmConfig } from "../../../os-core";
 import { IGmModuleModel } from "../../model/interfaces/gmModuleModel";
 declare const PROPS_VAR_NAMES: {
     params: string;

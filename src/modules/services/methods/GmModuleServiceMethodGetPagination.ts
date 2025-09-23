@@ -4,7 +4,7 @@ import {GmModuleDto} from '@modules/dto/GmModuleDto'
 import {GmServicePaginationQueryParamsType} from '@services/paginationTypes/GmServicePaginationQueryParamsType'
 import {GmServicePaginationValuesType} from '@services/paginationTypes/GmServicePaginationValuesType'
 import {IGmModuleModel} from '@modules/model/interfaces/gmModuleModel'
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 
 

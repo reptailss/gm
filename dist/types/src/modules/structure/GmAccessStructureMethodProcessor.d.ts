@@ -1,4 +1,4 @@
-import { GmConfig } from "../../config/types";
+import { GmConfig } from "../../os-core";
 import { IGmModuleClassMethod } from "../interfaces/gmModule";
 type CallVarNames = {
     openUserId: string;

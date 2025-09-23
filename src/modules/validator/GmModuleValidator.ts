@@ -1,7 +1,7 @@
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmAbstractModuleClass} from '@modules/abstractModule/GmAbstractModuleClass'
 import {IGmModuleClass, IGmModuleClassMethod} from '@modules/interfaces/gmModule'
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 import {GmAbstractModuleClassMethod} from '@modules/abstractModule/GmAbstractModuleClassMethod'
 import {GmModuleCreateDto} from '@modules/dto/GmModuleCreateDto'
 import {GmServiceValidator} from '@services/validator/GmServiceValidator'

@@ -1,4 +1,4 @@
-import { GmModelNoSqlColumn, GmModelSqlColumn } from "../../../config/types/columns";
+import { GmModelNoSqlColumn, GmModelSqlColumn } from "../../../os-core";
 export interface GmGenerateColumnModelSql {
     key: string;
     column: GmModelSqlColumn;

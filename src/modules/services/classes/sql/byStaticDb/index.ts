@@ -16,7 +16,7 @@ import {
     IGmModuleServiceApiUpdate,
 } from '@modules/services/interfaces/gmModuleServiceClassCurdApi'
 import {GmServiceActionsLoggerService} from '@services/sendActionSystemLog/GmServiceActionsLoggerService'
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmModuleServiceMethodCreate} from '@modules/services/methods/GmModuleServiceMethodCreate'
 import {GmModuleServiceMethodUpdate} from '@modules/services/methods/GmModuleServiceMethodUpdate'

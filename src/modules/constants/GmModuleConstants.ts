@@ -1,7 +1,7 @@
 import {GmAbstractModuleConstant} from '@modules/abstractModule/GmAbstractModuleConstant'
 import {IGmModuleConstant} from '@modules/interfaces/gmModule'
 import {GmFileWriteMode} from '@modules/types'
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 
 
 export class GmModuleConstants extends GmAbstractModuleConstant implements IGmModuleConstant {

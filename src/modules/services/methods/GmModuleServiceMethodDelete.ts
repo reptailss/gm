@@ -4,7 +4,7 @@ import {GmModuleDto} from '@modules/dto/GmModuleDto'
 import {GmServiceThrowAppError} from '@services/errors/GmServiceThrowAppError'
 import {GmServiceActionsLoggerService} from '@services/sendActionSystemLog/GmServiceActionsLoggerService'
 import {IGmModuleModel} from '@modules/model/interfaces/gmModuleModel'
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 import {GmConfigChecker} from '@config/GmConfigChecker'
 import {GmModuleDtoHelper} from '@modules/dto/helper/GmModuleDtoHelper'
 

@@ -1,4 +1,4 @@
-import { GmConfig } from "../../../config/types";
+import { GmConfig } from "../../../os-core";
 import { GmModuleDtoField } from "../types";
 export declare class GmModuleDtoHelper {
     static getDtoPrimaryKeyByConfig: (config: GmConfig) => GmModuleDtoField;

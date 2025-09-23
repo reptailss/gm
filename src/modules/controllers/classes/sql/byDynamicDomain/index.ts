@@ -1,4 +1,4 @@
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 import {GmAccessStructureMethodProcessor} from '@modules/structure/GmAccessStructureMethodProcessor'
 import {IGmModuleClass, IGmModuleClassMethod} from '@modules/interfaces/gmModule'
 import {GmModuleAbstractControllerClass} from '@modules/controllers/classes/abstract/GmModuleAbstractControllerClass'

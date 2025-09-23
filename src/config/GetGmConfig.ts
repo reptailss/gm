@@ -1,5 +1,5 @@
 import path from 'path'
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 import {gmDefaultConfig} from '@config/gmDefaultConfig'
 import {GmWriteDefaultConfig} from '@config/GmWriteDefaultConfig'
 import 'ts-node/register'

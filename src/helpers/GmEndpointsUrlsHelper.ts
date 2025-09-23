@@ -1,4 +1,4 @@
-import {GmConfig, GmEndpointType} from '@config/types'
+import {GmConfig, GmEndpointType} from 'os-core-ts'
 
 export class GmEndpointsUrlsHelper {
     static getEndpointUrl = (

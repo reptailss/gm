@@ -2,7 +2,7 @@ import {GmAbstractModuleClassMethod} from '@modules/abstractModule/GmAbstractMod
 import {IGmModuleClassMethod} from '@modules/interfaces/gmModule'
 import {GmModuleDto} from '@modules/dto/GmModuleDto'
 import {IGmModuleModel} from '@modules/model/interfaces/gmModuleModel'
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmModuleDtoHelper} from '@modules/dto/helper/GmModuleDtoHelper'
 

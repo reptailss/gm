@@ -1,4 +1,4 @@
-import { GmConfig } from "../../config/types";
+import { GmConfig } from "../../os-core";
 import { IGmModule, IGmModuleClass, IGmModuleConstant, IGmModuleFn, IGmModuleType } from "../interfaces/gmModule";
 import { GmImport } from "../../imports/types";
 import { GmModuleDirType, GmModuleParentInfo } from "../types";

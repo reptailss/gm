@@ -1,4 +1,4 @@
-import { GmConfig } from "../../../config/types";
+import { GmConfig } from "../../../os-core";
 import { GmAbstractModuleFn } from "../../abstractModule/GmAbstractModuleFn";
 import { IGmModuleFn } from "../../interfaces/gmModule";
 export declare abstract class GmAbstractModuleFnModelNoSql extends GmAbstractModuleFn implements IGmModuleFn {

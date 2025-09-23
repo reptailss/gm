@@ -1,5 +1,5 @@
 import {GmModuleConstants} from '@modules/constants/GmModuleConstants'
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmAbstractModuleFn} from '@modules/abstractModule/GmAbstractModuleFn'
 import {IGmModuleFn} from '@modules/interfaces/gmModule'

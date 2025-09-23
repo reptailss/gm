@@ -1,7 +1,7 @@
 import {GmAbstractModuleFnModelNoSql} from '@modules/model/abstractModel/GmAbstractModuleFnModelNoSql'
 import {IGmModuleModel} from '@modules/model/interfaces/gmModuleModel'
 import {IGmModuleModelApi} from '@modules/model/interfaces/gmModuleModelApi'
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 import {GmModuleModeApiNoSql} from '@modules/model/api/GmModuleModeApiNoSql'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 

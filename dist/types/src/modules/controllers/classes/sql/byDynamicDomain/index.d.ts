@@ -1,4 +1,4 @@
-import { GmConfig } from "../../../../../config/types";
+import { GmConfig } from "../../../../../os-core";
 import { IGmModuleClass } from "../../../../interfaces/gmModule";
 import { GmModuleAbstractControllerClass } from "../../abstract/GmModuleAbstractControllerClass";
 export declare class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstractControllerClass implements IGmModuleClass {

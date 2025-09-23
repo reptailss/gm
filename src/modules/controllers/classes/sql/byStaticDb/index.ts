@@ -1,4 +1,4 @@
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmConfigChecker} from '@config/GmConfigChecker'
 import {GmAccessStructureMethodProcessor} from '@modules/structure/GmAccessStructureMethodProcessor'

@@ -1,6 +1,6 @@
 import {GmAbstractModuleClass} from '@modules/abstractModule/GmAbstractModuleClass'
 import {IGmModuleClass} from '@modules/interfaces/gmModule'
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 import {GmControllerDec} from '@decorators/controllerDecorators/GmControllerDec'
 
 export abstract class GmModuleAbstractControllerClass extends GmAbstractModuleClass implements IGmModuleClass {

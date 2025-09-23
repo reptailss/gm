@@ -31,13 +31,13 @@ declare module '*.ejs' {
     export default template
 }
 
-declare module 'os-core-ts' {
-    export type GmConfig = any;
-    export type GmSqlModelConfig = any;
-    export type GmNoSqlModelConfig = any;
-    
-    const value: any;
-    export default value;
-}
+// declare module 'os-core-ts' {
+//     export type GmConfig = any;
+//     export type GmSqlModelConfig = any;
+//     export type GmNoSqlModelConfig = any;
+//
+//     const value: any;
+//     export default value;
+// }
 
 export {}

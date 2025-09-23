@@ -1,4 +1,4 @@
-import {GmConfig, GmEndpointsConfig, GmNoSqlModelConfig, GmSqlModelConfig} from '@config/types'
+import {GmConfig, GmEndpointsConfig, GmNoSqlModelConfig, GmSqlModelConfig} from 'os-core-ts'
 
 
 const GM_MODEL_NO_SQL_YEAR_AND_MONTH_CONFIG: GmNoSqlModelConfig = {

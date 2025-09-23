@@ -1,6 +1,6 @@
 import { GmAbstractModuleFn } from "../../abstractModule/GmAbstractModuleFn";
 import { IGmModuleFn } from "../../interfaces/gmModule";
-import { GmConfig } from "../../../config/types";
+import { GmConfig } from "../../../os-core";
 export declare abstract class GmAbstractModuleFnModelSql extends GmAbstractModuleFn implements IGmModuleFn {
     private readonly modelType;
     private readonly gmModuleModelColumns;

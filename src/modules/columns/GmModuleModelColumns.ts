@@ -2,7 +2,7 @@ import {GmAbstractModuleConstant} from '@modules/abstractModule/GmAbstractModule
 import {IGmModuleConstant} from '@modules/interfaces/gmModule'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmModuleDto} from '@modules/dto/GmModuleDto'
-import {GmModelNoSqlColumn, GmModelSqlColumn} from '@config/types/columns'
+import {GmModelNoSqlColumn, GmModelSqlColumn} from 'os-core-ts'
 
 
 export class GmModuleModelColumns extends GmAbstractModuleConstant implements IGmModuleConstant {

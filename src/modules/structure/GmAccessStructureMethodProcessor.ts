@@ -1,6 +1,6 @@
 import {GmServiceStructureAccess} from '@services/structureAccess/GmServiceStructureAccess'
 import {GmModuleRoutePaths} from '@modules/routePaths/GmModuleRoutePaths'
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 import {IGmModuleClassMethod} from '@modules/interfaces/gmModule'
 import {GmImportStructureServiceEndpointDec} from '@decorators/controllerDecorators/GmImportStructureServiceEndpointDec'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'

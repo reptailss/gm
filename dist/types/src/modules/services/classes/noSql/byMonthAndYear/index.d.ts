@@ -1,7 +1,7 @@
 import { GmModuleServiceClassByNoSqlMonthAndYear } from "../../bases/GmModuleServiceClassByNoSqlMonthAndYear";
 import { GmModuleServiceClassAll, GmModuleServiceClassCreate, GmModuleServiceClassGetAll } from "../../../interfaces/gmModuleServiceClassCurd";
 import { IGmModuleServiceApiAll, IGmModuleServiceApiCreate, IGmModuleServiceApiGetPagination } from "../../../interfaces/gmModuleServiceClassCurdApi";
-import { GmConfig } from "../../../../../config/types";
+import { GmConfig } from "../../../../../os-core";
 type AllCallVarNames = {
     create: CreateCallVarNames;
     getPagination: GetPaginationCallVarNames;

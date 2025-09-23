@@ -1,6 +1,6 @@
 import { GmAbstractModuleClassMethod } from "../../abstractModule/GmAbstractModuleClassMethod";
 import { IGmModuleClassMethod } from "../../interfaces/gmModule";
-import { GmConfig } from "../../../config/types";
+import { GmConfig } from "../../../os-core";
 import { IGmModuleServiceApiUpdate } from "../../services/interfaces/gmModuleServiceClassCurdApi";
 export declare class GmModuleControllerMethodUpdate extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {
     private readonly api;

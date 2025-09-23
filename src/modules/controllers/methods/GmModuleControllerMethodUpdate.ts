@@ -5,7 +5,7 @@ import {GmServiceMutateRowResultType} from '@services/resultTypes/GmServiceMutat
 import {GmModuleUpdateDto} from '@modules/dto/GmModuleUpdateDto'
 import {GmServiceUserInfoType} from '@services/userInfo/GmServiceUserInfoType'
 import {GmModuleRoutePaths} from '@modules/routePaths/GmModuleRoutePaths'
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 import {IGmModuleServiceApiUpdate} from '@modules/services/interfaces/gmModuleServiceClassCurdApi'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmModuleDtoHelper} from '@modules/dto/helper/GmModuleDtoHelper'

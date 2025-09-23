@@ -1,5 +1,5 @@
 import {GmAccessStructureMethodProcessor} from '@modules/structure/GmAccessStructureMethodProcessor'
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 import {GmModuleAbstractControllerClass} from '@modules/controllers/classes/abstract/GmModuleAbstractControllerClass'
 import {IGmModuleClass} from '@modules/interfaces/gmModule'
 import {GmModuleValidator} from '@modules/validator/GmModuleValidator'

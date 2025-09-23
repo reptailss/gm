@@ -4,7 +4,7 @@ import {IGmModuleConstant} from '@modules/interfaces/gmModule'
 import {GmModuleModelType} from '@modules/model/GmModuleModelType'
 import {GmModuleDto} from '@modules/dto/GmModuleDto'
 import {GmModuleModelColumns} from '@modules/columns/GmModuleModelColumns'
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 
 

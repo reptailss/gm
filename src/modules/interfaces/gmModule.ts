@@ -1,4 +1,4 @@
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 import {GmImport} from '@imports/types'
 import {IGmServiceFn} from '@services/inetfaces/gmServiceFn'
 import {

@@ -1,4 +1,4 @@
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 
 export class GmConfigChecker {
     static hasActionLogger(

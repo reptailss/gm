@@ -1,4 +1,4 @@
-import { GmConfig, GmEndpointsConfig, GmNoSqlModelConfig, GmSqlModelConfig } from "./types";
+import { GmConfig, GmEndpointsConfig, GmNoSqlModelConfig, GmSqlModelConfig } from "../os-core";
 export declare const gmDefaultConfig: {
     readonly default: GmConfig;
     readonly baseEndpoints: GmEndpointsConfig;

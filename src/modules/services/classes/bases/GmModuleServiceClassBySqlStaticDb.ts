@@ -2,7 +2,7 @@ import {GmModuleAbstractServiceClass} from '@modules/services/classes/abstract/G
 import {GmModuleServiceClass} from '@modules/services/interfaces/gmModuleServiceClassCurd'
 import {GmModuleModelSqlByStaticDb} from '@modules/model/GmModuleModelSqlByStaticDb'
 import {GmModuleModelType} from '@modules/model/GmModuleModelType'
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 import {IGmModuleModel} from '@modules/model/interfaces/gmModuleModel'
 
 

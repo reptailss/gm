@@ -1,6 +1,6 @@
 import {GmAbstractModuleClass} from '@modules/abstractModule/GmAbstractModuleClass'
 import {IGmModuleClass} from '@modules/interfaces/gmModule'
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 
 
 export abstract class GmModuleAbstractServiceClass extends GmAbstractModuleClass implements IGmModuleClass {

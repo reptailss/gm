@@ -1,4 +1,4 @@
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 import {IGmModule, IGmModuleClass, IGmModuleConstant, IGmModuleFn, IGmModuleType} from '@modules/interfaces/gmModule'
 import {GmImport} from '@imports/types'
 import {GmModuleDirType, GmModuleParentInfo} from '@modules/types'

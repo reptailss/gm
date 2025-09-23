@@ -1,6 +1,6 @@
 import { GmAbstractModuleConstant } from "../abstractModule/GmAbstractModuleConstant";
 import { IGmModuleClass, IGmModuleConstant } from "../interfaces/gmModule";
-import { GmConfig } from "../../config/types";
+import { GmConfig } from "../../os-core";
 export declare class GmModuleAppModule extends GmAbstractModuleConstant implements IGmModuleConstant {
     private controllers;
     constructor(config: GmConfig, controllers: IGmModuleClass[]);

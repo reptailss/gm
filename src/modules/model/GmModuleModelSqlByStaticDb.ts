@@ -2,7 +2,7 @@ import {GmAbstractModuleConstantModelSql} from '@modules/model/abstractModel/GmA
 import {IGmModuleModel} from '@modules/model/interfaces/gmModuleModel'
 import {IGmModuleModelApi} from '@modules/model/interfaces/gmModuleModelApi'
 import {GmModuleDbConnectionSql} from '@modules/dbConnectionSql/GmModuleDbConnectionSql'
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 import {GmModuleModeApiSql} from '@modules/model/api/GmModuleModeApiSql'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 

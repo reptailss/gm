@@ -2,7 +2,7 @@ import { GmAbstractModuleClassMethod } from "../../abstractModule/GmAbstractModu
 import { IGmModuleClassMethod } from "../../interfaces/gmModule";
 import { GmServiceActionsLoggerService } from "../../../services/sendActionSystemLog/GmServiceActionsLoggerService";
 import { IGmModuleModel } from "../../model/interfaces/gmModuleModel";
-import { GmConfig } from "../../../config/types";
+import { GmConfig } from "../../../os-core";
 declare const PROPS_VAR_NAMES: {
     initiatorOpenUserId: string;
     createDto: string;

@@ -1,5 +1,5 @@
 import {GmGenerateAbstractCrudDec} from '@crud/GmGenerateAbstractCrudDec'
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 import {IGmModuleClass} from '@modules/interfaces/gmModule'
 import {
     GmModuleControllerClassCreateBySqlStaticDb, GmModuleControllerClassCrudBySqlStaticDb,

@@ -1,6 +1,6 @@
 import {GmAbstractModuleConstant} from '@modules/abstractModule/GmAbstractModuleConstant'
 import {IGmModuleConstant} from '@modules/interfaces/gmModule'
-import {GmConfig} from '@config/types'
+import {GmConfig} from 'os-core-ts'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmEndpointsUrlsHelper} from '@helpers/GmEndpointsUrlsHelper'
 

@@ -1,7 +1,7 @@
 import { GmAbstractModuleFnModelSql } from "./abstractModel/GmAbstractModuleFnModelSql";
 import { IGmModuleModel } from "./interfaces/gmModuleModel";
 import { IGmModuleModelApi } from "./interfaces/gmModuleModelApi";
-import { GmConfig } from "../../config/types";
+import { GmConfig } from "../../os-core";
 export declare class GmModuleModelSqlByDynamicDomain extends GmAbstractModuleFnModelSql implements IGmModuleModel {
     api: IGmModuleModelApi;
     private getModelCbVarName;

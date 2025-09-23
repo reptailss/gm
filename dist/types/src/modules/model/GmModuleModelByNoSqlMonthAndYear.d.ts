@@ -1,7 +1,7 @@
 import { GmAbstractModuleFnModelNoSql } from "./abstractModel/GmAbstractModuleFnModelNoSql";
 import { IGmModuleModel } from "./interfaces/gmModuleModel";
 import { IGmModuleModelApi } from "./interfaces/gmModuleModelApi";
-import { GmConfig } from "../../config/types";
+import { GmConfig } from "../../os-core";
 export declare class GmModuleModelByNoSqlMonthAndYear extends GmAbstractModuleFnModelNoSql implements IGmModuleModel {
     private monthVarName;
     private yearVarName;
