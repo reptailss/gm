@@ -1,30 +1,30 @@
+import {GmConfig, GmSqlModelConfig, GmNoSqlModelConfig, GmEndpointsConfig} from 'os-core-ts'
 
-
-const sqlByStaticDb = {
+const sqlByStaticDb: GmSqlModelConfig = {
     dbType: 'sql',
     type: 'staticByDbConnection',
     columns: {title: {type: 'STRING'}, description: {type: 'STRING'}},
 }
 
-const sqlByDynamicDomain = {
+const sqlByDynamicDomain: GmSqlModelConfig = {
     dbType: 'sql',
     type: 'dynamicByDomain',
     columns: {name: {type: 'STRING'}, age: {type: 'INTEGER'}},
 }
 
-const sqlByLeId = {
+const sqlByLeId: GmSqlModelConfig = {
     dbType: 'sql',
     type: 'dynamicDbConfigByLegalEntityId',
     columns: {title: {type: 'STRING'}, user_id: {type: 'INTEGER'}},
 }
 
-const noSqlByYearAndMonth = {
+const noSqlByYearAndMonth: GmNoSqlModelConfig = {
     dbType: 'noSql',
     type: 'byDatabaseNameAndYearMonth',
     columns: {name: {type: 'STRING'}, price: {type: 'INTEGER'}},
 }
 
-export default function buildGmConfig() {
+export default function buildGmConfig(): GmConfig {
     return {
         dtoName: {
             singular: 'User',
@@ -40,6 +40,6 @@ export default function buildGmConfig() {
             get: {hasAuth: false, hasStructureAccess: false},
             list: {hasAuth: false, hasStructureAccess: false},
         },
-        rootDir: 'example',
+        rootDir: 'src',
     }
 }

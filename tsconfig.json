@@ -77,11 +77,16 @@
       "tsconfig-paths/register"
     ]
   },
+  "include": [
+    "src/**/*",
+    "src/**/*.d.ts",
+    "commands"
+  ],
   "exclude": [
     "node_modules",
     "dist",
     "example",
     "static",
-    "cli.js",
+    "cli.js"
   ]
 }

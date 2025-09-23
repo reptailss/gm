@@ -1,46 +1,9 @@
-export default function buildGmConfig(): {
-    dtoName: {
-        singular: string;
-        plural: string;
-    };
-    moduleName: string;
-    model: {
-        dbType: string;
-        type: string;
-        columns: {
-            name: {
-                type: string;
-            };
-            age: {
-                type: string;
-            };
-        };
-    };
-    hasSeparated: boolean;
-    endpoints: {
-        add: {
-            hasActionLogger: boolean;
-            hasAuth: boolean;
-            hasStructureAccess: boolean;
-        };
-        update: {
-            hasActionLogger: boolean;
-            hasAuth: boolean;
-            hasStructureAccess: boolean;
-        };
-        delete: {
-            hasActionLogger: boolean;
-            hasAuth: boolean;
-            hasStructureAccess: boolean;
-        };
-        get: {
-            hasAuth: boolean;
-            hasStructureAccess: boolean;
-        };
-        list: {
-            hasAuth: boolean;
-            hasStructureAccess: boolean;
-        };
-    };
-    rootDir: string;
-};
+declare module 'os-core-ts' {
+    export type GmConfig = any;
+    export type GmSqlModelConfig = any;
+    export type GmNoSqlModelConfig = any;
+    const value: any;
+    export default value;
+}
+import { GmConfig } from 'os-core-ts';
+export default function buildGmConfig(): GmConfig;

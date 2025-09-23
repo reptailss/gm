@@ -10,7 +10,7 @@
 		"build-lib": "npm run build && npm run copy-templates",
 		"dev": "nodemon ./src/dev.ts",
 		"g-crud": "node ./dist/commands/gCrudModule.js",
-		"create-app": "node ./dist/commands/createApp.js",
+		"create-app": "node ./dist/commands/createApp.js test5",
 		"type-check": "tsc --noEmit"
 	},
 	"bin": {

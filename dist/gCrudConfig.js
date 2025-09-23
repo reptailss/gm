@@ -3,30 +3,30 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sqlByStaticDb = {
     dbType: 'sql',
     type: 'staticByDbConnection',
-    columns: { title: { type: 'STRING' }, description: { type: 'STRING' } },
+    columns: { title: { type: 'STRING' }, description: { type: 'STRING' } }
 };
 const sqlByDynamicDomain = {
     dbType: 'sql',
     type: 'dynamicByDomain',
-    columns: { name: { type: 'STRING' }, age: { type: 'INTEGER' } },
+    columns: { name: { type: 'STRING' }, age: { type: 'INTEGER' } }
 };
 const sqlByLeId = {
     dbType: 'sql',
     type: 'dynamicDbConfigByLegalEntityId',
-    columns: { title: { type: 'STRING' }, user_id: { type: 'INTEGER' } },
+    columns: { title: { type: 'STRING' }, user_id: { type: 'INTEGER' } }
 };
 const noSqlByYearAndMonth = {
     dbType: 'noSql',
     type: 'byDatabaseNameAndYearMonth',
-    columns: { name: { type: 'STRING' }, price: { type: 'INTEGER' } },
+    columns: { name: { type: 'STRING' }, price: { type: 'INTEGER' } }
 };
 function buildGmConfig() {
     return {
         dtoName: {
-            singular: 'User',
-            plural: 'Users',
+            singular: 'Post',
+            plural: 'Posts'
         },
-        moduleName: 'Users',
+        moduleName: 'Posts',
         model: sqlByDynamicDomain,
         hasSeparated: true,
         endpoints: {
@@ -34,9 +34,8 @@ function buildGmConfig() {
             update: { hasActionLogger: true, hasAuth: true, hasStructureAccess: true },
             delete: { hasActionLogger: true, hasAuth: true, hasStructureAccess: true },
             get: { hasAuth: false, hasStructureAccess: false },
-            list: { hasAuth: false, hasStructureAccess: false },
-        },
-        rootDir: 'example',
+            list: { hasAuth: false, hasStructureAccess: false }
+        }
     };
 }
 exports.default = buildGmConfig;
