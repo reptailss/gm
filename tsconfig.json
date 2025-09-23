@@ -58,6 +58,9 @@
       "@writeModule/*": [
         "src/writeModule/*"
       ],
+      "@createApp/*": [
+        "src/createApp/*"
+      ]
     },
     "plugins": [
       {

@@ -4,6 +4,7 @@ import {GetGmConfig} from '@config/GetGmConfig'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmGenerateCrudDecSql} from '@crud/GenerateCrudDecSql'
 import {GmGenerateCrudDecNoSql} from '@crud/GenerateCrudDecNoSql'
+import {GmRootHathHelper} from '@helpers/GmRootHathHelper'
 
 
 export class GenerateCrud {

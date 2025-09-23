@@ -1,6 +1,6 @@
 {
 	"name": "os-gm",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"description": "Gm code generator",
 	"main": "dist/index.js",
 	"types": "dist/types/index.d.ts",
@@ -10,6 +10,7 @@
 		"build-lib": "npm run build && npm run copy-templates",
 		"dev": "nodemon ./src/dev.ts",
 		"g-crud": "node ./dist/commands/gCrudModule.js",
+		"create-app": "node ./dist/commands/createApp.js",
 		"type-check": "tsc --noEmit"
 	},
 	"bin": {
