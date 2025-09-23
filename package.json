@@ -15,11 +15,11 @@
 	"bin": {
 		"gm": "cli.js"
 	},
-	"type": "module",
+	"type": "commonjs",
 	"author": "One soft",
 	"license": "ISC",
 	"dependencies": {
-		"@prettier/sync": "^0.5.2",
+		"@prettier/sync": "0.4.0",
 		"ejs": "^3.1.10",
 		"json5": "^2.2.3"
 	},
