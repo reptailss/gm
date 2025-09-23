@@ -13,9 +13,6 @@
     "g-crud": "node ./dist/commands/gCrudModule.js",
     "type-check": "tsc --noEmit"
   },
-  "files": [
-    "dist"
-  ],
   "bin": {
     "gm": "cli.js"
   },
