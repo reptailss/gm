@@ -1,6 +1,6 @@
 import {GmAbstractModuleConstant} from '@modules/abstractModule/GmAbstractModuleConstant'
 import {IGmModuleClass, IGmModuleConstant} from '@modules/interfaces/gmModule'
-import {GmConfig} from 'os-core-ts'
+import {GmCrudConfig} from 'os-core-ts'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 
 
@@ -9,7 +9,7 @@ export class GmModuleAppModule extends GmAbstractModuleConstant implements IGmMo
     private controllers: IGmModuleClass[]
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         controllers: IGmModuleClass[],
     ) {
         super(config)

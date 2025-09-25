@@ -1,6 +1,6 @@
 import { GmAbstractModuleClassMethod } from "../../abstractModule/GmAbstractModuleClassMethod";
 import { IGmModuleClassMethod } from "../../interfaces/gmModule";
-import { GmConfig } from "../../../os-core";
+import { GmCrudConfig } from "../../../os-core";
 import { IGmModuleServiceApiCreate } from "../../services/interfaces/gmModuleServiceClassCurdApi";
 export declare class GmModuleControllerMethodCreate extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {
     private readonly api;
@@ -10,7 +10,7 @@ export declare class GmModuleControllerMethodCreate extends GmAbstractModuleClas
     private readonly gmModuleCreateDto;
     private readonly gmServiceUserInfoType;
     private readonly gmModuleRoutePaths;
-    constructor(config: GmConfig, api: IGmModuleServiceApiCreate, varNames: {
+    constructor(config: GmCrudConfig, api: IGmModuleServiceApiCreate, varNames: {
         createDto: string;
         userInfo: string;
         createDtoSchema: string;

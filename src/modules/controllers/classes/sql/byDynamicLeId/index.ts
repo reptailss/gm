@@ -1,5 +1,5 @@
 import {GmAccessStructureMethodProcessor} from '@modules/structure/GmAccessStructureMethodProcessor'
-import {GmConfig} from 'os-core-ts'
+import {GmCrudConfig} from 'os-core-ts'
 import {GmModuleAbstractControllerClass} from '@modules/controllers/classes/abstract/GmModuleAbstractControllerClass'
 import {IGmModuleClass} from '@modules/interfaces/gmModule'
 import {GmModuleValidator} from '@modules/validator/GmModuleValidator'
@@ -17,7 +17,7 @@ import {GmServiceValidator} from '@services/validator/GmServiceValidator'
 import {GmModuleUpdateDto} from '@modules/dto/GmModuleUpdateDto'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmModuleControllerMethodCreate} from '@modules/controllers/methods/GmModuleControllerMethodCreate'
-import {GmConfigChecker} from '@config/GmConfigChecker'
+import {GmCrudConfigChecker} from '@crudConfig/GmCrudConfigChecker'
 import {GmModuleControllerMethodUpdate} from '@modules/controllers/methods/GmModuleControllerMethodUpdate'
 import {GmModuleControllerMethodDelete} from '@modules/controllers/methods/GmModuleControllerMethodDelete'
 import {GmQueryParamNumDec} from '@decorators/controllerDecorators/GmQueryParamDec'
@@ -58,7 +58,7 @@ const GET_ALL_VAR_NAMES = {
 
 
 class GmAccessStructureMethodProcessorByDynamicLeId extends GmAccessStructureMethodProcessor {
-    constructor(config: GmConfig) {
+    constructor(config: GmCrudConfig) {
         super(config, {
             add: {
                 openUserId: `${CREATE_VAR_NAMES.userInfo}.open_user_id`,
@@ -95,7 +95,7 @@ export class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstrac
     private readonly gmModuleUpdateDto: GmModuleUpdateDto
     private readonly gmAccessStructureMethodProcessorByDynamicLeId: GmAccessStructureMethodProcessorByDynamicLeId
 
-    constructor(config: GmConfig,
+    constructor(config: GmCrudConfig,
     ) {
         super(
             config,
@@ -162,7 +162,7 @@ export class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstrac
                 createDtoType: this.getValidatorCreateBodyTypeVarName(),
             },
         )
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.add(methodCreate)
         }
         const methodUpdate = new GmModuleControllerMethodUpdate(
@@ -176,7 +176,7 @@ export class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstrac
                 id: UPDATE_VAR_NAMES.id,
             },
         )
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'update')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'update')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.update(methodUpdate)
         }
         const methodDelete = new GmModuleControllerMethodDelete(
@@ -192,7 +192,7 @@ export class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstrac
             type: 'number',
             decorator: new GmQueryParamNumDec('legal_entity_id'),
         })
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'delete')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'delete')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.delete(methodDelete)
         }
         const methodGetById = new GmModuleControllerMethodGetById(
@@ -208,7 +208,7 @@ export class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstrac
             type: 'number',
             decorator: new GmQueryParamNumDec('legal_entity_id'),
         })
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'get')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'get')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.get(methodGetById)
         }
         const methodPagination = new GmModuleControllerMethodGetPagination(
@@ -225,7 +225,7 @@ export class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstrac
             type: 'number',
             decorator: new GmQueryParamNumDec('legal_entity_id'),
         })
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.list(methodPagination)
         }
         this.addMethod(methodCreate)
@@ -304,7 +304,7 @@ export class GmModuleControllerClassCreateBySqlDynamicLeId extends GmModuleAbstr
     private readonly gmServiceValidator: GmServiceValidator
     private readonly gmAccessStructureMethodProcessorByDynamicLeId: GmAccessStructureMethodProcessor
 
-    constructor(config: GmConfig,
+    constructor(config: GmCrudConfig,
     ) {
         super(
             config,
@@ -348,7 +348,7 @@ export class GmModuleControllerClassCreateBySqlDynamicLeId extends GmModuleAbstr
                 createDtoType: this.getValidatorCreateBodyTypeVarName(),
             },
         )
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.add(methodCreate)
         }
 
@@ -403,7 +403,7 @@ export class GmModuleControllerClassUpdateBySqlDynamicLeId extends GmModuleAbstr
     private readonly gmServiceValidator: GmServiceValidator
     private readonly gmAccessStructureMethodProcessorByDynamicLeId: GmAccessStructureMethodProcessor
 
-    constructor(config: GmConfig,
+    constructor(config: GmCrudConfig,
     ) {
         super(
             config,
@@ -449,7 +449,7 @@ export class GmModuleControllerClassUpdateBySqlDynamicLeId extends GmModuleAbstr
                 id: UPDATE_VAR_NAMES.id,
             },
         )
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'update')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'update')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.update(methodUpdate)
         }
         this.addMethod(methodUpdate)
@@ -497,7 +497,7 @@ export class GmModuleControllerClassDeleteBySqlDynamicLeId extends GmModuleAbstr
     private readonly serviceCrud: GmModuleServiceClassDeleteBySqlDynamicLeId
     private readonly gmAccessStructureMethodProcessorByDynamicLeId: GmAccessStructureMethodProcessor
 
-    constructor(config: GmConfig,
+    constructor(config: GmCrudConfig,
     ) {
         super(
             config,
@@ -533,7 +533,7 @@ export class GmModuleControllerClassDeleteBySqlDynamicLeId extends GmModuleAbstr
             type: 'number',
             decorator: new GmQueryParamNumDec('legal_entity_id'),
         })
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'delete')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'delete')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.delete(methodDelete)
         }
 
@@ -559,7 +559,7 @@ export class GmModuleControllerClassGetBySqlDynamicLeId extends GmModuleAbstract
     private readonly serviceCrud: GmModuleServiceClassGetBySqlDynamicLeId
     private readonly gmAccessStructureMethodProcessorByDynamicLeId: GmAccessStructureMethodProcessor
 
-    constructor(config: GmConfig,
+    constructor(config: GmCrudConfig,
     ) {
         super(
             config,
@@ -595,7 +595,7 @@ export class GmModuleControllerClassGetBySqlDynamicLeId extends GmModuleAbstract
             decorator: new GmQueryParamNumDec('legal_entity_id'),
         })
 
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'get')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'get')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.get(methodGetById)
         }
 
@@ -623,7 +623,7 @@ export class GmModuleControllerClassGetAllBySqlDynamicLeId extends GmModuleAbstr
     private readonly serviceCrud: GmModuleServiceClassGetAllBySqlDynamicLeId
     private readonly gmAccessStructureMethodProcessorByDynamicLeId: GmAccessStructureMethodProcessorByDynamicLeId
 
-    constructor(config: GmConfig,
+    constructor(config: GmCrudConfig,
     ) {
         super(
             config,
@@ -664,7 +664,7 @@ export class GmModuleControllerClassGetAllBySqlDynamicLeId extends GmModuleAbstr
             type: 'number',
             decorator: new GmQueryParamNumDec('legal_entity_id'),
         })
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.list(methodPagination)
         }
         this.addMethod(methodPagination)

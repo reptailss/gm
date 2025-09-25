@@ -1,11 +1,11 @@
-import {GmConfig} from 'os-core-ts'
+import {GmCrudConfig} from 'os-core-ts'
 import {GmModuleDtoField} from '@modules/dto/types'
 
 
 export class GmModuleDtoHelper {
     
-    static getDtoPrimaryKeyByConfig = (config: GmConfig): GmModuleDtoField => {
-        switch (config.model.dbType) {
+    static getDtoPrimaryKeyByConfig = (config: GmCrudConfig): GmModuleDtoField => {
+        switch (config.repository.dbType) {
             case 'noSql': {
                 return {
                     key: '_id',

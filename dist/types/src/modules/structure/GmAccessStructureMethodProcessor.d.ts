@@ -1,4 +1,4 @@
-import { GmConfig } from "../../os-core";
+import { GmCrudConfig } from "../../os-core";
 import { IGmModuleClassMethod } from "../interfaces/gmModule";
 type CallVarNames = {
     openUserId: string;
@@ -9,7 +9,7 @@ export declare class GmAccessStructureMethodProcessor {
     private readonly varNames;
     private readonly gmServiceStructureAccess;
     private readonly gmModuleRoutePaths;
-    constructor(config: GmConfig, varNames: {
+    constructor(config: GmCrudConfig, varNames: {
         add: CallVarNames;
         update: CallVarNames;
         delete: CallVarNames;

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GmModuleControllerClassGetAllByNoSqlMonthAndYear = exports.GmModuleControllerClassCreateByNoSqlMonthAndYear = exports.GmModuleControllerClassCrudByNoSqlMonthAndYear = void 0;
 const StringCaseHelper_1 = require("../../../../../helpers/StringCaseHelper");
-const GmConfigChecker_1 = require("../../../../../config/GmConfigChecker");
+const GmCrudConfigChecker_1 = require("../../../../../crudConfig/GmCrudConfigChecker");
 const GmAccessStructureMethodProcessor_1 = require("../../../../structure/GmAccessStructureMethodProcessor");
 const GmQueryParamDec_1 = require("../../../../../decorators/controllerDecorators/GmQueryParamDec");
 const GmServiceValidator_1 = require("../../../../../services/validator/GmServiceValidator");
@@ -28,8 +28,8 @@ class GmGetVarNamesByMonthAndYear {
             createBody,
             createBodySchema: `create${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.config.dtoName.singular)}BodySchema`,
             legalEntityId: `${createBody}.legal_entity_id`,
-            createBodyType: !GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.config, 'add') ||
-                GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.config, 'add') && this.checkHasLeIdColumn()
+            createBodyType: !GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.config, 'add') ||
+                GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.config, 'add') && this.checkHasLeIdColumn()
                 ? undefined : `Create${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.config.dtoName.singular)}Body`,
         };
     }
@@ -41,7 +41,7 @@ class GmGetVarNamesByMonthAndYear {
             id: 'id',
             openUserId: `${this.userInfo()}.open_user_id`,
             legalEntityId: `${updateBody}.legal_entity_id`,
-            updateBodyType: GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.config, 'update') ? `Update${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.config.dtoName.singular)}Body` : undefined,
+            updateBodyType: GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.config, 'update') ? `Update${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.config.dtoName.singular)}Body` : undefined,
         };
     }
     delete() {
@@ -69,9 +69,9 @@ class GmGetVarNamesByMonthAndYear {
         };
     }
     checkHasLeIdColumn() {
-        return 'legal_entity_id' in this.config.model.columns &&
-            (this.config.model.columns.legal_entity_id.type === 'INTEGER' ||
-                this.config.model.columns.legal_entity_id.type === 'BIGINT');
+        return 'legal_entity_id' in this.config.repository.columns &&
+            (this.config.repository.columns.legal_entity_id.type === 'INTEGER' ||
+                this.config.repository.columns.legal_entity_id.type === 'BIGINT');
     }
 }
 class GmAccessStructureMethodProcessorByMonthAndYear extends GmAccessStructureMethodProcessor_1.GmAccessStructureMethodProcessor {
@@ -123,7 +123,7 @@ class GmValidatorBuilderByMonthAndYear {
     }
     add() {
         const schemaTypeStr = this.gmGetVarNames.add().createBodyType ? ` :${this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.gmGetVarNames.add().createBodyType || '')}` : '';
-        if (!GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.config, 'add')) {
+        if (!GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.config, 'add')) {
             return `const ${this.gmGetVarNames.add().createBodySchema}${schemaTypeStr} = ${this.validator.api.getCreateDtoSchema()}`;
         }
         if (this.gmGetVarNames.checkHasLeIdColumn()) {
@@ -137,7 +137,7 @@ class GmValidatorBuilderByMonthAndYear {
         return `const ${this.gmGetVarNames.list().paramsSchema} = ${this.validator.api.getDtoPaginationQueryParamsSchema()}`;
     }
     checkHasAddValidatorService(type) {
-        return GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.config, type) && !this.gmGetVarNames.checkHasLeIdColumn();
+        return GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.config, type) && !this.gmGetVarNames.checkHasLeIdColumn();
     }
 }
 class GmModuleControllerClassCrudByNoSqlMonthAndYear extends GmModuleAbstractControllerClass_1.GmModuleAbstractControllerClass {
@@ -180,7 +180,7 @@ class GmModuleControllerClassCrudByNoSqlMonthAndYear extends GmModuleAbstractCon
             userInfo: this.gmGetVarNames.userInfo(),
             createDtoSchema: this.gmGetVarNames.add().createBodySchema,
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
             this.gmAccessStructureMethodProcessorByMonthAndYear.add(methodCreate);
         }
         const methodPagination = new GmModuleControllerMethodGetPagination_1.GmModuleControllerMethodGetPagination(this.getConfig(), this.serviceCrud.api, {
@@ -198,7 +198,7 @@ class GmModuleControllerClassCrudByNoSqlMonthAndYear extends GmModuleAbstractCon
             callVarName: this.gmGetVarNames.list().dateEnd,
             decorator: new GmQueryParamDec_1.GmQueryParamDateDec('date_end'),
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
             this.gmAccessStructureMethodProcessorByMonthAndYear.list(methodPagination);
         }
         this.addMethod(methodCreate);
@@ -263,7 +263,7 @@ class GmModuleControllerClassCreateByNoSqlMonthAndYear extends GmModuleAbstractC
             userInfo: this.gmGetVarNames.userInfo(),
             createDtoSchema: this.gmGetVarNames.add().createBodySchema,
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
             this.gmAccessStructureMethodProcessorByMonthAndYear.add(methodCreate);
         }
         this.addMethod(methodCreate);
@@ -325,7 +325,7 @@ class GmModuleControllerClassGetAllByNoSqlMonthAndYear extends GmModuleAbstractC
             callVarName: this.gmGetVarNames.list().dateEnd,
             decorator: new GmQueryParamDec_1.GmQueryParamDateDec('date_end'),
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
             this.gmAccessStructureMethodProcessorByMonthAndYear.list(methodPagination);
         }
         this.addMethod(methodPagination);

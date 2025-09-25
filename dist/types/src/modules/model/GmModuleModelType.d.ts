@@ -5,5 +5,5 @@ export declare class GmModuleModelType extends GmAbstractModuleType implements I
     getDirName(): string;
     getFileName(): string;
     init(): void;
-    private getDtoName;
+    private getEntityName;
 }

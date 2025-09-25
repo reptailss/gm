@@ -28,8 +28,8 @@
       "@codeBuilder/*": [
         "src/codeBuilder/*"
       ],
-      "@config/*": [
-        "src/config/*"
+      "@crudConfig/*": [
+        "src/crudConfig/*"
       ],
       "@crud/*": [
         "src/crud/*"

@@ -1,6 +1,6 @@
 import { GmAbstractModuleClassMethod } from "../../abstractModule/GmAbstractModuleClassMethod";
 import { IGmModuleClassMethod } from "../../interfaces/gmModule";
-import { GmConfig } from "../../../os-core";
+import { GmCrudConfig } from "../../../os-core";
 import { IGmModuleServiceApiGet } from "../../services/interfaces/gmModuleServiceClassCurdApi";
 export declare class GmModuleControllerMethodGetById extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {
     private readonly api;
@@ -11,7 +11,7 @@ export declare class GmModuleControllerMethodGetById extends GmAbstractModuleCla
     private readonly gmModuleDto;
     private readonly gmServiceUserInfoType;
     private readonly gmModuleRoutePaths;
-    constructor(config: GmConfig, api: IGmModuleServiceApiGet, varNames: {
+    constructor(config: GmCrudConfig, api: IGmModuleServiceApiGet, varNames: {
         userInfo: string;
         id: string;
     });

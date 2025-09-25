@@ -69,8 +69,8 @@ class GmModuleValidatorGetCreateDtoMethod extends GmAbstractModuleClassMethod_1.
     }
     buildSchemaByColumns() {
         const res = {};
-        for (const key in this.getConfig().model.columns) {
-            switch (this.getConfig().model.columns[key].type) {
+        for (const key in this.getConfig().repository.columns) {
+            switch (this.getConfig().repository.columns[key].type) {
                 case 'INTEGER':
                     res[key] = this.gmServiceValidator.number();
                     break;

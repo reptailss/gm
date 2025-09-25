@@ -1,16 +1,15 @@
 import path from 'path'
 import fs from 'fs'
-import {GetGmConfig} from '@config/GetGmConfig'
+import {GetGmCrudConfig} from '@crudConfig/GetGmCrudConfig'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmGenerateCrudDecSql} from '@crud/GenerateCrudDecSql'
 import {GmGenerateCrudDecNoSql} from '@crud/GenerateCrudDecNoSql'
-import {GmRootHathHelper} from '@helpers/GmRootHathHelper'
 
 
 export class GenerateCrud {
     
     public async run() {
-        const config = await GetGmConfig.getConfig()
+        const config = await GetGmCrudConfig.getConfig()
         const dirName = StringCaseHelper.toCamelCase(config.moduleName)
         const rootDir = config.rootDir || 'src'
         const rootDirArray = rootDir.split('/')
@@ -21,7 +20,7 @@ export class GenerateCrud {
             throw new Error(`the folder ${dirName} already exists`)
         }
         
-        switch (config.model.dbType) {
+        switch (config.repository.dbType) {
             case 'sql' : {
                 new GmGenerateCrudDecSql(config).run()
                 break

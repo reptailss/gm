@@ -4,8 +4,8 @@ import {GmModuleDto} from '@modules/dto/GmModuleDto'
 import {GmServicePaginationQueryParamsType} from '@services/paginationTypes/GmServicePaginationQueryParamsType'
 import {GmServicePaginationValuesType} from '@services/paginationTypes/GmServicePaginationValuesType'
 import {GmServicePaginationNoSql} from '@services/pagination/GmServicePaginationNoSql'
-import {GmConfig} from 'os-core-ts'
-import {IGmModuleModel} from '@modules/model/interfaces/gmModuleModel'
+import {GmCrudConfig} from 'os-core-ts'
+import {IGmModuleRepository} from '@modules/repository/interfaces/gmModuleRepository'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 
 
@@ -24,8 +24,8 @@ export class GmModuleServiceMethodGetPaginationNoSql extends GmAbstractModuleCla
     private readonly callVarNames:typeof PROPS_VAR_NAMES
     
     constructor(
-        config: GmConfig,
-        gmModuleModel: IGmModuleModel,
+        config: GmCrudConfig,
+        gmModuleRepository: IGmModuleRepository,
         callVarNames:typeof PROPS_VAR_NAMES
     ) {
         super(config)
@@ -79,7 +79,7 @@ export class GmModuleServiceMethodGetPaginationNoSql extends GmAbstractModuleCla
                 paramsVarName: PROPS_VAR_NAMES.params,
                 dateStartVarName: PROPS_VAR_NAMES.dateStart,
                 dateEndVarName: PROPS_VAR_NAMES.dateEnd,
-                getModelCbVarName: 'this.getModelCb',
+                getRepositoryCbVarName: 'this.getRepositoryCb',
             })}`,
         })
     }

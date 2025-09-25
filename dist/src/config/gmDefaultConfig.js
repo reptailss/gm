@@ -80,10 +80,10 @@ const GM_DEFAULT_CONFIG = {
         plural: 'Users',
     },
     moduleName: 'Users',
-    model: GM_MODEL_SQL_DYNAMIC_BY_DOMAIN_CONFIG,
+    repository: GM_MODEL_SQL_DYNAMIC_BY_DOMAIN_CONFIG,
     endpoints: GM_BASE_ENDPOINTS_CONFIG,
     hasSeparated: true,
-    rootDir: 'src'
+    rootDir: 'src',
 };
 exports.gmDefaultConfig = {
     default: GM_DEFAULT_CONFIG,

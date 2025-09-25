@@ -15,40 +15,40 @@ class CreateAppGCrudConfigModule {
         const packageJsonPath = path_1.default.join(rootDir, this.packageName, 'gCrudConfig.ts');
         const content = `
 
-import { GmConfig, GmNoSqlModelConfig, GmSqlModelConfig } from 'os-core-ts'
+import { GmCrudConfig, GmCrudNoSqlRepositoryConfig, GmCrudSqlRepositoryConfig } from 'os-core-ts'
 
-const sqlByStaticDb: GmSqlModelConfig = {
+const sqlByStaticDb: GmCrudSqlRepositoryConfig = {
     dbType: 'sql',
     type: 'staticByDbConnection',
     columns: { title: { type: 'STRING' }, description: { type: 'STRING' } }
 }
 
-const sqlByDynamicDomain: GmSqlModelConfig = {
+const sqlByDynamicDomain: GmCrudSqlRepositoryConfig = {
     dbType: 'sql',
     type: 'dynamicByDomain',
     columns: { name: { type: 'STRING' }, age: { type: 'INTEGER' } }
 }
 
-const sqlByLeId: GmSqlModelConfig = {
+const sqlByLeId: GmCrudSqlRepositoryConfig = {
     dbType: 'sql',
     type: 'dynamicDbConfigByLegalEntityId',
     columns: { title: { type: 'STRING' }, user_id: { type: 'INTEGER' } }
 }
 
-const noSqlByYearAndMonth: GmNoSqlModelConfig = {
+const noSqlByYearAndMonth: GmCrudNoSqlRepositoryConfig = {
     dbType: 'noSql',
     type: 'byDatabaseNameAndYearMonth',
     columns: { name: { type: 'STRING' }, price: { type: 'INTEGER' } }
 }
 
-export default function buildGmConfig(): GmConfig {
+export default function buildGmCrudConfig(): GmCrudConfig {
     return {
         dtoName: {
             singular: 'Post',
             plural: 'Posts'
         },
         moduleName: 'Posts',
-        model: sqlByDynamicDomain,
+        repository: sqlByDynamicDomain,
         hasSeparated: true,
         endpoints: {
             add: { hasActionLogger: true, hasAuth: true, hasStructureAccess: true },

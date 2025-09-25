@@ -1,4 +1,4 @@
-import { GmConfig } from "../../../../../os-core";
+import { GmCrudConfig } from "../../../../../os-core";
 import { GmModuleAbstractControllerClass } from "../../abstract/GmModuleAbstractControllerClass";
 import { IGmModuleClass } from "../../../../interfaces/gmModule";
 export declare class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstractControllerClass implements IGmModuleClass {
@@ -9,7 +9,7 @@ export declare class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModul
     private readonly gmServiceValidator;
     private readonly gmModuleUpdateDto;
     private readonly gmAccessStructureMethodProcessorByDynamicLeId;
-    constructor(config: GmConfig);
+    constructor(config: GmCrudConfig);
     init(): void;
     private getValidatorVarName;
     private getValidatorCreateBodyVarName;
@@ -26,7 +26,7 @@ export declare class GmModuleControllerClassCreateBySqlDynamicLeId extends GmMod
     private readonly gmServiceSchemaValidatorType;
     private readonly gmServiceValidator;
     private readonly gmAccessStructureMethodProcessorByDynamicLeId;
-    constructor(config: GmConfig);
+    constructor(config: GmCrudConfig);
     init(): void;
     private getValidatorVarName;
     private getValidatorCreateBodyVarName;
@@ -40,7 +40,7 @@ export declare class GmModuleControllerClassUpdateBySqlDynamicLeId extends GmMod
     private readonly gmServiceSchemaValidatorType;
     private readonly gmServiceValidator;
     private readonly gmAccessStructureMethodProcessorByDynamicLeId;
-    constructor(config: GmConfig);
+    constructor(config: GmCrudConfig);
     init(): void;
     private getValidatorVarName;
     private getValidatorUpdateBodyVarName;
@@ -50,14 +50,14 @@ export declare class GmModuleControllerClassUpdateBySqlDynamicLeId extends GmMod
 export declare class GmModuleControllerClassDeleteBySqlDynamicLeId extends GmModuleAbstractControllerClass implements IGmModuleClass {
     private readonly serviceCrud;
     private readonly gmAccessStructureMethodProcessorByDynamicLeId;
-    constructor(config: GmConfig);
+    constructor(config: GmCrudConfig);
     init(): void;
     private getServiceVarName;
 }
 export declare class GmModuleControllerClassGetBySqlDynamicLeId extends GmModuleAbstractControllerClass implements IGmModuleClass {
     private readonly serviceCrud;
     private readonly gmAccessStructureMethodProcessorByDynamicLeId;
-    constructor(config: GmConfig);
+    constructor(config: GmCrudConfig);
     init(): void;
     private getServiceVarName;
 }
@@ -65,7 +65,7 @@ export declare class GmModuleControllerClassGetAllBySqlDynamicLeId extends GmMod
     private readonly validator;
     private readonly serviceCrud;
     private readonly gmAccessStructureMethodProcessorByDynamicLeId;
-    constructor(config: GmConfig);
+    constructor(config: GmCrudConfig);
     init(): void;
     private getValidatorVarName;
     private getValidatorParamsDtoVarName;

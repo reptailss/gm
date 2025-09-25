@@ -9,10 +9,10 @@ const PROPS_VAR_NAMES = {
     id: 'id',
 };
 class GmModuleServiceMethodGetById extends GmAbstractModuleClassMethod_1.GmAbstractModuleClassMethod {
-    constructor(config, gmModuleModel, callVarNames) {
+    constructor(config, gmModuleRepository, callVarNames) {
         super(config);
         this.gmModuleDto = new GmModuleDto_1.GmModuleDto(config);
-        this.gmModuleModel = gmModuleModel;
+        this.gmModuleRepository = gmModuleRepository;
         this.callVarNames = callVarNames;
     }
     getPropertyName() {
@@ -34,7 +34,7 @@ class GmModuleServiceMethodGetById extends GmAbstractModuleClassMethod_1.GmAbstr
     initGetRow() {
         this.appendBodyElement({
             name: 'getRow',
-            value: `return ${this.gmModuleModel.api.findByPk(PROPS_VAR_NAMES.id)}`,
+            value: `return ${this.gmModuleRepository.api.findByPk(PROPS_VAR_NAMES.id)}`,
         });
     }
 }

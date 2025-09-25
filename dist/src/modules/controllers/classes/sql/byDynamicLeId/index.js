@@ -11,7 +11,7 @@ const GmServiceValidator_1 = require("../../../../../services/validator/GmServic
 const GmModuleUpdateDto_1 = require("../../../../dto/GmModuleUpdateDto");
 const StringCaseHelper_1 = require("../../../../../helpers/StringCaseHelper");
 const GmModuleControllerMethodCreate_1 = require("../../../methods/GmModuleControllerMethodCreate");
-const GmConfigChecker_1 = require("../../../../../config/GmConfigChecker");
+const GmCrudConfigChecker_1 = require("../../../../../crudConfig/GmCrudConfigChecker");
 const GmModuleControllerMethodUpdate_1 = require("../../../methods/GmModuleControllerMethodUpdate");
 const GmModuleControllerMethodDelete_1 = require("../../../methods/GmModuleControllerMethodDelete");
 const GmQueryParamDec_1 = require("../../../../../decorators/controllerDecorators/GmQueryParamDec");
@@ -119,7 +119,7 @@ class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstractContro
             createDtoSchema: this.getValidatorCreateBodyVarName(),
             createDtoType: this.getValidatorCreateBodyTypeVarName(),
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.add(methodCreate);
         }
         const methodUpdate = new GmModuleControllerMethodUpdate_1.GmModuleControllerMethodUpdate(this.getConfig(), this.serviceCrud.api, {
@@ -129,7 +129,7 @@ class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstractContro
             updateDtoType: this.getValidatorUpdateBodyTypeVarName(),
             id: UPDATE_VAR_NAMES.id,
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.getConfig(), 'update')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'update')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.update(methodUpdate);
         }
         const methodDelete = new GmModuleControllerMethodDelete_1.GmModuleControllerMethodDelete(this.getConfig(), this.serviceCrud.api, {
@@ -141,7 +141,7 @@ class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstractContro
             type: 'number',
             decorator: new GmQueryParamDec_1.GmQueryParamNumDec('legal_entity_id'),
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.getConfig(), 'delete')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'delete')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.delete(methodDelete);
         }
         const methodGetById = new GmModuleControllerMethodGetById_1.GmModuleControllerMethodGetById(this.getConfig(), this.serviceCrud.api, {
@@ -153,7 +153,7 @@ class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstractContro
             type: 'number',
             decorator: new GmQueryParamDec_1.GmQueryParamNumDec('legal_entity_id'),
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.getConfig(), 'get')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'get')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.get(methodGetById);
         }
         const methodPagination = new GmModuleControllerMethodGetPagination_1.GmModuleControllerMethodGetPagination(this.getConfig(), this.serviceCrud.api, {
@@ -166,7 +166,7 @@ class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstractContro
             type: 'number',
             decorator: new GmQueryParamDec_1.GmQueryParamNumDec('legal_entity_id'),
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.list(methodPagination);
         }
         this.addMethod(methodCreate);
@@ -251,7 +251,7 @@ class GmModuleControllerClassCreateBySqlDynamicLeId extends GmModuleAbstractCont
             createDtoSchema: this.getValidatorCreateBodyVarName(),
             createDtoType: this.getValidatorCreateBodyTypeVarName(),
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.add(methodCreate);
         }
         this.addMethod(methodCreate);
@@ -316,7 +316,7 @@ class GmModuleControllerClassUpdateBySqlDynamicLeId extends GmModuleAbstractCont
             updateDtoType: this.getValidatorUpdateBodyTypeVarName(),
             id: UPDATE_VAR_NAMES.id,
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.getConfig(), 'update')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'update')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.update(methodUpdate);
         }
         this.addMethod(methodUpdate);
@@ -374,7 +374,7 @@ class GmModuleControllerClassDeleteBySqlDynamicLeId extends GmModuleAbstractCont
             type: 'number',
             decorator: new GmQueryParamDec_1.GmQueryParamNumDec('legal_entity_id'),
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.getConfig(), 'delete')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'delete')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.delete(methodDelete);
         }
         this.addMethod(methodDelete);
@@ -411,7 +411,7 @@ class GmModuleControllerClassGetBySqlDynamicLeId extends GmModuleAbstractControl
             type: 'number',
             decorator: new GmQueryParamDec_1.GmQueryParamNumDec('legal_entity_id'),
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.getConfig(), 'get')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'get')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.get(methodGetById);
         }
         this.addMethod(methodGetById);
@@ -451,7 +451,7 @@ class GmModuleControllerClassGetAllBySqlDynamicLeId extends GmModuleAbstractCont
             type: 'number',
             decorator: new GmQueryParamDec_1.GmQueryParamNumDec('legal_entity_id'),
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.list(methodPagination);
         }
         this.addMethod(methodPagination);

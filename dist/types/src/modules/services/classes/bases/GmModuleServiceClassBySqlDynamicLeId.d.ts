@@ -1,12 +1,12 @@
 import { GmModuleAbstractServiceClass } from "../abstract/GmModuleAbstractServiceClass";
 import { IGmModuleClass, IGmModuleClassMethod } from "../../../interfaces/gmModule";
-import { GmConfig } from "../../../../os-core";
-import { IGmModuleModel } from "../../../model/interfaces/gmModuleModel";
+import { GmCrudConfig } from "../../../../os-core";
+import { IGmModuleRepository } from "../../../repository/interfaces/gmModuleRepository";
 export declare class GmModuleServiceClassBySqlDynamicLeId extends GmModuleAbstractServiceClass implements IGmModuleClass {
-    private readonly model;
-    private readonly modelType;
-    constructor(config: GmConfig, serviceName: string);
-    getModuleModel(): IGmModuleModel;
+    private readonly repository;
+    private readonly entityType;
+    constructor(config: GmCrudConfig, serviceName: string);
+    getModuleRepository(): IGmModuleRepository;
     addAndInitMethod(method: IGmModuleClassMethod, leIdVarName: string): this;
     init(): void;
 }

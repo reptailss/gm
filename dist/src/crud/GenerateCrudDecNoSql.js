@@ -7,7 +7,7 @@ class GmGenerateCrudDecNoSql extends GmGenerateAbstractCrudDec_1.GmGenerateAbstr
     constructor(config) {
         const controllers = [];
         if (config.hasSeparated) {
-            switch (config.model.type) {
+            switch (config.repository.type) {
                 case 'byDatabaseNameAndYearMonth': {
                     controllers.push(new byMonthAndYear_1.GmModuleControllerClassCreateByNoSqlMonthAndYear(config));
                     controllers.push(new byMonthAndYear_1.GmModuleControllerClassGetAllByNoSqlMonthAndYear(config));
@@ -16,7 +16,7 @@ class GmGenerateCrudDecNoSql extends GmGenerateAbstractCrudDec_1.GmGenerateAbstr
             }
         }
         else {
-            switch (config.model.type) {
+            switch (config.repository.type) {
                 case 'byDatabaseNameAndYearMonth': {
                     controllers.push(new byMonthAndYear_1.GmModuleControllerClassCrudByNoSqlMonthAndYear(config));
                     break;

@@ -54,7 +54,7 @@ export abstract class GmAbstractModuleConstant extends GmAbstractModule implemen
         return this.renderData[key] as T
     }
 
-    public getExport(): GmExport {
+    public getExport(): GmExport | null {
         const parentInfo = this.getParentInfo()
         if (!parentInfo?.dirName) {
             return {

@@ -1,6 +1,6 @@
 import {GmAbstractModuleClass} from '@modules/abstractModule/GmAbstractModuleClass'
 import {IGmModuleClass} from '@modules/interfaces/gmModule'
-import {GmConfig} from 'os-core-ts'
+import {GmCrudConfig} from 'os-core-ts'
 import {GmControllerDec} from '@decorators/controllerDecorators/GmControllerDec'
 
 export abstract class GmModuleAbstractControllerClass extends GmAbstractModuleClass implements IGmModuleClass {
@@ -9,7 +9,7 @@ export abstract class GmModuleAbstractControllerClass extends GmAbstractModuleCl
     private className: string
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         className: string,
     ) {
         super(config)

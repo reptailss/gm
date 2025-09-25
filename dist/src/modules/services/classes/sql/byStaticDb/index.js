@@ -20,11 +20,11 @@ class GmModuleServiceClassCrudBySqlStaticDb extends GmModuleServiceClassBySqlSta
     init() {
         super.init();
         this.addService(this.actionsLoggerService)
-            .addMethod(new GmModuleServiceMethodCreate_1.GmModuleServiceMethodCreate(this.getConfig(), this.getModuleModel(), this.actionsLoggerService, this.allCallVarNames.create))
-            .addMethod(new GmModuleServiceMethodUpdate_1.GmModuleServiceMethodUpdate(this.getConfig(), this.getModuleModel(), this.actionsLoggerService, this.allCallVarNames.update))
-            .addMethod(new GmModuleServiceMethodDelete_1.GmModuleServiceMethodDelete(this.getConfig(), this.getModuleModel(), this.actionsLoggerService, this.allCallVarNames.delete))
-            .addMethod(new GmModuleServiceMethodGetById_1.GmModuleServiceMethodGetById(this.getConfig(), this.getModuleModel(), this.allCallVarNames.getById))
-            .addMethod(new GmModuleServiceMethodGetPagination_1.GmModuleServiceMethodGetPagination(this.getConfig(), this.getModuleModel(), this.allCallVarNames.getPagination));
+            .addMethod(new GmModuleServiceMethodCreate_1.GmModuleServiceMethodCreate(this.getConfig(), this.getModuleRepository(), this.actionsLoggerService, this.allCallVarNames.create))
+            .addMethod(new GmModuleServiceMethodUpdate_1.GmModuleServiceMethodUpdate(this.getConfig(), this.getModuleRepository(), this.actionsLoggerService, this.allCallVarNames.update))
+            .addMethod(new GmModuleServiceMethodDelete_1.GmModuleServiceMethodDelete(this.getConfig(), this.getModuleRepository(), this.actionsLoggerService, this.allCallVarNames.delete))
+            .addMethod(new GmModuleServiceMethodGetById_1.GmModuleServiceMethodGetById(this.getConfig(), this.getModuleRepository(), this.allCallVarNames.getById))
+            .addMethod(new GmModuleServiceMethodGetPagination_1.GmModuleServiceMethodGetPagination(this.getConfig(), this.getModuleRepository(), this.allCallVarNames.getPagination));
         this.api = new GmModuleServiceClassCurdApi_1.GmModuleServiceClassApiAll(this.serviceVarName, this.getMethodByIndex(0), this.getMethodByIndex(1), this.getMethodByIndex(2), this.getMethodByIndex(3), this.getMethodByIndex(4));
     }
 }
@@ -39,7 +39,7 @@ class GmModuleServiceClassCreateBySqlStaticDb extends GmModuleServiceClassBySqlS
     init() {
         super.init();
         this.addService(this.actionsLoggerService)
-            .addMethod(new GmModuleServiceMethodCreate_1.GmModuleServiceMethodCreate(this.getConfig(), this.getModuleModel(), this.actionsLoggerService, this.callVarNames));
+            .addMethod(new GmModuleServiceMethodCreate_1.GmModuleServiceMethodCreate(this.getConfig(), this.getModuleRepository(), this.actionsLoggerService, this.callVarNames));
         this.api = new GmModuleServiceClassCurdApi_1.GmModuleServiceClassApiCreate(this.serviceVarName, this.getMethodByIndex(0));
     }
 }
@@ -54,7 +54,7 @@ class GmModuleServiceClassUpdateBySqlStaticDb extends GmModuleServiceClassBySqlS
     init() {
         super.init();
         this.addService(this.actionsLoggerService)
-            .addMethod(new GmModuleServiceMethodUpdate_1.GmModuleServiceMethodUpdate(this.getConfig(), this.getModuleModel(), this.actionsLoggerService, this.callVarNames));
+            .addMethod(new GmModuleServiceMethodUpdate_1.GmModuleServiceMethodUpdate(this.getConfig(), this.getModuleRepository(), this.actionsLoggerService, this.callVarNames));
         this.api = new GmModuleServiceClassCurdApi_1.GmModuleServiceClassApiUpdate(this.serviceVarName, this.getMethodByIndex(0));
     }
 }
@@ -69,7 +69,7 @@ class GmModuleServiceClassDeleteBySqlStaticDb extends GmModuleServiceClassBySqlS
     init() {
         super.init();
         this.addService(this.actionsLoggerService)
-            .addMethod(new GmModuleServiceMethodDelete_1.GmModuleServiceMethodDelete(this.getConfig(), this.getModuleModel(), this.actionsLoggerService, this.callVarNames));
+            .addMethod(new GmModuleServiceMethodDelete_1.GmModuleServiceMethodDelete(this.getConfig(), this.getModuleRepository(), this.actionsLoggerService, this.callVarNames));
         this.api = new GmModuleServiceClassCurdApi_1.GmModuleServiceClassApiDelete(this.serviceVarName, this.getMethodByIndex(0));
     }
 }
@@ -82,7 +82,7 @@ class GmModuleServiceClassGetBySqlStaticDb extends GmModuleServiceClassBySqlStat
     }
     init() {
         super.init();
-        this.addMethod(new GmModuleServiceMethodGetById_1.GmModuleServiceMethodGetById(this.getConfig(), this.getModuleModel(), this.callVarNames));
+        this.addMethod(new GmModuleServiceMethodGetById_1.GmModuleServiceMethodGetById(this.getConfig(), this.getModuleRepository(), this.callVarNames));
         this.api = new GmModuleServiceClassCurdApi_1.GmModuleServiceClassApiGet(this.serviceVarName, this.getMethodByIndex(0));
     }
 }
@@ -95,7 +95,7 @@ class GmModuleServiceClassGetAllBySqlStaticDb extends GmModuleServiceClassBySqlS
     }
     init() {
         super.init();
-        this.addMethod(new GmModuleServiceMethodGetPagination_1.GmModuleServiceMethodGetPagination(this.getConfig(), this.getModuleModel(), this.callVarNames));
+        this.addMethod(new GmModuleServiceMethodGetPagination_1.GmModuleServiceMethodGetPagination(this.getConfig(), this.getModuleRepository(), this.callVarNames));
         this.api = new GmModuleServiceClassCurdApi_1.GmModuleServiceClassApiGetPagination(this.serviceVarName, this.getMethodByIndex(0));
     }
 }

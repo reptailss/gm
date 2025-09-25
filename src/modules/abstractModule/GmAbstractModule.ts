@@ -1,4 +1,4 @@
-import {GmConfig} from 'os-core-ts'
+import {GmCrudConfig} from 'os-core-ts'
 import {IGmModule, IGmModuleClass, IGmModuleConstant, IGmModuleFn, IGmModuleType} from '@modules/interfaces/gmModule'
 import {GmImport} from '@imports/types'
 import {GmModuleDirType, GmModuleParentInfo} from '@modules/types'
@@ -8,14 +8,14 @@ import {IGmService} from '@services/inetfaces/gmService'
 
 export abstract class GmAbstractModule implements IGmModule {
 
-    private config: GmConfig
+    private config: GmCrudConfig
     private childModules: IGmModule[] = []
     private modules: IGmModule[] = []
     private importsModules: GmImport[] = []
     private parentInfo: null | GmModuleParentInfo = null
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
     ) {
         this.config = config
     }
@@ -28,7 +28,7 @@ export abstract class GmAbstractModule implements IGmModule {
 
     public abstract init(): void
 
-    public getConfig(): GmConfig {
+    public getConfig(): GmCrudConfig {
         return this.config
     }
 

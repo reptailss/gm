@@ -11,7 +11,7 @@ const GmModuleRoutePaths_1 = require("../../routePaths/GmModuleRoutePaths");
 const StringCaseHelper_1 = require("../../../helpers/StringCaseHelper");
 const GmSwaggerInfoDec_1 = require("../../../decorators/controllerDecorators/GmSwaggerInfoDec");
 const GmGetDec_1 = require("../../../decorators/controllerDecorators/GmGetDec");
-const GmConfigChecker_1 = require("../../../config/GmConfigChecker");
+const GmCrudConfigChecker_1 = require("../../../crudConfig/GmCrudConfigChecker");
 const GmAuthDec_1 = require("../../../decorators/controllerDecorators/GmAuthDec");
 const GmModuleDtoHelper_1 = require("../../dto/helper/GmModuleDtoHelper");
 const GmParamDec_1 = require("../../../decorators/controllerDecorators/GmParamDec");
@@ -41,7 +41,7 @@ class GmModuleControllerMethodGetById extends GmAbstractModuleClassMethod_1.GmAb
         this.appendDecorator(new GmGetDec_1.GmGetDec(this.gmModuleRoutePaths.getRoutePathPropertyName('get')));
         this.setMethodScope('public');
         this.setAsyncType('async');
-        if (GmConfigChecker_1.GmConfigChecker.hasAuth(this.getConfig(), 'get')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasAuth(this.getConfig(), 'get')) {
             this.addService(this.gmServiceUserInfoType);
             this.addProp({
                 type: this.gmServiceUserInfoType.getUserInfoType(),

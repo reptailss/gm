@@ -1,5 +1,5 @@
 import { GmGenerateAbstractCrudDec } from "./GmGenerateAbstractCrudDec";
-import { GmConfig } from "../os-core";
+import { GmCrudConfig } from "../os-core";
 export declare class GmGenerateCrudDecSql extends GmGenerateAbstractCrudDec {
-    constructor(config: GmConfig);
+    constructor(config: GmCrudConfig);
 }

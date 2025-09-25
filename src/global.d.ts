@@ -32,9 +32,9 @@ declare module '*.ejs' {
 }
 
 // declare module 'os-core-ts' {
-//     export type GmConfig = any;
-//     export type GmSqlModelConfig = any;
-//     export type GmNoSqlModelConfig = any;
+//     export type GmCrudConfig = any;
+//     export type GmCrudSqlRepositoryConfig = any;
+//     export type GmCrudNoSqlRepositoryConfig = any;
 //
 //     const value: any;
 //     export default value;

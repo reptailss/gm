@@ -37,8 +37,8 @@ export class GmModuleCreateDto extends GmAbstractModuleType implements IGmModule
     private generateDtoByColumns = (): GmModuleDtoField[] => {
         const res: GmModuleDtoField[] = []
 
-        for (const key in this.getConfig().model.columns) {
-            const column = this.getConfig().model.columns[key]
+        for (const key in this.getConfig().repository.columns) {
+            const column = this.getConfig().repository.columns[key]
             res.push({
                 key,
                 type: GmModuleDtoHelper.getTypeByColumn(column.type),

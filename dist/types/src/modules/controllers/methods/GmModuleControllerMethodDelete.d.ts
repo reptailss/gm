@@ -1,6 +1,6 @@
 import { GmAbstractModuleClassMethod } from "../../abstractModule/GmAbstractModuleClassMethod";
 import { IGmModuleClassMethod } from "../../interfaces/gmModule";
-import { GmConfig } from "../../../os-core";
+import { GmCrudConfig } from "../../../os-core";
 import { IGmModuleServiceApiDelete } from "../../services/interfaces/gmModuleServiceClassCurdApi";
 export declare class GmModuleControllerMethodDelete extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {
     private readonly api;
@@ -9,7 +9,7 @@ export declare class GmModuleControllerMethodDelete extends GmAbstractModuleClas
     private readonly gmServiceMutateRowResultType;
     private readonly gmServiceUserInfoType;
     private readonly gmModuleRoutePaths;
-    constructor(config: GmConfig, api: IGmModuleServiceApiDelete, varNames: {
+    constructor(config: GmCrudConfig, api: IGmModuleServiceApiDelete, varNames: {
         userInfo: string;
         id: string;
     });

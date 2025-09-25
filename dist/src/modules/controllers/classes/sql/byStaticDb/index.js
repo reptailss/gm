@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GmModuleControllerClassGetAllBySqlStaticDb = exports.GmModuleControllerClassGetBySqlStaticDb = exports.GmModuleControllerClassDeleteBySqlStaticDb = exports.GmModuleControllerClassUpdateBySqlStaticDb = exports.GmModuleControllerClassCreateBySqlStaticDb = exports.GmModuleControllerClassCrudBySqlStaticDb = void 0;
 const StringCaseHelper_1 = require("../../../../../helpers/StringCaseHelper");
-const GmConfigChecker_1 = require("../../../../../config/GmConfigChecker");
+const GmCrudConfigChecker_1 = require("../../../../../crudConfig/GmCrudConfigChecker");
 const GmAccessStructureMethodProcessor_1 = require("../../../../structure/GmAccessStructureMethodProcessor");
 const GmQueryParamDec_1 = require("../../../../../decorators/controllerDecorators/GmQueryParamDec");
 const GmServiceValidator_1 = require("../../../../../services/validator/GmServiceValidator");
@@ -31,8 +31,8 @@ class GmGetVarNamesByStaticDb {
             createBody,
             createBodySchema: `create${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.config.dtoName.singular)}BodySchema`,
             legalEntityId: `${createBody}.legal_entity_id`,
-            createBodyType: !GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.config, 'add') ||
-                GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.config, 'add') && this.checkHasLeIdColumn()
+            createBodyType: !GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.config, 'add') ||
+                GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.config, 'add') && this.checkHasLeIdColumn()
                 ? undefined : `Create${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.config.dtoName.singular)}Body`,
         };
     }
@@ -44,7 +44,7 @@ class GmGetVarNamesByStaticDb {
             id: 'id',
             openUserId: `${this.userInfo()}.open_user_id`,
             legalEntityId: `${updateBody}.legal_entity_id`,
-            updateBodyType: GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.config, 'update') ? `Update${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.config.dtoName.singular)}Body` : undefined,
+            updateBodyType: GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.config, 'update') ? `Update${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.config.dtoName.singular)}Body` : undefined,
         };
     }
     delete() {
@@ -70,9 +70,9 @@ class GmGetVarNamesByStaticDb {
         };
     }
     checkHasLeIdColumn() {
-        return 'legal_entity_id' in this.config.model.columns &&
-            (this.config.model.columns.legal_entity_id.type === 'INTEGER' ||
-                this.config.model.columns.legal_entity_id.type === 'BIGINT');
+        return 'legal_entity_id' in this.config.repository.columns &&
+            (this.config.repository.columns.legal_entity_id.type === 'INTEGER' ||
+                this.config.repository.columns.legal_entity_id.type === 'BIGINT');
     }
 }
 class GmAccessStructureMethodProcessorByStaticDb extends GmAccessStructureMethodProcessor_1.GmAccessStructureMethodProcessor {
@@ -140,7 +140,7 @@ class GmValidatorBuilderByStaticDb {
     }
     add() {
         const schemaTypeStr = this.gmGetVarNames.add().createBodyType ? ` :${this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.gmGetVarNames.add().createBodyType || '')}` : '';
-        if (!GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.config, 'add')) {
+        if (!GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.config, 'add')) {
             return `const ${this.gmGetVarNames.add().createBodySchema}${schemaTypeStr} = ${this.validator.api.getCreateDtoSchema()}`;
         }
         if (this.gmGetVarNames.checkHasLeIdColumn()) {
@@ -152,7 +152,7 @@ class GmValidatorBuilderByStaticDb {
     }
     update() {
         const schemaTypeStr = this.gmGetVarNames.update().updateBodyType ? ` :${this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.gmGetVarNames.update().updateBodyType || '')}` : '';
-        if (!GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.config, 'update')) {
+        if (!GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.config, 'update')) {
             return `const ${this.gmGetVarNames.update().updateBodySchema}${schemaTypeStr} = ${this.validator.api.getUpdateDtoSchema()}`;
         }
         return `const ${this.gmGetVarNames.update().updateBodySchema}${schemaTypeStr} = ${this.validator.api.getUpdateDtoSchema()}.merge(${this.gmServiceValidator.object({
@@ -164,9 +164,9 @@ class GmValidatorBuilderByStaticDb {
     }
     checkHasAddValidatorService(type) {
         if (type === 'update') {
-            return GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.config, type);
+            return GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.config, type);
         }
-        return GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.config, type) && !this.gmGetVarNames.checkHasLeIdColumn();
+        return GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.config, type) && !this.gmGetVarNames.checkHasLeIdColumn();
     }
 }
 class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractControllerClass_1.GmModuleAbstractControllerClass {
@@ -222,7 +222,7 @@ class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractControlle
             userInfo: this.gmGetVarNames.userInfo(),
             createDtoSchema: this.gmGetVarNames.add().createBodySchema,
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
             this.gmAccessStructureMethodProcessorByStaticDb.add(methodCreate);
         }
         const methodUpdate = new GmModuleControllerMethodUpdate_1.GmModuleControllerMethodUpdate(this.getConfig(), this.serviceCrud.api, {
@@ -232,21 +232,21 @@ class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractControlle
             updateDtoSchema: this.gmGetVarNames.update().updateBodySchema,
             id: this.gmGetVarNames.update().id,
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.getConfig(), 'update')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'update')) {
             this.gmAccessStructureMethodProcessorByStaticDb.update(methodUpdate);
         }
         const methodDelete = new GmModuleControllerMethodDelete_1.GmModuleControllerMethodDelete(this.getConfig(), this.serviceCrud.api, {
             userInfo: this.gmGetVarNames.userInfo(),
             id: this.gmGetVarNames.delete().id,
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.getConfig(), 'delete')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'delete')) {
             this.gmAccessStructureMethodProcessorByStaticDb.delete(methodDelete);
         }
         const methodGetById = new GmModuleControllerMethodGetById_1.GmModuleControllerMethodGetById(this.getConfig(), this.serviceCrud.api, {
             userInfo: this.gmGetVarNames.userInfo(),
             id: this.gmGetVarNames.get().id,
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.getConfig(), 'get')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'get')) {
             this.gmAccessStructureMethodProcessorByStaticDb.get(methodGetById);
         }
         const methodPagination = new GmModuleControllerMethodGetPagination_1.GmModuleControllerMethodGetPagination(this.getConfig(), this.serviceCrud.api, {
@@ -254,7 +254,7 @@ class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractControlle
             userInfo: this.gmGetVarNames.userInfo(),
             paramsSchema: this.gmGetVarNames.list().paramsSchema,
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
             this.gmAccessStructureMethodProcessorByStaticDb.list(methodPagination);
         }
         this.addMethod(methodCreate);
@@ -325,7 +325,7 @@ class GmModuleControllerClassCreateBySqlStaticDb extends GmModuleAbstractControl
             userInfo: this.gmGetVarNames.userInfo(),
             createDtoSchema: this.gmGetVarNames.add().createBodySchema,
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
             this.gmAccessStructureMethodProcessorByStaticDb.add(methodCreate);
         }
         this.addMethod(methodCreate);
@@ -384,7 +384,7 @@ class GmModuleControllerClassUpdateBySqlStaticDb extends GmModuleAbstractControl
             updateDtoSchema: this.gmGetVarNames.update().updateBodySchema,
             id: this.gmGetVarNames.update().id,
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.getConfig(), 'update')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'update')) {
             this.gmAccessStructureMethodProcessorByStaticDb.update(methodUpdate);
             this.addModule(this.gmModuleUpdateDto);
         }
@@ -432,7 +432,7 @@ class GmModuleControllerClassDeleteBySqlStaticDb extends GmModuleAbstractControl
             userInfo: this.gmGetVarNames.userInfo(),
             id: this.gmGetVarNames.delete().id,
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.getConfig(), 'delete')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'delete')) {
             this.gmAccessStructureMethodProcessorByStaticDb.delete(methodDelete);
         }
         this.addMethod(methodDelete);
@@ -465,7 +465,7 @@ class GmModuleControllerClassGetBySqlStaticDb extends GmModuleAbstractController
             userInfo: this.gmGetVarNames.userInfo(),
             id: this.gmGetVarNames.get().id,
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.getConfig(), 'get')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'get')) {
             this.gmAccessStructureMethodProcessorByStaticDb.get(methodGetById);
         }
         this.addMethod(methodGetById);
@@ -502,7 +502,7 @@ class GmModuleControllerClassGetAllBySqlStaticDb extends GmModuleAbstractControl
             userInfo: this.gmGetVarNames.userInfo(),
             paramsSchema: this.gmGetVarNames.list().paramsSchema,
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
             this.gmAccessStructureMethodProcessorByStaticDb.list(methodPagination);
         }
         this.addMethod(methodPagination);

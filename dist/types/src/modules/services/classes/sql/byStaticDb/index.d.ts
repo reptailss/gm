@@ -1,7 +1,7 @@
 import { GmModuleServiceClassBySqlStaticDb } from "../../bases/GmModuleServiceClassBySqlStaticDb";
 import { GmModuleServiceClassAll, GmModuleServiceClassCreate, GmModuleServiceClassDelete, GmModuleServiceClassGet, GmModuleServiceClassGetAll, GmModuleServiceClassUpdate } from "../../../interfaces/gmModuleServiceClassCurd";
 import { IGmModuleServiceApiAll, IGmModuleServiceApiCreate, IGmModuleServiceApiDelete, IGmModuleServiceApiGet, IGmModuleServiceApiGetPagination, IGmModuleServiceApiUpdate } from "../../../interfaces/gmModuleServiceClassCurdApi";
-import { GmConfig } from "../../../../../os-core";
+import { GmCrudConfig } from "../../../../../os-core";
 type AllCallVarNames = {
     create: CreateCallVarNames;
     update: UpdateCallVarNames;
@@ -33,7 +33,7 @@ export declare class GmModuleServiceClassCrudBySqlStaticDb extends GmModuleServi
     private readonly allCallVarNames;
     api: IGmModuleServiceApiAll;
     private readonly actionsLoggerService;
-    constructor(config: GmConfig, serviceVarName: string, allCallVarNames: AllCallVarNames);
+    constructor(config: GmCrudConfig, serviceVarName: string, allCallVarNames: AllCallVarNames);
     init(): void;
 }
 export declare class GmModuleServiceClassCreateBySqlStaticDb extends GmModuleServiceClassBySqlStaticDb implements GmModuleServiceClassCreate {
@@ -41,7 +41,7 @@ export declare class GmModuleServiceClassCreateBySqlStaticDb extends GmModuleSer
     private readonly callVarNames;
     api: IGmModuleServiceApiCreate;
     private readonly actionsLoggerService;
-    constructor(config: GmConfig, serviceVarName: string, callVarNames: CreateCallVarNames);
+    constructor(config: GmCrudConfig, serviceVarName: string, callVarNames: CreateCallVarNames);
     init(): void;
 }
 export declare class GmModuleServiceClassUpdateBySqlStaticDb extends GmModuleServiceClassBySqlStaticDb implements GmModuleServiceClassUpdate {
@@ -49,7 +49,7 @@ export declare class GmModuleServiceClassUpdateBySqlStaticDb extends GmModuleSer
     private readonly callVarNames;
     api: IGmModuleServiceApiUpdate;
     private readonly actionsLoggerService;
-    constructor(config: GmConfig, serviceVarName: string, callVarNames: UpdateCallVarNames);
+    constructor(config: GmCrudConfig, serviceVarName: string, callVarNames: UpdateCallVarNames);
     init(): void;
 }
 export declare class GmModuleServiceClassDeleteBySqlStaticDb extends GmModuleServiceClassBySqlStaticDb implements GmModuleServiceClassDelete {
@@ -57,21 +57,21 @@ export declare class GmModuleServiceClassDeleteBySqlStaticDb extends GmModuleSer
     private readonly callVarNames;
     api: IGmModuleServiceApiDelete;
     private readonly actionsLoggerService;
-    constructor(config: GmConfig, serviceVarName: string, callVarNames: DeleteCallVarNames);
+    constructor(config: GmCrudConfig, serviceVarName: string, callVarNames: DeleteCallVarNames);
     init(): void;
 }
 export declare class GmModuleServiceClassGetBySqlStaticDb extends GmModuleServiceClassBySqlStaticDb implements GmModuleServiceClassGet {
     private readonly serviceVarName;
     private readonly callVarNames;
     api: IGmModuleServiceApiGet;
-    constructor(config: GmConfig, serviceVarName: string, callVarNames: GetByIdCallVarNames);
+    constructor(config: GmCrudConfig, serviceVarName: string, callVarNames: GetByIdCallVarNames);
     init(): void;
 }
 export declare class GmModuleServiceClassGetAllBySqlStaticDb extends GmModuleServiceClassBySqlStaticDb implements GmModuleServiceClassGetAll {
     private readonly serviceVarName;
     private readonly callVarNames;
     api: IGmModuleServiceApiGetPagination;
-    constructor(config: GmConfig, serviceVarName: string, callVarNames: GetPaginationCallVarNames);
+    constructor(config: GmCrudConfig, serviceVarName: string, callVarNames: GetPaginationCallVarNames);
     init(): void;
 }
 export {};

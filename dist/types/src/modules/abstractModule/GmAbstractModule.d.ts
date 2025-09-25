@@ -1,4 +1,4 @@
-import { GmConfig } from "../../os-core";
+import { GmCrudConfig } from "../../os-core";
 import { IGmModule, IGmModuleClass, IGmModuleConstant, IGmModuleFn, IGmModuleType } from "../interfaces/gmModule";
 import { GmImport } from "../../imports/types";
 import { GmModuleDirType, GmModuleParentInfo } from "../types";
@@ -9,12 +9,12 @@ export declare abstract class GmAbstractModule implements IGmModule {
     private modules;
     private importsModules;
     private parentInfo;
-    constructor(config: GmConfig);
+    constructor(config: GmCrudConfig);
     abstract moduleType: 'constant' | 'class' | 'classMethod' | 'fn' | 'type';
     abstract getPropertyName(): string;
     abstract getTemplatePath(): string;
     abstract init(): void;
-    getConfig(): GmConfig;
+    getConfig(): GmCrudConfig;
     getRootModuleDirName(): string;
     addService(service: IGmService): this;
     addModule(module: IGmModuleFn | IGmModuleConstant | IGmModuleType | IGmModuleClass, options?: {

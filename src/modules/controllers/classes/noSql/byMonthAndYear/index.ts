@@ -1,6 +1,6 @@
-import {GmConfig} from 'os-core-ts'
+import {GmCrudConfig} from 'os-core-ts'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
-import {GmConfigChecker} from '@config/GmConfigChecker'
+import {GmCrudConfigChecker} from '@crudConfig/GmCrudConfigChecker'
 import {GmAccessStructureMethodProcessor} from '@modules/structure/GmAccessStructureMethodProcessor'
 import {IGmModuleClass, IGmModuleClassMethod} from '@modules/interfaces/gmModule'
 import {GmQueryParamDateDec, GmQueryParamNumDec} from '@decorators/controllerDecorators/GmQueryParamDec'
@@ -19,7 +19,7 @@ import {GmModuleControllerMethodGetPagination} from '@modules/controllers/method
 
 
 class GmGetVarNamesByMonthAndYear {
-    constructor(private readonly config: GmConfig) {
+    constructor(private readonly config: GmCrudConfig) {
     }
 
     public userInfo() {
@@ -33,8 +33,8 @@ class GmGetVarNamesByMonthAndYear {
             createBody,
             createBodySchema: `create${StringCaseHelper.toPascalCase(this.config.dtoName.singular)}BodySchema`,
             legalEntityId: `${createBody}.legal_entity_id`,
-            createBodyType: !GmConfigChecker.hasStructureAccess(this.config, 'add') ||
-            GmConfigChecker.hasStructureAccess(this.config, 'add') && this.checkHasLeIdColumn()
+            createBodyType: !GmCrudConfigChecker.hasStructureAccess(this.config, 'add') ||
+            GmCrudConfigChecker.hasStructureAccess(this.config, 'add') && this.checkHasLeIdColumn()
                 ? undefined : `Create${StringCaseHelper.toPascalCase(this.config.dtoName.singular)}Body`,
         }
     }
@@ -47,7 +47,7 @@ class GmGetVarNamesByMonthAndYear {
             id: 'id',
             openUserId: `${this.userInfo()}.open_user_id`,
             legalEntityId: `${updateBody}.legal_entity_id`,
-            updateBodyType: GmConfigChecker.hasStructureAccess(this.config, 'update') ? `Update${StringCaseHelper.toPascalCase(this.config.dtoName.singular)}Body` : undefined,
+            updateBodyType: GmCrudConfigChecker.hasStructureAccess(this.config, 'update') ? `Update${StringCaseHelper.toPascalCase(this.config.dtoName.singular)}Body` : undefined,
         }
     }
 
@@ -80,10 +80,10 @@ class GmGetVarNamesByMonthAndYear {
     }
 
     public checkHasLeIdColumn(): boolean {
-        return 'legal_entity_id' in this.config.model.columns &&
+        return 'legal_entity_id' in this.config.repository.columns &&
             (
-                this.config.model.columns.legal_entity_id.type === 'INTEGER' ||
-                this.config.model.columns.legal_entity_id.type === 'BIGINT'
+                this.config.repository.columns.legal_entity_id.type === 'INTEGER' ||
+                this.config.repository.columns.legal_entity_id.type === 'BIGINT'
             )
     }
 
@@ -91,7 +91,7 @@ class GmGetVarNamesByMonthAndYear {
 
 class GmAccessStructureMethodProcessorByMonthAndYear extends GmAccessStructureMethodProcessor {
 
-    constructor(config: GmConfig) {
+    constructor(config: GmCrudConfig) {
         const gmGetVarNames = new GmGetVarNamesByMonthAndYear(config)
         super(config, {
             add: {
@@ -136,7 +136,7 @@ class GmValidatorBuilderByMonthAndYear {
     private readonly gmServiceSchemaValidatorType: GmServiceSchemaValidatorType
 
     constructor(
-        private readonly config: GmConfig,
+        private readonly config: GmCrudConfig,
         private readonly validatorVarName: string,
         private readonly validator: GmModuleValidator,
     ) {
@@ -152,7 +152,7 @@ class GmValidatorBuilderByMonthAndYear {
 
     public add() {
         const schemaTypeStr = this.gmGetVarNames.add().createBodyType ? ` :${this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.gmGetVarNames.add().createBodyType || '')}` : ''
-        if (!GmConfigChecker.hasStructureAccess(this.config, 'add')) {
+        if (!GmCrudConfigChecker.hasStructureAccess(this.config, 'add')) {
             return `const ${this.gmGetVarNames.add().createBodySchema}${schemaTypeStr} = ${this.validator.api.getCreateDtoSchema()}`
         }
         if (this.gmGetVarNames.checkHasLeIdColumn()) {
@@ -168,7 +168,7 @@ class GmValidatorBuilderByMonthAndYear {
     }
 
     public checkHasAddValidatorService(type: 'add') {
-        return GmConfigChecker.hasStructureAccess(this.config, type) && !this.gmGetVarNames.checkHasLeIdColumn()
+        return GmCrudConfigChecker.hasStructureAccess(this.config, type) && !this.gmGetVarNames.checkHasLeIdColumn()
     }
 
 
@@ -185,7 +185,7 @@ export class GmModuleControllerClassCrudByNoSqlMonthAndYear extends GmModuleAbst
     private readonly gmValidatorBuilder: GmValidatorBuilderByMonthAndYear
     private readonly gmModuleCreateDto: GmModuleCreateDto
 
-    constructor(config: GmConfig,
+    constructor(config: GmCrudConfig,
     ) {
         super(
             config,
@@ -249,7 +249,7 @@ export class GmModuleControllerClassCrudByNoSqlMonthAndYear extends GmModuleAbst
                 createDtoSchema: this.gmGetVarNames.add().createBodySchema,
             },
         )
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
             this.gmAccessStructureMethodProcessorByMonthAndYear.add(methodCreate)
         }
         const methodPagination = new GmModuleControllerMethodGetPagination(
@@ -271,7 +271,7 @@ export class GmModuleControllerClassCrudByNoSqlMonthAndYear extends GmModuleAbst
             callVarName: this.gmGetVarNames.list().dateEnd,
             decorator: new GmQueryParamDateDec('date_end'),
         })
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
             this.gmAccessStructureMethodProcessorByMonthAndYear.list(methodPagination)
         }
         this.addMethod(methodCreate)
@@ -319,7 +319,7 @@ export class GmModuleControllerClassCreateByNoSqlMonthAndYear extends GmModuleAb
     private readonly gmValidatorBuilder: GmValidatorBuilderByMonthAndYear
     private readonly gmModuleCreateDto: GmModuleCreateDto
 
-    constructor(config: GmConfig,
+    constructor(config: GmCrudConfig,
     ) {
         super(
             config,
@@ -377,7 +377,7 @@ export class GmModuleControllerClassCreateByNoSqlMonthAndYear extends GmModuleAb
                 createDtoSchema: this.gmGetVarNames.add().createBodySchema,
             },
         )
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
             this.gmAccessStructureMethodProcessorByMonthAndYear.add(methodCreate)
         }
         this.addMethod(methodCreate)
@@ -421,7 +421,7 @@ export class GmModuleControllerClassGetAllByNoSqlMonthAndYear extends GmModuleAb
     private readonly gmAccessStructureMethodProcessorByMonthAndYear: GmAccessStructureMethodProcessorByMonthAndYear
     private readonly gmValidatorBuilder: GmValidatorBuilderByMonthAndYear
 
-    constructor(config: GmConfig,
+    constructor(config: GmCrudConfig,
     ) {
         super(
             config,
@@ -475,7 +475,7 @@ export class GmModuleControllerClassGetAllByNoSqlMonthAndYear extends GmModuleAb
             callVarName: this.gmGetVarNames.list().dateEnd,
             decorator: new GmQueryParamDateDec('date_end'),
         })
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
             this.gmAccessStructureMethodProcessorByMonthAndYear.list(methodPagination)
         }
         this.addMethod(methodPagination)

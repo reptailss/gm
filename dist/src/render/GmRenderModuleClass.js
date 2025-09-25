@@ -44,6 +44,8 @@ class GmRenderModuleClass extends GmRenderModule_1.GmRenderModule {
         return '';
     }
     renderClass() {
+        const constructorProps = this.renderConstructorProps();
+        const constructor = constructorProps ? `constructor(${constructorProps}){}` : '';
         return `
         ${this.renderImports()}
         
@@ -52,7 +54,7 @@ class GmRenderModuleClass extends GmRenderModule_1.GmRenderModule {
         ${this.renderDecorators()}
         ${this.getExportMarkIfExported()} class ${this.renderPropertyName()} {
             \n
-            constructor(${this.renderConstructorProps()}){}
+            ${constructor}
              \n
              \n
              ${this.renderVars()}
@@ -75,6 +77,17 @@ class GmRenderModuleClass extends GmRenderModule_1.GmRenderModule {
             const readonly = gmVar.readonly ? 'readonly' : '';
             const defaultValue = gmVar.defaultValue ? ` = ${gmVar.defaultValue}` : '';
             const type = gmVar.type ? ` :${gmVar.type}` : '';
+            if (gmVar.decorator) {
+                if (!gmVar.decorator.getProps().length) {
+                    return `
+                    @${gmVar.decorator.getDecoratorName()}
+                     ${gmVar.scope} ${readonly} ${gmVar.varName} ${type}${defaultValue}
+                    `;
+                }
+                return `@${gmVar.decorator.getDecoratorName()}(${gmVar.decorator.getProps().join(',')})
+                ${gmVar.scope} ${readonly} ${gmVar.varName} ${type}${defaultValue}
+                `;
+            }
             return `${gmVar.scope} ${readonly} ${gmVar.varName} ${type}${defaultValue}`;
         }).join('\n');
     }

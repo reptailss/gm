@@ -1,5 +1,5 @@
 import {GmGenerateAbstractCrudDec} from '@crud/GmGenerateAbstractCrudDec'
-import {GmConfig} from 'os-core-ts'
+import {GmCrudConfig} from 'os-core-ts'
 import {IGmModuleClass} from '@modules/interfaces/gmModule'
 import {
     GmModuleControllerClassCreateBySqlStaticDb, GmModuleControllerClassCrudBySqlStaticDb,
@@ -23,12 +23,12 @@ import {
 
 export class GmGenerateCrudDecSql extends GmGenerateAbstractCrudDec {
 
-    constructor(config: GmConfig) {
+    constructor(config: GmCrudConfig) {
 
         const controllers: IGmModuleClass[] = []
 
         if (config.hasSeparated) {
-            switch (config.model.type) {
+            switch (config.repository.type) {
                 case 'staticByDbConnection': {
                     controllers.push(new GmModuleControllerClassCreateBySqlStaticDb(config))
                     controllers.push(new GmModuleControllerClassUpdateBySqlStaticDb(config))
@@ -56,7 +56,7 @@ export class GmGenerateCrudDecSql extends GmGenerateAbstractCrudDec {
             }
 
         } else {
-            switch (config.model.type) {
+            switch (config.repository.type) {
                 case 'staticByDbConnection': {
                     controllers.push(new GmModuleControllerClassCrudBySqlStaticDb(config))
                     break

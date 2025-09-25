@@ -1,8 +1,8 @@
 import {GmAbstractModuleClassMethod} from '@modules/abstractModule/GmAbstractModuleClassMethod'
 import {IGmModuleClassMethod} from '@modules/interfaces/gmModule'
 import {GmModuleDto} from '@modules/dto/GmModuleDto'
-import {IGmModuleModel} from '@modules/model/interfaces/gmModuleModel'
-import {GmConfig} from 'os-core-ts'
+import {IGmModuleRepository} from '@modules/repository/interfaces/gmModuleRepository'
+import {GmCrudConfig} from 'os-core-ts'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmModuleDtoHelper} from '@modules/dto/helper/GmModuleDtoHelper'
 
@@ -14,18 +14,18 @@ const PROPS_VAR_NAMES = {
 export  class GmModuleServiceMethodGetById extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {
 
     private readonly gmModuleDto: GmModuleDto
-    private readonly gmModuleModel: IGmModuleModel
+    private readonly gmModuleRepository: IGmModuleRepository
     private readonly callVarNames:typeof PROPS_VAR_NAMES
     
     constructor(
-        config: GmConfig,
-        gmModuleModel: IGmModuleModel,
+        config: GmCrudConfig,
+        gmModuleRepository: IGmModuleRepository,
         callVarNames:typeof PROPS_VAR_NAMES
     ) {
         super(config)
 
         this.gmModuleDto = new GmModuleDto(config)
-        this.gmModuleModel = gmModuleModel
+        this.gmModuleRepository = gmModuleRepository
         this.callVarNames = callVarNames
     }
 
@@ -53,7 +53,7 @@ export  class GmModuleServiceMethodGetById extends GmAbstractModuleClassMethod i
     private initGetRow() {
         this.appendBodyElement({
             name: 'getRow',
-            value: `return ${this.gmModuleModel.api.findByPk(PROPS_VAR_NAMES.id)}`,
+            value: `return ${this.gmModuleRepository.api.findByPk(PROPS_VAR_NAMES.id)}`,
         })
     }
 

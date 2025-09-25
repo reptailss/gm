@@ -1,9 +1,9 @@
-import { GmConfig, GmEndpointsConfig, GmNoSqlModelConfig, GmSqlModelConfig } from "../os-core";
+import { GmConfig, GmEndpointsConfig, GmNoSqlRepositoryConfig, GmSqlRepositoryConfig } from "../os-core";
 export declare const gmDefaultConfig: {
     readonly default: GmConfig;
     readonly baseEndpoints: GmEndpointsConfig;
-    readonly sqlByStaticDbConnection: GmSqlModelConfig;
-    readonly sqlByDynamicDomain: GmSqlModelConfig;
-    readonly sqlByDynamicLeId: GmSqlModelConfig;
-    readonly noSqlByYearAndMonth: GmNoSqlModelConfig;
+    readonly sqlByStaticDbConnection: GmSqlRepositoryConfig;
+    readonly sqlByDynamicDomain: GmSqlRepositoryConfig;
+    readonly sqlByDynamicLeId: GmSqlRepositoryConfig;
+    readonly noSqlByYearAndMonth: GmNoSqlRepositoryConfig;
 };

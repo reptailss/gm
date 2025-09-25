@@ -7,19 +7,19 @@ class GmModuleModelType extends GmAbstractModuleType_1.GmAbstractModuleType {
     getPropertyName() {
         switch (this.getConfig().model.type) {
             case 'staticByDbConnection':
-                return `${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.plural)}Model`;
+                return `${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.plural)}Repository`;
             case 'dynamicByDomain':
-                return `Get${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.plural)}ModelCb`;
+                return `Get${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.plural)}RepositoryCb`;
             case 'dynamicDbConfigByLegalEntityId':
-                return `Get${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.plural)}ModelCb`;
+                return `Get${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.plural)}RepositoryCb`;
             case 'byDatabaseNameAndYearMonth':
-                return `Get${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.plural)}ModelCb`;
+                return `Get${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.plural)}RepositoryCb`;
             default:
                 return '';
         }
     }
     getDirName() {
-        return 'model';
+        return 'repository';
     }
     getFileName() {
         return 'index.ts';
@@ -30,7 +30,7 @@ class GmModuleModelType extends GmAbstractModuleType_1.GmAbstractModuleType {
             case 'noSql': {
                 this.addImport({
                     path: 'os-core-ts',
-                    propertyName: 'IModelNoSql',
+                    propertyName: 'INoSqlRepository',
                     isLibImport: true,
                 });
                 break;
@@ -38,7 +38,7 @@ class GmModuleModelType extends GmAbstractModuleType_1.GmAbstractModuleType {
             case 'sql': {
                 this.addImport({
                     path: 'os-core-ts',
-                    propertyName: 'IModelSql',
+                    propertyName: 'ISqlRepository',
                     isLibImport: true,
                 });
                 break;
@@ -46,25 +46,25 @@ class GmModuleModelType extends GmAbstractModuleType_1.GmAbstractModuleType {
         }
         switch (this.getConfig().model.type) {
             case 'staticByDbConnection': {
-                this.setBody(`IModelSql<${this.getDtoName()}>`);
+                this.setBody(`ISqlRepository<${this.getEntityName()}>`);
                 break;
             }
             case 'dynamicByDomain': {
-                this.setBody(`(domain:string)=>Promise<IModelSql<${this.getDtoName()}>>`);
+                this.setBody(`(domain:string)=>Promise<ISqlRepository<${this.getEntityName()}>>`);
                 break;
             }
             case 'dynamicDbConfigByLegalEntityId': {
-                this.setBody(`(legalEntityId:number)=>Promise<IModelSql<${this.getDtoName()}>>`);
+                this.setBody(`(legalEntityId:number)=>Promise<ISqlRepository<${this.getEntityName()}>>`);
                 break;
             }
             case 'byDatabaseNameAndYearMonth': {
-                this.setBody(`(props:{month:number,year:number})=>Promise<IModelNoSql<${this.getDtoName()}>>`);
+                this.setBody(`(props:{month:number,year:number})=>Promise<INoSqlRepository<${this.getEntityName()}>>`);
                 break;
             }
         }
     }
-    getDtoName() {
-        return `${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Dto`;
+    getEntityName() {
+        return `${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Entity`;
     }
 }
 exports.GmModuleModelType = GmModuleModelType;

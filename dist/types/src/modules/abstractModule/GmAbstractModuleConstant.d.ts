@@ -18,7 +18,7 @@ export declare abstract class GmAbstractModuleConstant extends GmAbstractModule 
     getBody(): string;
     addRenderData<T>(key: string, value: T): this;
     getRenderData<T>(key: string): T;
-    getExport(): GmExport;
+    getExport(): GmExport | null;
     getFileWriteMode(): GmFileWriteMode;
     setDirType(dirType: GmModuleDirType): this;
     getDirType(): GmModuleDirType;

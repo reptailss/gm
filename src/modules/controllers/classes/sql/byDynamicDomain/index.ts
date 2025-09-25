@@ -1,4 +1,4 @@
-import {GmConfig} from 'os-core-ts'
+import {GmCrudConfig} from 'os-core-ts'
 import {GmAccessStructureMethodProcessor} from '@modules/structure/GmAccessStructureMethodProcessor'
 import {IGmModuleClass, IGmModuleClassMethod} from '@modules/interfaces/gmModule'
 import {GmModuleAbstractControllerClass} from '@modules/controllers/classes/abstract/GmModuleAbstractControllerClass'
@@ -14,7 +14,7 @@ import {
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmModuleControllerMethodCreate} from '@modules/controllers/methods/GmModuleControllerMethodCreate'
 import {GmDomainDec} from '@decorators/controllerDecorators/GmDomainDec'
-import {GmConfigChecker} from '@config/GmConfigChecker'
+import {GmCrudConfigChecker} from '@crudConfig/GmCrudConfigChecker'
 import {GmModuleControllerMethodUpdate} from '@modules/controllers/methods/GmModuleControllerMethodUpdate'
 import {GmModuleControllerMethodDelete} from '@modules/controllers/methods/GmModuleControllerMethodDelete'
 import {GmModuleControllerMethodGetById} from '@modules/controllers/methods/GmModuleControllerMethodGetById'
@@ -56,7 +56,7 @@ const GET_ALL_VAR_NAMES = {
 
 
 class GmAccessStructureMethodProcessorByDynamicDomain extends GmAccessStructureMethodProcessor {
-    constructor(config: GmConfig) {
+    constructor(config: GmCrudConfig) {
         super(config, {
             add: {
                 openUserId: `${CREATE_VAR_NAMES.userInfo}.open_user_id`,
@@ -157,7 +157,7 @@ export class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstr
     private readonly serviceCrud: GmModuleServiceClassCrudBySqlDynamicDomain
     private readonly gmAccessStructureMethodProcessorByDynamicDomain: GmAccessStructureMethodProcessorByDynamicDomain
 
-    constructor(config: GmConfig,
+    constructor(config: GmCrudConfig,
     ) {
         super(
             config,
@@ -220,7 +220,7 @@ export class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstr
             type: 'string',
             decorator: new GmDomainDec(),
         })
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
             this.gmAccessStructureMethodProcessorByDynamicDomain.add(methodCreate)
         }
         const methodUpdate = new GmModuleControllerMethodUpdate(
@@ -238,7 +238,7 @@ export class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstr
             type: 'string',
             decorator: new GmDomainDec(),
         })
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'update')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'update')) {
             this.gmAccessStructureMethodProcessorByDynamicDomain.update(methodUpdate)
         }
         const methodDelete = new GmModuleControllerMethodDelete(
@@ -254,7 +254,7 @@ export class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstr
             type: 'string',
             decorator: new GmDomainDec(),
         })
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'delete')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'delete')) {
             this.gmAccessStructureMethodProcessorByDynamicDomain.delete(methodDelete)
         }
         const methodGetById = new GmModuleControllerMethodGetById(
@@ -270,7 +270,7 @@ export class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstr
             type: 'string',
             decorator: new GmDomainDec(),
         })
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'get')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'get')) {
             this.gmAccessStructureMethodProcessorByDynamicDomain.get(methodGetById)
         }
         const methodPagination = new GmModuleControllerMethodGetPagination(
@@ -287,7 +287,7 @@ export class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstr
             type: 'string',
             decorator: new GmDomainDec(),
         })
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
             this.gmAccessStructureMethodProcessorByDynamicDomain.list(methodPagination)
         }
         this.addMethod(methodCreate)
@@ -339,7 +339,7 @@ export class GmModuleControllerClassCreateBySqlDynamicDomain extends GmModuleAbs
     private readonly serviceCrud: GmModuleServiceClassCreateBySqlDynamicDomain
     private readonly gmAccessStructureMethodProcessorByDynamicDomain: GmAccessStructureMethodProcessorByDynamicDomain
 
-    constructor(config: GmConfig,
+    constructor(config: GmCrudConfig,
     ) {
         super(
             config,
@@ -381,7 +381,7 @@ export class GmModuleControllerClassCreateBySqlDynamicDomain extends GmModuleAbs
             type: 'string',
             decorator: new GmDomainDec(),
         })
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
             this.gmAccessStructureMethodProcessorByDynamicDomain.add(methodCreate)
         }
         this.addMethod(methodCreate)
@@ -422,7 +422,7 @@ export class GmModuleControllerClassUpdateBySqlDynamicDomain extends GmModuleAbs
     private readonly serviceCrud: GmModuleServiceClassUpdateBySqlDynamicDomain
     private readonly gmAccessStructureMethodProcessorByDynamicDomain: GmAccessStructureMethodProcessorByDynamicDomain
 
-    constructor(config: GmConfig,
+    constructor(config: GmCrudConfig,
     ) {
         super(
             config,
@@ -467,7 +467,7 @@ export class GmModuleControllerClassUpdateBySqlDynamicDomain extends GmModuleAbs
             type: 'string',
             decorator: new GmDomainDec(),
         })
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'update')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'update')) {
             this.gmAccessStructureMethodProcessorByDynamicDomain.update(methodUpdate)
         }
         this.addMethod(methodUpdate)
@@ -505,7 +505,7 @@ export class GmModuleControllerClassDeleteBySqlDynamicDomain extends GmModuleAbs
     private readonly serviceCrud: GmModuleServiceClassDeleteBySqlDynamicDomain
     private readonly gmAccessStructureMethodProcessorByDynamicDomain: GmAccessStructureMethodProcessorByDynamicDomain
 
-    constructor(config: GmConfig,
+    constructor(config: GmCrudConfig,
     ) {
         super(
             config,
@@ -542,7 +542,7 @@ export class GmModuleControllerClassDeleteBySqlDynamicDomain extends GmModuleAbs
             type: 'string',
             decorator: new GmDomainDec(),
         })
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'delete')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'delete')) {
             this.gmAccessStructureMethodProcessorByDynamicDomain.delete(methodDelete)
         }
         this.addMethod(methodDelete)
@@ -567,7 +567,7 @@ export class GmModuleControllerClassGetBySqlDynamicDomain extends GmModuleAbstra
     private readonly serviceCrud: GmModuleServiceClassGetBySqlDynamicDomain
     private readonly gmAccessStructureMethodProcessorByDynamicDomain: GmAccessStructureMethodProcessorByDynamicDomain
 
-    constructor(config: GmConfig,
+    constructor(config: GmCrudConfig,
     ) {
         super(
             config,
@@ -603,7 +603,7 @@ export class GmModuleControllerClassGetBySqlDynamicDomain extends GmModuleAbstra
             type: 'string',
             decorator: new GmDomainDec(),
         })
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'get')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'get')) {
             this.gmAccessStructureMethodProcessorByDynamicDomain.get(methodGetById)
         }
         this.addMethod(methodGetById)
@@ -630,7 +630,7 @@ export class GmModuleControllerClassGetAllBySqlDynamicDomain extends GmModuleAbs
     private readonly serviceCrud: GmModuleServiceClassGetAllBySqlDynamicDomain
     private readonly gmAccessStructureMethodProcessorByDynamicDomain: GmAccessStructureMethodProcessorByDynamicDomain
 
-    constructor(config: GmConfig,
+    constructor(config: GmCrudConfig,
     ) {
         super(
             config,
@@ -672,7 +672,7 @@ export class GmModuleControllerClassGetAllBySqlDynamicDomain extends GmModuleAbs
             type: 'string',
             decorator: new GmDomainDec(),
         })
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
             this.gmAccessStructureMethodProcessorByDynamicDomain.list(methodPagination)
         }
         this.addMethod(methodPagination)

@@ -5,14 +5,14 @@ import {GmServiceMutateRowResultType} from '@services/resultTypes/GmServiceMutat
 import {GmModuleCreateDto} from '@modules/dto/GmModuleCreateDto'
 import {GmServiceUserInfoType} from '@services/userInfo/GmServiceUserInfoType'
 import {GmModuleRoutePaths} from '@modules/routePaths/GmModuleRoutePaths'
-import {GmConfig} from 'os-core-ts'
+import {GmCrudConfig} from 'os-core-ts'
 import {IGmModuleServiceApiCreate} from '@modules/services/interfaces/gmModuleServiceClassCurdApi'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmModuleDtoHelper} from '@modules/dto/helper/GmModuleDtoHelper'
 import {GmSwaggerInfoDec} from '@decorators/controllerDecorators/GmSwaggerInfoDec'
 import {GmPostDec} from '@decorators/controllerDecorators/GmPostDec'
 import {GmBodyDec} from '@decorators/controllerDecorators/GmBodyDec'
-import {GmConfigChecker} from '@config/GmConfigChecker'
+import {GmCrudConfigChecker} from '@crudConfig/GmCrudConfigChecker'
 import {GmAuthDec} from '@decorators/controllerDecorators/GmAuthDec'
 
 
@@ -25,7 +25,7 @@ export class GmModuleControllerMethodCreate extends GmAbstractModuleClassMethod 
     private readonly gmModuleRoutePaths: GmModuleRoutePaths
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         private readonly api: IGmModuleServiceApiCreate,
         private readonly varNames: {
             createDto: string
@@ -66,7 +66,7 @@ export class GmModuleControllerMethodCreate extends GmAbstractModuleClassMethod 
             callVarName: this.varNames.createDto,
             decorator: new GmBodyDec(this.varNames.createDtoSchema),
         })
-        if (GmConfigChecker.hasAuth(this.getConfig(), 'add')) {
+        if (GmCrudConfigChecker.hasAuth(this.getConfig(), 'add')) {
             this.addService(this.gmServiceUserInfoType)
             this.addProp({
                 type: this.gmServiceUserInfoType.getUserInfoType(),

@@ -6,23 +6,23 @@ class GmServicePaginationNoSql extends GmAbstractServiceFn_1.GmAbstractServiceFn
     getExport() {
         return {
             path: 'os-core-ts',
-            propertyName: 'ModelNoSqlPagination',
+            propertyName: 'RepositoryNoSqlPagination',
             isLibImport: true,
         };
     }
     getServiceName() {
-        return 'ModelNoSqlPagination';
+        return 'RepositoryNoSqlPagination';
     }
-    getPagination({ paramsVarName, dateStartVarName, dateEndVarName, getModelCbVarName, }) {
+    getPagination({ paramsVarName, dateStartVarName, dateEndVarName, getRepositoryCbVarName, }) {
         const paramsStr = paramsVarName === 'params' ? paramsVarName : `params:${paramsVarName}`;
         const dateStartStr = dateStartVarName === 'dateStart' ? dateStartVarName : `dateStart:${dateStartVarName}`;
         const dateEndStr = dateEndVarName === 'dateEnd' ? dateEndVarName : `dateEnd:${dateEndVarName}`;
-        const getModelCbStr = getModelCbVarName === 'getModelCb' ? getModelCbVarName : `getModelCb:${getModelCbVarName}`;
-        return `ModelNoSqlPagination.byYearAndMoth({
+        const getRepositoryCbStr = getRepositoryCbVarName === 'getRepositoryCb' ? getRepositoryCbVarName : `getRepositoryCb:${getRepositoryCbVarName}`;
+        return `RepositoryNoSqlPagination.byYearAndMoth({
             ${paramsStr},
             ${dateStartStr},
             ${dateEndStr},
-            ${getModelCbStr}
+            ${getRepositoryCbStr}
         })
         `;
     }

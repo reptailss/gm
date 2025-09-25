@@ -9,7 +9,7 @@ class GmGenerateCrudDecSql extends GmGenerateAbstractCrudDec_1.GmGenerateAbstrac
     constructor(config) {
         const controllers = [];
         if (config.hasSeparated) {
-            switch (config.model.type) {
+            switch (config.repository.type) {
                 case 'staticByDbConnection': {
                     controllers.push(new byStaticDb_1.GmModuleControllerClassCreateBySqlStaticDb(config));
                     controllers.push(new byStaticDb_1.GmModuleControllerClassUpdateBySqlStaticDb(config));
@@ -37,7 +37,7 @@ class GmGenerateCrudDecSql extends GmGenerateAbstractCrudDec_1.GmGenerateAbstrac
             }
         }
         else {
-            switch (config.model.type) {
+            switch (config.repository.type) {
                 case 'staticByDbConnection': {
                     controllers.push(new byStaticDb_1.GmModuleControllerClassCrudBySqlStaticDb(config));
                     break;

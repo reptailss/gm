@@ -58,4 +58,5 @@ export type GmModuleClassVar = {
     defaultValue: string | null
     optional?: boolean
     nullable?: boolean
+    decorator?: IGmModuleClassMethodPropDecorator
 }

@@ -5,7 +5,7 @@ class GmModuleDtoHelper {
 }
 exports.GmModuleDtoHelper = GmModuleDtoHelper;
 GmModuleDtoHelper.getDtoPrimaryKeyByConfig = (config) => {
-    switch (config.model.dbType) {
+    switch (config.repository.dbType) {
         case 'noSql': {
             return {
                 key: '_id',

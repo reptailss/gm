@@ -1,15 +1,15 @@
 import {GmModuleAbstractServiceClass} from '@modules/services/classes/abstract/GmModuleAbstractServiceClass'
 import {IGmModuleClass, IGmModuleClassMethod} from '@modules/interfaces/gmModule'
-import {GmModuleModelByNoSqlMonthAndYear} from '@modules/model/GmModuleModelByNoSqlMonthAndYear'
-import {GmModuleModelType} from '@modules/model/GmModuleModelType'
+import {GmModuleRepositoryByNoSqlMonthAndYear} from '@modules/repository/GmModuleRepositoryByNoSqlMonthAndYear'
+import {GmModuleEntityType} from '@modules/repository/GmModuleEntityType'
 import {GmServiceDateHelper} from '@services/dateHelper/GmServiceDateHelper'
-import {GmConfig} from 'os-core-ts'
-import {IGmModuleModel} from '@modules/model/interfaces/gmModuleModel'
+import {GmCrudConfig} from 'os-core-ts'
+import {IGmModuleRepository} from '@modules/repository/interfaces/gmModuleRepository'
 
 
 const PROP_NAMES = {
-    model: 'model',
-    getModelCb: 'getModelCb',
+    repository: 'repository',
+    getRepositoryCb: 'getRepositoryCb',
     month: 'month',
     year: 'year',
 } as const
@@ -17,33 +17,33 @@ const PROP_NAMES = {
 
 export class GmModuleServiceClassByNoSqlMonthAndYear extends GmModuleAbstractServiceClass implements IGmModuleClass {
 
-    private readonly model: GmModuleModelByNoSqlMonthAndYear
-    private readonly modelType: GmModuleModelType
+    private readonly repository: GmModuleRepositoryByNoSqlMonthAndYear
+    private readonly entityType: GmModuleEntityType
     private readonly gmServiceDateHelper: GmServiceDateHelper
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         className: string,
     ) {
         super(config, className)
-        this.model = new GmModuleModelByNoSqlMonthAndYear(config, {
-            modelVarName: PROP_NAMES.model,
-            getModelCbVarName: `this.${PROP_NAMES.getModelCb}`,
+        this.repository = new GmModuleRepositoryByNoSqlMonthAndYear(config, {
+            repositoryVarName: PROP_NAMES.repository,
+            getRepositoryCbVarName: `this.${PROP_NAMES.getRepositoryCb}`,
             monthVarName: PROP_NAMES.month,
             yearVarName: PROP_NAMES.year,
         })
-        this.modelType = new GmModuleModelType(config)
+        this.entityType = new GmModuleEntityType(config)
         this.gmServiceDateHelper = new GmServiceDateHelper()
     }
 
-    public getModuleModel(): IGmModuleModel {
-        return this.model
+    public getModuleRepository(): IGmModuleRepository {
+        return this.repository
     }
 
     public addAndInitMethod(method: IGmModuleClassMethod,monthVarName:string,yearVarName:string): this {
         method.prependBodyElement({
-            name: 'init model',
-            value: this.renderInitModel(),
+            name: 'init repository',
+            value: this.renderInitRepository(),
         })
         method.addProp({
             varName: PROP_NAMES.year,
@@ -63,20 +63,20 @@ export class GmModuleServiceClassByNoSqlMonthAndYear extends GmModuleAbstractSer
         return this
     }
 
-    public renderInitModel(){
-        return `const ${PROP_NAMES.model} = await ${this.model.getInitModel()}`
+    public renderInitRepository(){
+        return `const ${PROP_NAMES.repository} = await ${this.repository.getInitRepository()}`
     }
 
 
     public init(): void {
 
-        this.addModule(this.model)
-        this.addModule(this.modelType)
+        this.addModule(this.repository)
+        this.addModule(this.entityType)
 
         this.addConstructorProp({
-            varName: PROP_NAMES.getModelCb,
-            type: this.modelType.getPropertyName(),
-            defaultValue: this.model.getPropertyName(),
+            varName: PROP_NAMES.getRepositoryCb,
+            type: this.entityType.getPropertyName(),
+            defaultValue: this.repository.getPropertyName(),
             privateReadOnly: true,
         })
     }

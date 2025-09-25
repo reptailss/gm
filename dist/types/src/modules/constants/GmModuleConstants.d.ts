@@ -1,7 +1,7 @@
 import { GmAbstractModuleConstant } from "../abstractModule/GmAbstractModuleConstant";
 import { IGmModuleConstant } from "../interfaces/gmModule";
 import { GmFileWriteMode } from "../types";
-import { GmConfig } from "../../os-core";
+import { GmCrudConfig } from "../../os-core";
 export declare class GmModuleConstants extends GmAbstractModuleConstant implements IGmModuleConstant {
     private value;
     private mode;
@@ -9,7 +9,7 @@ export declare class GmModuleConstants extends GmAbstractModuleConstant implemen
     private hasDir;
     private fileName;
     constructor({ config, value, propertyName, hasDir, fileName, mode, }: {
-        config: GmConfig;
+        config: GmCrudConfig;
         value: string;
         propertyName: string;
         hasDir?: boolean;

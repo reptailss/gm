@@ -6,13 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GenerateCrud = void 0;
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
-const GetGmConfig_1 = require("../config/GetGmConfig");
+const GetGmCrudConfig_1 = require("../crudConfig/GetGmCrudConfig");
 const StringCaseHelper_1 = require("../helpers/StringCaseHelper");
 const GenerateCrudDecSql_1 = require("./GenerateCrudDecSql");
 const GenerateCrudDecNoSql_1 = require("./GenerateCrudDecNoSql");
 class GenerateCrud {
     async run() {
-        const config = await GetGmConfig_1.GetGmConfig.getConfig();
+        const config = await GetGmCrudConfig_1.GetGmCrudConfig.getConfig();
         const dirName = StringCaseHelper_1.StringCaseHelper.toCamelCase(config.moduleName);
         const rootDir = config.rootDir || 'src';
         const rootDirArray = rootDir.split('/');
@@ -20,7 +20,7 @@ class GenerateCrud {
         if (fs_1.default.existsSync(rootPath)) {
             throw new Error(`the folder ${dirName} already exists`);
         }
-        switch (config.model.dbType) {
+        switch (config.repository.dbType) {
             case 'sql': {
                 new GenerateCrudDecSql_1.GmGenerateCrudDecSql(config).run();
                 break;

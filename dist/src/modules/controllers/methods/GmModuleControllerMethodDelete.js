@@ -10,7 +10,7 @@ const StringCaseHelper_1 = require("../../../helpers/StringCaseHelper");
 const GmModuleDtoHelper_1 = require("../../dto/helper/GmModuleDtoHelper");
 const GmSwaggerInfoDec_1 = require("../../../decorators/controllerDecorators/GmSwaggerInfoDec");
 const GmDeleteDec_1 = require("../../../decorators/controllerDecorators/GmDeleteDec");
-const GmConfigChecker_1 = require("../../../config/GmConfigChecker");
+const GmCrudConfigChecker_1 = require("../../../crudConfig/GmCrudConfigChecker");
 const GmAuthDec_1 = require("../../../decorators/controllerDecorators/GmAuthDec");
 const GmParamDec_1 = require("../../../decorators/controllerDecorators/GmParamDec");
 class GmModuleControllerMethodDelete extends GmAbstractModuleClassMethod_1.GmAbstractModuleClassMethod {
@@ -35,7 +35,7 @@ class GmModuleControllerMethodDelete extends GmAbstractModuleClassMethod_1.GmAbs
         this.appendDecorator(new GmDeleteDec_1.GmDeleteDec(this.gmModuleRoutePaths.getRoutePathPropertyName('delete')));
         this.setMethodScope('public');
         this.setAsyncType('async');
-        if (GmConfigChecker_1.GmConfigChecker.hasAuth(this.getConfig(), 'delete')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasAuth(this.getConfig(), 'delete')) {
             this.addService(this.gmServiceUserInfoType);
             this.addProp({
                 type: this.gmServiceUserInfoType.getUserInfoType(),

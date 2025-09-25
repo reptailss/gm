@@ -10,10 +10,10 @@ const PROPS_VAR_NAMES = {
     params: 'params',
 };
 class GmModuleServiceMethodGetPagination extends GmAbstractModuleClassMethod_1.GmAbstractModuleClassMethod {
-    constructor(config, gmModuleModel, callVarNames) {
+    constructor(config, gmModuleRepository, callVarNames) {
         super(config);
         this.gmModuleDto = new GmModuleDto_1.GmModuleDto(config);
-        this.gmModuleModel = gmModuleModel;
+        this.gmModuleRepository = gmModuleRepository;
         this.gmServicePaginationQueryParamsType = new GmServicePaginationQueryParamsType_1.GmServicePaginationQueryParamsType();
         this.gmServicePaginationValuesType = new GmServicePaginationValuesType_1.GmServicePaginationValuesType();
         this.callVarNames = callVarNames;
@@ -36,7 +36,7 @@ class GmModuleServiceMethodGetPagination extends GmAbstractModuleClassMethod_1.G
         this.setReturnType(`Promise<${this.gmServicePaginationValuesType.getPaginationValuesType(this.gmModuleDto.getPropertyName())}>`);
         this.appendBodyElement({
             name: 'returnPagination',
-            value: `return ${this.gmModuleModel.api.pagination(PROPS_VAR_NAMES.params)}`,
+            value: `return ${this.gmModuleRepository.api.pagination(PROPS_VAR_NAMES.params)}`,
         });
     }
 }

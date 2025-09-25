@@ -12,7 +12,7 @@ const GmModuleDtoHelper_1 = require("../../dto/helper/GmModuleDtoHelper");
 const GmSwaggerInfoDec_1 = require("../../../decorators/controllerDecorators/GmSwaggerInfoDec");
 const GmPostDec_1 = require("../../../decorators/controllerDecorators/GmPostDec");
 const GmBodyDec_1 = require("../../../decorators/controllerDecorators/GmBodyDec");
-const GmConfigChecker_1 = require("../../../config/GmConfigChecker");
+const GmCrudConfigChecker_1 = require("../../../crudConfig/GmCrudConfigChecker");
 const GmAuthDec_1 = require("../../../decorators/controllerDecorators/GmAuthDec");
 class GmModuleControllerMethodCreate extends GmAbstractModuleClassMethod_1.GmAbstractModuleClassMethod {
     constructor(config, api, varNames) {
@@ -44,7 +44,7 @@ class GmModuleControllerMethodCreate extends GmAbstractModuleClassMethod_1.GmAbs
             callVarName: this.varNames.createDto,
             decorator: new GmBodyDec_1.GmBodyDec(this.varNames.createDtoSchema),
         });
-        if (GmConfigChecker_1.GmConfigChecker.hasAuth(this.getConfig(), 'add')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasAuth(this.getConfig(), 'add')) {
             this.addService(this.gmServiceUserInfoType);
             this.addProp({
                 type: this.gmServiceUserInfoType.getUserInfoType(),

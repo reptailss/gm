@@ -1,8 +1,8 @@
-import { IGmModuleModel } from "../../model/interfaces/gmModuleModel";
+import { IGmModuleRepository } from "../../repository/interfaces/gmModuleRepository";
 import { IGmModuleServiceApiAll, IGmModuleServiceApiCreate, IGmModuleServiceApiDelete, IGmModuleServiceApiGet, IGmModuleServiceApiGetPagination, IGmModuleServiceApiUpdate } from "./gmModuleServiceClassCurdApi";
 import { GmModuleAbstractServiceClass } from "../classes/abstract/GmModuleAbstractServiceClass";
 export interface GmModuleServiceClass extends GmModuleAbstractServiceClass {
-    getModuleModel(): IGmModuleModel;
+    getModuleRepository(): IGmModuleRepository;
 }
 export interface GmModuleServiceClassAll extends GmModuleAbstractServiceClass {
     api: IGmModuleServiceApiAll;

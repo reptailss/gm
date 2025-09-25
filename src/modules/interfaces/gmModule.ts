@@ -1,4 +1,4 @@
-import {GmConfig} from 'os-core-ts'
+import {GmCrudConfig} from 'os-core-ts'
 import {GmImport} from '@imports/types'
 import {IGmServiceFn} from '@services/inetfaces/gmServiceFn'
 import {
@@ -25,7 +25,7 @@ export interface IGmModule {
 
     getTemplatePath(): string
 
-    getConfig(): GmConfig
+    getConfig(): GmCrudConfig
 
     getRootModuleDirName(): string
 

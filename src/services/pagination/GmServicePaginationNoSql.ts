@@ -3,42 +3,42 @@ import {IGmService} from '@services/inetfaces/gmService'
 import {GmExport} from '@export/types'
 
 export class GmServicePaginationNoSql extends GmAbstractServiceFn implements IGmService {
-
+    
     public getExport(): GmExport {
         return {
             path: 'os-core-ts',
-            propertyName: 'ModelNoSqlPagination',
+            propertyName: 'RepositoryNoSqlPagination',
             isLibImport: true,
         }
     }
-
+    
     public getServiceName(): string {
-        return 'ModelNoSqlPagination'
+        return 'RepositoryNoSqlPagination'
     }
-
-
+    
+    
     public getPagination({
                              paramsVarName,
                              dateStartVarName,
                              dateEndVarName,
-                             getModelCbVarName,
+                             getRepositoryCbVarName,
                          }: {
         paramsVarName: string,
         dateStartVarName: string,
         dateEndVarName: string,
-        getModelCbVarName: string,
+        getRepositoryCbVarName: string,
     }): string {
         const paramsStr = paramsVarName === 'params' ? paramsVarName : `params:${paramsVarName}`
         const dateStartStr = dateStartVarName === 'dateStart' ? dateStartVarName : `dateStart:${dateStartVarName}`
         const dateEndStr = dateEndVarName === 'dateEnd' ? dateEndVarName : `dateEnd:${dateEndVarName}`
-        const getModelCbStr = getModelCbVarName === 'getModelCb' ? getModelCbVarName : `getModelCb:${getModelCbVarName}`
-      return `ModelNoSqlPagination.byYearAndMoth({
+        const getRepositoryCbStr = getRepositoryCbVarName === 'getRepositoryCb' ? getRepositoryCbVarName : `getRepositoryCb:${getRepositoryCbVarName}`
+        return `RepositoryNoSqlPagination.byYearAndMoth({
             ${paramsStr},
             ${dateStartStr},
             ${dateEndStr},
-            ${getModelCbStr}
+            ${getRepositoryCbStr}
         })
         `
     }
-
+    
 }

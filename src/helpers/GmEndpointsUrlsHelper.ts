@@ -1,9 +1,9 @@
-import {GmConfig, GmEndpointType} from 'os-core-ts'
+import {GmCrudConfig, GmCrudEndpointType} from 'os-core-ts'
 
 export class GmEndpointsUrlsHelper {
     static getEndpointUrl = (
-        config: GmConfig,
-        endpointType: GmEndpointType,
+        config: GmCrudConfig,
+        endpointType: GmCrudEndpointType,
     ) => {
         return `/${endpointType}`
 

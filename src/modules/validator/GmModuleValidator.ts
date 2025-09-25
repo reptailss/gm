@@ -1,7 +1,7 @@
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmAbstractModuleClass} from '@modules/abstractModule/GmAbstractModuleClass'
 import {IGmModuleClass, IGmModuleClassMethod} from '@modules/interfaces/gmModule'
-import {GmConfig} from 'os-core-ts'
+import {GmCrudConfig} from 'os-core-ts'
 import {GmAbstractModuleClassMethod} from '@modules/abstractModule/GmAbstractModuleClassMethod'
 import {GmModuleCreateDto} from '@modules/dto/GmModuleCreateDto'
 import {GmServiceValidator} from '@services/validator/GmServiceValidator'
@@ -18,7 +18,7 @@ export class GmModuleValidator extends GmAbstractModuleClass implements IGmModul
 
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         private readonly schemaVarName: string,
     ) {
         super(config)
@@ -66,7 +66,7 @@ class GmModuleValidatorGetCreateDtoMethod extends GmAbstractModuleClassMethod im
     private readonly gmServiceValidator: GmServiceValidator
     private readonly gmServiceObjectSchemaValidatorType: GmServiceObjectSchemaValidatorType
 
-    constructor(config: GmConfig) {
+    constructor(config: GmCrudConfig) {
         super(config)
         this.gmModuleCreateDto = new GmModuleCreateDto(config)
         this.gmServiceObjectSchemaValidatorType = new GmServiceObjectSchemaValidatorType()
@@ -93,8 +93,8 @@ class GmModuleValidatorGetCreateDtoMethod extends GmAbstractModuleClassMethod im
 
         const res: Record<string, string> = {}
 
-        for (const key in this.getConfig().model.columns) {
-            switch (this.getConfig().model.columns[key].type) {
+        for (const key in this.getConfig().repository.columns) {
+            switch (this.getConfig().repository.columns[key].type) {
                 case 'INTEGER':
                     res[key] = this.gmServiceValidator.number()
                     break
@@ -135,7 +135,7 @@ class GmModuleValidatorGetUpdateDtoMethod extends GmAbstractModuleClassMethod im
     private readonly gmModuleCreateDto: GmModuleCreateDto
     private readonly gmServiceObjectSchemaValidatorType: GmServiceObjectSchemaValidatorType
 
-    constructor(config: GmConfig) {
+    constructor(config: GmCrudConfig) {
         super(config)
         this.gmModuleUpdateDto = new GmModuleUpdateDto(config)
         this.gmModuleCreateDto = new GmModuleCreateDto(config)
@@ -170,7 +170,7 @@ class GmModuleValidatorGetDtoMethod extends GmAbstractModuleClassMethod implemen
     private readonly gmServiceSchemaValidatorType: GmServiceSchemaValidatorType
     private readonly gmServiceValidator: GmServiceValidator
 
-    constructor(config: GmConfig) {
+    constructor(config: GmCrudConfig) {
         super(config)
         this.gmModuleDto = new GmModuleDto(config)
         this.gmServiceSchemaValidatorType = new GmServiceSchemaValidatorType()
@@ -208,7 +208,7 @@ class GmModuleValidatorGetPaginationMethod extends GmAbstractModuleClassMethod i
     private readonly gmServiceSchemaValidatorType: GmServiceSchemaValidatorType
     private readonly gmServicePaginationQueryParamsValidator: GmServicePaginationQueryParamsValidator
 
-    constructor(config: GmConfig) {
+    constructor(config: GmCrudConfig) {
         super(config)
         this.gmModuleDto = new GmModuleDto(config)
         this.gmServiceSchemaValidatorType = new GmServiceSchemaValidatorType()

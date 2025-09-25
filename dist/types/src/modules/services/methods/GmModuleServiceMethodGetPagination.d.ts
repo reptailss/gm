@@ -1,7 +1,7 @@
 import { GmAbstractModuleClassMethod } from "../../abstractModule/GmAbstractModuleClassMethod";
 import { IGmModuleClassMethod } from "../../interfaces/gmModule";
-import { IGmModuleModel } from "../../model/interfaces/gmModuleModel";
-import { GmConfig } from "../../../os-core";
+import { IGmModuleRepository } from "../../repository/interfaces/gmModuleRepository";
+import { GmCrudConfig } from "../../../os-core";
 declare const PROPS_VAR_NAMES: {
     params: string;
 };
@@ -9,9 +9,9 @@ export declare class GmModuleServiceMethodGetPagination extends GmAbstractModule
     private readonly gmModuleDto;
     private readonly gmServicePaginationQueryParamsType;
     private readonly gmServicePaginationValuesType;
-    private readonly gmModuleModel;
+    private readonly gmModuleRepository;
     private readonly callVarNames;
-    constructor(config: GmConfig, gmModuleModel: IGmModuleModel, callVarNames: typeof PROPS_VAR_NAMES);
+    constructor(config: GmCrudConfig, gmModuleRepository: IGmModuleRepository, callVarNames: typeof PROPS_VAR_NAMES);
     getPropertyName(): string;
     init(): void;
 }

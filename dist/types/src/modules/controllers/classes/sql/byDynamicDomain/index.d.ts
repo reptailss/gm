@@ -1,11 +1,11 @@
-import { GmConfig } from "../../../../../os-core";
+import { GmCrudConfig } from "../../../../../os-core";
 import { IGmModuleClass } from "../../../../interfaces/gmModule";
 import { GmModuleAbstractControllerClass } from "../../abstract/GmModuleAbstractControllerClass";
 export declare class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstractControllerClass implements IGmModuleClass {
     private readonly validator;
     private readonly serviceCrud;
     private readonly gmAccessStructureMethodProcessorByDynamicDomain;
-    constructor(config: GmConfig);
+    constructor(config: GmCrudConfig);
     init(): void;
     private getValidatorVarName;
     private getValidatorCreateDtoVarName;
@@ -17,7 +17,7 @@ export declare class GmModuleControllerClassCreateBySqlDynamicDomain extends GmM
     private readonly validator;
     private readonly serviceCrud;
     private readonly gmAccessStructureMethodProcessorByDynamicDomain;
-    constructor(config: GmConfig);
+    constructor(config: GmCrudConfig);
     init(): void;
     private getValidatorVarName;
     private getValidatorCreateDtoVarName;
@@ -27,7 +27,7 @@ export declare class GmModuleControllerClassUpdateBySqlDynamicDomain extends GmM
     private readonly validator;
     private readonly serviceCrud;
     private readonly gmAccessStructureMethodProcessorByDynamicDomain;
-    constructor(config: GmConfig);
+    constructor(config: GmCrudConfig);
     init(): void;
     private getValidatorVarName;
     private getValidatorUpdateDtoVarName;
@@ -36,14 +36,14 @@ export declare class GmModuleControllerClassUpdateBySqlDynamicDomain extends GmM
 export declare class GmModuleControllerClassDeleteBySqlDynamicDomain extends GmModuleAbstractControllerClass implements IGmModuleClass {
     private readonly serviceCrud;
     private readonly gmAccessStructureMethodProcessorByDynamicDomain;
-    constructor(config: GmConfig);
+    constructor(config: GmCrudConfig);
     init(): void;
     private getServiceVarName;
 }
 export declare class GmModuleControllerClassGetBySqlDynamicDomain extends GmModuleAbstractControllerClass implements IGmModuleClass {
     private readonly serviceCrud;
     private readonly gmAccessStructureMethodProcessorByDynamicDomain;
-    constructor(config: GmConfig);
+    constructor(config: GmCrudConfig);
     init(): void;
     private getServiceVarName;
 }
@@ -51,7 +51,7 @@ export declare class GmModuleControllerClassGetAllBySqlDynamicDomain extends GmM
     private readonly validator;
     private readonly serviceCrud;
     private readonly gmAccessStructureMethodProcessorByDynamicDomain;
-    constructor(config: GmConfig);
+    constructor(config: GmCrudConfig);
     init(): void;
     private getValidatorVarName;
     private getValidatorParamsDtoVarName;

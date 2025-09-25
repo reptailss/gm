@@ -6,20 +6,20 @@ const GmModuleDto_1 = require("../../dto/GmModuleDto");
 const GmModuleCreateDto_1 = require("../../dto/GmModuleCreateDto");
 const GmServiceThrowAppError_1 = require("../../../services/errors/GmServiceThrowAppError");
 const StringCaseHelper_1 = require("../../../helpers/StringCaseHelper");
-const GmConfigChecker_1 = require("../../../config/GmConfigChecker");
+const GmCrudConfigChecker_1 = require("../../../crudConfig/GmCrudConfigChecker");
 const GmModuleDtoHelper_1 = require("../../dto/helper/GmModuleDtoHelper");
 const PROPS_VAR_NAMES = {
     initiatorOpenUserId: 'initiatorOpenUserId',
     createDto: 'createDto',
 };
 class GmModuleServiceMethodCreate extends GmAbstractModuleClassMethod_1.GmAbstractModuleClassMethod {
-    constructor(config, gmModuleModel, gmServiceSendActionSystemLog, callVarNames) {
+    constructor(config, gmModuleRepository, gmServiceSendActionSystemLog, callVarNames) {
         super(config);
         this.gmModuleDto = new GmModuleDto_1.GmModuleDto(config);
         this.gmModuleCreateDto = new GmModuleCreateDto_1.GmModuleCreateDto(config);
         this.gmServiceThrowAppError = new GmServiceThrowAppError_1.GmServiceThrowAppError();
         this.gmServiceSendActionSystemLog = gmServiceSendActionSystemLog;
-        this.gmModuleModel = gmModuleModel;
+        this.gmModuleRepository = gmModuleRepository;
         this.callVarNames = callVarNames;
     }
     getPropertyName() {
@@ -33,7 +33,7 @@ class GmModuleServiceMethodCreate extends GmAbstractModuleClassMethod_1.GmAbstra
         this.setAsyncType('async');
         this.setReturnType(`Promise<${this.gmModuleDto.getPropertyName()}>`);
         this.setPropsType('object');
-        if (GmConfigChecker_1.GmConfigChecker.hasActionLogger(this.getConfig(), 'add')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasActionLogger(this.getConfig(), 'add')) {
             this.addProp({
                 varName: PROPS_VAR_NAMES.initiatorOpenUserId,
                 callVarName: this.callVarNames.initiatorOpenUserId,
@@ -50,36 +50,36 @@ class GmModuleServiceMethodCreate extends GmAbstractModuleClassMethod_1.GmAbstra
         this.createRow();
     }
     createRow() {
-        if (!GmConfigChecker_1.GmConfigChecker.hasActionLogger(this.getConfig(), 'add')) {
+        if (!GmCrudConfigChecker_1.GmCrudConfigChecker.hasActionLogger(this.getConfig(), 'add')) {
             this.appendBodyElement({
                 name: 'createRow',
-                value: `return ${this.gmModuleModel.api.create(PROPS_VAR_NAMES.createDto)}`,
+                value: `return ${this.gmModuleRepository.api.create(PROPS_VAR_NAMES.createDto)}`,
                 hasEmptyLineAtEnd: false,
             });
             return;
         }
         this.appendBodyElement({
             name: 'createRow',
-            value: `const ${this.getNewDtoPropertyVarName()} = await ${this.gmModuleModel.api.create(PROPS_VAR_NAMES.createDto)}`,
+            value: `const ${this.getNewEntityPropertyVarName()} = await ${this.gmModuleRepository.api.create(PROPS_VAR_NAMES.createDto)}`,
             hasEmptyLineAtEnd: false,
         });
         this.appendBodyElement({
             name: 'SendActionSystemLogService',
             value: `await ${this.gmServiceSendActionSystemLog.logCreateAction({
-                rowId: `${this.getNewDtoPropertyVarName()}.${GmModuleDtoHelper_1.GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).key}`,
-                value: this.getNewDtoPropertyVarName(),
-                config: this.gmModuleModel.api.getConfig(),
+                rowId: `${this.getNewEntityPropertyVarName()}.${GmModuleDtoHelper_1.GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).key}`,
+                value: this.getNewEntityPropertyVarName(),
+                config: this.gmModuleRepository.api.getConfig(),
                 initiatorOpenUserId: PROPS_VAR_NAMES.initiatorOpenUserId,
             })}`,
             hasEmptyLineAtEnd: true,
         });
         this.appendBodyElement({
             name: 'returnNewRow',
-            value: `return ${this.getNewDtoPropertyVarName()}`,
+            value: `return ${this.getNewEntityPropertyVarName()}`,
         });
     }
-    getNewDtoPropertyVarName() {
-        return 'newDto';
+    getNewEntityPropertyVarName() {
+        return 'newEntity';
     }
 }
 exports.GmModuleServiceMethodCreate = GmModuleServiceMethodCreate;

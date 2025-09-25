@@ -1,7 +1,7 @@
 import { GmModuleServiceClassByNoSqlMonthAndYear } from "../../bases/GmModuleServiceClassByNoSqlMonthAndYear";
 import { GmModuleServiceClassAll, GmModuleServiceClassCreate, GmModuleServiceClassGetAll } from "../../../interfaces/gmModuleServiceClassCurd";
 import { IGmModuleServiceApiAll, IGmModuleServiceApiCreate, IGmModuleServiceApiGetPagination } from "../../../interfaces/gmModuleServiceClassCurdApi";
-import { GmConfig } from "../../../../../os-core";
+import { GmCrudConfig } from "../../../../../os-core";
 type AllCallVarNames = {
     create: CreateCallVarNames;
     getPagination: GetPaginationCallVarNames;
@@ -22,7 +22,7 @@ export declare class GmModuleServiceClassCrudByNoSqlMonthAndYear extends GmModul
     private readonly allCallVarNames;
     api: IGmModuleServiceApiAll;
     private readonly actionsLoggerService;
-    constructor(config: GmConfig, serviceVarName: string, allCallVarNames: AllCallVarNames);
+    constructor(config: GmCrudConfig, serviceVarName: string, allCallVarNames: AllCallVarNames);
     init(): void;
 }
 export declare class GmModuleServiceClassCreateByNoSqlMonthAndYear extends GmModuleServiceClassByNoSqlMonthAndYear implements GmModuleServiceClassCreate {
@@ -30,14 +30,14 @@ export declare class GmModuleServiceClassCreateByNoSqlMonthAndYear extends GmMod
     private readonly callVarNames;
     api: IGmModuleServiceApiCreate;
     private readonly actionsLoggerService;
-    constructor(config: GmConfig, serviceVarName: string, callVarNames: CreateCallVarNames);
+    constructor(config: GmCrudConfig, serviceVarName: string, callVarNames: CreateCallVarNames);
     init(): void;
 }
 export declare class GmModuleServiceClassGetAllByNoSqlMonthAndYear extends GmModuleServiceClassByNoSqlMonthAndYear implements GmModuleServiceClassGetAll {
     private readonly serviceVarName;
     private readonly callVarNames;
     api: IGmModuleServiceApiGetPagination;
-    constructor(config: GmConfig, serviceVarName: string, callVarNames: GetPaginationCallVarNames);
+    constructor(config: GmCrudConfig, serviceVarName: string, callVarNames: GetPaginationCallVarNames);
     init(): void;
 }
 export {};

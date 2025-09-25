@@ -101,6 +101,9 @@ class GmAbstractModuleClass extends GmAbstractModule_1.GmAbstractModule {
         return super.addChildModule(module);
     }
     addVar(gmVar) {
+        if (gmVar.decorator) {
+            this.addImport(gmVar.decorator.getImport());
+        }
         this.vars.push(gmVar);
         return this;
     }

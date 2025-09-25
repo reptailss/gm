@@ -17,17 +17,17 @@ class GmWriteDefaultConfig {
     static buildDefaultConfig() {
         const baseInfo = `
     
-    const sqlByStaticDb:GmSqlModelConfig = ${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectToString(gmDefaultConfig_1.gmDefaultConfig.sqlByStaticDbConnection)}
+    const sqlByStaticDb:GmSqlRepositoryConfig = ${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectToString(gmDefaultConfig_1.gmDefaultConfig.sqlByStaticDbConnection)}
    
-    const sqlByDynamicDomain:GmSqlModelConfig = ${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectToString(gmDefaultConfig_1.gmDefaultConfig.sqlByDynamicDomain)}
+    const sqlByDynamicDomain:GmSqlRepositoryConfig = ${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectToString(gmDefaultConfig_1.gmDefaultConfig.sqlByDynamicDomain)}
     
-    const sqlByLeId:GmSqlModelConfig = ${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectToString(gmDefaultConfig_1.gmDefaultConfig.sqlByDynamicLeId)}
+    const sqlByLeId:GmSqlRepositoryConfig = ${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectToString(gmDefaultConfig_1.gmDefaultConfig.sqlByDynamicLeId)}
     
-    const noSqlByYearAndMonth:GmNoSqlModelConfig = ${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectToString(gmDefaultConfig_1.gmDefaultConfig.noSqlByYearAndMonth)}
+    const noSqlByYearAndMonth:GmNoSqlRepositoryConfig = ${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectToString(gmDefaultConfig_1.gmDefaultConfig.noSqlByYearAndMonth)}
     
     `;
         const file = `
-    import {GmConfig, GmSqlModelConfig, GmNoSqlModelConfig, GmEndpointsConfig} from 'os-core-ts' \n${baseInfo}
+    import {GmConfig, GmSqlRepositoryConfig, GmNoSqlRepositoryConfig, GmEndpointsConfig} from 'os-core-ts' \n${baseInfo}
     
   
     export default function buildGmConfig(): GmConfig {
@@ -37,7 +37,7 @@ class GmWriteDefaultConfig {
                          plural:'Users',
                     },
                     moduleName: 'Users',
-                    model: sqlByDynamicDomain,
+                    repository: sqlByDynamicDomain,
                     hasSeparated:true,
                     endpoints:${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectToString(gmDefaultConfig_1.gmDefaultConfig.baseEndpoints)},
                     rootDir:'src',

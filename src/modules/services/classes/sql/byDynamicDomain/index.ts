@@ -18,7 +18,7 @@ import {
     IGmModuleServiceApiUpdate,
 } from '@modules/services/interfaces/gmModuleServiceClassCurdApi'
 import {GmServiceActionsLoggerService} from '@services/sendActionSystemLog/GmServiceActionsLoggerService'
-import {GmConfig} from 'os-core-ts'
+import {GmCrudConfig} from 'os-core-ts'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmModuleServiceMethodCreate} from '@modules/services/methods/GmModuleServiceMethodCreate'
 import {GmModuleServiceMethodUpdate} from '@modules/services/methods/GmModuleServiceMethodUpdate'
@@ -77,7 +77,7 @@ export class GmModuleServiceClassCrudBySqlDynamicDomain extends GmModuleServiceC
     private readonly actionsLoggerService: GmServiceActionsLoggerService
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         private readonly serviceVarName: string,
         private readonly allCallVarNames: AllCallVarNames,
     ) {
@@ -95,7 +95,7 @@ export class GmModuleServiceClassCrudBySqlDynamicDomain extends GmModuleServiceC
         this.addAndInitMethod(
             new GmModuleServiceMethodCreate(
                 this.getConfig(),
-                this.getModuleModel(),
+                this.getModuleRepository(),
                 this.actionsLoggerService,
                 this.allCallVarNames.create,
             ),
@@ -103,7 +103,7 @@ export class GmModuleServiceClassCrudBySqlDynamicDomain extends GmModuleServiceC
         ).addAndInitMethod(
             new GmModuleServiceMethodUpdate(
                 this.getConfig(),
-                this.getModuleModel(),
+                this.getModuleRepository(),
                 this.actionsLoggerService,
                 this.allCallVarNames.update,
             ),
@@ -111,7 +111,7 @@ export class GmModuleServiceClassCrudBySqlDynamicDomain extends GmModuleServiceC
         ).addAndInitMethod(
             new GmModuleServiceMethodDelete(
                 this.getConfig(),
-                this.getModuleModel(),
+                this.getModuleRepository(),
                 this.actionsLoggerService,
                 this.allCallVarNames.delete,
             ),
@@ -119,14 +119,14 @@ export class GmModuleServiceClassCrudBySqlDynamicDomain extends GmModuleServiceC
         ).addAndInitMethod(
             new GmModuleServiceMethodGetById(
                 this.getConfig(),
-                this.getModuleModel(),
+                this.getModuleRepository(),
                 this.allCallVarNames.getById,
             ),
             this.allCallVarNames.getById.domain,
         ).addAndInitMethod(
             new GmModuleServiceMethodGetPagination(
                 this.getConfig(),
-                this.getModuleModel(),
+                this.getModuleRepository(),
                 this.allCallVarNames.getPagination,
             ),
             this.allCallVarNames.getPagination.domain,
@@ -149,7 +149,7 @@ export class GmModuleServiceClassCreateBySqlDynamicDomain extends GmModuleServic
     private readonly actionsLoggerService: GmServiceActionsLoggerService
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         private serviceVarName: string,
         private readonly callVarNames: CreateCallVarNames,
     ) {
@@ -166,7 +166,7 @@ export class GmModuleServiceClassCreateBySqlDynamicDomain extends GmModuleServic
             .addAndInitMethod(
                 new GmModuleServiceMethodCreate(
                     this.getConfig(),
-                    this.getModuleModel(),
+                    this.getModuleRepository(),
                     this.actionsLoggerService,
                     this.callVarNames,
                 ),
@@ -185,7 +185,7 @@ export class GmModuleServiceClassUpdateBySqlDynamicDomain extends GmModuleServic
     private readonly actionsLoggerService: GmServiceActionsLoggerService
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         private readonly serviceVarName: string,
         private readonly callVarNames: UpdateCallVarNames,
     ) {
@@ -202,7 +202,7 @@ export class GmModuleServiceClassUpdateBySqlDynamicDomain extends GmModuleServic
             .addAndInitMethod(
                 new GmModuleServiceMethodUpdate(
                     this.getConfig(),
-                    this.getModuleModel(),
+                    this.getModuleRepository(),
                     this.actionsLoggerService,
                     this.callVarNames,
                 ),
@@ -221,7 +221,7 @@ export class GmModuleServiceClassDeleteBySqlDynamicDomain extends GmModuleServic
     private readonly actionsLoggerService: GmServiceActionsLoggerService
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         private readonly serviceVarName: string,
         private readonly callVarNames: DeleteCallVarNames,
     ) {
@@ -238,7 +238,7 @@ export class GmModuleServiceClassDeleteBySqlDynamicDomain extends GmModuleServic
             .addAndInitMethod(
                 new GmModuleServiceMethodDelete(
                     this.getConfig(),
-                    this.getModuleModel(),
+                    this.getModuleRepository(),
                     this.actionsLoggerService,
                     this.callVarNames,
                 ),
@@ -256,7 +256,7 @@ export class GmModuleServiceClassGetBySqlDynamicDomain extends GmModuleServiceCl
     public api!: IGmModuleServiceApiGet
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         private readonly serviceVarName: string,
         private readonly callVarNames: GetByIdCallVarNames,
     ) {
@@ -271,7 +271,7 @@ export class GmModuleServiceClassGetBySqlDynamicDomain extends GmModuleServiceCl
         this.addAndInitMethod(
             new GmModuleServiceMethodGetById(
                 this.getConfig(),
-                this.getModuleModel(),
+                this.getModuleRepository(),
                 this.callVarNames,
             ),
             this.callVarNames.domain,
@@ -288,7 +288,7 @@ export class GmModuleServiceClassGetAllBySqlDynamicDomain extends GmModuleServic
     public api!: IGmModuleServiceApiGetPagination
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         private readonly serviceVarName: string,
         private readonly callVarNames: GetPaginationCallVarNames,
     ) {
@@ -303,7 +303,7 @@ export class GmModuleServiceClassGetAllBySqlDynamicDomain extends GmModuleServic
         this.addAndInitMethod(
             new GmModuleServiceMethodGetPagination(
                 this.getConfig(),
-                this.getModuleModel(),
+                this.getModuleRepository(),
                 this.callVarNames,
             ),
             this.callVarNames.domain,

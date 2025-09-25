@@ -4,13 +4,13 @@ import {GmServiceBuildResponseFormat} from '@services/buildResponseFormat/GmServ
 import {GmServiceMutateRowResultType} from '@services/resultTypes/GmServiceMutateRowResultType'
 import {GmServiceUserInfoType} from '@services/userInfo/GmServiceUserInfoType'
 import {GmModuleRoutePaths} from '@modules/routePaths/GmModuleRoutePaths'
-import {GmConfig} from 'os-core-ts'
+import {GmCrudConfig} from 'os-core-ts'
 import {IGmModuleServiceApiDelete} from '@modules/services/interfaces/gmModuleServiceClassCurdApi'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmModuleDtoHelper} from '@modules/dto/helper/GmModuleDtoHelper'
 import {GmSwaggerInfoDec} from '@decorators/controllerDecorators/GmSwaggerInfoDec'
 import {GmDeleteDec} from '@decorators/controllerDecorators/GmDeleteDec'
-import {GmConfigChecker} from '@config/GmConfigChecker'
+import {GmCrudConfigChecker} from '@crudConfig/GmCrudConfigChecker'
 import {GmAuthDec} from '@decorators/controllerDecorators/GmAuthDec'
 import {GmParamDec, GmParamNumDec} from '@decorators/controllerDecorators/GmParamDec'
 
@@ -23,7 +23,7 @@ export class GmModuleControllerMethodDelete extends GmAbstractModuleClassMethod 
     private readonly gmModuleRoutePaths: GmModuleRoutePaths
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         private readonly api: IGmModuleServiceApiDelete,
         private readonly varNames: {
             userInfo: string
@@ -57,7 +57,7 @@ export class GmModuleControllerMethodDelete extends GmAbstractModuleClassMethod 
         this.setMethodScope('public')
         this.setAsyncType('async')
 
-        if (GmConfigChecker.hasAuth(this.getConfig(), 'delete')) {
+        if (GmCrudConfigChecker.hasAuth(this.getConfig(), 'delete')) {
             this.addService(this.gmServiceUserInfoType)
             this.addProp({
                 type: this.gmServiceUserInfoType.getUserInfoType(),

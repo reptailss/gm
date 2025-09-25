@@ -1,7 +1,7 @@
 import { GmModuleServiceClassBySqlDynamicDomain } from "../../bases/GmModuleServiceClassBySqlDynamicDomain";
 import { GmModuleServiceClassAll, GmModuleServiceClassCreate, GmModuleServiceClassDelete, GmModuleServiceClassGet, GmModuleServiceClassGetAll, GmModuleServiceClassUpdate } from "../../../interfaces/gmModuleServiceClassCurd";
 import { IGmModuleServiceApiAll, IGmModuleServiceApiCreate, IGmModuleServiceApiDelete, IGmModuleServiceApiGet, IGmModuleServiceApiGetPagination, IGmModuleServiceApiUpdate } from "../../../interfaces/gmModuleServiceClassCurdApi";
-import { GmConfig } from "../../../../../os-core";
+import { GmCrudConfig } from "../../../../../os-core";
 type BaseCallBarNames = {
     domain: string;
 };
@@ -36,7 +36,7 @@ export declare class GmModuleServiceClassCrudBySqlDynamicDomain extends GmModule
     private readonly allCallVarNames;
     api: IGmModuleServiceApiAll;
     private readonly actionsLoggerService;
-    constructor(config: GmConfig, serviceVarName: string, allCallVarNames: AllCallVarNames);
+    constructor(config: GmCrudConfig, serviceVarName: string, allCallVarNames: AllCallVarNames);
     init(): void;
 }
 export declare class GmModuleServiceClassCreateBySqlDynamicDomain extends GmModuleServiceClassBySqlDynamicDomain implements GmModuleServiceClassCreate {
@@ -44,7 +44,7 @@ export declare class GmModuleServiceClassCreateBySqlDynamicDomain extends GmModu
     private readonly callVarNames;
     api: IGmModuleServiceApiCreate;
     private readonly actionsLoggerService;
-    constructor(config: GmConfig, serviceVarName: string, callVarNames: CreateCallVarNames);
+    constructor(config: GmCrudConfig, serviceVarName: string, callVarNames: CreateCallVarNames);
     init(): void;
 }
 export declare class GmModuleServiceClassUpdateBySqlDynamicDomain extends GmModuleServiceClassBySqlDynamicDomain implements GmModuleServiceClassUpdate {
@@ -52,7 +52,7 @@ export declare class GmModuleServiceClassUpdateBySqlDynamicDomain extends GmModu
     private readonly callVarNames;
     api: IGmModuleServiceApiUpdate;
     private readonly actionsLoggerService;
-    constructor(config: GmConfig, serviceVarName: string, callVarNames: UpdateCallVarNames);
+    constructor(config: GmCrudConfig, serviceVarName: string, callVarNames: UpdateCallVarNames);
     init(): void;
 }
 export declare class GmModuleServiceClassDeleteBySqlDynamicDomain extends GmModuleServiceClassBySqlDynamicDomain implements GmModuleServiceClassDelete {
@@ -60,21 +60,21 @@ export declare class GmModuleServiceClassDeleteBySqlDynamicDomain extends GmModu
     private readonly callVarNames;
     api: IGmModuleServiceApiDelete;
     private readonly actionsLoggerService;
-    constructor(config: GmConfig, serviceVarName: string, callVarNames: DeleteCallVarNames);
+    constructor(config: GmCrudConfig, serviceVarName: string, callVarNames: DeleteCallVarNames);
     init(): void;
 }
 export declare class GmModuleServiceClassGetBySqlDynamicDomain extends GmModuleServiceClassBySqlDynamicDomain implements GmModuleServiceClassGet {
     private readonly serviceVarName;
     private readonly callVarNames;
     api: IGmModuleServiceApiGet;
-    constructor(config: GmConfig, serviceVarName: string, callVarNames: GetByIdCallVarNames);
+    constructor(config: GmCrudConfig, serviceVarName: string, callVarNames: GetByIdCallVarNames);
     init(): void;
 }
 export declare class GmModuleServiceClassGetAllBySqlDynamicDomain extends GmModuleServiceClassBySqlDynamicDomain implements GmModuleServiceClassGetAll {
     private readonly serviceVarName;
     private readonly callVarNames;
     api: IGmModuleServiceApiGetPagination;
-    constructor(config: GmConfig, serviceVarName: string, callVarNames: GetPaginationCallVarNames);
+    constructor(config: GmCrudConfig, serviceVarName: string, callVarNames: GetPaginationCallVarNames);
     init(): void;
 }
 export {};

@@ -16,7 +16,7 @@ import {
     IGmModuleServiceApiUpdate,
 } from '@modules/services/interfaces/gmModuleServiceClassCurdApi'
 import {GmServiceActionsLoggerService} from '@services/sendActionSystemLog/GmServiceActionsLoggerService'
-import {GmConfig} from 'os-core-ts'
+import {GmCrudConfig} from 'os-core-ts'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmModuleServiceMethodCreate} from '@modules/services/methods/GmModuleServiceMethodCreate'
 import {GmModuleServiceMethodUpdate} from '@modules/services/methods/GmModuleServiceMethodUpdate'
@@ -70,7 +70,7 @@ export class GmModuleServiceClassCrudBySqlStaticDb extends GmModuleServiceClassB
     private readonly actionsLoggerService: GmServiceActionsLoggerService
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         private readonly serviceVarName: string,
         private readonly allCallVarNames: AllCallVarNames,
     ) {
@@ -88,7 +88,7 @@ export class GmModuleServiceClassCrudBySqlStaticDb extends GmModuleServiceClassB
             .addMethod(
                 new GmModuleServiceMethodCreate(
                     this.getConfig(),
-                    this.getModuleModel(),
+                    this.getModuleRepository(),
                     this.actionsLoggerService,
                     this.allCallVarNames.create,
                 ),
@@ -96,7 +96,7 @@ export class GmModuleServiceClassCrudBySqlStaticDb extends GmModuleServiceClassB
             .addMethod(
                 new GmModuleServiceMethodUpdate(
                     this.getConfig(),
-                    this.getModuleModel(),
+                    this.getModuleRepository(),
                     this.actionsLoggerService,
                     this.allCallVarNames.update,
                 ),
@@ -104,7 +104,7 @@ export class GmModuleServiceClassCrudBySqlStaticDb extends GmModuleServiceClassB
             .addMethod(
                 new GmModuleServiceMethodDelete(
                     this.getConfig(),
-                    this.getModuleModel(),
+                    this.getModuleRepository(),
                     this.actionsLoggerService,
                     this.allCallVarNames.delete,
                 ),
@@ -112,14 +112,14 @@ export class GmModuleServiceClassCrudBySqlStaticDb extends GmModuleServiceClassB
             .addMethod(
                 new GmModuleServiceMethodGetById(
                     this.getConfig(),
-                    this.getModuleModel(),
+                    this.getModuleRepository(),
                     this.allCallVarNames.getById,
                 ),
             )
             .addMethod(
                 new GmModuleServiceMethodGetPagination(
                     this.getConfig(),
-                    this.getModuleModel(),
+                    this.getModuleRepository(),
                     this.allCallVarNames.getPagination,
                 ),
             )
@@ -141,7 +141,7 @@ export class GmModuleServiceClassCreateBySqlStaticDb extends GmModuleServiceClas
     private readonly actionsLoggerService: GmServiceActionsLoggerService
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         private serviceVarName: string,
         private readonly callVarNames: CreateCallVarNames,
     ) {
@@ -158,7 +158,7 @@ export class GmModuleServiceClassCreateBySqlStaticDb extends GmModuleServiceClas
             .addMethod(
                 new GmModuleServiceMethodCreate(
                     this.getConfig(),
-                    this.getModuleModel(),
+                    this.getModuleRepository(),
                     this.actionsLoggerService,
                     this.callVarNames,
                 ),
@@ -176,7 +176,7 @@ export class GmModuleServiceClassUpdateBySqlStaticDb extends GmModuleServiceClas
     private readonly actionsLoggerService: GmServiceActionsLoggerService
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         private readonly serviceVarName: string,
         private readonly callVarNames: UpdateCallVarNames,
     ) {
@@ -193,7 +193,7 @@ export class GmModuleServiceClassUpdateBySqlStaticDb extends GmModuleServiceClas
             .addMethod(
                 new GmModuleServiceMethodUpdate(
                     this.getConfig(),
-                    this.getModuleModel(),
+                    this.getModuleRepository(),
                     this.actionsLoggerService,
                     this.callVarNames,
                 ),
@@ -211,7 +211,7 @@ export class GmModuleServiceClassDeleteBySqlStaticDb extends GmModuleServiceClas
     private readonly actionsLoggerService: GmServiceActionsLoggerService
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         private readonly serviceVarName: string,
         private readonly callVarNames: DeleteCallVarNames,
     ) {
@@ -228,7 +228,7 @@ export class GmModuleServiceClassDeleteBySqlStaticDb extends GmModuleServiceClas
             .addMethod(
                 new GmModuleServiceMethodDelete(
                     this.getConfig(),
-                    this.getModuleModel(),
+                    this.getModuleRepository(),
                     this.actionsLoggerService,
                     this.callVarNames,
                 ),
@@ -245,7 +245,7 @@ export class GmModuleServiceClassGetBySqlStaticDb extends GmModuleServiceClassBy
     public api!: IGmModuleServiceApiGet
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         private readonly serviceVarName: string,
         private readonly callVarNames: GetByIdCallVarNames,
     ) {
@@ -261,7 +261,7 @@ export class GmModuleServiceClassGetBySqlStaticDb extends GmModuleServiceClassBy
         this.addMethod(
             new GmModuleServiceMethodGetById(
                 this.getConfig(),
-                this.getModuleModel(),
+                this.getModuleRepository(),
                 this.callVarNames,
             ),
         )
@@ -277,7 +277,7 @@ export class GmModuleServiceClassGetAllBySqlStaticDb extends GmModuleServiceClas
     public api!: IGmModuleServiceApiGetPagination
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         private readonly serviceVarName: string,
         private readonly callVarNames: GetPaginationCallVarNames,
     ) {
@@ -292,7 +292,7 @@ export class GmModuleServiceClassGetAllBySqlStaticDb extends GmModuleServiceClas
         this.addMethod(
             new GmModuleServiceMethodGetPagination(
                 this.getConfig(),
-                this.getModuleModel(),
+                this.getModuleRepository(),
                 this.callVarNames,
             ),
         )

@@ -1,13 +1,13 @@
 import {GmAbstractModuleConstant} from '@modules/abstractModule/GmAbstractModuleConstant'
 import {IGmModuleConstant} from '@modules/interfaces/gmModule'
-import {GmConfig} from 'os-core-ts'
+import {GmCrudConfig} from 'os-core-ts'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmEndpointsUrlsHelper} from '@helpers/GmEndpointsUrlsHelper'
 
 
 export class GmModuleRoutePaths extends GmAbstractModuleConstant implements IGmModuleConstant {
 
-    constructor(config: GmConfig) {
+    constructor(config: GmCrudConfig) {
         super(config)
     }
 
@@ -28,7 +28,7 @@ export class GmModuleRoutePaths extends GmAbstractModuleConstant implements IGmM
     }
 
     public init(): void {
-        if (this.getConfig().model.type === 'byDatabaseNameAndYearMonth') {
+        if (this.getConfig().repository.type === 'byDatabaseNameAndYearMonth') {
             this.setBody(`
         {
             add:'/${this.getModuleKey()}${GmEndpointsUrlsHelper.getEndpointUrl(this.getConfig(), 'add')}',

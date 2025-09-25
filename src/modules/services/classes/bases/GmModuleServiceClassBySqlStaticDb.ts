@@ -1,43 +1,43 @@
 import {GmModuleAbstractServiceClass} from '@modules/services/classes/abstract/GmModuleAbstractServiceClass'
 import {GmModuleServiceClass} from '@modules/services/interfaces/gmModuleServiceClassCurd'
-import {GmModuleModelSqlByStaticDb} from '@modules/model/GmModuleModelSqlByStaticDb'
-import {GmModuleModelType} from '@modules/model/GmModuleModelType'
-import {GmConfig} from 'os-core-ts'
-import {IGmModuleModel} from '@modules/model/interfaces/gmModuleModel'
+import {GmModuleRepositorySqlByStaticDb} from '@modules/repository/GmModuleRepositorySqlByStaticDb'
+import {GmModuleEntityType} from '@modules/repository/GmModuleEntityType'
+import {GmCrudConfig} from 'os-core-ts'
+import {IGmModuleRepository} from '@modules/repository/interfaces/gmModuleRepository'
 
 
 const PROP_NAMES = {
-    model: 'model',
+    repository: 'repository',
 } as const
 
 
 export class GmModuleServiceClassBySqlStaticDb extends GmModuleAbstractServiceClass implements GmModuleServiceClass {
 
-    private readonly model: GmModuleModelSqlByStaticDb
-    private readonly modelType: GmModuleModelType
+    private readonly repository: GmModuleRepositorySqlByStaticDb
+    private readonly entityType: GmModuleEntityType
 
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         className: string,
     ) {
         super(config, className)
 
-        this.model = new GmModuleModelSqlByStaticDb(config, `this.${PROP_NAMES.model}`)
-        this.modelType = new GmModuleModelType(config)
+        this.repository = new GmModuleRepositorySqlByStaticDb(config, `this.${PROP_NAMES.repository}`)
+        this.entityType = new GmModuleEntityType(config)
     }
 
-    public getModuleModel(): IGmModuleModel {
-        return this.model
+    public getModuleRepository(): IGmModuleRepository {
+        return this.repository
     }
 
     public init(): void {
-        this.addModule(this.model)
-        this.addModule(this.modelType)
+        this.addModule(this.repository)
+        this.addModule(this.entityType)
         this.addConstructorProp({
-            varName: PROP_NAMES.model,
-            type: this.modelType.getPropertyName(),
-            defaultValue: this.model.getPropertyName(),
+            varName: PROP_NAMES.repository,
+            type: this.entityType.getPropertyName(),
+            defaultValue: this.repository.getPropertyName(),
             privateReadOnly: true,
         })
     }

@@ -17,8 +17,8 @@ class GmModuleServiceClassCrudByNoSqlMonthAndYear extends GmModuleServiceClassBy
     init() {
         super.init();
         this.addService(this.actionsLoggerService);
-        this.addAndInitMethod(new GmModuleServiceMethodCreate_1.GmModuleServiceMethodCreate(this.getConfig(), this.getModuleModel(), this.actionsLoggerService, this.allCallVarNames.create), this.allCallVarNames.create.month, this.allCallVarNames.create.year);
-        this.addMethod(new GmModuleServiceMethodGetPaginationNoSql_1.GmModuleServiceMethodGetPaginationNoSql(this.getConfig(), this.getModuleModel(), this.allCallVarNames.getPagination));
+        this.addAndInitMethod(new GmModuleServiceMethodCreate_1.GmModuleServiceMethodCreate(this.getConfig(), this.getModuleRepository(), this.actionsLoggerService, this.allCallVarNames.create), this.allCallVarNames.create.month, this.allCallVarNames.create.year);
+        this.addMethod(new GmModuleServiceMethodGetPaginationNoSql_1.GmModuleServiceMethodGetPaginationNoSql(this.getConfig(), this.getModuleRepository(), this.allCallVarNames.getPagination));
         this.api = new GmModuleServiceClassCurdApi_1.GmModuleServiceClassApiAll(this.serviceVarName, this.getMethodByIndex(0), this.getMethodByIndex(1), this.getMethodByIndex(1), this.getMethodByIndex(1), this.getMethodByIndex(1));
     }
 }
@@ -33,7 +33,7 @@ class GmModuleServiceClassCreateByNoSqlMonthAndYear extends GmModuleServiceClass
     init() {
         super.init();
         this.addService(this.actionsLoggerService)
-            .addAndInitMethod(new GmModuleServiceMethodCreate_1.GmModuleServiceMethodCreate(this.getConfig(), this.getModuleModel(), this.actionsLoggerService, this.callVarNames), this.callVarNames.month, this.callVarNames.year);
+            .addAndInitMethod(new GmModuleServiceMethodCreate_1.GmModuleServiceMethodCreate(this.getConfig(), this.getModuleRepository(), this.actionsLoggerService, this.callVarNames), this.callVarNames.month, this.callVarNames.year);
         this.api = new GmModuleServiceClassCurdApi_1.GmModuleServiceClassApiCreate(this.serviceVarName, this.getMethodByIndex(0));
     }
 }
@@ -46,7 +46,7 @@ class GmModuleServiceClassGetAllByNoSqlMonthAndYear extends GmModuleServiceClass
     }
     init() {
         super.init();
-        this.addMethod(new GmModuleServiceMethodGetPaginationNoSql_1.GmModuleServiceMethodGetPaginationNoSql(this.getConfig(), this.getModuleModel(), this.callVarNames));
+        this.addMethod(new GmModuleServiceMethodGetPaginationNoSql_1.GmModuleServiceMethodGetPaginationNoSql(this.getConfig(), this.getModuleRepository(), this.callVarNames));
         this.api = new GmModuleServiceClassCurdApi_1.GmModuleServiceClassApiGetPagination(this.serviceVarName, this.getMethodByIndex(0));
     }
 }

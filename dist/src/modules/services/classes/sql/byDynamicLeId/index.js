@@ -20,7 +20,7 @@ class GmModuleServiceClassCrudBySqlDynamicLeId extends GmModuleServiceClassBySql
     init() {
         super.init();
         this.addService(this.actionsLoggerService);
-        this.addAndInitMethod(new GmModuleServiceMethodCreate_1.GmModuleServiceMethodCreate(this.getConfig(), this.getModuleModel(), this.actionsLoggerService, this.allCallVarNames.create), this.allCallVarNames.create.legalEntityId).addAndInitMethod(new GmModuleServiceMethodUpdate_1.GmModuleServiceMethodUpdate(this.getConfig(), this.getModuleModel(), this.actionsLoggerService, this.allCallVarNames.update), this.allCallVarNames.update.legalEntityId).addAndInitMethod(new GmModuleServiceMethodDelete_1.GmModuleServiceMethodDelete(this.getConfig(), this.getModuleModel(), this.actionsLoggerService, this.allCallVarNames.delete), this.allCallVarNames.delete.legalEntityId).addAndInitMethod(new GmModuleServiceMethodGetById_1.GmModuleServiceMethodGetById(this.getConfig(), this.getModuleModel(), this.allCallVarNames.getById), this.allCallVarNames.getById.legalEntityId).addAndInitMethod(new GmModuleServiceMethodGetPagination_1.GmModuleServiceMethodGetPagination(this.getConfig(), this.getModuleModel(), this.allCallVarNames.getPagination), this.allCallVarNames.getPagination.legalEntityId);
+        this.addAndInitMethod(new GmModuleServiceMethodCreate_1.GmModuleServiceMethodCreate(this.getConfig(), this.getModuleRepository(), this.actionsLoggerService, this.allCallVarNames.create), this.allCallVarNames.create.legalEntityId).addAndInitMethod(new GmModuleServiceMethodUpdate_1.GmModuleServiceMethodUpdate(this.getConfig(), this.getModuleRepository(), this.actionsLoggerService, this.allCallVarNames.update), this.allCallVarNames.update.legalEntityId).addAndInitMethod(new GmModuleServiceMethodDelete_1.GmModuleServiceMethodDelete(this.getConfig(), this.getModuleRepository(), this.actionsLoggerService, this.allCallVarNames.delete), this.allCallVarNames.delete.legalEntityId).addAndInitMethod(new GmModuleServiceMethodGetById_1.GmModuleServiceMethodGetById(this.getConfig(), this.getModuleRepository(), this.allCallVarNames.getById), this.allCallVarNames.getById.legalEntityId).addAndInitMethod(new GmModuleServiceMethodGetPagination_1.GmModuleServiceMethodGetPagination(this.getConfig(), this.getModuleRepository(), this.allCallVarNames.getPagination), this.allCallVarNames.getPagination.legalEntityId);
         this.api = new GmModuleServiceClassCurdApi_1.GmModuleServiceClassApiAll(this.serviceVarName, this.getMethodByIndex(0), this.getMethodByIndex(1), this.getMethodByIndex(2), this.getMethodByIndex(3), this.getMethodByIndex(4));
     }
 }
@@ -35,7 +35,7 @@ class GmModuleServiceClassCreateBySqlDynamicLeId extends GmModuleServiceClassByS
     init() {
         super.init();
         this.addService(this.actionsLoggerService)
-            .addAndInitMethod(new GmModuleServiceMethodCreate_1.GmModuleServiceMethodCreate(this.getConfig(), this.getModuleModel(), this.actionsLoggerService, this.callVarNames), this.callVarNames.legalEntityId);
+            .addAndInitMethod(new GmModuleServiceMethodCreate_1.GmModuleServiceMethodCreate(this.getConfig(), this.getModuleRepository(), this.actionsLoggerService, this.callVarNames), this.callVarNames.legalEntityId);
         this.api = new GmModuleServiceClassCurdApi_1.GmModuleServiceClassApiCreate(this.serviceVarName, this.getMethodByIndex(0));
     }
 }
@@ -50,7 +50,7 @@ class GmModuleServiceClassUpdateBySqlDynamicLeId extends GmModuleServiceClassByS
     init() {
         super.init();
         this.addService(this.actionsLoggerService)
-            .addAndInitMethod(new GmModuleServiceMethodUpdate_1.GmModuleServiceMethodUpdate(this.getConfig(), this.getModuleModel(), this.actionsLoggerService, this.callVarNames), this.callVarNames.legalEntityId);
+            .addAndInitMethod(new GmModuleServiceMethodUpdate_1.GmModuleServiceMethodUpdate(this.getConfig(), this.getModuleRepository(), this.actionsLoggerService, this.callVarNames), this.callVarNames.legalEntityId);
         this.api = new GmModuleServiceClassCurdApi_1.GmModuleServiceClassApiUpdate(this.serviceVarName, this.getMethodByIndex(0));
     }
 }
@@ -65,7 +65,7 @@ class GmModuleServiceClassDeleteBySqlDynamicLeId extends GmModuleServiceClassByS
     init() {
         super.init();
         this.addService(this.actionsLoggerService)
-            .addAndInitMethod(new GmModuleServiceMethodDelete_1.GmModuleServiceMethodDelete(this.getConfig(), this.getModuleModel(), this.actionsLoggerService, this.callVarNames), this.callVarNames.legalEntityId);
+            .addAndInitMethod(new GmModuleServiceMethodDelete_1.GmModuleServiceMethodDelete(this.getConfig(), this.getModuleRepository(), this.actionsLoggerService, this.callVarNames), this.callVarNames.legalEntityId);
         this.api = new GmModuleServiceClassCurdApi_1.GmModuleServiceClassApiDelete(this.serviceVarName, this.getMethodByIndex(0));
     }
 }
@@ -78,7 +78,7 @@ class GmModuleServiceClassGetBySqlDynamicLeId extends GmModuleServiceClassBySqlD
     }
     init() {
         super.init();
-        this.addAndInitMethod(new GmModuleServiceMethodGetById_1.GmModuleServiceMethodGetById(this.getConfig(), this.getModuleModel(), this.callVarNames), this.callVarNames.legalEntityId);
+        this.addAndInitMethod(new GmModuleServiceMethodGetById_1.GmModuleServiceMethodGetById(this.getConfig(), this.getModuleRepository(), this.callVarNames), this.callVarNames.legalEntityId);
         this.api = new GmModuleServiceClassCurdApi_1.GmModuleServiceClassApiGet(this.serviceVarName, this.getMethodByIndex(0));
     }
 }
@@ -91,7 +91,7 @@ class GmModuleServiceClassGetAllBySqlDynamicLeId extends GmModuleServiceClassByS
     }
     init() {
         super.init();
-        this.addAndInitMethod(new GmModuleServiceMethodGetPagination_1.GmModuleServiceMethodGetPagination(this.getConfig(), this.getModuleModel(), this.callVarNames), this.callVarNames.legalEntityId);
+        this.addAndInitMethod(new GmModuleServiceMethodGetPagination_1.GmModuleServiceMethodGetPagination(this.getConfig(), this.getModuleRepository(), this.callVarNames), this.callVarNames.legalEntityId);
         this.api = new GmModuleServiceClassCurdApi_1.GmModuleServiceClassApiGetPagination(this.serviceVarName, this.getMethodByIndex(0));
     }
 }

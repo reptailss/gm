@@ -1,4 +1,4 @@
-import { GmConfig } from "../../os-core";
+import { GmCrudConfig } from "../../os-core";
 import { GmImport } from "../../imports/types";
 import { IGmServiceFn } from "../../services/inetfaces/gmServiceFn";
 import { GmBodyElement, GmFileWriteMode, GmModuleClassMethodProp, GmModuleClassMethodPropDecorator, GmModuleClassVar, GmModuleConstructorProp, GmModuleDirType, GmModuleFnProp, GmModuleParentInfo, GmModulePropsType } from "../types";
@@ -11,7 +11,7 @@ export interface IGmModule {
     init(): void;
     getPropertyName(): string;
     getTemplatePath(): string;
-    getConfig(): GmConfig;
+    getConfig(): GmCrudConfig;
     getRootModuleDirName(): string;
     addImport(data: GmImport): this;
     getImports(): GmImport[];

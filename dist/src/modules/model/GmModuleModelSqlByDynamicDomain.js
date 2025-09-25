@@ -15,7 +15,7 @@ class GmModuleModelSqlByDynamicDomain extends GmAbstractModuleFnModelSql_1.GmAbs
         this.api = new GmModuleModeApiSql_1.GmModuleModeApiSql(modelVarName);
     }
     getPropertyName() {
-        return `get${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.plural)}Model`;
+        return `get${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.plural)}Repository`;
     }
     getInitModel() {
         return `${this.getModelCbVarName}(${this.domainVarName})`;
@@ -31,9 +31,9 @@ class GmModuleModelSqlByDynamicDomain extends GmAbstractModuleFnModelSql_1.GmAbs
         this.appendBodyElement({
             name: 'returnModel',
             value: `
-            return LoaderModelSql.dynamicByDomain({
-                columns:${this.getColumnsPropertyName()},
-                tableName:${this.getTableNamePropertyName()},
+            return LoaderSqlRepository.dynamicByDomain({
+                entity: ${this.getEntityPropertyName()},
+                tableName:'${StringCaseHelper_1.StringCaseHelper.toSnakeCase(this.getConfig().moduleName)}',
                 ${PROP_VAR_NAMES.domain},
             })`,
         });

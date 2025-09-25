@@ -1,4 +1,4 @@
-import {IGmModuleModel} from '@modules/model/interfaces/gmModuleModel'
+import {IGmModuleRepository} from '@modules/repository/interfaces/gmModuleRepository'
 import {
     IGmModuleServiceApiAll,
     IGmModuleServiceApiCreate,
@@ -11,7 +11,7 @@ import {GmModuleAbstractServiceClass} from '@modules/services/classes/abstract/G
 
 
 export interface GmModuleServiceClass extends GmModuleAbstractServiceClass {
-    getModuleModel(): IGmModuleModel
+    getModuleRepository(): IGmModuleRepository
 }
 
 

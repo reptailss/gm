@@ -1,7 +1,7 @@
 import {GmAbstractModuleConstant} from '@modules/abstractModule/GmAbstractModuleConstant'
 import {IGmModuleConstant} from '@modules/interfaces/gmModule'
 import {GmFileWriteMode} from '@modules/types'
-import {GmConfig} from 'os-core-ts'
+import {GmCrudConfig} from 'os-core-ts'
 
 
 export class GmModuleConstants extends GmAbstractModuleConstant implements IGmModuleConstant {
@@ -21,7 +21,7 @@ export class GmModuleConstants extends GmAbstractModuleConstant implements IGmMo
             fileName,
             mode,
         }: {
-            config: GmConfig
+            config: GmCrudConfig
             value: string
             propertyName: string
             hasDir?: boolean

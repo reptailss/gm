@@ -1,51 +1,41 @@
-type ModelNoSqlColumn<Row, Value> = ModelNoSqlColumnInteger | ModelNoSqlColumnString | ModelNoSqlColumnObject<Value> | ModelNoSqlColumnDateTime;
-type ModelNoSqlColumnInteger = {
+type RepositoryNoSqlColumn = RepositoryNoSqlColumnInteger | RepositoryNoSqlColumnString | RepositoryNoSqlColumnObject | RepositoryNoSqlColumnDateTime;
+type RepositoryNoSqlColumnInteger = {
     type: 'INTEGER';
     defaultValue?: number | null;
 };
-type ModelNoSqlColumnString = {
+type RepositoryNoSqlColumnString = {
     type: 'STRING';
     defaultValue?: string | null;
 };
-type ModelNoSqlColumnDateTime = {
+type RepositoryNoSqlColumnDateTime = {
     type: 'DATETIME';
     defaultValue?: Date | 'CURRENT_TIMESTAMP' | null;
 };
-type ModelNoSqlColumnObject<Value> = {
+type RepositoryNoSqlColumnObject = {
     type: 'OBJECT';
-    defaultValue?: Value | null;
+    defaultValue?: object | null;
 };
-type ModelSqlColumnInteger = {
+type RepositorySqlColumnInteger = {
     allowNull?: boolean;
     type: 'INTEGER';
-    options?: {
-        length: number;
-    };
     defaultValue?: number | null;
 };
-type ModelSqlColumnBigint = {
+type RepositorySqlColumnBigint = {
     allowNull?: boolean;
     type: 'BIGINT';
-    options?: {
-        length: number;
-    };
     defaultValue?: number | null;
 };
-type ModelSqlColumnFloat = {
+type RepositorySqlColumnFloat = {
     allowNull?: boolean;
     type: 'FLOAT';
-    options?: {
-        length: number;
-    };
     defaultValue?: number | null;
 };
-type ModelSqlColumnBoolean = {
+type RepositorySqlColumnBoolean = {
     allowNull?: boolean;
     type: 'BOOLEAN';
-    options?: {};
     defaultValue?: boolean | null;
 };
-type ModelSqlColumnString = {
+type RepositorySqlColumnString = {
     allowNull?: boolean;
     type: 'STRING';
     options?: {
@@ -53,7 +43,7 @@ type ModelSqlColumnString = {
     };
     defaultValue?: string | null;
 };
-type ModelSqlColumnText = {
+type RepositorySqlColumnText = {
     allowNull?: boolean;
     type: 'TEXT';
     options?: {
@@ -61,54 +51,54 @@ type ModelSqlColumnText = {
     };
     defaultValue?: string;
 };
-type ModelSqlColumnDateTime = {
+type RepositorySqlColumnDateTime = {
     type: 'DATETIME';
     defaultValue?: Date | 'CURRENT_TIMESTAMP' | null;
     allowNull?: boolean;
 };
-type ModelSqlColumnJson<Value> = {
+type RepositorySqlColumnJson = {
     type: 'JSON';
-    defaultValue?: Value | null;
+    defaultValue?: object | null;
     allowNull?: boolean;
 };
-type ModelSqlColumn<Row, Value> = ModelSqlColumnInteger | ModelSqlColumnBigint | ModelSqlColumnFloat | ModelSqlColumnBoolean | ModelSqlColumnString | ModelSqlColumnJson<Value> | ModelSqlColumnText | ModelSqlColumnDateTime;
-export type GmModelSqlColumn = ModelSqlColumn<any, any>;
-export type GmModelNoSqlColumn = ModelNoSqlColumn<any, any>;
-export type GmConfig = {
+type RepositorySqlColumn = RepositorySqlColumnInteger | RepositorySqlColumnBigint | RepositorySqlColumnFloat | RepositorySqlColumnBoolean | RepositorySqlColumnString | RepositorySqlColumnJson | RepositorySqlColumnText | RepositorySqlColumnDateTime;
+export type GmRepositorySqlColumn = RepositorySqlColumn;
+export type GmRepositoryNoSqlColumn = RepositoryNoSqlColumn;
+export type GmCrudConfig = {
     dtoName: {
         singular: string;
         plural: string;
     };
     moduleName: string;
-    model: GmModelConfig;
-    endpoints: GmEndpointsConfig;
+    repository: GmCrudRepositoryConfig;
+    endpoints: GmCrudEndpointsConfig;
     hasSeparated: boolean;
     rootDir?: string;
 };
-type GmModelConfig = GmSqlModelConfig | GmNoSqlModelConfig;
-export type GmSqlModelConfig = {
-    columns: Record<string, GmModelSqlColumn>;
+type GmCrudRepositoryConfig = GmCrudSqlRepositoryConfig | GmCrudNoSqlRepositoryConfig;
+export type GmCrudSqlRepositoryConfig = {
+    columns: Record<string, GmRepositorySqlColumn>;
     dbType: 'sql';
     type: 'dynamicByDomain' | 'dynamicDbConfigByLegalEntityId' | 'staticByDbConnection';
 };
-export type GmNoSqlModelConfig = {
-    columns: Record<string, GmModelNoSqlColumn>;
+export type GmCrudNoSqlRepositoryConfig = {
+    columns: Record<string, GmRepositoryNoSqlColumn>;
     dbType: 'noSql';
     type: 'byDatabaseNameAndYearMonth';
 };
-export type GmEndpointsConfig = {
-    add: GmEndpointConfigAction;
-    delete: GmEndpointConfigAction;
-    update: GmEndpointConfigAction;
-    list: GmEndpointConfig;
-    get: GmEndpointConfig;
+export type GmCrudEndpointsConfig = {
+    add: GmCrudEndpointConfigAction;
+    delete: GmCrudEndpointConfigAction;
+    update: GmCrudEndpointConfigAction;
+    list: GmCrudEndpointConfig;
+    get: GmCrudEndpointConfig;
 };
-export type GmEndpointConfig = {
+export type GmCrudEndpointConfig = {
     hasAuth: boolean;
     hasStructureAccess: boolean;
 };
-export type GmEndpointConfigAction = GmEndpointConfig & {
+export type GmCrudEndpointConfigAction = GmCrudEndpointConfig & {
     hasActionLogger: boolean;
 };
-export type GmEndpointType = 'add' | 'delete' | 'update' | 'list' | 'get';
+export type GmCrudEndpointType = 'add' | 'delete' | 'update' | 'list' | 'get';
 export {};

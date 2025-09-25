@@ -43,9 +43,9 @@ class GmModuleModelByNoSqlMonthAndYear extends GmAbstractModuleFnModelNoSql_1.Gm
             name: 'returnModel',
             value: `
             return LoaderModelNoSql.byDatabaseNameAndYearMonth({
-                columns:${this.getColumnsPropertyName()},
-                collectionName:${this.getCollectionNamePropertyName()},
-                databaseName:${this.getDatabaseNamePropertyName()},
+                entity: ${this.getEntityPropertyName()},
+                collectionName:${StringCaseHelper_1.StringCaseHelper.toSnakeCase(this.getConfig().moduleName)},
+                databaseName:${StringCaseHelper_1.StringCaseHelper.toSnakeCase(this.getConfig().moduleName)},
                 ${monthStr},
                 ${yearStr},
             })`,

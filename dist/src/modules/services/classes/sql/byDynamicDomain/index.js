@@ -20,7 +20,7 @@ class GmModuleServiceClassCrudBySqlDynamicDomain extends GmModuleServiceClassByS
     init() {
         super.init();
         this.addService(this.actionsLoggerService);
-        this.addAndInitMethod(new GmModuleServiceMethodCreate_1.GmModuleServiceMethodCreate(this.getConfig(), this.getModuleModel(), this.actionsLoggerService, this.allCallVarNames.create), this.allCallVarNames.create.domain).addAndInitMethod(new GmModuleServiceMethodUpdate_1.GmModuleServiceMethodUpdate(this.getConfig(), this.getModuleModel(), this.actionsLoggerService, this.allCallVarNames.update), this.allCallVarNames.update.domain).addAndInitMethod(new GmModuleServiceMethodDelete_1.GmModuleServiceMethodDelete(this.getConfig(), this.getModuleModel(), this.actionsLoggerService, this.allCallVarNames.delete), this.allCallVarNames.delete.domain).addAndInitMethod(new GmModuleServiceMethodGetById_1.GmModuleServiceMethodGetById(this.getConfig(), this.getModuleModel(), this.allCallVarNames.getById), this.allCallVarNames.getById.domain).addAndInitMethod(new GmModuleServiceMethodGetPagination_1.GmModuleServiceMethodGetPagination(this.getConfig(), this.getModuleModel(), this.allCallVarNames.getPagination), this.allCallVarNames.getPagination.domain);
+        this.addAndInitMethod(new GmModuleServiceMethodCreate_1.GmModuleServiceMethodCreate(this.getConfig(), this.getModuleRepository(), this.actionsLoggerService, this.allCallVarNames.create), this.allCallVarNames.create.domain).addAndInitMethod(new GmModuleServiceMethodUpdate_1.GmModuleServiceMethodUpdate(this.getConfig(), this.getModuleRepository(), this.actionsLoggerService, this.allCallVarNames.update), this.allCallVarNames.update.domain).addAndInitMethod(new GmModuleServiceMethodDelete_1.GmModuleServiceMethodDelete(this.getConfig(), this.getModuleRepository(), this.actionsLoggerService, this.allCallVarNames.delete), this.allCallVarNames.delete.domain).addAndInitMethod(new GmModuleServiceMethodGetById_1.GmModuleServiceMethodGetById(this.getConfig(), this.getModuleRepository(), this.allCallVarNames.getById), this.allCallVarNames.getById.domain).addAndInitMethod(new GmModuleServiceMethodGetPagination_1.GmModuleServiceMethodGetPagination(this.getConfig(), this.getModuleRepository(), this.allCallVarNames.getPagination), this.allCallVarNames.getPagination.domain);
         this.api = new GmModuleServiceClassCurdApi_1.GmModuleServiceClassApiAll(this.serviceVarName, this.getMethodByIndex(0), this.getMethodByIndex(1), this.getMethodByIndex(2), this.getMethodByIndex(3), this.getMethodByIndex(4));
     }
 }
@@ -35,7 +35,7 @@ class GmModuleServiceClassCreateBySqlDynamicDomain extends GmModuleServiceClassB
     init() {
         super.init();
         this.addService(this.actionsLoggerService)
-            .addAndInitMethod(new GmModuleServiceMethodCreate_1.GmModuleServiceMethodCreate(this.getConfig(), this.getModuleModel(), this.actionsLoggerService, this.callVarNames), this.callVarNames.domain);
+            .addAndInitMethod(new GmModuleServiceMethodCreate_1.GmModuleServiceMethodCreate(this.getConfig(), this.getModuleRepository(), this.actionsLoggerService, this.callVarNames), this.callVarNames.domain);
         this.api = new GmModuleServiceClassCurdApi_1.GmModuleServiceClassApiCreate(this.serviceVarName, this.getMethodByIndex(0));
     }
 }
@@ -50,7 +50,7 @@ class GmModuleServiceClassUpdateBySqlDynamicDomain extends GmModuleServiceClassB
     init() {
         super.init();
         this.addService(this.actionsLoggerService)
-            .addAndInitMethod(new GmModuleServiceMethodUpdate_1.GmModuleServiceMethodUpdate(this.getConfig(), this.getModuleModel(), this.actionsLoggerService, this.callVarNames), this.callVarNames.domain);
+            .addAndInitMethod(new GmModuleServiceMethodUpdate_1.GmModuleServiceMethodUpdate(this.getConfig(), this.getModuleRepository(), this.actionsLoggerService, this.callVarNames), this.callVarNames.domain);
         this.api = new GmModuleServiceClassCurdApi_1.GmModuleServiceClassApiUpdate(this.serviceVarName, this.getMethodByIndex(0));
     }
 }
@@ -65,7 +65,7 @@ class GmModuleServiceClassDeleteBySqlDynamicDomain extends GmModuleServiceClassB
     init() {
         super.init();
         this.addService(this.actionsLoggerService)
-            .addAndInitMethod(new GmModuleServiceMethodDelete_1.GmModuleServiceMethodDelete(this.getConfig(), this.getModuleModel(), this.actionsLoggerService, this.callVarNames), this.callVarNames.domain);
+            .addAndInitMethod(new GmModuleServiceMethodDelete_1.GmModuleServiceMethodDelete(this.getConfig(), this.getModuleRepository(), this.actionsLoggerService, this.callVarNames), this.callVarNames.domain);
         this.api = new GmModuleServiceClassCurdApi_1.GmModuleServiceClassApiDelete(this.serviceVarName, this.getMethodByIndex(0));
     }
 }
@@ -78,7 +78,7 @@ class GmModuleServiceClassGetBySqlDynamicDomain extends GmModuleServiceClassBySq
     }
     init() {
         super.init();
-        this.addAndInitMethod(new GmModuleServiceMethodGetById_1.GmModuleServiceMethodGetById(this.getConfig(), this.getModuleModel(), this.callVarNames), this.callVarNames.domain);
+        this.addAndInitMethod(new GmModuleServiceMethodGetById_1.GmModuleServiceMethodGetById(this.getConfig(), this.getModuleRepository(), this.callVarNames), this.callVarNames.domain);
         this.api = new GmModuleServiceClassCurdApi_1.GmModuleServiceClassApiGet(this.serviceVarName, this.getMethodByIndex(0));
     }
 }
@@ -91,7 +91,7 @@ class GmModuleServiceClassGetAllBySqlDynamicDomain extends GmModuleServiceClassB
     }
     init() {
         super.init();
-        this.addAndInitMethod(new GmModuleServiceMethodGetPagination_1.GmModuleServiceMethodGetPagination(this.getConfig(), this.getModuleModel(), this.callVarNames), this.callVarNames.domain);
+        this.addAndInitMethod(new GmModuleServiceMethodGetPagination_1.GmModuleServiceMethodGetPagination(this.getConfig(), this.getModuleRepository(), this.callVarNames), this.callVarNames.domain);
         this.api = new GmModuleServiceClassCurdApi_1.GmModuleServiceClassApiGetPagination(this.serviceVarName, this.getMethodByIndex(0));
     }
 }

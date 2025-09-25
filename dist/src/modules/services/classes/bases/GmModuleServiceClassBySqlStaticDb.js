@@ -2,27 +2,27 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GmModuleServiceClassBySqlStaticDb = void 0;
 const GmModuleAbstractServiceClass_1 = require("../abstract/GmModuleAbstractServiceClass");
-const GmModuleModelSqlByStaticDb_1 = require("../../../model/GmModuleModelSqlByStaticDb");
-const GmModuleModelType_1 = require("../../../model/GmModuleModelType");
+const GmModuleRepositorySqlByStaticDb_1 = require("../../../repository/GmModuleRepositorySqlByStaticDb");
+const GmModuleEntityType_1 = require("../../../repository/GmModuleEntityType");
 const PROP_NAMES = {
-    model: 'model',
+    repository: 'repository',
 };
 class GmModuleServiceClassBySqlStaticDb extends GmModuleAbstractServiceClass_1.GmModuleAbstractServiceClass {
     constructor(config, className) {
         super(config, className);
-        this.model = new GmModuleModelSqlByStaticDb_1.GmModuleModelSqlByStaticDb(config, `this.${PROP_NAMES.model}`);
-        this.modelType = new GmModuleModelType_1.GmModuleModelType(config);
+        this.repository = new GmModuleRepositorySqlByStaticDb_1.GmModuleRepositorySqlByStaticDb(config, `this.${PROP_NAMES.repository}`);
+        this.entityType = new GmModuleEntityType_1.GmModuleEntityType(config);
     }
-    getModuleModel() {
-        return this.model;
+    getModuleRepository() {
+        return this.repository;
     }
     init() {
-        this.addModule(this.model);
-        this.addModule(this.modelType);
+        this.addModule(this.repository);
+        this.addModule(this.entityType);
         this.addConstructorProp({
-            varName: PROP_NAMES.model,
-            type: this.modelType.getPropertyName(),
-            defaultValue: this.model.getPropertyName(),
+            varName: PROP_NAMES.repository,
+            type: this.entityType.getPropertyName(),
+            defaultValue: this.repository.getPropertyName(),
             privateReadOnly: true,
         });
     }

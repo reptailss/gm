@@ -5,14 +5,14 @@ import {GmServiceMutateRowResultType} from '@services/resultTypes/GmServiceMutat
 import {GmModuleUpdateDto} from '@modules/dto/GmModuleUpdateDto'
 import {GmServiceUserInfoType} from '@services/userInfo/GmServiceUserInfoType'
 import {GmModuleRoutePaths} from '@modules/routePaths/GmModuleRoutePaths'
-import {GmConfig} from 'os-core-ts'
+import {GmCrudConfig} from 'os-core-ts'
 import {IGmModuleServiceApiUpdate} from '@modules/services/interfaces/gmModuleServiceClassCurdApi'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmModuleDtoHelper} from '@modules/dto/helper/GmModuleDtoHelper'
 import {GmSwaggerInfoDec} from '@decorators/controllerDecorators/GmSwaggerInfoDec'
 import {GmPutDec} from '@decorators/controllerDecorators/GmPutDec'
 import {GmBodyDec} from '@decorators/controllerDecorators/GmBodyDec'
-import {GmConfigChecker} from '@config/GmConfigChecker'
+import {GmCrudConfigChecker} from '@crudConfig/GmCrudConfigChecker'
 import {GmAuthDec} from '@decorators/controllerDecorators/GmAuthDec'
 import {GmParamDec, GmParamNumDec} from '@decorators/controllerDecorators/GmParamDec'
 
@@ -26,7 +26,7 @@ export class GmModuleControllerMethodUpdate extends GmAbstractModuleClassMethod 
     private readonly gmModuleRoutePaths: GmModuleRoutePaths
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         private readonly api: IGmModuleServiceApiUpdate,
         private readonly varNames: {
             updateDto: string
@@ -69,7 +69,7 @@ export class GmModuleControllerMethodUpdate extends GmAbstractModuleClassMethod 
             callVarName: this.varNames.updateDto,
             decorator: new GmBodyDec(this.varNames.updateDtoSchema),
         })
-        if (GmConfigChecker.hasAuth(this.getConfig(), 'update')) {
+        if (GmCrudConfigChecker.hasAuth(this.getConfig(), 'update')) {
             this.addService(this.gmServiceUserInfoType)
             this.addProp({
                 type: this.gmServiceUserInfoType.getUserInfoType(),

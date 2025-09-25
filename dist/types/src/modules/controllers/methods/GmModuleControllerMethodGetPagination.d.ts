@@ -1,6 +1,6 @@
 import { GmAbstractModuleClassMethod } from "../../abstractModule/GmAbstractModuleClassMethod";
 import { IGmModuleClassMethod } from "../../interfaces/gmModule";
-import { GmConfig } from "../../../os-core";
+import { GmCrudConfig } from "../../../os-core";
 import { IGmModuleServiceApiGetPagination } from "../../services/interfaces/gmModuleServiceClassCurdApi";
 export declare class GmModuleControllerMethodGetPagination extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {
     private readonly api;
@@ -11,7 +11,7 @@ export declare class GmModuleControllerMethodGetPagination extends GmAbstractMod
     private readonly gmModuleDto;
     private readonly gmServiceUserInfoType;
     private readonly gmModuleRoutePaths;
-    constructor(config: GmConfig, api: IGmModuleServiceApiGetPagination, varNames: {
+    constructor(config: GmCrudConfig, api: IGmModuleServiceApiGetPagination, varNames: {
         userInfo: string;
         params: string;
         paramsSchema: string;

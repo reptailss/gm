@@ -1,7 +1,7 @@
 import { GmAbstractModuleClassMethod } from "../../abstractModule/GmAbstractModuleClassMethod";
 import { IGmModuleClassMethod } from "../../interfaces/gmModule";
-import { GmConfig } from "../../../os-core";
-import { IGmModuleModel } from "../../model/interfaces/gmModuleModel";
+import { GmCrudConfig } from "../../../os-core";
+import { IGmModuleRepository } from "../../repository/interfaces/gmModuleRepository";
 declare const PROPS_VAR_NAMES: {
     params: string;
     dateStart: string;
@@ -13,7 +13,7 @@ export declare class GmModuleServiceMethodGetPaginationNoSql extends GmAbstractM
     private readonly gmServicePaginationValuesType;
     private readonly gmServicePaginationNoSql;
     private readonly callVarNames;
-    constructor(config: GmConfig, gmModuleModel: IGmModuleModel, callVarNames: typeof PROPS_VAR_NAMES);
+    constructor(config: GmCrudConfig, gmModuleRepository: IGmModuleRepository, callVarNames: typeof PROPS_VAR_NAMES);
     getPropertyName(): string;
     init(): void;
 }

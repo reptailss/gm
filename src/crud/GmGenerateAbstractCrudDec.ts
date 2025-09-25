@@ -1,4 +1,4 @@
-import {GmConfig} from 'os-core-ts'
+import {GmCrudConfig} from 'os-core-ts'
 import {IGmModuleClass} from '@modules/interfaces/gmModule'
 import {GmWriteModule} from '@writeModule/GmWriteModule'
 import {GmModuleAppModule} from '@modules/appModule/GmModuleAppModule'
@@ -6,10 +6,10 @@ import {GmModuleAppModule} from '@modules/appModule/GmModuleAppModule'
 
 export class GmGenerateAbstractCrudDec {
 
-    private config: GmConfig
+    private config: GmCrudConfig
     private controllers: IGmModuleClass[] = []
 
-    constructor(config: GmConfig, controllers: IGmModuleClass[]) {
+    constructor(config: GmCrudConfig, controllers: IGmModuleClass[]) {
         this.config = config
         this.controllers = controllers
     }

@@ -1,5 +1,5 @@
 import {GmGenerateAbstractCrudDec} from '@crud/GmGenerateAbstractCrudDec'
-import {GmConfig} from 'os-core-ts'
+import {GmCrudConfig} from 'os-core-ts'
 import {IGmModuleClass} from '@modules/interfaces/gmModule'
 import {
     GmModuleControllerClassCreateByNoSqlMonthAndYear, GmModuleControllerClassCrudByNoSqlMonthAndYear,
@@ -10,11 +10,11 @@ import {
 export class GmGenerateCrudDecNoSql extends GmGenerateAbstractCrudDec {
 
 
-    constructor(config: GmConfig) {
+    constructor(config: GmCrudConfig) {
 
         const controllers: IGmModuleClass[] = []
         if (config.hasSeparated) {
-            switch (config.model.type) {
+            switch (config.repository.type) {
                 case 'byDatabaseNameAndYearMonth': {
                     controllers.push(new GmModuleControllerClassCreateByNoSqlMonthAndYear(config))
                     controllers.push(new GmModuleControllerClassGetAllByNoSqlMonthAndYear(config))
@@ -22,7 +22,7 @@ export class GmGenerateCrudDecNoSql extends GmGenerateAbstractCrudDec {
                 }
             }
         } else {
-            switch (config.model.type) {
+            switch (config.repository.type) {
                 case 'byDatabaseNameAndYearMonth': {
                     controllers.push(new GmModuleControllerClassCrudByNoSqlMonthAndYear(config))
                     break

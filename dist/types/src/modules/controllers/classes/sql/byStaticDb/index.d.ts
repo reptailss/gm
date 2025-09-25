@@ -1,4 +1,4 @@
-import { GmConfig } from "../../../../../os-core";
+import { GmCrudConfig } from "../../../../../os-core";
 import { IGmModuleClass } from "../../../../interfaces/gmModule";
 import { GmModuleAbstractControllerClass } from "../../abstract/GmModuleAbstractControllerClass";
 export declare class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractControllerClass implements IGmModuleClass {
@@ -9,7 +9,7 @@ export declare class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAb
     private readonly gmValidatorBuilder;
     private readonly gmModuleCreateDto;
     private readonly gmModuleUpdateDto;
-    constructor(config: GmConfig);
+    constructor(config: GmCrudConfig);
     init(): void;
     private getValidatorVarName;
     private getServiceVarName;
@@ -21,7 +21,7 @@ export declare class GmModuleControllerClassCreateBySqlStaticDb extends GmModule
     private readonly gmAccessStructureMethodProcessorByStaticDb;
     private readonly gmValidatorBuilder;
     private readonly gmModuleCreateDto;
-    constructor(config: GmConfig);
+    constructor(config: GmCrudConfig);
     init(): void;
     private getValidatorVarName;
     private getServiceVarName;
@@ -33,7 +33,7 @@ export declare class GmModuleControllerClassUpdateBySqlStaticDb extends GmModule
     private readonly gmAccessStructureMethodProcessorByStaticDb;
     private readonly gmValidatorBuilder;
     private readonly gmModuleUpdateDto;
-    constructor(config: GmConfig);
+    constructor(config: GmCrudConfig);
     init(): void;
     private getValidatorVarName;
     private getServiceVarName;
@@ -42,7 +42,7 @@ export declare class GmModuleControllerClassDeleteBySqlStaticDb extends GmModule
     private readonly serviceCrud;
     private readonly gmGetVarNames;
     private readonly gmAccessStructureMethodProcessorByStaticDb;
-    constructor(config: GmConfig);
+    constructor(config: GmCrudConfig);
     init(): void;
     private getServiceVarName;
 }
@@ -50,7 +50,7 @@ export declare class GmModuleControllerClassGetBySqlStaticDb extends GmModuleAbs
     private readonly serviceCrud;
     private readonly gmGetVarNames;
     private readonly gmAccessStructureMethodProcessorByStaticDb;
-    constructor(config: GmConfig);
+    constructor(config: GmCrudConfig);
     init(): void;
     private getServiceVarName;
 }
@@ -60,7 +60,7 @@ export declare class GmModuleControllerClassGetAllBySqlStaticDb extends GmModule
     private readonly gmGetVarNames;
     private readonly gmAccessStructureMethodProcessorByStaticDb;
     private readonly gmValidatorBuilder;
-    constructor(config: GmConfig);
+    constructor(config: GmCrudConfig);
     init(): void;
     private getValidatorVarName;
     private getServiceVarName;

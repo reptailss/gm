@@ -1,6 +1,6 @@
-import {GmConfig} from 'os-core-ts'
+import {GmCrudConfig} from 'os-core-ts'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
-import {GmConfigChecker} from '@config/GmConfigChecker'
+import {GmCrudConfigChecker} from '@crudConfig/GmCrudConfigChecker'
 import {GmAccessStructureMethodProcessor} from '@modules/structure/GmAccessStructureMethodProcessor'
 import {IGmModuleClass, IGmModuleClassMethod} from '@modules/interfaces/gmModule'
 import {GmQueryParamNumDec} from '@decorators/controllerDecorators/GmQueryParamDec'
@@ -26,7 +26,7 @@ import {GmModuleControllerMethodGetPagination} from '@modules/controllers/method
 
 
 class GmGetVarNamesByStaticDb {
-    constructor(private readonly config: GmConfig) {
+    constructor(private readonly config: GmCrudConfig) {
     }
 
     public userInfo() {
@@ -40,8 +40,8 @@ class GmGetVarNamesByStaticDb {
             createBody,
             createBodySchema: `create${StringCaseHelper.toPascalCase(this.config.dtoName.singular)}BodySchema`,
             legalEntityId: `${createBody}.legal_entity_id`,
-            createBodyType: !GmConfigChecker.hasStructureAccess(this.config, 'add') ||
-            GmConfigChecker.hasStructureAccess(this.config, 'add') && this.checkHasLeIdColumn()
+            createBodyType: !GmCrudConfigChecker.hasStructureAccess(this.config, 'add') ||
+            GmCrudConfigChecker.hasStructureAccess(this.config, 'add') && this.checkHasLeIdColumn()
                 ? undefined : `Create${StringCaseHelper.toPascalCase(this.config.dtoName.singular)}Body`,
         }
     }
@@ -54,7 +54,7 @@ class GmGetVarNamesByStaticDb {
             id: 'id',
             openUserId: `${this.userInfo()}.open_user_id`,
             legalEntityId: `${updateBody}.legal_entity_id`,
-            updateBodyType: GmConfigChecker.hasStructureAccess(this.config, 'update')  ? `Update${StringCaseHelper.toPascalCase(this.config.dtoName.singular)}Body` : undefined,
+            updateBodyType: GmCrudConfigChecker.hasStructureAccess(this.config, 'update')  ? `Update${StringCaseHelper.toPascalCase(this.config.dtoName.singular)}Body` : undefined,
         }
     }
 
@@ -85,10 +85,10 @@ class GmGetVarNamesByStaticDb {
     }
 
     public checkHasLeIdColumn(): boolean {
-        return 'legal_entity_id' in this.config.model.columns &&
+        return 'legal_entity_id' in this.config.repository.columns &&
             (
-                this.config.model.columns.legal_entity_id.type === 'INTEGER' ||
-                this.config.model.columns.legal_entity_id.type === 'BIGINT'
+                this.config.repository.columns.legal_entity_id.type === 'INTEGER' ||
+                this.config.repository.columns.legal_entity_id.type === 'BIGINT'
             )
     }
 
@@ -96,7 +96,7 @@ class GmGetVarNamesByStaticDb {
 
 class GmAccessStructureMethodProcessorByStaticDb extends GmAccessStructureMethodProcessor {
 
-    constructor(config: GmConfig) {
+    constructor(config: GmCrudConfig) {
         const gmGetVarNames = new GmGetVarNamesByStaticDb(config)
         super(config, {
             add: {
@@ -160,7 +160,7 @@ class GmValidatorBuilderByStaticDb {
     private readonly gmServiceSchemaValidatorType: GmServiceSchemaValidatorType
 
     constructor(
-        private readonly config: GmConfig,
+        private readonly config: GmCrudConfig,
         private readonly validatorVarName: string,
         private readonly validator: GmModuleValidator,
     ) {
@@ -176,7 +176,7 @@ class GmValidatorBuilderByStaticDb {
 
     public add() {
         const schemaTypeStr = this.gmGetVarNames.add().createBodyType ? ` :${this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.gmGetVarNames.add().createBodyType || '')}` : ''
-        if (!GmConfigChecker.hasStructureAccess(this.config, 'add')) {
+        if (!GmCrudConfigChecker.hasStructureAccess(this.config, 'add')) {
             return `const ${this.gmGetVarNames.add().createBodySchema}${schemaTypeStr} = ${this.validator.api.getCreateDtoSchema()}`
         }
         if (this.gmGetVarNames.checkHasLeIdColumn()) {
@@ -189,7 +189,7 @@ class GmValidatorBuilderByStaticDb {
 
     public update() {
         const schemaTypeStr = this.gmGetVarNames.update().updateBodyType ? ` :${this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.gmGetVarNames.update().updateBodyType || '')}` : ''
-        if (!GmConfigChecker.hasStructureAccess(this.config, 'update')) {
+        if (!GmCrudConfigChecker.hasStructureAccess(this.config, 'update')) {
             return `const ${this.gmGetVarNames.update().updateBodySchema}${schemaTypeStr} = ${this.validator.api.getUpdateDtoSchema()}`
         }
         return `const ${this.gmGetVarNames.update().updateBodySchema}${schemaTypeStr} = ${this.validator.api.getUpdateDtoSchema()}.merge(${this.gmServiceValidator.object({
@@ -203,10 +203,10 @@ class GmValidatorBuilderByStaticDb {
 
     public checkHasAddValidatorService(type: 'add' | 'update') {
         if(type === 'update'){
-            return GmConfigChecker.hasStructureAccess(this.config, type)
+            return GmCrudConfigChecker.hasStructureAccess(this.config, type)
         }
 
-        return GmConfigChecker.hasStructureAccess(this.config, type) && !this.gmGetVarNames.checkHasLeIdColumn()
+        return GmCrudConfigChecker.hasStructureAccess(this.config, type) && !this.gmGetVarNames.checkHasLeIdColumn()
     }
 
 
@@ -223,7 +223,7 @@ export class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractCo
     private readonly gmModuleCreateDto: GmModuleCreateDto
     private readonly gmModuleUpdateDto: GmModuleUpdateDto
 
-    constructor(config: GmConfig,
+    constructor(config: GmCrudConfig,
     ) {
         super(
             config,
@@ -307,7 +307,7 @@ export class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractCo
                 createDtoSchema: this.gmGetVarNames.add().createBodySchema,
             },
         )
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
             this.gmAccessStructureMethodProcessorByStaticDb.add(methodCreate)
         }
         const methodUpdate = new GmModuleControllerMethodUpdate(
@@ -321,7 +321,7 @@ export class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractCo
                 id: this.gmGetVarNames.update().id,
             },
         )
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'update')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'update')) {
             this.gmAccessStructureMethodProcessorByStaticDb.update(methodUpdate)
         }
         const methodDelete = new GmModuleControllerMethodDelete(
@@ -332,7 +332,7 @@ export class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractCo
                 id: this.gmGetVarNames.delete().id,
             },
         )
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'delete')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'delete')) {
             this.gmAccessStructureMethodProcessorByStaticDb.delete(methodDelete)
         }
         const methodGetById = new GmModuleControllerMethodGetById(
@@ -343,7 +343,7 @@ export class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractCo
                 id: this.gmGetVarNames.get().id,
             },
         )
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'get')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'get')) {
             this.gmAccessStructureMethodProcessorByStaticDb.get(methodGetById)
         }
         const methodPagination = new GmModuleControllerMethodGetPagination(
@@ -355,7 +355,7 @@ export class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractCo
                 paramsSchema: this.gmGetVarNames.list().paramsSchema,
             },
         )
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
             this.gmAccessStructureMethodProcessorByStaticDb.list(methodPagination)
         }
         this.addMethod(methodCreate)
@@ -412,7 +412,7 @@ export class GmModuleControllerClassCreateBySqlStaticDb extends GmModuleAbstract
     private readonly gmValidatorBuilder: GmValidatorBuilderByStaticDb
     private readonly gmModuleCreateDto: GmModuleCreateDto
 
-    constructor(config: GmConfig,
+    constructor(config: GmCrudConfig,
     ) {
         super(
             config,
@@ -465,7 +465,7 @@ export class GmModuleControllerClassCreateBySqlStaticDb extends GmModuleAbstract
                 createDtoSchema: this.gmGetVarNames.add().createBodySchema,
             },
         )
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
             this.gmAccessStructureMethodProcessorByStaticDb.add(methodCreate)
         }
         this.addMethod(methodCreate)
@@ -509,7 +509,7 @@ export class GmModuleControllerClassUpdateBySqlStaticDb extends GmModuleAbstract
     private readonly gmValidatorBuilder: GmValidatorBuilderByStaticDb
     private readonly gmModuleUpdateDto: GmModuleUpdateDto
 
-    constructor(config: GmConfig,
+    constructor(config: GmCrudConfig,
     ) {
         super(
             config,
@@ -562,7 +562,7 @@ export class GmModuleControllerClassUpdateBySqlStaticDb extends GmModuleAbstract
                 id: this.gmGetVarNames.update().id,
             },
         )
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'update')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'update')) {
             this.gmAccessStructureMethodProcessorByStaticDb.update(methodUpdate)
             this.addModule(this.gmModuleUpdateDto)
         }
@@ -603,7 +603,7 @@ export class GmModuleControllerClassDeleteBySqlStaticDb extends GmModuleAbstract
     private readonly gmGetVarNames: GmGetVarNamesByStaticDb
     private readonly gmAccessStructureMethodProcessorByStaticDb: GmAccessStructureMethodProcessorByStaticDb
 
-    constructor(config: GmConfig,
+    constructor(config: GmCrudConfig,
     ) {
         super(
             config,
@@ -634,7 +634,7 @@ export class GmModuleControllerClassDeleteBySqlStaticDb extends GmModuleAbstract
                 id: this.gmGetVarNames.delete().id,
             },
         )
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'delete')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'delete')) {
             this.gmAccessStructureMethodProcessorByStaticDb.delete(methodDelete)
         }
         this.addMethod(methodDelete)
@@ -661,7 +661,7 @@ export class GmModuleControllerClassGetBySqlStaticDb extends GmModuleAbstractCon
     private readonly gmAccessStructureMethodProcessorByStaticDb: GmAccessStructureMethodProcessorByStaticDb
 
 
-    constructor(config: GmConfig,
+    constructor(config: GmCrudConfig,
     ) {
         super(
             config,
@@ -691,7 +691,7 @@ export class GmModuleControllerClassGetBySqlStaticDb extends GmModuleAbstractCon
                 id: this.gmGetVarNames.get().id,
             },
         )
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'get')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'get')) {
             this.gmAccessStructureMethodProcessorByStaticDb.get(methodGetById)
         }
         this.addMethod(methodGetById)
@@ -720,7 +720,7 @@ export class GmModuleControllerClassGetAllBySqlStaticDb extends GmModuleAbstract
     private readonly gmAccessStructureMethodProcessorByStaticDb: GmAccessStructureMethodProcessorByStaticDb
     private readonly gmValidatorBuilder: GmValidatorBuilderByStaticDb
 
-    constructor(config: GmConfig,
+    constructor(config: GmCrudConfig,
     ) {
         super(
             config,
@@ -764,7 +764,7 @@ export class GmModuleControllerClassGetAllBySqlStaticDb extends GmModuleAbstract
                 paramsSchema: this.gmGetVarNames.list().paramsSchema,
             },
         )
-        if (GmConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
+        if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'list')) {
             this.gmAccessStructureMethodProcessorByStaticDb.list(methodPagination)
         }
         this.addMethod(methodPagination)

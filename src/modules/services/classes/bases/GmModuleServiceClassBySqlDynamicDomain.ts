@@ -1,48 +1,48 @@
 import {GmModuleAbstractServiceClass} from '@modules/services/classes/abstract/GmModuleAbstractServiceClass'
 import {IGmModuleClass, IGmModuleClassMethod} from '@modules/interfaces/gmModule'
-import {GmModuleModelSqlByDynamicDomain} from '@modules/model/GmModuleModelSqlByDynamicDomain'
-import {GmModuleModelType} from '@modules/model/GmModuleModelType'
-import {GmConfig} from 'os-core-ts'
-import {IGmModuleModel} from '@modules/model/interfaces/gmModuleModel'
+import {GmModuleRepositorySqlByDynamicDomain} from '@modules/repository/GmModuleRepositorySqlByDynamicDomain'
+import {GmModuleEntityType} from '@modules/repository/GmModuleEntityType'
+import {GmCrudConfig} from 'os-core-ts'
+import {IGmModuleRepository} from '@modules/repository/interfaces/gmModuleRepository'
 
 
 const PROP_NAMES = {
-    model: 'model',
-    getModelCb: 'getModelCb',
+    repository: 'repository',
+    getRepositoryCb: 'getRepositoryCb',
     domain: 'domain',
 }
 
 export class GmModuleServiceClassBySqlDynamicDomain extends GmModuleAbstractServiceClass implements IGmModuleClass {
 
 
-    private readonly model: GmModuleModelSqlByDynamicDomain
-    private readonly modelType: GmModuleModelType
+    private readonly repository: GmModuleRepositorySqlByDynamicDomain
+    private readonly entityType: GmModuleEntityType
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         serviceName: string,
     ) {
         super(config, serviceName)
-        this.model = new GmModuleModelSqlByDynamicDomain(
+        this.repository = new GmModuleRepositorySqlByDynamicDomain(
             config,
             {
-                modelVarName: PROP_NAMES.model,
-                getModelCbVarName: `this.${PROP_NAMES.getModelCb}`,
+                repositoryVarName: PROP_NAMES.repository,
+                getRepositoryCbVarName: `this.${PROP_NAMES.getRepositoryCb}`,
                 domainVarName: PROP_NAMES.domain,
             },
         )
-        this.modelType = new GmModuleModelType(config)
+        this.entityType = new GmModuleEntityType(config)
 
     }
 
-    public getModuleModel(): IGmModuleModel {
-        return this.model
+    public getModuleRepository(): IGmModuleRepository {
+        return this.repository
     }
 
     public addAndInitMethod(method: IGmModuleClassMethod, domainVarName: string): this {
         method.prependBodyElement({
-            name: 'init model',
-            value: `const ${PROP_NAMES.model} = await ${this.model.getInitModel()}`,
+            name: 'init repository',
+            value: `const ${PROP_NAMES.repository} = await ${this.repository.getInitRepository()}`,
         })
         method.addProp({
             varName: PROP_NAMES.domain,
@@ -57,13 +57,13 @@ export class GmModuleServiceClassBySqlDynamicDomain extends GmModuleAbstractServ
 
     public init(): void {
 
-        this.addModule(this.model)
-        this.addModule(this.modelType)
+        this.addModule(this.repository)
+        this.addModule(this.entityType)
 
         this.addConstructorProp({
-            varName: PROP_NAMES.getModelCb,
-            type: this.modelType.getPropertyName(),
-            defaultValue: this.model.getPropertyName(),
+            varName: PROP_NAMES.getRepositoryCb,
+            type: this.entityType.getPropertyName(),
+            defaultValue: this.repository.getPropertyName(),
             privateReadOnly: true,
         })
     }

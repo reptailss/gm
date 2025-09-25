@@ -11,7 +11,7 @@ const GmModuleRoutePaths_1 = require("../../routePaths/GmModuleRoutePaths");
 const StringCaseHelper_1 = require("../../../helpers/StringCaseHelper");
 const GmSwaggerInfoDec_1 = require("../../../decorators/controllerDecorators/GmSwaggerInfoDec");
 const GmGetDec_1 = require("../../../decorators/controllerDecorators/GmGetDec");
-const GmConfigChecker_1 = require("../../../config/GmConfigChecker");
+const GmCrudConfigChecker_1 = require("../../../crudConfig/GmCrudConfigChecker");
 const GmAuthDec_1 = require("../../../decorators/controllerDecorators/GmAuthDec");
 const GmPaginationQueryParamsDec_1 = require("../../../decorators/controllerDecorators/GmPaginationQueryParamsDec");
 class GmModuleControllerMethodGetPagination extends GmAbstractModuleClassMethod_1.GmAbstractModuleClassMethod {
@@ -40,7 +40,7 @@ class GmModuleControllerMethodGetPagination extends GmAbstractModuleClassMethod_
         this.appendDecorator(new GmGetDec_1.GmGetDec(this.gmModuleRoutePaths.getRoutePathPropertyName('list')));
         this.setMethodScope('public');
         this.setAsyncType('async');
-        if (GmConfigChecker_1.GmConfigChecker.hasAuth(this.getConfig(), 'list')) {
+        if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasAuth(this.getConfig(), 'list')) {
             this.addService(this.gmServiceUserInfoType);
             this.addProp({
                 type: this.gmServiceUserInfoType.getUserInfoType(),

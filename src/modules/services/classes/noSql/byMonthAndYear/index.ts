@@ -10,7 +10,7 @@ import {
     IGmModuleServiceApiCreate, IGmModuleServiceApiGetPagination,
 } from '@modules/services/interfaces/gmModuleServiceClassCurdApi'
 import {GmServiceActionsLoggerService} from '@services/sendActionSystemLog/GmServiceActionsLoggerService'
-import {GmConfig} from 'os-core-ts'
+import {GmCrudConfig} from 'os-core-ts'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmModuleServiceMethodCreate} from '@modules/services/methods/GmModuleServiceMethodCreate'
 import {
@@ -46,7 +46,7 @@ export class GmModuleServiceClassCrudByNoSqlMonthAndYear extends GmModuleService
     private readonly actionsLoggerService: GmServiceActionsLoggerService
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         private readonly serviceVarName: string,
         private readonly allCallVarNames: AllCallVarNames,
     ) {
@@ -64,7 +64,7 @@ export class GmModuleServiceClassCrudByNoSqlMonthAndYear extends GmModuleService
         this.addAndInitMethod(
             new GmModuleServiceMethodCreate(
                 this.getConfig(),
-                this.getModuleModel(),
+                this.getModuleRepository(),
                 this.actionsLoggerService,
                 this.allCallVarNames.create,
             ),
@@ -73,7 +73,7 @@ export class GmModuleServiceClassCrudByNoSqlMonthAndYear extends GmModuleService
         )
         this.addMethod(new GmModuleServiceMethodGetPaginationNoSql(
             this.getConfig(),
-            this.getModuleModel(),
+            this.getModuleRepository(),
             this.allCallVarNames.getPagination,
         ))
 
@@ -94,7 +94,7 @@ export class GmModuleServiceClassCreateByNoSqlMonthAndYear extends GmModuleServi
     private readonly actionsLoggerService: GmServiceActionsLoggerService
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         private serviceVarName: string,
         private readonly callVarNames: CreateCallVarNames,
     ) {
@@ -111,7 +111,7 @@ export class GmModuleServiceClassCreateByNoSqlMonthAndYear extends GmModuleServi
             .addAndInitMethod(
                 new GmModuleServiceMethodCreate(
                     this.getConfig(),
-                    this.getModuleModel(),
+                    this.getModuleRepository(),
                     this.actionsLoggerService,
                     this.callVarNames,
                 ),
@@ -132,7 +132,7 @@ export class GmModuleServiceClassGetAllByNoSqlMonthAndYear extends GmModuleServi
     public api!: IGmModuleServiceApiGetPagination
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         private readonly serviceVarName: string,
         private readonly callVarNames: GetPaginationCallVarNames,
     ) {
@@ -146,7 +146,7 @@ export class GmModuleServiceClassGetAllByNoSqlMonthAndYear extends GmModuleServi
         super.init()
         this.addMethod(new GmModuleServiceMethodGetPaginationNoSql(
             this.getConfig(),
-            this.getModuleModel(),
+            this.getModuleRepository(),
             this.callVarNames,
         ))
 

@@ -1,7 +1,7 @@
 import {GmAbstractModuleType} from '@modules/abstractModule/GmAbstractModuleType'
 import {IGmModuleType} from '@modules/interfaces/gmModule'
 import {GmModuleCreateDto} from '@modules/dto/GmModuleCreateDto'
-import {GmConfig} from 'os-core-ts'
+import {GmCrudConfig} from 'os-core-ts'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmModuleDtoHelper} from '@modules/dto/helper/GmModuleDtoHelper'
 
@@ -11,7 +11,7 @@ export class GmModuleDto extends GmAbstractModuleType implements IGmModuleType {
     private readonly gmModuleCreateDto: GmModuleCreateDto
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
     ) {
         super(config)
         this.gmModuleCreateDto = new GmModuleCreateDto(config)

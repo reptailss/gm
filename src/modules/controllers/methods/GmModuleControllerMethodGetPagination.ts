@@ -6,12 +6,12 @@ import {GmServicePaginationQueryParamsType} from '@services/paginationTypes/GmSe
 import {GmModuleDto} from '@modules/dto/GmModuleDto'
 import {GmServiceUserInfoType} from '@services/userInfo/GmServiceUserInfoType'
 import {GmModuleRoutePaths} from '@modules/routePaths/GmModuleRoutePaths'
-import {GmConfig} from 'os-core-ts'
+import {GmCrudConfig} from 'os-core-ts'
 import {IGmModuleServiceApiGetPagination} from '@modules/services/interfaces/gmModuleServiceClassCurdApi'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmSwaggerInfoDec} from '@decorators/controllerDecorators/GmSwaggerInfoDec'
 import {GmGetDec} from '@decorators/controllerDecorators/GmGetDec'
-import {GmConfigChecker} from '@config/GmConfigChecker'
+import {GmCrudConfigChecker} from '@crudConfig/GmCrudConfigChecker'
 import {GmAuthDec} from '@decorators/controllerDecorators/GmAuthDec'
 import {GmPaginationQueryParamsDec} from '@decorators/controllerDecorators/GmPaginationQueryParamsDec'
 
@@ -26,7 +26,7 @@ export class GmModuleControllerMethodGetPagination extends GmAbstractModuleClass
     private readonly gmModuleRoutePaths: GmModuleRoutePaths
 
     constructor(
-        config: GmConfig,
+        config: GmCrudConfig,
         private readonly api: IGmModuleServiceApiGetPagination,
         private readonly varNames: {
             userInfo: string
@@ -63,7 +63,7 @@ export class GmModuleControllerMethodGetPagination extends GmAbstractModuleClass
         this.setMethodScope('public')
         this.setAsyncType('async')
 
-        if (GmConfigChecker.hasAuth(this.getConfig(), 'list')) {
+        if (GmCrudConfigChecker.hasAuth(this.getConfig(), 'list')) {
             this.addService(this.gmServiceUserInfoType)
             this.addProp({
                 type: this.gmServiceUserInfoType.getUserInfoType(),

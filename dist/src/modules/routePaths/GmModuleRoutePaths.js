@@ -21,7 +21,7 @@ class GmModuleRoutePaths extends GmAbstractModuleConstant_1.GmAbstractModuleCons
         return `${this.getPropertyName()}.${type}`;
     }
     init() {
-        if (this.getConfig().model.type === 'byDatabaseNameAndYearMonth') {
+        if (this.getConfig().repository.type === 'byDatabaseNameAndYearMonth') {
             this.setBody(`
         {
             add:'/${this.getModuleKey()}${GmEndpointsUrlsHelper_1.GmEndpointsUrlsHelper.getEndpointUrl(this.getConfig(), 'add')}',
