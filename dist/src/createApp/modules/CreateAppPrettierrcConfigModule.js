@@ -17,8 +17,8 @@ class CreateAppPrettierrcConfigModule {
             'semi': false,
             'singleQuote': true,
             'trailingComma': 'none',
-            'tabWith': 4,
-            'printWith': 180,
+            'tabWidth': 4,
+            'printWidth': 180,
         }, null, 2), {
             encoding: 'utf-8',
         });

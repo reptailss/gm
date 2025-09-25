@@ -17,7 +17,7 @@ const commands = {
         console.log('Доступні команди:')
         console.log('- create-app: Створює новий проект')
         console.log('- g-crud: Генерує CRUD модулі для вашого проекту на основі конфгіу - gCrudConfig.ts')
-        console.log('- set-global-config: Записує глобально енв конфіг для подальшого створення проектів\n\n')
+        console.log('- set-global-config: Записує глобально енв конфіг для подальшого створення проектів\n')
         console.log('- set-global-config з ключом "INIT_OS_CORE_LIB" - зберігає ключ до os-core-ts в package.json')
     },
 }
