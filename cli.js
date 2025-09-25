@@ -7,12 +7,8 @@ const commands = {
     'g-crud': () => {
         execSync(`node ${resolve(__dirname, 'dist', 'commands', 'gCrudModule.js')}`, {stdio: 'inherit'})
     },
-    'create-app': (appName) => {
-        if (!appName) {
-            console.error('Please provide an app name: create-app <appName>')
-            process.exit(1)
-        }
-        execSync(`node ${resolve(__dirname, 'dist', 'commands', 'createApp.js')} ${appName}`, {stdio: 'inherit'})
+    'create-app': () => {
+        execSync(`node ${resolve(__dirname, 'dist', 'commands', 'createApp.js')}`, {stdio: 'inherit'})
     },
     'set-global-config': () => {
         execSync(`node ${resolve(__dirname, 'dist', 'commands', 'setGlobalConfig.js')}`, {stdio: 'inherit'})
@@ -21,6 +17,7 @@ const commands = {
         console.log('Доступні команди:')
         console.log('- create-app: Створює новий проект')
         console.log('- g-crud: Генерує CRUD модулі для вашого проекту на основі конфгіу - gCrudConfig.ts')
+        console.log('- set-global-config: Записує глобально енв конфіг для подальшого створення проектів')
     },
 }
 
