@@ -2,7 +2,7 @@ import {GmModuleConstants} from '@modules/constants/GmModuleConstants'
 import {GmAbstractModuleConstant} from '@modules/abstractModule/GmAbstractModuleConstant'
 import {IGmModuleConstant} from '@modules/interfaces/gmModule'
 import {GmModuleEntityType} from '@modules/repository/GmModuleEntityType'
-import {GmModuleEntity} from '@modules/columns/GmModuleEntity'
+import {GmModuleEntity} from '@modules/entity/GmModuleEntity'
 import {GmCrudConfig} from 'os-core-ts'
 import {GmModuleEntityInstance} from '@modules/repository/GmModuleEntityInstance'
 

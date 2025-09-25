@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GmModuleEntityType = void 0;
 const GmAbstractModuleType_1 = require("../abstractModule/GmAbstractModuleType");
 const StringCaseHelper_1 = require("../../helpers/StringCaseHelper");
-const GmModuleEntity_1 = require("../columns/GmModuleEntity");
+const GmModuleEntity_1 = require("../entity/GmModuleEntity");
 class GmModuleEntityType extends GmAbstractModuleType_1.GmAbstractModuleType {
     constructor(config) {
         super(config);
@@ -70,7 +70,7 @@ class GmModuleEntityType extends GmAbstractModuleType_1.GmAbstractModuleType {
         }
     }
     getEntityName() {
-        return `${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Entity`;
+        return this.gmModuleEntity.getPropertyName();
     }
 }
 exports.GmModuleEntityType = GmModuleEntityType;

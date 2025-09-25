@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GmModuleEntityInstance = void 0;
-const GmModuleEntity_1 = require("../columns/GmModuleEntity");
+const GmModuleEntity_1 = require("../entity/GmModuleEntity");
 const GmAbstractModuleConstant_1 = require("../abstractModule/GmAbstractModuleConstant");
 class GmModuleEntityInstance extends GmAbstractModuleConstant_1.GmAbstractModuleConstant {
     constructor(config) {

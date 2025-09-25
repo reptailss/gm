@@ -1,6 +1,6 @@
 import {IGmModuleConstant} from '@modules/interfaces/gmModule'
 import {GmCrudConfig} from 'os-core-ts'
-import {GmModuleEntity} from '@modules/columns/GmModuleEntity'
+import {GmModuleEntity} from '@modules/entity/GmModuleEntity'
 import {GmAbstractModuleConstant} from '@modules/abstractModule/GmAbstractModuleConstant'
 
 

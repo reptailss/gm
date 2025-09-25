@@ -1,7 +1,7 @@
 import {GmAbstractModuleType} from '@modules/abstractModule/GmAbstractModuleType'
 import {IGmModuleType} from '@modules/interfaces/gmModule'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
-import {GmModuleEntity} from '@modules/columns/GmModuleEntity'
+import {GmModuleEntity} from '@modules/entity/GmModuleEntity'
 import {GmCrudConfig} from 'os-core-ts'
 
 
@@ -28,19 +28,19 @@ export class GmModuleEntityType extends GmAbstractModuleType implements IGmModul
                 return ''
         }
     }
-
+    
     public getDirName(): string {
         return 'repository'
     }
-
+    
     public getFileName(): string {
         return 'index.ts'
     }
-
+    
     public init(): void {
         this.setFileWriteMode('appendAfter')
         this.addChildModule(this.gmModuleEntity)
-
+        
         switch (this.getConfig().repository.dbType) {
             case 'noSql': {
                 this.addImport({
@@ -59,7 +59,7 @@ export class GmModuleEntityType extends GmAbstractModuleType implements IGmModul
                 break
             }
         }
-
+        
         switch (this.getConfig().repository.type) {
             case 'staticByDbConnection': {
                 this.setBody(`ISqlRepository<${this.getEntityName()}>`)
@@ -78,11 +78,11 @@ export class GmModuleEntityType extends GmAbstractModuleType implements IGmModul
                 break
             }
         }
-
+        
     }
     
     
     private getEntityName(): string {
-        return `${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Entity`
+        return this.gmModuleEntity.getPropertyName()
     }
 }

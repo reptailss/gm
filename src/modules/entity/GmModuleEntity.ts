@@ -414,7 +414,7 @@ class EntityJsonDec implements IGmModuleClassDecorator {
 export class GmModuleEntity extends GmAbstractModuleClass implements IGmModuleClass {
     
     public getPropertyName(): string {
-        return `${StringCaseHelper.toPascalCase(this.getConfig().dtoName.plural)}Entity`
+        return `${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Entity`
     }
     
     public getDirName(): string | null {
