@@ -30,7 +30,6 @@ export class GmModuleEntityInstance extends GmAbstractModuleConstant implements 
     
     
     public init(): void {
-        this.addModule(this.gmModuleEntity)
         this.setFileWriteMode('appendAfter')
         this.setBody(`new ${this.gmModuleEntity.getPropertyName()}()`)
         

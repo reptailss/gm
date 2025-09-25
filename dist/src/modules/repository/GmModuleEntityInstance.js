@@ -21,7 +21,6 @@ class GmModuleEntityInstance extends GmAbstractModuleConstant_1.GmAbstractModule
         return null;
     }
     init() {
-        this.addModule(this.gmModuleEntity);
         this.setFileWriteMode('appendAfter');
         this.setBody(`new ${this.gmModuleEntity.getPropertyName()}()`);
     }

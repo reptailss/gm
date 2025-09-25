@@ -1,11 +1,19 @@
 import {GmAbstractModuleType} from '@modules/abstractModule/GmAbstractModuleType'
 import {IGmModuleType} from '@modules/interfaces/gmModule'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
+import {GmModuleEntity} from '@modules/columns/GmModuleEntity'
+import {GmCrudConfig} from 'os-core-ts'
 
 
 export class GmModuleEntityType extends GmAbstractModuleType implements IGmModuleType {
-
-
+    
+    private readonly gmModuleEntity: GmModuleEntity
+    
+    constructor(config: GmCrudConfig) {
+        super(config)
+        this.gmModuleEntity = new GmModuleEntity(config)
+    }
+    
     public getPropertyName(): string {
         switch (this.getConfig().repository.type) {
             case 'staticByDbConnection':
@@ -31,6 +39,7 @@ export class GmModuleEntityType extends GmAbstractModuleType implements IGmModul
 
     public init(): void {
         this.setFileWriteMode('appendAfter')
+        this.addChildModule(this.gmModuleEntity)
 
         switch (this.getConfig().repository.dbType) {
             case 'noSql': {

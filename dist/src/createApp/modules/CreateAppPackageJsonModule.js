@@ -27,7 +27,7 @@ class CreateAppPackageJsonModule {
             author: '-',
             license: 'ISC',
             dependencies: {
-                'os-core-ts': 'git+https://key/andry444/node-core-framework-typescript.git#v2.0.0',
+                'os-core-ts': 'git+https://{key}/{user}/node-core-framework-typescript.git#v2.0.0',
             },
             devDependencies: {
                 '@types/node': '22.7.6',

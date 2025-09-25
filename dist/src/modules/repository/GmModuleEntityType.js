@@ -3,7 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GmModuleEntityType = void 0;
 const GmAbstractModuleType_1 = require("../abstractModule/GmAbstractModuleType");
 const StringCaseHelper_1 = require("../../helpers/StringCaseHelper");
+const GmModuleEntity_1 = require("../columns/GmModuleEntity");
 class GmModuleEntityType extends GmAbstractModuleType_1.GmAbstractModuleType {
+    constructor(config) {
+        super(config);
+        this.gmModuleEntity = new GmModuleEntity_1.GmModuleEntity(config);
+    }
     getPropertyName() {
         switch (this.getConfig().repository.type) {
             case 'staticByDbConnection':
@@ -26,6 +31,7 @@ class GmModuleEntityType extends GmAbstractModuleType_1.GmAbstractModuleType {
     }
     init() {
         this.setFileWriteMode('appendAfter');
+        this.addChildModule(this.gmModuleEntity);
         switch (this.getConfig().repository.dbType) {
             case 'noSql': {
                 this.addImport({
