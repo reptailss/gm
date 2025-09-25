@@ -1,5 +1,8 @@
+import { CreateAppConfig } from "../config/types";
 export declare class CreateAppEnvModule {
     private readonly packageName;
-    constructor(packageName: string);
+    private readonly config;
+    constructor(packageName: string, config: CreateAppConfig);
     create(): void;
+    private getEnvValue;
 }

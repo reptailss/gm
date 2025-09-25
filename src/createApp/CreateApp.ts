@@ -13,6 +13,7 @@ import {CreateAppEnvModule} from '@createApp/modules/CreateAppEnvModule'
 import {CreateAppDockerignoreModule} from '@createApp/modules/CreateAppDockerignoreModule'
 import {CreateAppIndexModule} from '@createApp/modules/CreateAppIndexModule'
 import {CreateAppModule} from '@createApp/modules/CreateAppModule'
+import {CreateAppConfig} from '@createApp/config/types'
 
 export class CreateApp {
     private readonly createAppPackageJsonModule: CreateAppPackageJsonModule
@@ -29,17 +30,17 @@ export class CreateApp {
     private readonly createAppModule: CreateAppModule
     private readonly createAppIndexModule: CreateAppIndexModule
     
-    constructor(private readonly packageName: string) {
+    constructor(private readonly packageName: string, config: CreateAppConfig) {
         this.createAppPackageJsonModule = new CreateAppPackageJsonModule(packageName)
         this.createAppTsConfigModule = new CreateAppTsConfigModule(packageName)
-        this.createAppReadmeModule = new CreateAppReadmeModule(packageName)
+        this.createAppReadmeModule = new CreateAppReadmeModule(packageName, config)
         this.createAppSwaggerConfigModule = new CreateAppSwaggerConfigModule(packageName)
         this.createAppGCrudConfigModule = new CreateAppGCrudConfigModule(packageName)
         this.createAppPipelinesModule = new CreateAppPipelinesModule(packageName)
         this.createAppDockerfileModule = new CreateAppDockerfileModule(packageName)
         this.createAppPrettierrcConfigModule = new CreateAppPrettierrcConfigModule(packageName)
         this.createAppGitignoreModule = new CreateAppGitignoreModule(packageName)
-        this.createAppEnvModule = new CreateAppEnvModule(packageName)
+        this.createAppEnvModule = new CreateAppEnvModule(packageName, config)
         this.createAppDockerignoreModule = new CreateAppDockerignoreModule(packageName)
         this.createAppModule = new CreateAppModule(packageName)
         this.createAppIndexModule = new CreateAppIndexModule(packageName)

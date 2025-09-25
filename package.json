@@ -1,6 +1,6 @@
 {
 	"name": "os-gm",
-	"version": "1.0.7",
+	"version": "1.0.8",
 	"description": "Gm code generator",
 	"main": "dist/index.js",
 	"types": "dist/types/index.d.ts",
@@ -10,7 +10,8 @@
 		"build-lib": "npm run build && npm run copy-templates",
 		"dev": "nodemon ./src/dev.ts",
 		"g-crud": "node ./dist/commands/gCrudModule.js",
-		"create-app": "node ./dist/commands/createApp.js test5",
+		"create-app": "node ./dist/commands/createApp.js",
+		"set-global-config": "node ./dist/commands/setGlobalConfig.js",
 		"type-check": "tsc --noEmit"
 	},
 	"bin": {
@@ -22,6 +23,7 @@
 	"dependencies": {
 		"@prettier/sync": "0.4.0",
 		"ejs": "^3.1.10",
+		"inquirer": "^12.9.6",
 		"json5": "^2.2.3",
 		"ts-node": "10.9.2",
 		"typescript": "5.4.2"

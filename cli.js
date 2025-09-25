@@ -4,13 +4,23 @@ const {execSync} = require('child_process')
 const {resolve} = require('path')
 
 const commands = {
-    'g-crud': () => execSync(`node  ${resolve(__dirname, 'dist', 'commands', 'gCrudModule.js')}`, {stdio: 'inherit'}),
+    'g-crud': () => {
+        execSync(`node ${resolve(__dirname, 'dist', 'commands', 'gCrudModule.js')}`, {stdio: 'inherit'})
+    },
     'create-app': (appName) => {
         if (!appName) {
             console.error('Please provide an app name: create-app <appName>')
             process.exit(1)
         }
         execSync(`node ${resolve(__dirname, 'dist', 'commands', 'createApp.js')} ${appName}`, {stdio: 'inherit'})
+    },
+    'set-global-config': () => {
+        execSync(`node ${resolve(__dirname, 'dist', 'commands', 'setGlobalConfig.js')}`, {stdio: 'inherit'})
+    },
+    'help': () => {
+        console.log('Доступні команди:')
+        console.log('- create-app: Створює новий проект')
+        console.log('- g-crud: Генерує CRUD модулі для вашого проекту на основі конфгіу - gCrudConfig.ts')
     },
 }
 
@@ -22,8 +32,9 @@ try {
         console.log(`Unknown command: ${command}`)
         process.exit(1)
     }
-    const commandArgs = args[1]
-    commands[command](commandArgs)
+
+    const commandArgs = args.slice(1)
+    commands[command](...commandArgs)
 
 } catch (error) {
     console.error('Error executing command:', error)

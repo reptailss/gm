@@ -1,3 +1,4 @@
+import { CreateAppConfig } from "./config/types";
 export declare class CreateApp {
     private readonly packageName;
     private readonly createAppPackageJsonModule;
@@ -13,7 +14,7 @@ export declare class CreateApp {
     private readonly createAppDockerignoreModule;
     private readonly createAppModule;
     private readonly createAppIndexModule;
-    constructor(packageName: string);
+    constructor(packageName: string, config: CreateAppConfig);
     run(): Promise<void>;
     private createPackageDir;
 }

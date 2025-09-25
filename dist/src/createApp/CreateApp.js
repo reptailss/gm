@@ -20,18 +20,18 @@ const CreateAppDockerignoreModule_1 = require("./modules/CreateAppDockerignoreMo
 const CreateAppIndexModule_1 = require("./modules/CreateAppIndexModule");
 const CreateAppModule_1 = require("./modules/CreateAppModule");
 class CreateApp {
-    constructor(packageName) {
+    constructor(packageName, config) {
         this.packageName = packageName;
         this.createAppPackageJsonModule = new CreateAppPackageJsonModule_1.CreateAppPackageJsonModule(packageName);
         this.createAppTsConfigModule = new CreateAppTsConfigModule_1.CreateAppTsConfigModule(packageName);
-        this.createAppReadmeModule = new CreateAppReadmeModule_1.CreateAppReadmeModule(packageName);
+        this.createAppReadmeModule = new CreateAppReadmeModule_1.CreateAppReadmeModule(packageName, config);
         this.createAppSwaggerConfigModule = new CreateAppSwaggerConfigModule_1.CreateAppSwaggerConfigModule(packageName);
         this.createAppGCrudConfigModule = new CreateAppGCrudConfigModule_1.CreateAppGCrudConfigModule(packageName);
         this.createAppPipelinesModule = new CreateAppPipelinesModule_1.CreateAppPipelinesModule(packageName);
         this.createAppDockerfileModule = new CreateAppDockerfileModule_1.CreateAppDockerfileModule(packageName);
         this.createAppPrettierrcConfigModule = new CreateAppPrettierrcConfigModule_1.CreateAppPrettierrcConfigModule(packageName);
         this.createAppGitignoreModule = new CreateAppGitignoreModule_1.CreateAppGitignoreModule(packageName);
-        this.createAppEnvModule = new CreateAppEnvModule_1.CreateAppEnvModule(packageName);
+        this.createAppEnvModule = new CreateAppEnvModule_1.CreateAppEnvModule(packageName, config);
         this.createAppDockerignoreModule = new CreateAppDockerignoreModule_1.CreateAppDockerignoreModule(packageName);
         this.createAppModule = new CreateAppModule_1.CreateAppModule(packageName);
         this.createAppIndexModule = new CreateAppIndexModule_1.CreateAppIndexModule(packageName);
