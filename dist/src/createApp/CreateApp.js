@@ -22,7 +22,7 @@ const CreateAppModule_1 = require("./modules/CreateAppModule");
 class CreateApp {
     constructor(packageName, config) {
         this.packageName = packageName;
-        this.createAppPackageJsonModule = new CreateAppPackageJsonModule_1.CreateAppPackageJsonModule(packageName);
+        this.createAppPackageJsonModule = new CreateAppPackageJsonModule_1.CreateAppPackageJsonModule(packageName, config);
         this.createAppTsConfigModule = new CreateAppTsConfigModule_1.CreateAppTsConfigModule(packageName);
         this.createAppReadmeModule = new CreateAppReadmeModule_1.CreateAppReadmeModule(packageName, config);
         this.createAppSwaggerConfigModule = new CreateAppSwaggerConfigModule_1.CreateAppSwaggerConfigModule(packageName);

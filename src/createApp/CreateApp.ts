@@ -31,7 +31,7 @@ export class CreateApp {
     private readonly createAppIndexModule: CreateAppIndexModule
     
     constructor(private readonly packageName: string, config: CreateAppConfig) {
-        this.createAppPackageJsonModule = new CreateAppPackageJsonModule(packageName)
+        this.createAppPackageJsonModule = new CreateAppPackageJsonModule(packageName,config)
         this.createAppTsConfigModule = new CreateAppTsConfigModule(packageName)
         this.createAppReadmeModule = new CreateAppReadmeModule(packageName, config)
         this.createAppSwaggerConfigModule = new CreateAppSwaggerConfigModule(packageName)

@@ -1,10 +1,11 @@
 import fs from 'fs'
 import path from 'path'
+import {CreateAppConfig} from '@createApp/config/types'
 
 export class CreateAppPackageJsonModule {
     
     
-    constructor(private readonly packageName: string) {
+    constructor(private readonly packageName: string, private readonly config: CreateAppConfig) {
     }
     
     
@@ -12,6 +13,7 @@ export class CreateAppPackageJsonModule {
         const rootDir = process.cwd()
         const packageJsonPath = path.join(rootDir, this.packageName, 'package.json')
         
+        const osCoreKey = 'INIT_OS_CORE_LIB' in this.config.env ? this.config.env.INIT_OS_CORE_LIB : 'git+https://{key}/{user}/node-core-framework-typescript.git#v2.0.0'
         const packageJsonContent = {
             name: this.packageName,
             version: '1.0.0',
@@ -26,7 +28,7 @@ export class CreateAppPackageJsonModule {
             author: '-',
             license: 'ISC',
             dependencies: {
-                'os-core-ts': 'git+https://{key}/{user}/node-core-framework-typescript.git#v2.0.0',
+                'os-core-ts': osCoreKey,
             },
             devDependencies: {
                 '@types/node': '22.7.6',

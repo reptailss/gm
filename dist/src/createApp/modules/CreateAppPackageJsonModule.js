@@ -7,12 +7,14 @@ exports.CreateAppPackageJsonModule = void 0;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 class CreateAppPackageJsonModule {
-    constructor(packageName) {
+    constructor(packageName, config) {
         this.packageName = packageName;
+        this.config = config;
     }
     create() {
         const rootDir = process.cwd();
         const packageJsonPath = path_1.default.join(rootDir, this.packageName, 'package.json');
+        const osCoreKey = 'INIT_OS_CORE_LIB' in this.config.env ? this.config.env.INIT_OS_CORE_LIB : 'git+https://{key}/{user}/node-core-framework-typescript.git#v2.0.0';
         const packageJsonContent = {
             name: this.packageName,
             version: '1.0.0',
@@ -27,7 +29,7 @@ class CreateAppPackageJsonModule {
             author: '-',
             license: 'ISC',
             dependencies: {
-                'os-core-ts': 'git+https://{key}/{user}/node-core-framework-typescript.git#v2.0.0',
+                'os-core-ts': osCoreKey,
             },
             devDependencies: {
                 '@types/node': '22.7.6',
