@@ -11,7 +11,7 @@ class GmServiceActionsLoggerService extends GmAbstractServiceClass_1.GmAbstractS
             varName: 'actionsLoggerService',
             type: this.getServiceName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.getServiceName()}()`,
+            defaultValue: null,
         };
     }
     getExport() {

@@ -5,20 +5,20 @@ import {GmExport} from '@export/types'
 
 
 export class GmServiceActionsLoggerService extends GmAbstractServiceClass implements IGmServiceClass {
-
+    
     public getServiceName(): string {
         return 'ActionsLoggerService'
     }
-
+    
     public getConstructorProp(): GmModuleConstructorProp {
         return {
             varName: 'actionsLoggerService',
             type: this.getServiceName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.getServiceName()}()`,
+            defaultValue: null,
         }
     }
-
+    
     public getExport(): GmExport {
         return {
             path: 'os-core-ts',
@@ -26,7 +26,7 @@ export class GmServiceActionsLoggerService extends GmAbstractServiceClass implem
             isLibImport: true,
         }
     }
-
+    
     public logCreateAction({
                                value,
                                rowId,
@@ -46,7 +46,7 @@ export class GmServiceActionsLoggerService extends GmAbstractServiceClass implem
                  rowId: ${rowId}
               })`
     }
-
+    
     public logUpdateAction({
                                oldValue,
                                newValue,
@@ -69,7 +69,7 @@ export class GmServiceActionsLoggerService extends GmAbstractServiceClass implem
                  rowId: ${rowId}
               })`
     }
-
+    
     public logDeleteAction({
                                oldValue,
                                initiatorOpenUserId,
@@ -89,6 +89,6 @@ export class GmServiceActionsLoggerService extends GmAbstractServiceClass implem
                  rowId: ${rowId}
               })`
     }
-
-
+    
+    
 }
