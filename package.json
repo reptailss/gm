@@ -1,6 +1,6 @@
 {
 	"name": "os-gm",
-	"version": "1.1.6",
+	"version": "1.2.0",
 	"description": "Gm code generator",
 	"main": "dist/index.js",
 	"types": "dist/types/index.d.ts",
