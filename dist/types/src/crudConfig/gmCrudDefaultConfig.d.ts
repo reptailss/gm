@@ -1,4 +1,4 @@
-import { GmCrudConfig, GmCrudEndpointsConfig, GmCrudNoSqlRepositoryConfig, GmCrudSqlRepositoryConfig } from 'os-core-ts';
+import { GmCrudConfig, GmCrudEndpointsConfig, GmCrudNoSqlRepositoryConfig, GmCrudSqlRepositoryConfig } from "../os-core";
 export declare const gmCrudDefaultConfig: {
     readonly default: GmCrudConfig;
     readonly baseEndpoints: GmCrudEndpointsConfig;

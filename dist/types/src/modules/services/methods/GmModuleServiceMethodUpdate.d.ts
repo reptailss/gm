@@ -2,7 +2,7 @@ import { GmAbstractModuleClassMethod } from "../../abstractModule/GmAbstractModu
 import { IGmModuleClassMethod } from "../../interfaces/gmModule";
 import { GmServiceActionsLoggerService } from "../../../services/sendActionSystemLog/GmServiceActionsLoggerService";
 import { IGmModuleRepository } from "../../repository/interfaces/gmModuleRepository";
-import { GmCrudConfig } from 'os-core-ts';
+import { GmCrudConfig } from "../../../os-core";
 declare const PROPS_VAR_NAMES: {
     initiatorOpenUserId: string;
     updateDto: string;

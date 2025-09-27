@@ -74,6 +74,7 @@ export type GmCrudConfig = {
     endpoints: GmCrudEndpointsConfig;
     hasSeparated: boolean;
     rootDir?: string;
+    modulesDir?: string;
 };
 type GmCrudRepositoryConfig = GmCrudSqlRepositoryConfig | GmCrudNoSqlRepositoryConfig;
 export type GmCrudSqlRepositoryConfig = {

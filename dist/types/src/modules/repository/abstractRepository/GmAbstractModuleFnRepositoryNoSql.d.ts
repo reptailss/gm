@@ -1,4 +1,4 @@
-import { GmCrudConfig } from 'os-core-ts';
+import { GmCrudConfig } from "../../../os-core";
 import { GmAbstractModuleFn } from "../../abstractModule/GmAbstractModuleFn";
 import { IGmModuleFn } from "../../interfaces/gmModule";
 export declare abstract class GmAbstractModuleFnRepositoryNoSql extends GmAbstractModuleFn implements IGmModuleFn {

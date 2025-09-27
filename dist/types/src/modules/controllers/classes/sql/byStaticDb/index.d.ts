@@ -1,4 +1,4 @@
-import { GmCrudConfig } from 'os-core-ts';
+import { GmCrudConfig } from "../../../../../os-core";
 import { IGmModuleClass } from "../../../../interfaces/gmModule";
 import { GmModuleAbstractControllerClass } from "../../abstract/GmModuleAbstractControllerClass";
 export declare class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractControllerClass implements IGmModuleClass {

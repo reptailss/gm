@@ -15,7 +15,7 @@ class CreateAppEnvModule {
         const rootDir = process.cwd();
         const envPath = path_1.default.join(rootDir, this.packageName, '.env');
         const res = [];
-        res.push({ key: 'INIT_SERVICE_PORT', value: this.getEnvValue('INIT_SERVICE_PORT') || '3000' }, { key: 'INIT_SERVICE_KEY', value: this.packageName }, { key: 'INIT_SERVICE_PREFIX', value: this.getEnvValue('INIT_SERVICE_PREFIX') }, { key: 'INIT_SYSTEM_AUTH_TOKEN', value: this.getEnvValue('INIT_SYSTEM_AUTH_TOKEN') });
+        res.push({ key: 'INIT_SERVICE_KEY', value: this.packageName }, { key: 'INIT_SERVICE_PREFIX', value: this.getEnvValue('INIT_SERVICE_PREFIX') }, { key: 'INIT_SYSTEM_AUTH_TOKEN', value: this.getEnvValue('INIT_SYSTEM_AUTH_TOKEN') });
         if (this.config.hasDynamicSql) {
             res.push({ key: 'INIT_SQL_DYNAMIC_DB_HOST', value: this.getEnvValue('INIT_SQL_DYNAMIC_DB_HOST') }, { key: 'INIT_SQL_DYNAMIC_DB_PORT', value: this.getEnvValue('INIT_SQL_DYNAMIC_DB_PORT') }, { key: 'INIT_SQL_DYNAMIC_DB_USERNAME', value: this.getEnvValue('INIT_SQL_DYNAMIC_DB_USERNAME') }, { key: 'INIT_SQL_DYNAMIC_DB_PASSWORD', value: this.getEnvValue('INIT_SQL_DYNAMIC_DB_PASSWORD') });
         }
@@ -32,9 +32,6 @@ class CreateAppEnvModule {
             res.push({ key: 'INIT_REDIS_DYNAMIC_HOST', value: this.getEnvValue('INIT_REDIS_DYNAMIC_HOST') }, { key: 'INIT_REDIS_DYNAMIC_PORT', value: this.getEnvValue('INIT_REDIS_DYNAMIC_PORT') }, { key: 'INIT_REDIS_DYNAMIC_PASSWORD', value: this.getEnvValue('INIT_REDIS_DYNAMIC_PASSWORD') });
         }
         res.push({ key: 'INIT_URL_AUTH_SERVICE', value: this.getEnvValue('INIT_URL_AUTH_SERVICE') }, { key: 'INIT_URL_FOR_CHECK_AUTH', value: this.getEnvValue('INIT_URL_FOR_CHECK_AUTH') }, { key: 'INIT_URL_TO_ACTIONS_SYSTEM_LOGGER_SERVICE', value: this.getEnvValue('INIT_URL_TO_ACTIONS_SYSTEM_LOGGER_SERVICE') }, { key: 'INIT_URL_OS_STATUS_SERVICE', value: this.getEnvValue('INIT_URL_OS_STATUS_SERVICE') });
-        if (this.config.hasStructureAccess) {
-            res.push({ key: 'INIT_USE_STRUCTURE_ACCESS', value: this.getEnvValue('INIT_USE_STRUCTURE_ACCESS') });
-        }
         res.push({ key: 'INIT_SERVICE_PORT', value: this.getEnvValue('INIT_SERVICE_PORT') }, { key: 'INIT_USE_SWAGGER', value: this.getEnvValue('INIT_USE_SWAGGER') }, { key: 'INIT_HAS_CORS', value: this.getEnvValue('INIT_HAS_CORS') }, { key: 'INIT_HAS_CONSOLE_LOGGER_REQUESTS', value: this.getEnvValue('INIT_HAS_CONSOLE_LOGGER_REQUESTS') }, { key: 'INIT_HAS_SEND_ACTION_SYSTEM_LOGGER', value: this.getEnvValue('INIT_HAS_SEND_ACTION_SYSTEM_LOGGER') }, { key: 'INIT_SWAGGER_URL', value: this.getEnvValue('INIT_SWAGGER_URL') }, { key: 'INIT_SWAGGER_DEFAULT_AUTH_TOKEN', value: this.getEnvValue('INIT_SWAGGER_DEFAULT_AUTH_TOKEN') });
         if (this.config.hasDynamicSql) {
             res.push({ key: 'INIT_REDIS_CLIENT_DATABASE_PREFIX', value: this.getEnvValue('INIT_REDIS_CLIENT_DATABASE_PREFIX') }, { key: 'INIT_SQL_DYNAMIC_DB_DIALECT', value: this.getEnvValue('INIT_SQL_DYNAMIC_DB_DIALECT') }, { key: 'INIT_SQL_DYNAMIC_DB_ENCODING', value: this.getEnvValue('INIT_SQL_DYNAMIC_DB_ENCODING') }, { key: 'INIT_SQL_DYNAMIC_DB_TIMEZONE', value: this.getEnvValue('INIT_SQL_DYNAMIC_DB_TIMEZONE') }, { key: 'INIT_SQL_DYNAMIC_CHECK_READINESS_DATABASE_NAME', value: this.getEnvValue('INIT_SQL_DYNAMIC_CHECK_READINESS_DATABASE_NAME') });

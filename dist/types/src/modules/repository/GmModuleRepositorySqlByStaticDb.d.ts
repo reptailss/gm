@@ -1,6 +1,6 @@
 import { IGmModuleRepository } from "./interfaces/gmModuleRepository";
 import { IGmModuleRepositoryApi } from "./interfaces/gmModuleRepositoryApi";
-import { GmCrudConfig } from 'os-core-ts';
+import { GmCrudConfig } from "../../os-core";
 import { GmAbstractModuleClassRepositorySql } from "./abstractRepository/GmAbstractModuleClassRepositorySql";
 export declare class GmModuleRepositorySqlByStaticDb extends GmAbstractModuleClassRepositorySql implements IGmModuleRepository {
     api: IGmModuleRepositoryApi;

@@ -1,6 +1,6 @@
 import { IGmModuleClassMethod } from "../../interfaces/gmModule";
 import { GmAbstractModuleClassMethod } from "../../abstractModule/GmAbstractModuleClassMethod";
-import { GmCrudConfig } from 'os-core-ts';
+import { GmCrudConfig } from "../../../os-core";
 import { GmModuleEntity } from "../../entity/GmModuleEntity";
 import { GmModuleDto } from "../../dto/GmModuleDto";
 export declare class GmModuleRepositoryMethodDestroy extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {

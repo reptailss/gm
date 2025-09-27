@@ -1,7 +1,7 @@
 import { GmAbstractModuleFnRepositoryNoSql } from "./abstractRepository/GmAbstractModuleFnRepositoryNoSql";
 import { IGmModuleRepository } from "./interfaces/gmModuleRepository";
 import { IGmModuleRepositoryApi } from "./interfaces/gmModuleRepositoryApi";
-import { GmCrudConfig } from 'os-core-ts';
+import { GmCrudConfig } from "../../os-core";
 export declare class GmModuleRepositoryByNoSqlMonthAndYear extends GmAbstractModuleFnRepositoryNoSql implements IGmModuleRepository {
     private monthVarName;
     private yearVarName;

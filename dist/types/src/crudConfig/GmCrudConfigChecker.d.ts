@@ -1,4 +1,4 @@
-import { GmCrudConfig } from 'os-core-ts';
+import { GmCrudConfig } from "../os-core";
 export declare class GmCrudConfigChecker {
     static hasActionLogger(config: GmCrudConfig, endpointType: 'add' | 'delete' | 'update'): boolean;
     static hasStructureAccess(config: GmCrudConfig, endpointType: 'add' | 'delete' | 'update' | 'list' | 'get'): boolean;

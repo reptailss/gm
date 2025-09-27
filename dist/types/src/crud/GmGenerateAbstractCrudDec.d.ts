@@ -1,4 +1,4 @@
-import { GmCrudConfig } from 'os-core-ts';
+import { GmCrudConfig } from "../os-core";
 import { IGmModuleClass } from "../modules/interfaces/gmModule";
 export declare class GmGenerateAbstractCrudDec {
     private config;

@@ -1,6 +1,6 @@
 import { GmAbstractModuleConstant } from "../abstractModule/GmAbstractModuleConstant";
 import { IGmModuleConstant } from "../interfaces/gmModule";
-import { GmCrudConfig } from 'os-core-ts';
+import { GmCrudConfig } from "../../os-core";
 export declare class GmModuleRoutePaths extends GmAbstractModuleConstant implements IGmModuleConstant {
     constructor(config: GmCrudConfig);
     getPropertyName(): string;

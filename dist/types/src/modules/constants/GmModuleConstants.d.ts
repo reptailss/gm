@@ -1,7 +1,7 @@
 import { GmAbstractModuleConstant } from "../abstractModule/GmAbstractModuleConstant";
 import { IGmModuleConstant } from "../interfaces/gmModule";
 import { GmFileWriteMode } from "../types";
-import { GmCrudConfig } from 'os-core-ts';
+import { GmCrudConfig } from "../../os-core";
 export declare class GmModuleConstants extends GmAbstractModuleConstant implements IGmModuleConstant {
     private value;
     private mode;

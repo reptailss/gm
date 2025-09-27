@@ -1,6 +1,6 @@
 import { IGmModuleRepository } from "./interfaces/gmModuleRepository";
 import { IGmModuleRepositoryApi } from "./interfaces/gmModuleRepositoryApi";
-import { GmCrudConfig } from 'os-core-ts';
+import { GmCrudConfig } from "../../os-core";
 import { GmAbstractModuleClass } from "../abstractModule/GmAbstractModuleClass";
 export declare class GmModuleRepositorySqlByDynamicDomain extends GmAbstractModuleClass implements IGmModuleRepository {
     api: IGmModuleRepositoryApi;

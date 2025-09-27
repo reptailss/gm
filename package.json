@@ -1,6 +1,6 @@
 {
 	"name": "os-gm",
-	"version": "1.1.4",
+	"version": "1.1.6",
 	"description": "Gm code generator",
 	"main": "dist/index.js",
 	"types": "dist/types/index.d.ts",
@@ -27,8 +27,7 @@
 		"inquirer": "^12.9.6",
 		"json5": "^2.2.3",
 		"ts-node": "10.9.2",
-		"typescript": "5.4.2",
-		"os-core-ts": "git+https://AndriyGoodCoder:ATBBPqXugvLcqadZwW596AJshUjA0710A4BD@bitbucket.org/andry444/node-core-framework-typescript.git#v3.0.0"
+		"typescript": "5.4.2"
 	},
 	"devDependencies": {
 		"@types/ejs": "^3.1.5",

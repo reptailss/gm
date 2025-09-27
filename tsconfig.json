@@ -61,16 +61,8 @@
       "@createApp/*": [
         "src/createApp/*"
       ],
-//      "os-core-ts": [
-//        "src/os-core.ts"
-//      ]
-
-//test
-      "@testModules/*": [
-        "src/test/testModules/*"
-      ],
-      "@db/*": [
-        "src/test/db/*"
+      "os-core-ts": [
+        "src/os-core.ts"
       ]
     },
     "plugins": [

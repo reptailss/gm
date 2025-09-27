@@ -1,4 +1,4 @@
-import { GmCrudConfig } from 'os-core-ts';
+import { GmCrudConfig } from "../../os-core";
 import { GmImport } from "../../imports/types";
 import { IGmServiceFn } from "../../services/inetfaces/gmServiceFn";
 import { GmBodyElement, GmFileWriteMode, GmModuleClassMethodProp, GmModuleClassMethodPropDecorator, GmModuleClassVar, GmModuleConstructorProp, GmModuleDirType, GmModuleFnProp, GmModuleParentInfo, GmModulePropsType } from "../types";

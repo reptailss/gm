@@ -16,7 +16,6 @@ export class CreateAppEnvModule {
         const res: { key: string; value: string }[] = []
         
         res.push(
-            { key: 'INIT_SERVICE_PORT', value: this.getEnvValue('INIT_SERVICE_PORT') || '3000' },
             { key: 'INIT_SERVICE_KEY', value: this.packageName },
             { key: 'INIT_SERVICE_PREFIX', value: this.getEnvValue('INIT_SERVICE_PREFIX') },
             { key: 'INIT_SYSTEM_AUTH_TOKEN', value: this.getEnvValue('INIT_SYSTEM_AUTH_TOKEN') },
@@ -75,11 +74,6 @@ export class CreateAppEnvModule {
             { key: 'INIT_URL_OS_STATUS_SERVICE', value: this.getEnvValue('INIT_URL_OS_STATUS_SERVICE') },
         )
         
-        if(this.config.hasStructureAccess){
-            res.push(
-                { key: 'INIT_USE_STRUCTURE_ACCESS', value: this.getEnvValue('INIT_USE_STRUCTURE_ACCESS') },
-            )
-        }
         
         res.push(
             { key: 'INIT_SERVICE_PORT', value: this.getEnvValue('INIT_SERVICE_PORT') },
