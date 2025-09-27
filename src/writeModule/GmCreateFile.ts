@@ -132,7 +132,7 @@ export class GmCreateFile {
         const rootDirArray = rootDir.split('/')
         switch (dirType) {
             case 'modules':
-                return path.resolve(process.cwd(), ...rootDirArray, 'modules', this.module.getRootModuleDirName())
+                return path.resolve(process.cwd(), ...rootDirArray, this.module.getConfig().modulesDir || 'modules', this.module.getRootModuleDirName())
             case 'root' :
                 return path.resolve(process.cwd(), ...rootDirArray)
             default:

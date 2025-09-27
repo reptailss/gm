@@ -40,7 +40,7 @@ export class GmModuleControllerMethodDelete extends GmAbstractModuleClassMethod 
     }
 
     public getPropertyName(): string {
-        return `delete${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}`
+        return 'delete'
     }
 
     public init(): void {

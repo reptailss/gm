@@ -16,7 +16,7 @@ class GenerateCrud {
         const dirName = StringCaseHelper_1.StringCaseHelper.toCamelCase(config.moduleName);
         const rootDir = config.rootDir || 'src';
         const rootDirArray = rootDir.split('/');
-        const rootPath = path_1.default.resolve(process.cwd(), ...rootDirArray, 'modules', dirName);
+        const rootPath = path_1.default.resolve(process.cwd(), ...rootDirArray, config.modulesDir || 'modules', dirName);
         if (fs_1.default.existsSync(rootPath)) {
             throw new Error(`the folder ${dirName} already exists`);
         }

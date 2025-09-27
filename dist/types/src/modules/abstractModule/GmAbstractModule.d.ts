@@ -1,4 +1,4 @@
-import { GmCrudConfig } from "../../os-core";
+import { GmCrudConfig } from 'os-core-ts';
 import { IGmModule, IGmModuleClass, IGmModuleConstant, IGmModuleFn, IGmModuleType } from "../interfaces/gmModule";
 import { GmImport } from "../../imports/types";
 import { GmModuleDirType, GmModuleParentInfo } from "../types";

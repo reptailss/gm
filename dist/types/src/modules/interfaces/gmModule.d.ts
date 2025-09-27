@@ -1,4 +1,4 @@
-import { GmCrudConfig } from "../../os-core";
+import { GmCrudConfig } from 'os-core-ts';
 import { GmImport } from "../../imports/types";
 import { IGmServiceFn } from "../../services/inetfaces/gmServiceFn";
 import { GmBodyElement, GmFileWriteMode, GmModuleClassMethodProp, GmModuleClassMethodPropDecorator, GmModuleClassVar, GmModuleConstructorProp, GmModuleDirType, GmModuleFnProp, GmModuleParentInfo, GmModulePropsType } from "../types";
@@ -45,6 +45,8 @@ export interface IGmModuleClass extends IGmModule {
     getVars(): GmModuleClassVar[];
     addElementBeforeClass(value: string): this;
     getElementsBeforeClass(): string[];
+    addElementConstructorBody(value: string): this;
+    getElementsConstructorBody(): string[];
 }
 export interface IGmModuleClassMethod extends IGmModule {
     moduleType: 'classMethod';

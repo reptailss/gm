@@ -1,7 +1,7 @@
 import { GmModuleServiceClassBySqlDynamicDomain } from "../../bases/GmModuleServiceClassBySqlDynamicDomain";
 import { GmModuleServiceClassAll, GmModuleServiceClassCreate, GmModuleServiceClassDelete, GmModuleServiceClassGet, GmModuleServiceClassGetAll, GmModuleServiceClassUpdate } from "../../../interfaces/gmModuleServiceClassCurd";
 import { IGmModuleServiceApiAll, IGmModuleServiceApiCreate, IGmModuleServiceApiDelete, IGmModuleServiceApiGet, IGmModuleServiceApiGetPagination, IGmModuleServiceApiUpdate } from "../../../interfaces/gmModuleServiceClassCurdApi";
-import { GmCrudConfig } from "../../../../../os-core";
+import { GmCrudConfig } from 'os-core-ts';
 type BaseCallBarNames = {
     domain: string;
 };

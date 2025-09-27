@@ -17,14 +17,14 @@ import {GmPaginationQueryParamsDec} from '@decorators/controllerDecorators/GmPag
 
 
 export class GmModuleControllerMethodGetPagination extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {
-
+    
     private readonly gmServiceBuildResponseFormat: GmServiceBuildResponseFormat
     private readonly gmServicePaginationValues: GmServicePaginationValues
     private readonly gmServicePaginationQueryParamsType: GmServicePaginationQueryParamsType
     private readonly gmModuleDto: GmModuleDto
     private readonly gmServiceUserInfoType: GmServiceUserInfoType
     private readonly gmModuleRoutePaths: GmModuleRoutePaths
-
+    
     constructor(
         config: GmCrudConfig,
         private readonly api: IGmModuleServiceApiGetPagination,
@@ -41,14 +41,14 @@ export class GmModuleControllerMethodGetPagination extends GmAbstractModuleClass
         this.gmServiceUserInfoType = new GmServiceUserInfoType()
         this.gmModuleDto = new GmModuleDto(config)
         this.gmModuleRoutePaths = new GmModuleRoutePaths(config)
-
-
+        
+        
     }
-
+    
     public getPropertyName(): string {
-        return `get${StringCaseHelper.toPascalCase(this.getConfig().dtoName.plural)}Pagination`
+        return 'pagination'
     }
-
+    
     public init(): void {
         this.addModule(this.gmModuleDto)
         this.addModule(this.gmModuleRoutePaths)
@@ -56,13 +56,13 @@ export class GmModuleControllerMethodGetPagination extends GmAbstractModuleClass
         this.addService(this.gmServicePaginationValues)
         this.addService(this.gmServicePaginationQueryParamsType)
         this.setReturnType(`Promise<${this.gmServicePaginationValues.getPaginationResultType(this.gmModuleDto.getPropertyName())}>`)
-
+        
         this.appendDecorator(new GmSwaggerInfoDec(`Get ${StringCaseHelper.toKebabCase(this.getConfig().dtoName.plural)} list`))
         this.appendDecorator(new GmGetDec(this.gmModuleRoutePaths.getRoutePathPropertyName('list')))
-
+        
         this.setMethodScope('public')
         this.setAsyncType('async')
-
+        
         if (GmCrudConfigChecker.hasAuth(this.getConfig(), 'list')) {
             this.addService(this.gmServiceUserInfoType)
             this.addProp({
@@ -82,14 +82,14 @@ export class GmModuleControllerMethodGetPagination extends GmAbstractModuleClass
             name: 'create row',
             value: `const ${this.getPaginationValuesVarName()} = await ${this.api.getPagination()}`,
         })
-
+        
         this.appendBodyElement({
             name: 'return pagination',
             value: `return ${this.gmServiceBuildResponseFormat.pagination(this.getPaginationValuesVarName())}`,
         })
     }
-
-
+    
+    
     private getPaginationValuesVarName(): string {
         return 'paginationValues'
     }

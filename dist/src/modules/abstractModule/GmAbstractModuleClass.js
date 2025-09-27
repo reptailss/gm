@@ -11,6 +11,7 @@ class GmAbstractModuleClass extends GmAbstractModule_1.GmAbstractModule {
         this.decorators = [];
         this.vars = [];
         this.elementsBeforeClass = [];
+        this.elementsConstructorBody = [];
         this.fileWriteModeGm = 'skipIfExists';
         this.dirType = 'modules';
     }
@@ -116,6 +117,13 @@ class GmAbstractModuleClass extends GmAbstractModule_1.GmAbstractModule {
     }
     getElementsBeforeClass() {
         return this.elementsBeforeClass;
+    }
+    getElementsConstructorBody() {
+        return this.elementsConstructorBody;
+    }
+    addElementConstructorBody(element) {
+        this.elementsConstructorBody.push(element);
+        return this;
     }
 }
 exports.GmAbstractModuleClass = GmAbstractModuleClass;

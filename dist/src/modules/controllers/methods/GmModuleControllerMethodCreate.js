@@ -26,7 +26,7 @@ class GmModuleControllerMethodCreate extends GmAbstractModuleClassMethod_1.GmAbs
         this.gmModuleRoutePaths = new GmModuleRoutePaths_1.GmModuleRoutePaths(config);
     }
     getPropertyName() {
-        return `create${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}`;
+        return 'create';
     }
     init() {
         this.addModule(this.gmModuleCreateDto);

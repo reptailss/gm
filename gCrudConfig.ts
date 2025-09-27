@@ -41,14 +41,15 @@ export default function buildGmCrudConfig(): GmCrudConfig {
         },
         moduleName: 'Test',
         repository: sqlByDynamicDomain,
-        hasSeparated: true,
+        hasSeparated: false,
         endpoints: {
             add: {hasActionLogger: true, hasAuth: true, hasStructureAccess: true},
             update: {hasActionLogger: true, hasAuth: true, hasStructureAccess: true},
             delete: {hasActionLogger: true, hasAuth: true, hasStructureAccess: true},
-            get: {hasAuth: false, hasStructureAccess: false},
-            list: {hasAuth: false, hasStructureAccess: false},
+            get: {hasAuth: false, hasStructureAccess: true},
+            list: {hasAuth: false, hasStructureAccess: true},
         },
-        rootDir: 'test',
+        rootDir: 'src/test',
+        modulesDir:'testModules'
     }
 }

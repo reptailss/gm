@@ -27,7 +27,7 @@ class GmModuleControllerMethodGetPagination extends GmAbstractModuleClassMethod_
         this.gmModuleRoutePaths = new GmModuleRoutePaths_1.GmModuleRoutePaths(config);
     }
     getPropertyName() {
-        return `get${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.plural)}Pagination`;
+        return 'pagination';
     }
     init() {
         this.addModule(this.gmModuleDto);

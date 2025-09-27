@@ -28,6 +28,12 @@ class GmRenderModuleClass extends GmRenderModule_1.GmRenderModule {
             return `${varName}:${type}${defaultValue}`;
         })) === null || _b === void 0 ? void 0 : _b.join(',');
     }
+    renderConstructorBody() {
+        if (!this.moduleClass.getElementsConstructorBody()) {
+            return '';
+        }
+        return this.moduleClass.getElementsConstructorBody().join('\n');
+    }
     renderDecorators() {
         var _a;
         return (_a = this.moduleClass.getDecorators().map((decorator) => {
@@ -45,7 +51,8 @@ class GmRenderModuleClass extends GmRenderModule_1.GmRenderModule {
     }
     renderClass() {
         const constructorProps = this.renderConstructorProps();
-        const constructor = constructorProps ? `constructor(${constructorProps}){}` : '';
+        const constructorBody = this.renderConstructorBody();
+        const constructor = (constructorProps || constructorBody) ? `constructor(${constructorProps}){${constructorBody}}` : '';
         return `
         ${this.renderImports()}
         
@@ -53,11 +60,12 @@ class GmRenderModuleClass extends GmRenderModule_1.GmRenderModule {
         
         ${this.renderDecorators()}
         ${this.getExportMarkIfExported()} class ${this.renderPropertyName()} {
-            \n
-            ${constructor}
              \n
              \n
              ${this.renderVars()}
+              \n
+              \n
+                  ${constructor}
                \n
             ${this.renderStringMethods()}
         }

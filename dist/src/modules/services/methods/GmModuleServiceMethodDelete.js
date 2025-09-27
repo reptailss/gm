@@ -22,7 +22,7 @@ class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod_1.GmAbstra
         this.callVarNames = callVarNames;
     }
     getPropertyName() {
-        return `delete${this.getConfig().dtoName.singular}ById`;
+        return 'delete';
     }
     init() {
         this.addModule(this.gmModuleDto);
@@ -51,7 +51,7 @@ class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod_1.GmAbstra
     checkHasOldDto() {
         this.appendBodyElement({
             name: 'foundRow',
-            value: `const ${this.getOldEntityVarName()} = await ${this.gmModuleRepository.api.findOne({
+            value: `const ${this.getOldDtoVarName()} = await ${this.gmModuleRepository.api.findOne({
                 where: {
                     [GmModuleDtoHelper_1.GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).key]: PROPS_VAR_NAMES.id,
                 },
@@ -62,7 +62,7 @@ class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod_1.GmAbstra
             value: this.gmServiceThrowAppError.throwAppError({
                 message: 'Not found',
                 errorKey: 'NOT_FOUND_ERROR',
-                ifConstruction: `!${this.getOldEntityVarName()}`,
+                ifConstruction: `!${this.getOldDtoVarName()}`,
             }),
         });
     }
@@ -81,7 +81,7 @@ class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod_1.GmAbstra
                 name: 'SendActionSystemLogService',
                 value: `await ${this.gmServiceSendActionSystemLog.logDeleteAction({
                     rowId: PROPS_VAR_NAMES.id,
-                    oldValue: this.getOldEntityVarName(),
+                    oldValue: this.getOldDtoVarName(),
                     config: this.gmModuleRepository.api.getConfig(),
                     initiatorOpenUserId: PROPS_VAR_NAMES.initiatorOpenUserId,
                 })}`,
@@ -90,11 +90,11 @@ class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod_1.GmAbstra
         }
         this.appendBodyElement({
             name: 'return oldDto',
-            value: `return ${this.getOldEntityVarName()}`,
+            value: `return ${this.getOldDtoVarName()}`,
         });
     }
-    getOldEntityVarName() {
-        return 'oldEntity';
+    getOldDtoVarName() {
+        return 'oldDto';
     }
 }
 exports.GmModuleServiceMethodDelete = GmModuleServiceMethodDelete;

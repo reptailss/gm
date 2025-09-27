@@ -18,14 +18,14 @@ import {GmParamDec, GmParamNumDec} from '@decorators/controllerDecorators/GmPara
 
 
 export class GmModuleControllerMethodGetById extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {
-
+    
     private readonly gmServiceBuildResponseFormat: GmServiceBuildResponseFormat
     private readonly gmServiceRowResultType: GmServiceRowResultType
     private readonly gmServiceThrowAppError: GmServiceThrowAppError
     private readonly gmModuleDto: GmModuleDto
     private readonly gmServiceUserInfoType: GmServiceUserInfoType
     private readonly gmModuleRoutePaths: GmModuleRoutePaths
-
+    
     constructor(
         config: GmCrudConfig,
         private readonly api: IGmModuleServiceApiGet,
@@ -41,14 +41,14 @@ export class GmModuleControllerMethodGetById extends GmAbstractModuleClassMethod
         this.gmServiceThrowAppError = new GmServiceThrowAppError()
         this.gmModuleDto = new GmModuleDto(config)
         this.gmModuleRoutePaths = new GmModuleRoutePaths(config)
-
-
+        
+        
     }
-
+    
     public getPropertyName(): string {
-        return `get${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}ById`
+        return `getById`
     }
-
+    
     public init(): void {
         this.addModule(this.gmModuleDto)
         this.addModule(this.gmModuleRoutePaths)
@@ -58,10 +58,10 @@ export class GmModuleControllerMethodGetById extends GmAbstractModuleClassMethod
         this.setReturnType(`Promise<${this.gmServiceRowResultType.getRowResultType(this.gmModuleDto.getPropertyName())}>`)
         this.appendDecorator(new GmSwaggerInfoDec(`Get ${StringCaseHelper.toKebabCase(this.getConfig().dtoName.singular)} by id`))
         this.appendDecorator(new GmGetDec(this.gmModuleRoutePaths.getRoutePathPropertyName('get')))
-
+        
         this.setMethodScope('public')
         this.setAsyncType('async')
-
+        
         if (GmCrudConfigChecker.hasAuth(this.getConfig(), 'get')) {
             this.addService(this.gmServiceUserInfoType)
             this.addProp({
@@ -81,7 +81,7 @@ export class GmModuleControllerMethodGetById extends GmAbstractModuleClassMethod
             name: 'create row',
             value: `const ${this.getDtoPropertyVarName()} = await ${this.api.getById()}`,
         })
-
+        
         this.appendBodyElement({
             name: 'check has row',
             value: this.gmServiceThrowAppError.throwAppError({
@@ -90,15 +90,15 @@ export class GmModuleControllerMethodGetById extends GmAbstractModuleClassMethod
                 ifConstruction: `!${this.getDtoPropertyVarName()}`,
             }),
         })
-
-
+        
+        
         this.appendBodyElement({
             name: 'return row',
             value: `return ${this.gmServiceBuildResponseFormat.row(this.getDtoPropertyVarName())}`,
         })
     }
-
-
+    
+    
     private getDtoPropertyVarName(): string {
         return 'dto'
     }

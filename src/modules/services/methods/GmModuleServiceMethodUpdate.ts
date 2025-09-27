@@ -6,7 +6,6 @@ import {GmServiceThrowAppError} from '@services/errors/GmServiceThrowAppError'
 import {GmServiceActionsLoggerService} from '@services/sendActionSystemLog/GmServiceActionsLoggerService'
 import {IGmModuleRepository} from '@modules/repository/interfaces/gmModuleRepository'
 import {GmCrudConfig} from 'os-core-ts'
-import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmCrudConfigChecker} from '@crudConfig/GmCrudConfigChecker'
 import {GmModuleDtoHelper} from '@modules/dto/helper/GmModuleDtoHelper'
 
@@ -44,7 +43,7 @@ export class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMethod imp
     
     
     public getPropertyName(): string {
-        return `update${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}`
+        return 'update'
     }
     
     public init(): void {
@@ -92,7 +91,7 @@ export class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMethod imp
         
         this.appendBodyElement({
             name: 'getOldRow',
-            value: `const ${this.getOldEntityVarName()}  = await ${this.gmModuleRepository.api.findByPk(PROPS_VAR_NAMES.id)}`,
+            value: `const ${this.getOldDtoVarName()}  = await ${this.gmModuleRepository.api.findByPk(PROPS_VAR_NAMES.id)}`,
         })
         
         this.appendBodyElement({
@@ -100,7 +99,7 @@ export class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMethod imp
             value: this.gmServiceThrowAppError.throwAppError({
                 message: 'Not found.',
                 errorKey: 'NOT_FOUND_ERROR',
-                ifConstruction: `!${this.getOldEntityVarName()}`,
+                ifConstruction: `!${this.getOldDtoVarName()}`,
             }),
             hasEmptyLineAtEnd: true,
         })
@@ -135,7 +134,7 @@ export class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMethod imp
             name: 'SendActionSystemLogService',
             value: `await ${this.gmServiceSendActionSystemLog.logUpdateAction({
                 rowId: PROPS_VAR_NAMES.id,
-                oldValue: this.getOldEntityVarName(),
+                oldValue: this.getOldDtoVarName(),
                 newValue: this.getNewEntityVarName(),
                 config: this.gmModuleRepository.api.getConfig(),
                 initiatorOpenUserId: PROPS_VAR_NAMES.initiatorOpenUserId,
@@ -150,10 +149,10 @@ export class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMethod imp
     }
     
     private getNewEntityVarName(): string {
-        return 'newEntity'
+        return 'newDto'
     }
     
-    private getOldEntityVarName(): string {
-        return 'oldEntity'
+    private getOldDtoVarName(): string {
+        return 'oldDto'
     }
 }

@@ -5,7 +5,6 @@ const GmAbstractModuleClassMethod_1 = require("../../abstractModule/GmAbstractMo
 const GmModuleDto_1 = require("../../dto/GmModuleDto");
 const GmModuleUpdateDto_1 = require("../../dto/GmModuleUpdateDto");
 const GmServiceThrowAppError_1 = require("../../../services/errors/GmServiceThrowAppError");
-const StringCaseHelper_1 = require("../../../helpers/StringCaseHelper");
 const GmCrudConfigChecker_1 = require("../../../crudConfig/GmCrudConfigChecker");
 const GmModuleDtoHelper_1 = require("../../dto/helper/GmModuleDtoHelper");
 const PROPS_VAR_NAMES = {
@@ -24,7 +23,7 @@ class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMethod_1.GmAbstra
         this.callVarNames = callVarNames;
     }
     getPropertyName() {
-        return `update${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}`;
+        return 'update';
     }
     init() {
         this.addModule(this.gmModuleDto);
@@ -61,14 +60,14 @@ class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMethod_1.GmAbstra
     checkHasRow() {
         this.appendBodyElement({
             name: 'getOldRow',
-            value: `const ${this.getOldEntityVarName()}  = await ${this.gmModuleRepository.api.findByPk(PROPS_VAR_NAMES.id)}`,
+            value: `const ${this.getOldDtoVarName()}  = await ${this.gmModuleRepository.api.findByPk(PROPS_VAR_NAMES.id)}`,
         });
         this.appendBodyElement({
             name: 'checkOldRow',
             value: this.gmServiceThrowAppError.throwAppError({
                 message: 'Not found.',
                 errorKey: 'NOT_FOUND_ERROR',
-                ifConstruction: `!${this.getOldEntityVarName()}`,
+                ifConstruction: `!${this.getOldDtoVarName()}`,
             }),
             hasEmptyLineAtEnd: true,
         });
@@ -99,7 +98,7 @@ class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMethod_1.GmAbstra
             name: 'SendActionSystemLogService',
             value: `await ${this.gmServiceSendActionSystemLog.logUpdateAction({
                 rowId: PROPS_VAR_NAMES.id,
-                oldValue: this.getOldEntityVarName(),
+                oldValue: this.getOldDtoVarName(),
                 newValue: this.getNewEntityVarName(),
                 config: this.gmModuleRepository.api.getConfig(),
                 initiatorOpenUserId: PROPS_VAR_NAMES.initiatorOpenUserId,
@@ -112,10 +111,10 @@ class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMethod_1.GmAbstra
         });
     }
     getNewEntityVarName() {
-        return 'newEntity';
+        return 'newDto';
     }
-    getOldEntityVarName() {
-        return 'oldEntity';
+    getOldDtoVarName() {
+        return 'oldDto';
     }
 }
 exports.GmModuleServiceMethodUpdate = GmModuleServiceMethodUpdate;

@@ -18,13 +18,13 @@ import {GmParamDec, GmParamNumDec} from '@decorators/controllerDecorators/GmPara
 
 
 export class GmModuleControllerMethodUpdate extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {
-
+    
     private readonly gmServiceBuildResponseFormat: GmServiceBuildResponseFormat
     private readonly gmServiceMutateRowResultType: GmServiceMutateRowResultType
     private readonly gmModuleUpdateDto: GmModuleUpdateDto
     private readonly gmServiceUserInfoType: GmServiceUserInfoType
     private readonly gmModuleRoutePaths: GmModuleRoutePaths
-
+    
     constructor(
         config: GmCrudConfig,
         private readonly api: IGmModuleServiceApiUpdate,
@@ -42,25 +42,25 @@ export class GmModuleControllerMethodUpdate extends GmAbstractModuleClassMethod 
         this.gmServiceUserInfoType = new GmServiceUserInfoType()
         this.gmModuleUpdateDto = new GmModuleUpdateDto(config)
         this.gmModuleRoutePaths = new GmModuleRoutePaths(config)
-
-
+        
+        
     }
-
+    
     public getPropertyName(): string {
-        return `update${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}`
+        return 'update'
     }
-
+    
     public init(): void {
         this.addModule(this.gmModuleUpdateDto)
         this.addModule(this.gmModuleRoutePaths)
         this.addService(this.gmServiceBuildResponseFormat)
         this.addService(this.gmServiceMutateRowResultType)
         this.setReturnType(`Promise<${this.gmServiceMutateRowResultType.getMutateRowResultType(GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).type as 'string')}>`)
-
+        
         this.appendDecorator(new GmSwaggerInfoDec(`Update ${StringCaseHelper.toKebabCase(this.getConfig().dtoName.singular)} by id`))
         this.appendDecorator(new GmPutDec(this.gmModuleRoutePaths.getRoutePathPropertyName('update')))
-
-
+        
+        
         this.setMethodScope('public')
         this.setAsyncType('async')
         this.addProp({
@@ -88,14 +88,14 @@ export class GmModuleControllerMethodUpdate extends GmAbstractModuleClassMethod 
             name: 'create row',
             value: `const ${this.getNewDtoPropertyVarName()} = await ${this.api.update()}`,
         })
-
+        
         this.appendBodyElement({
             name: 'return row',
             value: `return ${this.gmServiceBuildResponseFormat.mutateRow(`${this.getNewDtoPropertyVarName()}.${GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).key}`)}`,
         })
     }
-
-
+    
+    
     private getNewDtoPropertyVarName(): string {
         return 'newDto'
     }

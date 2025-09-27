@@ -4,19 +4,17 @@ exports.GmModuleControllerClassGetAllBySqlStaticDb = exports.GmModuleControllerC
 const StringCaseHelper_1 = require("../../../../../helpers/StringCaseHelper");
 const GmCrudConfigChecker_1 = require("../../../../../crudConfig/GmCrudConfigChecker");
 const GmAccessStructureMethodProcessor_1 = require("../../../../structure/GmAccessStructureMethodProcessor");
-const GmQueryParamDec_1 = require("../../../../../decorators/controllerDecorators/GmQueryParamDec");
-const GmServiceValidator_1 = require("../../../../../services/validator/GmServiceValidator");
-const GmServiceSchemaValidatorType_1 = require("../../../../../services/schemaValidator/GmServiceSchemaValidatorType");
 const GmModuleValidator_1 = require("../../../../validator/GmModuleValidator");
 const GmModuleAbstractControllerClass_1 = require("../../abstract/GmModuleAbstractControllerClass");
 const byStaticDb_1 = require("../../../../services/classes/sql/byStaticDb");
-const GmModuleCreateDto_1 = require("../../../../dto/GmModuleCreateDto");
 const GmModuleUpdateDto_1 = require("../../../../dto/GmModuleUpdateDto");
 const GmModuleControllerMethodCreate_1 = require("../../../methods/GmModuleControllerMethodCreate");
 const GmModuleControllerMethodUpdate_1 = require("../../../methods/GmModuleControllerMethodUpdate");
 const GmModuleControllerMethodDelete_1 = require("../../../methods/GmModuleControllerMethodDelete");
 const GmModuleControllerMethodGetById_1 = require("../../../methods/GmModuleControllerMethodGetById");
 const GmModuleControllerMethodGetPagination_1 = require("../../../methods/GmModuleControllerMethodGetPagination");
+const GmBodyParamDec_1 = require("../../../../../decorators/controllerDecorators/GmBodyParamDec");
+const GmQueryParamDec_1 = require("../../../../../decorators/controllerDecorators/GmQueryParamDec");
 class GmGetVarNamesByStaticDb {
     constructor(config) {
         this.config = config;
@@ -29,22 +27,18 @@ class GmGetVarNamesByStaticDb {
         return {
             openUserId: `${this.userInfo()}.open_user_id`,
             createBody,
-            createBodySchema: `create${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.config.dtoName.singular)}BodySchema`,
-            legalEntityId: `${createBody}.legal_entity_id`,
-            createBodyType: !GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.config, 'add') ||
-                GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.config, 'add') && this.checkHasLeIdColumn()
-                ? undefined : `Create${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.config.dtoName.singular)}Body`,
+            createBodySchema: `create${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.config.dtoName.singular)}Schema`,
+            legalEntityId: 'legalEntityId',
         };
     }
     update() {
         const updateBody = 'body';
         return {
             updateBody,
-            updateBodySchema: `update${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.config.dtoName.singular)}BodySchema`,
+            updateBodySchema: `update${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.config.dtoName.singular)}Schema`,
             id: 'id',
             openUserId: `${this.userInfo()}.open_user_id`,
-            legalEntityId: `${updateBody}.legal_entity_id`,
-            updateBodyType: GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.config, 'update') ? `Update${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.config.dtoName.singular)}Body` : undefined,
+            legalEntityId: 'legalEntityId',
         };
     }
     delete() {
@@ -68,11 +62,6 @@ class GmGetVarNamesByStaticDb {
             openUserId: `${this.userInfo()}.open_user_id`,
             legalEntityId: 'legalEntityId',
         };
-    }
-    checkHasLeIdColumn() {
-        return 'legal_entity_id' in this.config.repository.columns &&
-            (this.config.repository.columns.legal_entity_id.type === 'INTEGER' ||
-                this.config.repository.columns.legal_entity_id.type === 'BIGINT');
     }
 }
 class GmAccessStructureMethodProcessorByStaticDb extends GmAccessStructureMethodProcessor_1.GmAccessStructureMethodProcessor {
@@ -99,6 +88,22 @@ class GmAccessStructureMethodProcessorByStaticDb extends GmAccessStructureMethod
                 openUserId: gmGetVarNames.list().openUserId,
                 legalEntityId: gmGetVarNames.list().legalEntityId,
             },
+        });
+    }
+    add(method) {
+        super.add(method);
+        method.appendPropDecorator({
+            decorator: new GmBodyParamDec_1.GmBodyParamNumDec('legal_entity_id'),
+            type: 'number',
+            varName: 'legalEntityId',
+        });
+    }
+    update(method) {
+        super.update(method);
+        method.appendPropDecorator({
+            decorator: new GmBodyParamDec_1.GmBodyParamNumDec('legal_entity_id'),
+            type: 'number',
+            varName: 'legalEntityId',
         });
     }
     delete(method) {
@@ -132,41 +137,18 @@ class GmValidatorBuilderByStaticDb {
         this.validatorVarName = validatorVarName;
         this.validator = validator;
         this.gmGetVarNames = new GmGetVarNamesByStaticDb(config);
-        this.gmServiceValidator = new GmServiceValidator_1.GmServiceValidator();
-        this.gmServiceSchemaValidatorType = new GmServiceSchemaValidatorType_1.GmServiceSchemaValidatorType();
     }
     initValidator() {
         return `const ${this.validatorVarName} = new ${this.validator.getPropertyName()}()`;
     }
     add() {
-        const schemaTypeStr = this.gmGetVarNames.add().createBodyType ? ` :${this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.gmGetVarNames.add().createBodyType || '')}` : '';
-        if (!GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.config, 'add')) {
-            return `const ${this.gmGetVarNames.add().createBodySchema}${schemaTypeStr} = ${this.validator.api.getCreateDtoSchema()}`;
-        }
-        if (this.gmGetVarNames.checkHasLeIdColumn()) {
-            return `const ${this.gmGetVarNames.add().createBodySchema}${schemaTypeStr} = ${this.validator.api.getCreateDtoSchema()}`;
-        }
-        return `const ${this.gmGetVarNames.add().createBodySchema}${schemaTypeStr} = ${this.validator.api.getCreateDtoSchema()}.merge(${this.gmServiceValidator.object({
-            legal_entity_id: this.gmServiceValidator.number(),
-        })})`;
+        return `const ${this.gmGetVarNames.add().createBodySchema} = ${this.validator.api.getCreateDtoSchema()}`;
     }
     update() {
-        const schemaTypeStr = this.gmGetVarNames.update().updateBodyType ? ` :${this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.gmGetVarNames.update().updateBodyType || '')}` : '';
-        if (!GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.config, 'update')) {
-            return `const ${this.gmGetVarNames.update().updateBodySchema}${schemaTypeStr} = ${this.validator.api.getUpdateDtoSchema()}`;
-        }
-        return `const ${this.gmGetVarNames.update().updateBodySchema}${schemaTypeStr} = ${this.validator.api.getUpdateDtoSchema()}.merge(${this.gmServiceValidator.object({
-            legal_entity_id: this.gmServiceValidator.number(),
-        })})`;
+        return `const ${this.gmGetVarNames.update().updateBodySchema} = ${this.validator.api.getUpdateDtoSchema()}`;
     }
     list() {
         return `const ${this.gmGetVarNames.list().paramsSchema} = ${this.validator.api.getDtoPaginationQueryParamsSchema()}`;
-    }
-    checkHasAddValidatorService(type) {
-        if (type === 'update') {
-            return GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.config, type);
-        }
-        return GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.config, type) && !this.gmGetVarNames.checkHasLeIdColumn();
     }
 }
 class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractControllerClass_1.GmModuleAbstractControllerClass {
@@ -198,27 +180,13 @@ class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractControlle
         });
         this.gmAccessStructureMethodProcessorByStaticDb = new GmAccessStructureMethodProcessorByStaticDb(config);
         this.gmGetVarNames = gmGetVarNames;
-        this.gmModuleCreateDto = new GmModuleCreateDto_1.GmModuleCreateDto(config);
-        this.gmModuleUpdateDto = new GmModuleUpdateDto_1.GmModuleUpdateDto(config);
     }
     init() {
         super.init();
         this.addModule(this.validator);
         this.addModule(this.serviceCrud);
-        if (this.gmValidatorBuilder.checkHasAddValidatorService('add') ||
-            this.gmValidatorBuilder.checkHasAddValidatorService('update')) {
-            this.addService(new GmServiceValidator_1.GmServiceValidator());
-            this.addService(new GmServiceSchemaValidatorType_1.GmServiceSchemaValidatorType());
-        }
-        if (this.gmValidatorBuilder.checkHasAddValidatorService('add')) {
-            this.addModule(this.gmModuleCreateDto);
-        }
-        if (this.gmValidatorBuilder.checkHasAddValidatorService('update')) {
-            this.addModule(this.gmModuleUpdateDto);
-        }
         const methodCreate = new GmModuleControllerMethodCreate_1.GmModuleControllerMethodCreate(this.getConfig(), this.serviceCrud.api, {
             createDto: this.gmGetVarNames.add().createBody,
-            createDtoType: this.gmGetVarNames.add().createBodyType,
             userInfo: this.gmGetVarNames.userInfo(),
             createDtoSchema: this.gmGetVarNames.add().createBodySchema,
         });
@@ -227,7 +195,6 @@ class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractControlle
         }
         const methodUpdate = new GmModuleControllerMethodUpdate_1.GmModuleControllerMethodUpdate(this.getConfig(), this.serviceCrud.api, {
             updateDto: this.gmGetVarNames.update().updateBody,
-            updateDtoType: this.gmGetVarNames.update().updateBodyType,
             userInfo: this.gmGetVarNames.userInfo(),
             updateDtoSchema: this.gmGetVarNames.update().updateBodySchema,
             id: this.gmGetVarNames.update().id,
@@ -266,18 +233,8 @@ class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractControlle
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         });
-        if (this.gmGetVarNames.add().createBodyType) {
-            this.addElementBeforeClass(`
-                type ${this.gmGetVarNames.add().createBodyType} = ${this.gmModuleCreateDto.getPropertyName()} & {legal_entity_id:number}
-            `);
-        }
-        if (this.gmGetVarNames.update().updateBodyType) {
-            this.addElementBeforeClass(`
-                type ${this.gmGetVarNames.update().updateBodyType} = ${this.gmModuleUpdateDto.getPropertyName()} & {legal_entity_id:number}
-            `);
-        }
         this.addElementBeforeClass(`
             ${this.gmValidatorBuilder.initValidator()}
             
@@ -308,20 +265,13 @@ class GmModuleControllerClassCreateBySqlStaticDb extends GmModuleAbstractControl
         });
         this.gmAccessStructureMethodProcessorByStaticDb = new GmAccessStructureMethodProcessorByStaticDb(config);
         this.gmGetVarNames = gmGetVarNames;
-        this.gmModuleCreateDto = new GmModuleCreateDto_1.GmModuleCreateDto(config);
     }
     init() {
         super.init();
         this.addModule(this.validator);
         this.addModule(this.serviceCrud);
-        if (this.gmValidatorBuilder.checkHasAddValidatorService('add')) {
-            this.addService(new GmServiceValidator_1.GmServiceValidator());
-            this.addService(new GmServiceSchemaValidatorType_1.GmServiceSchemaValidatorType());
-            this.addModule(this.gmModuleCreateDto);
-        }
         const methodCreate = new GmModuleControllerMethodCreate_1.GmModuleControllerMethodCreate(this.getConfig(), this.serviceCrud.api, {
             createDto: this.gmGetVarNames.add().createBody,
-            createDtoType: this.gmGetVarNames.add().createBodyType,
             userInfo: this.gmGetVarNames.userInfo(),
             createDtoSchema: this.gmGetVarNames.add().createBodySchema,
         });
@@ -333,13 +283,8 @@ class GmModuleControllerClassCreateBySqlStaticDb extends GmModuleAbstractControl
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         });
-        if (this.gmGetVarNames.add().createBodyType) {
-            this.addElementBeforeClass(`
-                type ${this.gmGetVarNames.add().createBodyType} = ${this.gmModuleCreateDto.getPropertyName()} & {legal_entity_id:number}
-            `);
-        }
         this.addElementBeforeClass(`
             ${this.gmValidatorBuilder.initValidator()}
             
@@ -373,13 +318,8 @@ class GmModuleControllerClassUpdateBySqlStaticDb extends GmModuleAbstractControl
         super.init();
         this.addModule(this.validator);
         this.addModule(this.serviceCrud);
-        if (this.gmValidatorBuilder.checkHasAddValidatorService('update')) {
-            this.addService(new GmServiceValidator_1.GmServiceValidator());
-            this.addService(new GmServiceSchemaValidatorType_1.GmServiceSchemaValidatorType());
-        }
         const methodUpdate = new GmModuleControllerMethodUpdate_1.GmModuleControllerMethodUpdate(this.getConfig(), this.serviceCrud.api, {
             updateDto: this.gmGetVarNames.update().updateBody,
-            updateDtoType: this.gmGetVarNames.update().updateBodyType,
             userInfo: this.gmGetVarNames.userInfo(),
             updateDtoSchema: this.gmGetVarNames.update().updateBodySchema,
             id: this.gmGetVarNames.update().id,
@@ -393,16 +333,11 @@ class GmModuleControllerClassUpdateBySqlStaticDb extends GmModuleAbstractControl
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         });
-        if (this.gmGetVarNames.update().updateBodyType) {
-            this.addElementBeforeClass(`
-                type ${this.gmGetVarNames.update().updateBodyType} = ${this.gmModuleUpdateDto.getPropertyName()} & {legal_entity_id:number}
-            `);
-        }
         this.addElementBeforeClass(`
             ${this.gmValidatorBuilder.initValidator()}
-            
+          
             ${this.gmValidatorBuilder.update()}
         `);
     }
@@ -440,7 +375,7 @@ class GmModuleControllerClassDeleteBySqlStaticDb extends GmModuleAbstractControl
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         });
     }
     getServiceVarName() {
@@ -473,7 +408,7 @@ class GmModuleControllerClassGetBySqlStaticDb extends GmModuleAbstractController
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         });
     }
     getServiceVarName() {
@@ -510,7 +445,7 @@ class GmModuleControllerClassGetAllBySqlStaticDb extends GmModuleAbstractControl
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         });
         this.addElementBeforeClass(`
             ${this.gmValidatorBuilder.initValidator()}

@@ -32,8 +32,6 @@ export abstract class GmModuleAbstractControllerClass extends GmAbstractModuleCl
 
     public init(): void {
         this.addDecorator(new GmControllerDec())
-
-
     }
 
 

@@ -28,7 +28,7 @@ class GmModuleControllerMethodGetById extends GmAbstractModuleClassMethod_1.GmAb
         this.gmModuleRoutePaths = new GmModuleRoutePaths_1.GmModuleRoutePaths(config);
     }
     getPropertyName() {
-        return `get${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}ById`;
+        return `getById`;
     }
     init() {
         this.addModule(this.gmModuleDto);

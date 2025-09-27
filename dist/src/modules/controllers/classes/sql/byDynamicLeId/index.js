@@ -6,8 +6,6 @@ const GmModuleAbstractControllerClass_1 = require("../../abstract/GmModuleAbstra
 const GmModuleValidator_1 = require("../../../../validator/GmModuleValidator");
 const byDynamicLeId_1 = require("../../../../services/classes/sql/byDynamicLeId");
 const GmModuleCreateDto_1 = require("../../../../dto/GmModuleCreateDto");
-const GmServiceSchemaValidatorType_1 = require("../../../../../services/schemaValidator/GmServiceSchemaValidatorType");
-const GmServiceValidator_1 = require("../../../../../services/validator/GmServiceValidator");
 const GmModuleUpdateDto_1 = require("../../../../dto/GmModuleUpdateDto");
 const StringCaseHelper_1 = require("../../../../../helpers/StringCaseHelper");
 const GmModuleControllerMethodCreate_1 = require("../../../methods/GmModuleControllerMethodCreate");
@@ -17,16 +15,19 @@ const GmModuleControllerMethodDelete_1 = require("../../../methods/GmModuleContr
 const GmQueryParamDec_1 = require("../../../../../decorators/controllerDecorators/GmQueryParamDec");
 const GmModuleControllerMethodGetById_1 = require("../../../methods/GmModuleControllerMethodGetById");
 const GmModuleControllerMethodGetPagination_1 = require("../../../methods/GmModuleControllerMethodGetPagination");
+const GmBodyParamDec_1 = require("../../../../../decorators/controllerDecorators/GmBodyParamDec");
 const CREATE_VAR_NAMES = {
     body: 'body',
     createDtoSchema: 'createDtoSchema',
     userInfo: 'userInfo',
+    legalEntityId: 'legalEntityId',
 };
 const UPDATE_VAR_NAMES = {
     body: 'body',
     updateDtoSchema: 'createDtoSchema',
     userInfo: 'userInfo',
     id: 'id',
+    legalEntityId: 'legalEntityId',
 };
 const DELETE_VAR_NAMES = {
     legalEntityId: 'legalEntityId',
@@ -45,14 +46,15 @@ const GET_ALL_VAR_NAMES = {
 };
 class GmAccessStructureMethodProcessorByDynamicLeId extends GmAccessStructureMethodProcessor_1.GmAccessStructureMethodProcessor {
     constructor(config) {
+        const hasLeIdColumn = 'legal_entity_id' in config.repository.columns;
         super(config, {
             add: {
                 openUserId: `${CREATE_VAR_NAMES.userInfo}.open_user_id`,
-                legalEntityId: `${CREATE_VAR_NAMES.body}.legal_entity_id`,
+                legalEntityId: hasLeIdColumn ? `${CREATE_VAR_NAMES.body}.legal_entity_id` : CREATE_VAR_NAMES.legalEntityId,
             },
             update: {
                 openUserId: `${UPDATE_VAR_NAMES.userInfo}.open_user_id`,
-                legalEntityId: `${UPDATE_VAR_NAMES.body}.legal_entity_id`,
+                legalEntityId: hasLeIdColumn ? `${UPDATE_VAR_NAMES.body}.legal_entity_id` : UPDATE_VAR_NAMES.legalEntityId,
             },
             delete: {
                 openUserId: `${DELETE_VAR_NAMES.userInfo}.open_user_id`,
@@ -73,14 +75,15 @@ class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstractContro
     constructor(config) {
         super(config, `${StringCaseHelper_1.StringCaseHelper.toPascalCase(config.dtoName.plural)}Controller`);
         this.validator = new GmModuleValidator_1.GmModuleValidator(config, this.getValidatorVarName());
+        const hasLeIdColumn = 'legal_entity_id' in this.getConfig().repository.columns;
         this.serviceCrud = new byDynamicLeId_1.GmModuleServiceClassCrudBySqlDynamicLeId(config, `this.${this.getServiceVarName()}`, {
             create: {
-                legalEntityId: `${CREATE_VAR_NAMES.body}.legal_entity_id`,
+                legalEntityId: hasLeIdColumn ? `${CREATE_VAR_NAMES.body}.legal_entity_id` : CREATE_VAR_NAMES.legalEntityId,
                 createDto: CREATE_VAR_NAMES.body,
                 initiatorOpenUserId: `${CREATE_VAR_NAMES.userInfo}.open_user_id`,
             },
             update: {
-                legalEntityId: `${UPDATE_VAR_NAMES.body}.legal_entity_id`,
+                legalEntityId: hasLeIdColumn ? `${UPDATE_VAR_NAMES.body}.legal_entity_id` : UPDATE_VAR_NAMES.legalEntityId,
                 id: UPDATE_VAR_NAMES.id,
                 updateDto: UPDATE_VAR_NAMES.body,
                 initiatorOpenUserId: `${UPDATE_VAR_NAMES.userInfo}.open_user_id`,
@@ -100,8 +103,6 @@ class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstractContro
             },
         });
         this.gmModuleCreateDto = new GmModuleCreateDto_1.GmModuleCreateDto(config);
-        this.gmServiceSchemaValidatorType = new GmServiceSchemaValidatorType_1.GmServiceSchemaValidatorType();
-        this.gmServiceValidator = new GmServiceValidator_1.GmServiceValidator();
         this.gmModuleUpdateDto = new GmModuleUpdateDto_1.GmModuleUpdateDto(config);
         this.gmAccessStructureMethodProcessorByDynamicLeId = new GmAccessStructureMethodProcessorByDynamicLeId(config);
     }
@@ -111,14 +112,20 @@ class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstractContro
         this.addModule(this.serviceCrud);
         this.addModule(this.gmModuleCreateDto);
         this.addModule(this.gmModuleUpdateDto);
-        this.addService(this.gmServiceSchemaValidatorType);
-        this.addService(this.gmServiceValidator);
+        const hasLeIdColumn = 'legal_entity_id' in this.getConfig().repository.columns;
         const methodCreate = new GmModuleControllerMethodCreate_1.GmModuleControllerMethodCreate(this.getConfig(), this.serviceCrud.api, {
             createDto: CREATE_VAR_NAMES.body,
             userInfo: CREATE_VAR_NAMES.userInfo,
             createDtoSchema: this.getValidatorCreateBodyVarName(),
-            createDtoType: this.getValidatorCreateBodyTypeVarName(),
         });
+        if (!hasLeIdColumn) {
+            methodCreate.addProp({
+                type: 'number',
+                varName: CREATE_VAR_NAMES.legalEntityId,
+                callVarName: CREATE_VAR_NAMES.legalEntityId,
+                decorator: new GmBodyParamDec_1.GmBodyParamNumDec('legal_entity_id'),
+            });
+        }
         if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.add(methodCreate);
         }
@@ -126,9 +133,16 @@ class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstractContro
             updateDto: UPDATE_VAR_NAMES.body,
             userInfo: UPDATE_VAR_NAMES.userInfo,
             updateDtoSchema: this.getValidatorUpdateBodyVarName(),
-            updateDtoType: this.getValidatorUpdateBodyTypeVarName(),
             id: UPDATE_VAR_NAMES.id,
         });
+        if (!hasLeIdColumn) {
+            methodUpdate.addProp({
+                type: 'number',
+                varName: UPDATE_VAR_NAMES.legalEntityId,
+                callVarName: UPDATE_VAR_NAMES.legalEntityId,
+                decorator: new GmBodyParamDec_1.GmBodyParamNumDec('legal_entity_id'),
+            });
+        }
         if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'update')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.update(methodUpdate);
         }
@@ -178,25 +192,15 @@ class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstractContro
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         });
         this.addElementBeforeClass(`
-            type ${this.getValidatorCreateBodyTypeVarName()} = ${this.gmModuleCreateDto.getPropertyName()} & {
-                legal_entity_id:number
-            }
-            type ${this.getValidatorUpdateBodyTypeVarName()} = ${this.gmModuleUpdateDto.getPropertyName()} & {
-                legal_entity_id:number
-            }
-            
+          
             const ${this.getValidatorVarName()} = new ${this.validator.getPropertyName()}()
             
-            const ${this.getValidatorCreateBodyVarName()}:${this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.getValidatorCreateBodyTypeVarName())} = ${this.validator.api.getCreateDtoSchema()}.merge(${this.gmServiceValidator.object({
-            legal_entity_id: this.gmServiceValidator.number(),
-        })})
+            const ${this.getValidatorCreateBodyVarName()} = ${this.validator.api.getCreateDtoSchema()}
              
-            const ${this.getValidatorUpdateBodyVarName()}:${this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.getValidatorUpdateBodyTypeVarName())} = ${this.validator.api.getUpdateDtoSchema()}.merge(${this.gmServiceValidator.object({
-            legal_entity_id: this.gmServiceValidator.number(),
-        })})
+            const ${this.getValidatorUpdateBodyVarName()} = ${this.validator.api.getUpdateDtoSchema()}
              
             const ${this.getValidatorParamsDtoVarName()} = ${this.validator.api.getDtoPaginationQueryParamsSchema()}
         `);
@@ -205,16 +209,10 @@ class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstractContro
         return `${StringCaseHelper_1.StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}Validator`;
     }
     getValidatorCreateBodyVarName() {
-        return `create${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}BodySchema`;
-    }
-    getValidatorCreateBodyTypeVarName() {
-        return `Create${this.getConfig().dtoName.singular}Body`;
+        return `create${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Schema`;
     }
     getValidatorUpdateBodyVarName() {
-        return `update${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}BodySchema`;
-    }
-    getValidatorUpdateBodyTypeVarName() {
-        return `Update${this.getConfig().dtoName.singular}Body`;
+        return `update${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Schema`;
     }
     getValidatorParamsDtoVarName() {
         return `${StringCaseHelper_1.StringCaseHelper.toCamelCase(this.getConfig().dtoName.singular)}DtoPaginationQueryParamsSchema`;
@@ -227,15 +225,14 @@ exports.GmModuleControllerClassCrudBySqlDynamicLeId = GmModuleControllerClassCru
 class GmModuleControllerClassCreateBySqlDynamicLeId extends GmModuleAbstractControllerClass_1.GmModuleAbstractControllerClass {
     constructor(config) {
         super(config, `Create${StringCaseHelper_1.StringCaseHelper.toPascalCase(config.dtoName.singular)}Controller`);
+        const hasLeIdColumn = 'legal_entity_id' in this.getConfig().repository.columns;
         this.validator = new GmModuleValidator_1.GmModuleValidator(config, this.getValidatorVarName());
         this.serviceCrud = new byDynamicLeId_1.GmModuleServiceClassCreateBySqlDynamicLeId(config, `this.${this.getServiceVarName()}`, {
             initiatorOpenUserId: `${CREATE_VAR_NAMES.userInfo}.open_user_id`,
             createDto: CREATE_VAR_NAMES.body,
-            legalEntityId: `${CREATE_VAR_NAMES.body}.legal_entity_id`,
+            legalEntityId: hasLeIdColumn ? `${CREATE_VAR_NAMES.body}.legal_entity_id` : CREATE_VAR_NAMES.legalEntityId,
         });
         this.gmModuleCreateDto = new GmModuleCreateDto_1.GmModuleCreateDto(config);
-        this.gmServiceSchemaValidatorType = new GmServiceSchemaValidatorType_1.GmServiceSchemaValidatorType();
-        this.gmServiceValidator = new GmServiceValidator_1.GmServiceValidator();
         this.gmAccessStructureMethodProcessorByDynamicLeId = new GmAccessStructureMethodProcessorByDynamicLeId(config);
     }
     init() {
@@ -243,14 +240,20 @@ class GmModuleControllerClassCreateBySqlDynamicLeId extends GmModuleAbstractCont
         this.addModule(this.validator);
         this.addModule(this.serviceCrud);
         this.addModule(this.gmModuleCreateDto);
-        this.addService(this.gmServiceSchemaValidatorType);
-        this.addService(this.gmServiceValidator);
+        const hasLeIdColumn = 'legal_entity_id' in this.getConfig().repository.columns;
         const methodCreate = new GmModuleControllerMethodCreate_1.GmModuleControllerMethodCreate(this.getConfig(), this.serviceCrud.api, {
             createDto: CREATE_VAR_NAMES.body,
             userInfo: CREATE_VAR_NAMES.userInfo,
             createDtoSchema: this.getValidatorCreateBodyVarName(),
-            createDtoType: this.getValidatorCreateBodyTypeVarName(),
         });
+        if (!hasLeIdColumn) {
+            methodCreate.addProp({
+                type: 'number',
+                varName: CREATE_VAR_NAMES.legalEntityId,
+                callVarName: CREATE_VAR_NAMES.legalEntityId,
+                decorator: new GmBodyParamDec_1.GmBodyParamNumDec('legal_entity_id'),
+            });
+        }
         if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.add(methodCreate);
         }
@@ -259,28 +262,20 @@ class GmModuleControllerClassCreateBySqlDynamicLeId extends GmModuleAbstractCont
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         });
         this.addElementBeforeClass(`
             const ${this.getValidatorVarName()} = new ${this.validator.getPropertyName()}()
         `);
         this.addElementBeforeClass(`
-            type ${this.getValidatorCreateBodyTypeVarName()} = ${this.gmModuleCreateDto.getPropertyName()} & {
-                legal_entity_id:number
-            }
-            const ${this.getValidatorCreateBodyVarName()}:${this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.getValidatorCreateBodyTypeVarName())} = ${this.validator.api.getCreateDtoSchema()}.merge(${this.gmServiceValidator.object({
-            legal_entity_id: this.gmServiceValidator.number(),
-        })})
+            const ${this.getValidatorCreateBodyVarName()} = ${this.validator.api.getCreateDtoSchema()}
         `);
     }
     getValidatorVarName() {
         return `${StringCaseHelper_1.StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}Validator`;
     }
     getValidatorCreateBodyVarName() {
-        return `create${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}BodySchema`;
-    }
-    getValidatorCreateBodyTypeVarName() {
-        return `Create${this.getConfig().dtoName.singular}Body`;
+        return `create${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Schema`;
     }
     getServiceVarName() {
         return `create${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Service`;
@@ -290,16 +285,15 @@ exports.GmModuleControllerClassCreateBySqlDynamicLeId = GmModuleControllerClassC
 class GmModuleControllerClassUpdateBySqlDynamicLeId extends GmModuleAbstractControllerClass_1.GmModuleAbstractControllerClass {
     constructor(config) {
         super(config, `Update${StringCaseHelper_1.StringCaseHelper.toPascalCase(config.dtoName.singular)}Controller`);
+        const hasLeIdColumn = 'legal_entity_id' in this.getConfig().repository.columns;
         this.validator = new GmModuleValidator_1.GmModuleValidator(config, this.getValidatorVarName());
         this.serviceCrud = new byDynamicLeId_1.GmModuleServiceClassUpdateBySqlDynamicLeId(config, `this.${this.getServiceVarName()}`, {
             initiatorOpenUserId: `${UPDATE_VAR_NAMES.userInfo}.open_user_id`,
             updateDto: UPDATE_VAR_NAMES.body,
-            legalEntityId: `${UPDATE_VAR_NAMES.body}.legal_entity_id`,
+            legalEntityId: hasLeIdColumn ? `${UPDATE_VAR_NAMES.body}.legal_entity_id` : UPDATE_VAR_NAMES.legalEntityId,
             id: UPDATE_VAR_NAMES.id,
         });
         this.gmModuleUpdateDto = new GmModuleUpdateDto_1.GmModuleUpdateDto(config);
-        this.gmServiceSchemaValidatorType = new GmServiceSchemaValidatorType_1.GmServiceSchemaValidatorType();
-        this.gmServiceValidator = new GmServiceValidator_1.GmServiceValidator();
         this.gmAccessStructureMethodProcessorByDynamicLeId = new GmAccessStructureMethodProcessorByDynamicLeId(config);
     }
     init() {
@@ -307,15 +301,21 @@ class GmModuleControllerClassUpdateBySqlDynamicLeId extends GmModuleAbstractCont
         this.addModule(this.validator);
         this.addModule(this.serviceCrud);
         this.addModule(this.gmModuleUpdateDto);
-        this.addService(this.gmServiceSchemaValidatorType);
-        this.addService(this.gmServiceValidator);
+        const hasLeIdColumn = 'legal_entity_id' in this.getConfig().repository.columns;
         const methodUpdate = new GmModuleControllerMethodUpdate_1.GmModuleControllerMethodUpdate(this.getConfig(), this.serviceCrud.api, {
             updateDto: UPDATE_VAR_NAMES.body,
             userInfo: UPDATE_VAR_NAMES.userInfo,
             updateDtoSchema: this.getValidatorUpdateBodyVarName(),
-            updateDtoType: this.getValidatorUpdateBodyTypeVarName(),
             id: UPDATE_VAR_NAMES.id,
         });
+        if (!hasLeIdColumn) {
+            methodUpdate.addProp({
+                type: 'number',
+                varName: UPDATE_VAR_NAMES.legalEntityId,
+                callVarName: UPDATE_VAR_NAMES.legalEntityId,
+                decorator: new GmBodyParamDec_1.GmBodyParamNumDec('legal_entity_id'),
+            });
+        }
         if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'update')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.update(methodUpdate);
         }
@@ -324,28 +324,20 @@ class GmModuleControllerClassUpdateBySqlDynamicLeId extends GmModuleAbstractCont
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         });
         this.addElementBeforeClass(`
             const ${this.getValidatorVarName()} = new ${this.validator.getPropertyName()}()
         `);
         this.addElementBeforeClass(`
-            type ${this.getValidatorUpdateBodyTypeVarName()} = ${this.gmModuleUpdateDto.getPropertyName()} & {
-                legal_entity_id:number
-            }
-            const ${this.getValidatorUpdateBodyVarName()}:${this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.getValidatorUpdateBodyTypeVarName())} = ${this.validator.api.getUpdateDtoSchema()}.merge(${this.gmServiceValidator.object({
-            legal_entity_id: this.gmServiceValidator.number(),
-        })})
+            const ${this.getValidatorUpdateBodyVarName()} = ${this.validator.api.getUpdateDtoSchema()}
         `);
     }
     getValidatorVarName() {
         return `${StringCaseHelper_1.StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}Validator`;
     }
     getValidatorUpdateBodyVarName() {
-        return `update${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}BodySchema`;
-    }
-    getValidatorUpdateBodyTypeVarName() {
-        return `Update${this.getConfig().dtoName.singular}Body`;
+        return `update${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Schema`;
     }
     getServiceVarName() {
         return `update${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Service`;
@@ -382,7 +374,7 @@ class GmModuleControllerClassDeleteBySqlDynamicLeId extends GmModuleAbstractCont
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         });
     }
     getServiceVarName() {
@@ -419,7 +411,7 @@ class GmModuleControllerClassGetBySqlDynamicLeId extends GmModuleAbstractControl
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         });
     }
     getServiceVarName() {
@@ -459,7 +451,7 @@ class GmModuleControllerClassGetAllBySqlDynamicLeId extends GmModuleAbstractCont
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         });
         this.addElementBeforeClass(`
             const ${this.getValidatorVarName()} = new ${this.validator.getPropertyName()}()

@@ -2,7 +2,7 @@ import { GmAbstractModuleClassMethod } from "../../abstractModule/GmAbstractModu
 import { IGmModuleClassMethod } from "../../interfaces/gmModule";
 import { GmServiceActionsLoggerService } from "../../../services/sendActionSystemLog/GmServiceActionsLoggerService";
 import { IGmModuleRepository } from "../../repository/interfaces/gmModuleRepository";
-import { GmCrudConfig } from "../../../os-core";
+import { GmCrudConfig } from 'os-core-ts';
 declare const PROPS_VAR_NAMES: {
     initiatorOpenUserId: string;
     id: string;
@@ -18,6 +18,6 @@ export declare class GmModuleServiceMethodDelete extends GmAbstractModuleClassMe
     init(): void;
     private checkHasOldDto;
     private deleteRow;
-    private getOldEntityVarName;
+    private getOldDtoVarName;
 }
 export {};

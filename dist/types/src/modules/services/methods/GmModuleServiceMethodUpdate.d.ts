@@ -2,7 +2,7 @@ import { GmAbstractModuleClassMethod } from "../../abstractModule/GmAbstractModu
 import { IGmModuleClassMethod } from "../../interfaces/gmModule";
 import { GmServiceActionsLoggerService } from "../../../services/sendActionSystemLog/GmServiceActionsLoggerService";
 import { IGmModuleRepository } from "../../repository/interfaces/gmModuleRepository";
-import { GmCrudConfig } from "../../../os-core";
+import { GmCrudConfig } from 'os-core-ts';
 declare const PROPS_VAR_NAMES: {
     initiatorOpenUserId: string;
     updateDto: string;
@@ -21,6 +21,6 @@ export declare class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMe
     private checkHasRow;
     private updateRow;
     private getNewEntityVarName;
-    private getOldEntityVarName;
+    private getOldDtoVarName;
 }
 export {};

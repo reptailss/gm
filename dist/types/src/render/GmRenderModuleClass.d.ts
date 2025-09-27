@@ -7,6 +7,7 @@ export declare class GmRenderModuleClass extends GmRenderModule implements IGmRe
     constructor(moduleClass: IGmModuleClass);
     renderImports(): string;
     renderConstructorProps(): string;
+    renderConstructorBody(): string;
     renderDecorators(): string;
     getExportMarkIfExported(): string;
     renderClass(): string;

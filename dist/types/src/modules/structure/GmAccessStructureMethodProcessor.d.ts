@@ -1,4 +1,4 @@
-import { GmCrudConfig } from "../../os-core";
+import { GmCrudConfig } from 'os-core-ts';
 import { IGmModuleClassMethod } from "../interfaces/gmModule";
 type CallVarNames = {
     openUserId: string;

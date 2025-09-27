@@ -1,9 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GmRenderImports = void 0;
-const ALIAS = {
-    'src/baseTypes/crud': '@baseTypes/crud',
-};
+const ALIAS = {};
 class GmRenderImports {
     constructor(module) {
         this.module = module;
@@ -84,7 +82,7 @@ class GmRenderImports {
             }
             return `import { ${uniq.join(', ')} } from '@${path}'\n`;
         }
-        return `import { ${uniq.join(', ')} } from '@modules/${rootDir}/${path}'\n`;
+        return `import { ${uniq.join(', ')} } from '@${this.module.getConfig().modulesDir || 'modules'}/${rootDir}/${path}'\n`;
     }
     getNormalizeImportPath(path) {
         const res = path.replace('.ts', '');

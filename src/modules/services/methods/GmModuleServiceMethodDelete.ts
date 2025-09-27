@@ -14,22 +14,22 @@ const PROPS_VAR_NAMES = {
     id: 'id',
 }
 
-export  class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {
-
+export class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {
+    
     private readonly gmModuleDto: GmModuleDto
     private readonly gmServiceThrowAppError: GmServiceThrowAppError
     private readonly gmServiceSendActionSystemLog: GmServiceActionsLoggerService
     private readonly gmModuleRepository: IGmModuleRepository
-    private readonly callVarNames:typeof PROPS_VAR_NAMES
+    private readonly callVarNames: typeof PROPS_VAR_NAMES
     
     constructor(
         config: GmCrudConfig,
         gmModuleRepository: IGmModuleRepository,
         gmServiceSendActionSystemLog: GmServiceActionsLoggerService,
-        callVarNames:typeof PROPS_VAR_NAMES
+        callVarNames: typeof PROPS_VAR_NAMES,
     ) {
         super(config)
-
+        
         this.gmModuleDto = new GmModuleDto(config)
         this.gmServiceThrowAppError = new GmServiceThrowAppError()
         this.gmServiceSendActionSystemLog = new GmServiceActionsLoggerService()
@@ -37,48 +37,48 @@ export  class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod im
         this.gmModuleRepository = gmModuleRepository
         this.callVarNames = callVarNames
     }
-
+    
     public getPropertyName(): string {
-        return `delete${this.getConfig().dtoName.singular}ById`
+        return 'delete'
     }
-
+    
     public init(): void {
-
+        
         this.addModule(this.gmModuleDto)
         this.addService(this.gmServiceThrowAppError)
-
+        
         this.setMethodScope('public')
         this.setAsyncType('async')
-
+        
         if (GmCrudConfigChecker.hasActionLogger(this.getConfig(), 'delete')) {
             this.addProp({
                 varName: PROPS_VAR_NAMES.initiatorOpenUserId,
-                callVarName:this.callVarNames.initiatorOpenUserId,
+                callVarName: this.callVarNames.initiatorOpenUserId,
                 type: 'number',
                 decorator: null,
             })
         }
-
+        
         this.setPropsType('object')
-
+        
         this.addProp({
             varName: PROPS_VAR_NAMES.id,
-            callVarName:this.callVarNames.id,
+            callVarName: this.callVarNames.id,
             type: GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).type,
             decorator: null,
         })
         this.setReturnType(`Promise<${this.gmModuleDto.getPropertyName()}>`)
-
+        
         this.checkHasOldDto()
-
+        
         this.deleteRow()
     }
-
-
+    
+    
     private checkHasOldDto() {
         this.appendBodyElement({
             name: 'foundRow',
-            value: `const ${this.getOldEntityVarName()} = await ${this.gmModuleRepository.api.findOne({
+            value: `const ${this.getOldDtoVarName()} = await ${this.gmModuleRepository.api.findOne({
                 where: {
                     [GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).key]: PROPS_VAR_NAMES.id,
                 },
@@ -89,13 +89,13 @@ export  class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod im
             value: this.gmServiceThrowAppError.throwAppError({
                 message: 'Not found',
                 errorKey: 'NOT_FOUND_ERROR',
-                ifConstruction: `!${this.getOldEntityVarName()}`,
+                ifConstruction: `!${this.getOldDtoVarName()}`,
             }),
         })
     }
-
+    
     private deleteRow() {
-
+        
         this.appendBodyElement({
             name: 'deleteRow',
             value: `await ${this.gmModuleRepository.api.destroy({
@@ -105,30 +105,30 @@ export  class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod im
             })}`,
             hasEmptyLineAtEnd: true,
         })
-
+        
         if (GmCrudConfigChecker.hasActionLogger(this.getConfig(), 'delete')) {
-
+            
             this.appendBodyElement({
                 name: 'SendActionSystemLogService',
                 value: `await ${this.gmServiceSendActionSystemLog.logDeleteAction({
                     rowId: PROPS_VAR_NAMES.id,
-                    oldValue: this.getOldEntityVarName(),
+                    oldValue: this.getOldDtoVarName(),
                     config: this.gmModuleRepository.api.getConfig(),
                     initiatorOpenUserId: PROPS_VAR_NAMES.initiatorOpenUserId,
                 })}`,
                 hasEmptyLineAtEnd: true,
             })
         }
-
+        
         this.appendBodyElement({
             name: 'return oldDto',
-            value: `return ${this.getOldEntityVarName()}`,
+            value: `return ${this.getOldDtoVarName()}`,
         })
     }
-
-
-    private getOldEntityVarName(): string {
-        return 'oldEntity'
+    
+    
+    private getOldDtoVarName(): string {
+        return 'oldDto'
     }
-
+    
 }

@@ -1,6 +1,6 @@
 import { GmAbstractModuleClass } from "../abstractModule/GmAbstractModuleClass";
 import { IGmModuleClass } from "../interfaces/gmModule";
-import { GmCrudConfig } from "../../os-core";
+import { GmCrudConfig } from 'os-core-ts';
 export declare class GmModuleValidator extends GmAbstractModuleClass implements IGmModuleClass {
     private readonly schemaVarName;
     constructor(config: GmCrudConfig, schemaVarName: string);

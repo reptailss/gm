@@ -12,6 +12,7 @@ export declare abstract class GmAbstractModuleClass extends GmAbstractModule imp
     private decorators;
     private vars;
     private elementsBeforeClass;
+    private elementsConstructorBody;
     private fileWriteModeGm;
     private dirType;
     abstract getDirName(): string | null;
@@ -25,7 +26,7 @@ export declare abstract class GmAbstractModuleClass extends GmAbstractModule imp
     addDecorator(decorator: IGmModuleClassDecorator): this;
     getDecorators(): IGmModuleClassDecorator[];
     addService(service: IGmServiceFn | IGmServiceClass): this;
-    getExport(): GmExport;
+    getExport(): GmExport | null;
     getFileWriteMode(): GmFileWriteMode;
     setDirType(dirType: GmModuleDirType): this;
     getDirType(): GmModuleDirType;
@@ -36,4 +37,6 @@ export declare abstract class GmAbstractModuleClass extends GmAbstractModule imp
     getVars(): GmModuleClassVar[];
     addElementBeforeClass(value: string): this;
     getElementsBeforeClass(): string[];
+    getElementsConstructorBody(): string[];
+    addElementConstructorBody(element: string): this;
 }

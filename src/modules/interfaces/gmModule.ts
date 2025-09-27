@@ -92,6 +92,10 @@ export interface IGmModuleClass extends IGmModule {
     addElementBeforeClass(value: string): this
 
     getElementsBeforeClass(): string[]
+    
+    addElementConstructorBody(value: string): this
+    
+    getElementsConstructorBody(): string[]
 
 }
 

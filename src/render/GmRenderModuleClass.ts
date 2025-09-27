@@ -36,6 +36,13 @@ export class GmRenderModuleClass extends GmRenderModule implements IGmRenderModu
         })?.join(',')
     }
     
+    public renderConstructorBody() {
+        if (!this.moduleClass.getElementsConstructorBody()) {
+            return ''
+        }
+        return this.moduleClass.getElementsConstructorBody().join('\n')
+    }
+    
     
     public renderDecorators(): string {
         return this.moduleClass.getDecorators().map((decorator) => {
@@ -57,7 +64,8 @@ export class GmRenderModuleClass extends GmRenderModule implements IGmRenderModu
     
     public renderClass() {
         const constructorProps = this.renderConstructorProps()
-        const constructor = constructorProps ? `constructor(${constructorProps}){}` : ''
+        const constructorBody = this.renderConstructorBody()
+        const constructor = (constructorProps || constructorBody)  ? `constructor(${constructorProps}){${constructorBody}}` : ''
         return `
         ${this.renderImports()}
         
@@ -65,11 +73,12 @@ export class GmRenderModuleClass extends GmRenderModule implements IGmRenderModu
         
         ${this.renderDecorators()}
         ${this.getExportMarkIfExported()} class ${this.renderPropertyName()} {
-            \n
-            ${constructor}
              \n
              \n
              ${this.renderVars()}
+              \n
+              \n
+                  ${constructor}
                \n
             ${this.renderStringMethods()}
         }
@@ -92,7 +101,7 @@ export class GmRenderModuleClass extends GmRenderModule implements IGmRenderModu
             const defaultValue = gmVar.defaultValue ? ` = ${gmVar.defaultValue}` : ''
             const type = gmVar.type ? ` :${gmVar.type}` : ''
             if (gmVar.decorator) {
-                if(!gmVar.decorator.getProps().length){
+                if (!gmVar.decorator.getProps().length) {
                     return `
                     @${gmVar.decorator.getDecoratorName()}
                      ${gmVar.scope} ${readonly} ${gmVar.varName} ${type}${defaultValue}

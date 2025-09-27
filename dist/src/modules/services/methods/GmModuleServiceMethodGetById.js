@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GmModuleServiceMethodGetById = void 0;
 const GmAbstractModuleClassMethod_1 = require("../../abstractModule/GmAbstractModuleClassMethod");
 const GmModuleDto_1 = require("../../dto/GmModuleDto");
-const StringCaseHelper_1 = require("../../../helpers/StringCaseHelper");
 const GmModuleDtoHelper_1 = require("../../dto/helper/GmModuleDtoHelper");
 const PROPS_VAR_NAMES = {
     id: 'id',
@@ -16,7 +15,7 @@ class GmModuleServiceMethodGetById extends GmAbstractModuleClassMethod_1.GmAbstr
         this.callVarNames = callVarNames;
     }
     getPropertyName() {
-        return `get${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}ById`;
+        return 'getById';
     }
     init() {
         this.addModule(this.gmModuleDto);

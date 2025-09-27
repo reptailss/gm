@@ -1,4 +1,4 @@
-import { GmCrudConfig } from "../../../os-core";
+import { GmCrudConfig } from 'os-core-ts';
 import { GmModuleDtoField } from "../types";
 export declare class GmModuleDtoHelper {
     static getDtoPrimaryKeyByConfig: (config: GmCrudConfig) => GmModuleDtoField;

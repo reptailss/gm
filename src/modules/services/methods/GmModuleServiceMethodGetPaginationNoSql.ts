@@ -38,7 +38,7 @@ export class GmModuleServiceMethodGetPaginationNoSql extends GmAbstractModuleCla
     }
 
     public getPropertyName(): string {
-        return `get${StringCaseHelper.toPascalCase(this.getConfig().dtoName.plural)}Pagination`
+        return 'pagination'
     }
 
     public init(): void {

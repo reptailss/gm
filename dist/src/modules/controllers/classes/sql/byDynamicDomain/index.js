@@ -236,7 +236,7 @@ class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstractCont
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         });
         this.addElementBeforeClass(`
             const ${this.getValidatorVarName()} = new ${this.validator.getPropertyName()}()
@@ -295,7 +295,7 @@ class GmModuleControllerClassCreateBySqlDynamicDomain extends GmModuleAbstractCo
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         });
         this.addElementBeforeClass(`
             const ${this.getValidatorVarName()} = new ${this.validator.getPropertyName()}()
@@ -350,7 +350,7 @@ class GmModuleControllerClassUpdateBySqlDynamicDomain extends GmModuleAbstractCo
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         });
         this.addElementBeforeClass(`
             const ${this.getValidatorVarName()} = new ${this.validator.getPropertyName()}()
@@ -400,7 +400,7 @@ class GmModuleControllerClassDeleteBySqlDynamicDomain extends GmModuleAbstractCo
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         });
     }
     getServiceVarName() {
@@ -437,7 +437,7 @@ class GmModuleControllerClassGetBySqlDynamicDomain extends GmModuleAbstractContr
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         });
     }
     getServiceVarName() {
@@ -477,7 +477,7 @@ class GmModuleControllerClassGetAllBySqlDynamicDomain extends GmModuleAbstractCo
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         });
         this.addElementBeforeClass(`
             const ${this.getValidatorVarName()} = new ${this.validator.getPropertyName()}()

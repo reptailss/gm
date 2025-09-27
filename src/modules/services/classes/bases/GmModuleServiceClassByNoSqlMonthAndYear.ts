@@ -5,11 +5,12 @@ import {GmModuleEntityType} from '@modules/repository/GmModuleEntityType'
 import {GmServiceDateHelper} from '@services/dateHelper/GmServiceDateHelper'
 import {GmCrudConfig} from 'os-core-ts'
 import {IGmModuleRepository} from '@modules/repository/interfaces/gmModuleRepository'
+import {GmInjectableDec} from '@decorators/controllerDecorators/GmInjectableDec'
 
 
 const PROP_NAMES = {
     repository: 'repository',
-    getRepositoryCb: 'getRepositoryCb',
+    getRepositoryCb: 'loaderRepository',
     month: 'month',
     year: 'year',
 } as const
@@ -19,7 +20,6 @@ export class GmModuleServiceClassByNoSqlMonthAndYear extends GmModuleAbstractSer
 
     private readonly repository: GmModuleRepositoryByNoSqlMonthAndYear
     private readonly entityType: GmModuleEntityType
-    private readonly gmServiceDateHelper: GmServiceDateHelper
 
     constructor(
         config: GmCrudConfig,
@@ -33,7 +33,6 @@ export class GmModuleServiceClassByNoSqlMonthAndYear extends GmModuleAbstractSer
             yearVarName: PROP_NAMES.year,
         })
         this.entityType = new GmModuleEntityType(config)
-        this.gmServiceDateHelper = new GmServiceDateHelper()
     }
 
     public getModuleRepository(): IGmModuleRepository {
@@ -79,6 +78,7 @@ export class GmModuleServiceClassByNoSqlMonthAndYear extends GmModuleAbstractSer
             defaultValue: this.repository.getPropertyName(),
             privateReadOnly: true,
         })
+        this.addDecorator(new GmInjectableDec())
     }
 
 }

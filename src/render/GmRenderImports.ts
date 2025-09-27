@@ -3,7 +3,7 @@ import {GmImport} from '@imports/types'
 import {GmModuleDirType} from '@modules/types'
 
 const ALIAS: Record<string, string> = {
-    'src/baseTypes/crud': '@baseTypes/crud',
+
 }
 
 export class GmRenderImports {
@@ -120,7 +120,7 @@ export class GmRenderImports {
             return `import { ${uniq.join(', ')} } from '@${path}'\n`
         }
 
-        return `import { ${uniq.join(', ')} } from '@modules/${rootDir}/${path}'\n`
+        return `import { ${uniq.join(', ')} } from '@${this.module.getConfig().modulesDir || 'modules'}/${rootDir}/${path}'\n`
     }
 
     private getNormalizeImportPath(path: string): string {

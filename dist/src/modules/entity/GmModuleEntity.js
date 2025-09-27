@@ -307,7 +307,7 @@ class GmModuleEntity extends GmAbstractModuleClass_1.GmAbstractModuleClass {
         return `${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Entity`;
     }
     getDirName() {
-        return null;
+        return 'repository';
     }
     getFileName() {
         return 'entity.ts';

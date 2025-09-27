@@ -84,6 +84,7 @@ const GM_DEFAULT_CONFIG = {
     endpoints: GM_BASE_ENDPOINTS_CONFIG,
     hasSeparated: true,
     rootDir: 'src',
+    modulesDir: 'testModules'
 };
 exports.gmCrudDefaultConfig = {
     default: GM_DEFAULT_CONFIG,

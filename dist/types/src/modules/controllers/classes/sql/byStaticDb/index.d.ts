@@ -1,4 +1,4 @@
-import { GmCrudConfig } from "../../../../../os-core";
+import { GmCrudConfig } from 'os-core-ts';
 import { IGmModuleClass } from "../../../../interfaces/gmModule";
 import { GmModuleAbstractControllerClass } from "../../abstract/GmModuleAbstractControllerClass";
 export declare class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractControllerClass implements IGmModuleClass {
@@ -7,8 +7,6 @@ export declare class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAb
     private readonly gmGetVarNames;
     private readonly gmAccessStructureMethodProcessorByStaticDb;
     private readonly gmValidatorBuilder;
-    private readonly gmModuleCreateDto;
-    private readonly gmModuleUpdateDto;
     constructor(config: GmCrudConfig);
     init(): void;
     private getValidatorVarName;
@@ -20,7 +18,6 @@ export declare class GmModuleControllerClassCreateBySqlStaticDb extends GmModule
     private readonly gmGetVarNames;
     private readonly gmAccessStructureMethodProcessorByStaticDb;
     private readonly gmValidatorBuilder;
-    private readonly gmModuleCreateDto;
     constructor(config: GmCrudConfig);
     init(): void;
     private getValidatorVarName;

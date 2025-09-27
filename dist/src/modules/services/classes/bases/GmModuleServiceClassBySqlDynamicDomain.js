@@ -3,29 +3,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GmModuleServiceClassBySqlDynamicDomain = void 0;
 const GmModuleAbstractServiceClass_1 = require("../abstract/GmModuleAbstractServiceClass");
 const GmModuleRepositorySqlByDynamicDomain_1 = require("../../../repository/GmModuleRepositorySqlByDynamicDomain");
-const GmModuleEntityType_1 = require("../../../repository/GmModuleEntityType");
+const GmInjectableDec_1 = require("../../../../decorators/controllerDecorators/GmInjectableDec");
 const PROP_NAMES = {
     repository: 'repository',
-    getRepositoryCb: 'getRepositoryCb',
+    getRepositoryCb: 'loaderRepository',
     domain: 'domain',
 };
 class GmModuleServiceClassBySqlDynamicDomain extends GmModuleAbstractServiceClass_1.GmModuleAbstractServiceClass {
     constructor(config, serviceName) {
         super(config, serviceName);
-        this.repository = new GmModuleRepositorySqlByDynamicDomain_1.GmModuleRepositorySqlByDynamicDomain(config, {
+        this.gmModuleRepositorySqlByDynamicDomain = new GmModuleRepositorySqlByDynamicDomain_1.GmModuleRepositorySqlByDynamicDomain(config, {
             repositoryVarName: PROP_NAMES.repository,
             getRepositoryCbVarName: `this.${PROP_NAMES.getRepositoryCb}`,
             domainVarName: PROP_NAMES.domain,
         });
-        this.entityType = new GmModuleEntityType_1.GmModuleEntityType(config);
     }
     getModuleRepository() {
-        return this.repository;
+        return this.gmModuleRepositorySqlByDynamicDomain;
     }
     addAndInitMethod(method, domainVarName) {
         method.prependBodyElement({
             name: 'init repository',
-            value: `const ${PROP_NAMES.repository} = await ${this.repository.getInitRepository()}`,
+            value: `const ${PROP_NAMES.repository} = await ${this.gmModuleRepositorySqlByDynamicDomain.getInitRepository()}`,
         });
         method.addProp({
             varName: PROP_NAMES.domain,
@@ -38,14 +37,14 @@ class GmModuleServiceClassBySqlDynamicDomain extends GmModuleAbstractServiceClas
         return this;
     }
     init() {
-        this.addModule(this.repository);
-        this.addModule(this.entityType);
+        this.addModule(this.gmModuleRepositorySqlByDynamicDomain);
         this.addConstructorProp({
             varName: PROP_NAMES.getRepositoryCb,
-            type: this.entityType.getPropertyName(),
-            defaultValue: this.repository.getPropertyName(),
+            type: this.gmModuleRepositorySqlByDynamicDomain.getPropertyName(),
+            defaultValue: null,
             privateReadOnly: true,
         });
+        this.addDecorator(new GmInjectableDec_1.GmInjectableDec());
     }
 }
 exports.GmModuleServiceClassBySqlDynamicDomain = GmModuleServiceClassBySqlDynamicDomain;

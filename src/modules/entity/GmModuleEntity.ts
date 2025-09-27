@@ -418,7 +418,7 @@ export class GmModuleEntity extends GmAbstractModuleClass implements IGmModuleCl
     }
     
     public getDirName(): string | null {
-        return null
+        return 'repository'
     }
     
     public getFileName(): string {

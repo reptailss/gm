@@ -2,7 +2,7 @@ import { GmAbstractModuleClassMethod } from "../../abstractModule/GmAbstractModu
 import { IGmModuleClassMethod } from "../../interfaces/gmModule";
 import { GmServiceActionsLoggerService } from "../../../services/sendActionSystemLog/GmServiceActionsLoggerService";
 import { IGmModuleRepository } from "../../repository/interfaces/gmModuleRepository";
-import { GmCrudConfig } from "../../../os-core";
+import { GmCrudConfig } from 'os-core-ts';
 declare const PROPS_VAR_NAMES: {
     initiatorOpenUserId: string;
     createDto: string;
@@ -18,6 +18,6 @@ export declare class GmModuleServiceMethodCreate extends GmAbstractModuleClassMe
     getPropertyName(): string;
     init(): void;
     private createRow;
-    private getNewEntityPropertyVarName;
+    private getNewDtoPropertyVarName;
 }
 export {};

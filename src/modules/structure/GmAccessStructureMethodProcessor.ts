@@ -4,6 +4,8 @@ import {GmCrudConfig} from 'os-core-ts'
 import {IGmModuleClassMethod} from '@modules/interfaces/gmModule'
 import {GmImportStructureServiceEndpointDec} from '@decorators/controllerDecorators/GmImportStructureServiceEndpointDec'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
+import {GmBodyParamNumDec} from '@decorators/controllerDecorators/GmBodyParamDec'
+import {GmQueryParamNumDec} from '@decorators/controllerDecorators/GmQueryParamDec'
 
 
 type CallVarNames = {
@@ -47,6 +49,7 @@ export class GmAccessStructureMethodProcessor {
             })}`,
         })
         
+     
     }
     
     public update(method: IGmModuleClassMethod) {
@@ -60,6 +63,8 @@ export class GmAccessStructureMethodProcessor {
                 endpointVarName: this.gmModuleRoutePaths.getRoutePathPropertyName('update'),
             })}`,
         })
+        
+      
     }
     
     public delete(method: IGmModuleClassMethod) {
@@ -74,6 +79,8 @@ export class GmAccessStructureMethodProcessor {
                 endpointVarName: this.gmModuleRoutePaths.getRoutePathPropertyName('delete'),
             })}`,
         })
+        
+      
     }
     
     public get(method: IGmModuleClassMethod) {
@@ -88,6 +95,8 @@ export class GmAccessStructureMethodProcessor {
                 endpointVarName: this.gmModuleRoutePaths.getRoutePathPropertyName('get'),
             })}`,
         })
+        
+      
     }
     
     public list(method: IGmModuleClassMethod) {
@@ -102,5 +111,7 @@ export class GmAccessStructureMethodProcessor {
                 endpointVarName: this.gmModuleRoutePaths.getRoutePathPropertyName('list'),
             })}`,
         })
+        
+        
     }
 }

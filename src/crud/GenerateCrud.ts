@@ -13,7 +13,7 @@ export class GenerateCrud {
         const dirName = StringCaseHelper.toCamelCase(config.moduleName)
         const rootDir = config.rootDir || 'src'
         const rootDirArray = rootDir.split('/')
-        const rootPath = path.resolve(process.cwd(), ...rootDirArray, 'modules', dirName)
+        const rootPath = path.resolve(process.cwd(), ...rootDirArray,config.modulesDir || 'modules', dirName)
         
         
         if (fs.existsSync(rootPath)) {

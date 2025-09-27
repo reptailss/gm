@@ -5,7 +5,6 @@ const GmAbstractModuleClassMethod_1 = require("../../abstractModule/GmAbstractMo
 const GmModuleDto_1 = require("../../dto/GmModuleDto");
 const GmServicePaginationQueryParamsType_1 = require("../../../services/paginationTypes/GmServicePaginationQueryParamsType");
 const GmServicePaginationValuesType_1 = require("../../../services/paginationTypes/GmServicePaginationValuesType");
-const StringCaseHelper_1 = require("../../../helpers/StringCaseHelper");
 const PROPS_VAR_NAMES = {
     params: 'params',
 };
@@ -19,7 +18,7 @@ class GmModuleServiceMethodGetPagination extends GmAbstractModuleClassMethod_1.G
         this.callVarNames = callVarNames;
     }
     getPropertyName() {
-        return `get${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.plural)}Pagination`;
+        return 'pagination';
     }
     init() {
         this.addModule(this.gmModuleDto);

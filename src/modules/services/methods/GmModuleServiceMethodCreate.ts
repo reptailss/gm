@@ -43,7 +43,7 @@ export class GmModuleServiceMethodCreate extends GmAbstractModuleClassMethod imp
     }
     
     public getPropertyName(): string {
-        return `create${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}`
+        return 'create'
     }
     
     public init(): void {
@@ -89,15 +89,15 @@ export class GmModuleServiceMethodCreate extends GmAbstractModuleClassMethod imp
         
         this.appendBodyElement({
             name: 'createRow',
-            value: `const ${this.getNewEntityPropertyVarName()} = await ${this.gmModuleRepository.api.create(PROPS_VAR_NAMES.createDto)}`,
+            value: `const ${this.getNewDtoPropertyVarName()} = await ${this.gmModuleRepository.api.create(PROPS_VAR_NAMES.createDto)}`,
             hasEmptyLineAtEnd: false,
         })
         
         this.appendBodyElement({
             name: 'SendActionSystemLogService',
             value: `await ${this.gmServiceSendActionSystemLog.logCreateAction({
-                rowId: `${this.getNewEntityPropertyVarName()}.${GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).key}`,
-                value: this.getNewEntityPropertyVarName(),
+                rowId: `${this.getNewDtoPropertyVarName()}.${GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).key}`,
+                value: this.getNewDtoPropertyVarName(),
                 config: this.gmModuleRepository.api.getConfig(),
                 initiatorOpenUserId: PROPS_VAR_NAMES.initiatorOpenUserId,
             })}`,
@@ -106,12 +106,12 @@ export class GmModuleServiceMethodCreate extends GmAbstractModuleClassMethod imp
         
         this.appendBodyElement({
             name: 'returnNewRow',
-            value: `return ${this.getNewEntityPropertyVarName()}`,
+            value: `return ${this.getNewDtoPropertyVarName()}`,
         })
         
     }
     
-    private getNewEntityPropertyVarName(): string {
-        return 'newEntity'
+    private getNewDtoPropertyVarName(): string {
+        return 'newDto'
     }
 }

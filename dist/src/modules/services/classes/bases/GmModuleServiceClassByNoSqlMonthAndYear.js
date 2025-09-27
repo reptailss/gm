@@ -4,10 +4,10 @@ exports.GmModuleServiceClassByNoSqlMonthAndYear = void 0;
 const GmModuleAbstractServiceClass_1 = require("../abstract/GmModuleAbstractServiceClass");
 const GmModuleRepositoryByNoSqlMonthAndYear_1 = require("../../../repository/GmModuleRepositoryByNoSqlMonthAndYear");
 const GmModuleEntityType_1 = require("../../../repository/GmModuleEntityType");
-const GmServiceDateHelper_1 = require("../../../../services/dateHelper/GmServiceDateHelper");
+const GmInjectableDec_1 = require("../../../../decorators/controllerDecorators/GmInjectableDec");
 const PROP_NAMES = {
     repository: 'repository',
-    getRepositoryCb: 'getRepositoryCb',
+    getRepositoryCb: 'loaderRepository',
     month: 'month',
     year: 'year',
 };
@@ -21,7 +21,6 @@ class GmModuleServiceClassByNoSqlMonthAndYear extends GmModuleAbstractServiceCla
             yearVarName: PROP_NAMES.year,
         });
         this.entityType = new GmModuleEntityType_1.GmModuleEntityType(config);
-        this.gmServiceDateHelper = new GmServiceDateHelper_1.GmServiceDateHelper();
     }
     getModuleRepository() {
         return this.repository;
@@ -59,6 +58,7 @@ class GmModuleServiceClassByNoSqlMonthAndYear extends GmModuleAbstractServiceCla
             defaultValue: this.repository.getPropertyName(),
             privateReadOnly: true,
         });
+        this.addDecorator(new GmInjectableDec_1.GmInjectableDec());
     }
 }
 exports.GmModuleServiceClassByNoSqlMonthAndYear = GmModuleServiceClassByNoSqlMonthAndYear;

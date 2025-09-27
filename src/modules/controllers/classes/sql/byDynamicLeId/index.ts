@@ -12,8 +12,6 @@ import {
     GmModuleServiceClassUpdateBySqlDynamicLeId,
 } from '@modules/services/classes/sql/byDynamicLeId'
 import {GmModuleCreateDto} from '@modules/dto/GmModuleCreateDto'
-import {GmServiceSchemaValidatorType} from '@services/schemaValidator/GmServiceSchemaValidatorType'
-import {GmServiceValidator} from '@services/validator/GmServiceValidator'
 import {GmModuleUpdateDto} from '@modules/dto/GmModuleUpdateDto'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmModuleControllerMethodCreate} from '@modules/controllers/methods/GmModuleControllerMethodCreate'
@@ -23,12 +21,14 @@ import {GmModuleControllerMethodDelete} from '@modules/controllers/methods/GmMod
 import {GmQueryParamNumDec} from '@decorators/controllerDecorators/GmQueryParamDec'
 import {GmModuleControllerMethodGetById} from '@modules/controllers/methods/GmModuleControllerMethodGetById'
 import {GmModuleControllerMethodGetPagination} from '@modules/controllers/methods/GmModuleControllerMethodGetPagination'
+import {GmBodyParamNumDec} from '@decorators/controllerDecorators/GmBodyParamDec'
 
 
 const CREATE_VAR_NAMES = {
     body: 'body',
     createDtoSchema: 'createDtoSchema',
     userInfo: 'userInfo',
+    legalEntityId: 'legalEntityId',
 } as const
 
 const UPDATE_VAR_NAMES = {
@@ -36,6 +36,7 @@ const UPDATE_VAR_NAMES = {
     updateDtoSchema: 'createDtoSchema',
     userInfo: 'userInfo',
     id: 'id',
+    legalEntityId: 'legalEntityId',
 } as const
 
 const DELETE_VAR_NAMES = {
@@ -59,14 +60,15 @@ const GET_ALL_VAR_NAMES = {
 
 class GmAccessStructureMethodProcessorByDynamicLeId extends GmAccessStructureMethodProcessor {
     constructor(config: GmCrudConfig) {
+        const hasLeIdColumn = 'legal_entity_id' in config.repository.columns
         super(config, {
             add: {
                 openUserId: `${CREATE_VAR_NAMES.userInfo}.open_user_id`,
-                legalEntityId: `${CREATE_VAR_NAMES.body}.legal_entity_id`,
+                legalEntityId: hasLeIdColumn ? `${CREATE_VAR_NAMES.body}.legal_entity_id` : CREATE_VAR_NAMES.legalEntityId,
             },
             update: {
                 openUserId: `${UPDATE_VAR_NAMES.userInfo}.open_user_id`,
-                legalEntityId: `${UPDATE_VAR_NAMES.body}.legal_entity_id`,
+                legalEntityId: hasLeIdColumn ? `${UPDATE_VAR_NAMES.body}.legal_entity_id` : UPDATE_VAR_NAMES.legalEntityId,
             },
             delete: {
                 openUserId: `${DELETE_VAR_NAMES.userInfo}.open_user_id`,
@@ -85,16 +87,14 @@ class GmAccessStructureMethodProcessorByDynamicLeId extends GmAccessStructureMet
 }
 
 export class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstractControllerClass implements IGmModuleClass {
-
-
+    
+    
     private readonly validator: GmModuleValidator
     private readonly serviceCrud: GmModuleServiceClassCrudBySqlDynamicLeId
     private readonly gmModuleCreateDto: GmModuleCreateDto
-    private readonly gmServiceSchemaValidatorType: GmServiceSchemaValidatorType
-    private readonly gmServiceValidator: GmServiceValidator
     private readonly gmModuleUpdateDto: GmModuleUpdateDto
     private readonly gmAccessStructureMethodProcessorByDynamicLeId: GmAccessStructureMethodProcessorByDynamicLeId
-
+    
     constructor(config: GmCrudConfig,
     ) {
         super(
@@ -105,17 +105,18 @@ export class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstrac
             config,
             this.getValidatorVarName(),
         )
+        const hasLeIdColumn = 'legal_entity_id' in this.getConfig().repository.columns
         this.serviceCrud = new GmModuleServiceClassCrudBySqlDynamicLeId(
             config,
             `this.${this.getServiceVarName()}`,
             {
                 create: {
-                    legalEntityId: `${CREATE_VAR_NAMES.body}.legal_entity_id`,
+                    legalEntityId: hasLeIdColumn ? `${CREATE_VAR_NAMES.body}.legal_entity_id` : CREATE_VAR_NAMES.legalEntityId,
                     createDto: CREATE_VAR_NAMES.body,
                     initiatorOpenUserId: `${CREATE_VAR_NAMES.userInfo}.open_user_id`,
                 },
                 update: {
-                    legalEntityId: `${UPDATE_VAR_NAMES.body}.legal_entity_id`,
+                    legalEntityId: hasLeIdColumn ? `${UPDATE_VAR_NAMES.body}.legal_entity_id` : UPDATE_VAR_NAMES.legalEntityId,
                     id: UPDATE_VAR_NAMES.id,
                     updateDto: UPDATE_VAR_NAMES.body,
                     initiatorOpenUserId: `${UPDATE_VAR_NAMES.userInfo}.open_user_id`,
@@ -136,22 +137,19 @@ export class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstrac
             },
         )
         this.gmModuleCreateDto = new GmModuleCreateDto(config)
-        this.gmServiceSchemaValidatorType = new GmServiceSchemaValidatorType()
-        this.gmServiceValidator = new GmServiceValidator()
         this.gmModuleUpdateDto = new GmModuleUpdateDto(config)
         this.gmAccessStructureMethodProcessorByDynamicLeId = new GmAccessStructureMethodProcessorByDynamicLeId(config)
-
+        
     }
-
+    
     public init(): void {
         super.init()
         this.addModule(this.validator)
         this.addModule(this.serviceCrud)
         this.addModule(this.gmModuleCreateDto)
         this.addModule(this.gmModuleUpdateDto)
-        this.addService(this.gmServiceSchemaValidatorType)
-        this.addService(this.gmServiceValidator)
-
+        
+        const hasLeIdColumn = 'legal_entity_id' in this.getConfig().repository.columns
         const methodCreate = new GmModuleControllerMethodCreate(
             this.getConfig(),
             this.serviceCrud.api,
@@ -159,9 +157,16 @@ export class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstrac
                 createDto: CREATE_VAR_NAMES.body,
                 userInfo: CREATE_VAR_NAMES.userInfo,
                 createDtoSchema: this.getValidatorCreateBodyVarName(),
-                createDtoType: this.getValidatorCreateBodyTypeVarName(),
             },
         )
+        if (!hasLeIdColumn) {
+            methodCreate.addProp({
+                type: 'number',
+                varName: CREATE_VAR_NAMES.legalEntityId,
+                callVarName: CREATE_VAR_NAMES.legalEntityId,
+                decorator: new GmBodyParamNumDec('legal_entity_id'),
+            })
+        }
         if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.add(methodCreate)
         }
@@ -172,10 +177,17 @@ export class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstrac
                 updateDto: UPDATE_VAR_NAMES.body,
                 userInfo: UPDATE_VAR_NAMES.userInfo,
                 updateDtoSchema: this.getValidatorUpdateBodyVarName(),
-                updateDtoType: this.getValidatorUpdateBodyTypeVarName(),
                 id: UPDATE_VAR_NAMES.id,
             },
         )
+        if (!hasLeIdColumn) {
+            methodUpdate.addProp({
+                type: 'number',
+                varName: UPDATE_VAR_NAMES.legalEntityId,
+                callVarName: UPDATE_VAR_NAMES.legalEntityId,
+                decorator: new GmBodyParamNumDec('legal_entity_id'),
+            })
+        }
         if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'update')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.update(methodUpdate)
         }
@@ -237,57 +249,38 @@ export class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstrac
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         })
-
+        
         this.addElementBeforeClass(`
-            type ${this.getValidatorCreateBodyTypeVarName()} = ${this.gmModuleCreateDto.getPropertyName()} & {
-                legal_entity_id:number
-            }
-            type ${this.getValidatorUpdateBodyTypeVarName()} = ${this.gmModuleUpdateDto.getPropertyName()} & {
-                legal_entity_id:number
-            }
-            
+          
             const ${this.getValidatorVarName()} = new ${this.validator.getPropertyName()}()
             
-            const ${this.getValidatorCreateBodyVarName()}:${this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.getValidatorCreateBodyTypeVarName())} = ${this.validator.api.getCreateDtoSchema()}.merge(${this.gmServiceValidator.object({
-            legal_entity_id: this.gmServiceValidator.number(),
-        })})
+            const ${this.getValidatorCreateBodyVarName()} = ${this.validator.api.getCreateDtoSchema()}
              
-            const ${this.getValidatorUpdateBodyVarName()}:${this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.getValidatorUpdateBodyTypeVarName())} = ${this.validator.api.getUpdateDtoSchema()}.merge(${this.gmServiceValidator.object({
-            legal_entity_id: this.gmServiceValidator.number(),
-        })})
+            const ${this.getValidatorUpdateBodyVarName()} = ${this.validator.api.getUpdateDtoSchema()}
              
             const ${this.getValidatorParamsDtoVarName()} = ${this.validator.api.getDtoPaginationQueryParamsSchema()}
         `)
     }
-
+    
     private getValidatorVarName() {
         return `${StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}Validator`
     }
-
+    
     private getValidatorCreateBodyVarName(): string {
-        return `create${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}BodySchema`
+        return `create${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Schema`
     }
-
-    private getValidatorCreateBodyTypeVarName(): string {
-        return `Create${this.getConfig().dtoName.singular}Body`
-    }
-
-
+    
     private getValidatorUpdateBodyVarName(): string {
-        return `update${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}BodySchema`
+        return `update${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Schema`
     }
-
-    private getValidatorUpdateBodyTypeVarName(): string {
-        return `Update${this.getConfig().dtoName.singular}Body`
-    }
-
-
+    
+    
     private getValidatorParamsDtoVarName(): string {
         return `${StringCaseHelper.toCamelCase(this.getConfig().dtoName.singular)}DtoPaginationQueryParamsSchema`
     }
-
+    
     private getServiceVarName(): string {
         return `${StringCaseHelper.toCamelCase(this.getConfig().dtoName.singular)}Service`
     }
@@ -295,21 +288,20 @@ export class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstrac
 
 
 export class GmModuleControllerClassCreateBySqlDynamicLeId extends GmModuleAbstractControllerClass implements IGmModuleClass {
-
-
+    
+    
     private readonly validator: GmModuleValidator
     private readonly serviceCrud: GmModuleServiceClassCreateBySqlDynamicLeId
     private readonly gmModuleCreateDto: GmModuleCreateDto
-    private readonly gmServiceSchemaValidatorType: GmServiceSchemaValidatorType
-    private readonly gmServiceValidator: GmServiceValidator
     private readonly gmAccessStructureMethodProcessorByDynamicLeId: GmAccessStructureMethodProcessor
-
+    
     constructor(config: GmCrudConfig,
     ) {
         super(
             config,
             `Create${StringCaseHelper.toPascalCase(config.dtoName.singular)}Controller`,
         )
+        const hasLeIdColumn = 'legal_entity_id' in this.getConfig().repository.columns
         this.validator = new GmModuleValidator(
             config,
             this.getValidatorVarName(),
@@ -320,24 +312,21 @@ export class GmModuleControllerClassCreateBySqlDynamicLeId extends GmModuleAbstr
             {
                 initiatorOpenUserId: `${CREATE_VAR_NAMES.userInfo}.open_user_id`,
                 createDto: CREATE_VAR_NAMES.body,
-                legalEntityId: `${CREATE_VAR_NAMES.body}.legal_entity_id`,
+                legalEntityId: hasLeIdColumn ? `${CREATE_VAR_NAMES.body}.legal_entity_id` : CREATE_VAR_NAMES.legalEntityId,
             },
         )
         this.gmModuleCreateDto = new GmModuleCreateDto(config)
-        this.gmServiceSchemaValidatorType = new GmServiceSchemaValidatorType()
-        this.gmServiceValidator = new GmServiceValidator()
         this.gmAccessStructureMethodProcessorByDynamicLeId = new GmAccessStructureMethodProcessorByDynamicLeId(config)
-
+        
     }
-
+    
     public init(): void {
         super.init()
         this.addModule(this.validator)
         this.addModule(this.serviceCrud)
         this.addModule(this.gmModuleCreateDto)
-        this.addService(this.gmServiceSchemaValidatorType)
-        this.addService(this.gmServiceValidator)
-
+        
+        const hasLeIdColumn = 'legal_entity_id' in this.getConfig().repository.columns
         const methodCreate = new GmModuleControllerMethodCreate(
             this.getConfig(),
             this.serviceCrud.api,
@@ -345,48 +334,45 @@ export class GmModuleControllerClassCreateBySqlDynamicLeId extends GmModuleAbstr
                 createDto: CREATE_VAR_NAMES.body,
                 userInfo: CREATE_VAR_NAMES.userInfo,
                 createDtoSchema: this.getValidatorCreateBodyVarName(),
-                createDtoType: this.getValidatorCreateBodyTypeVarName(),
             },
         )
+        if (!hasLeIdColumn) {
+            methodCreate.addProp({
+                type: 'number',
+                varName: CREATE_VAR_NAMES.legalEntityId,
+                callVarName: CREATE_VAR_NAMES.legalEntityId,
+                decorator: new GmBodyParamNumDec('legal_entity_id'),
+            })
+        }
         if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.add(methodCreate)
         }
-
+        
         this.addMethod(methodCreate)
-
+        
         this.addConstructorProp({
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         })
-
+        
         this.addElementBeforeClass(`
             const ${this.getValidatorVarName()} = new ${this.validator.getPropertyName()}()
         `)
         this.addElementBeforeClass(`
-            type ${this.getValidatorCreateBodyTypeVarName()} = ${this.gmModuleCreateDto.getPropertyName()} & {
-                legal_entity_id:number
-            }
-            const ${this.getValidatorCreateBodyVarName()}:${this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.getValidatorCreateBodyTypeVarName())} = ${this.validator.api.getCreateDtoSchema()}.merge(${this.gmServiceValidator.object({
-            legal_entity_id: this.gmServiceValidator.number(),
-        })})
+            const ${this.getValidatorCreateBodyVarName()} = ${this.validator.api.getCreateDtoSchema()}
         `)
     }
-
+    
     private getValidatorVarName() {
         return `${StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}Validator`
     }
-
+    
     private getValidatorCreateBodyVarName(): string {
-        return `create${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}BodySchema`
+        return `create${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Schema`
     }
-
-    private getValidatorCreateBodyTypeVarName(): string {
-        return `Create${this.getConfig().dtoName.singular}Body`
-    }
-
-
+    
     private getServiceVarName(): string {
         return `create${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Service`
     }
@@ -394,21 +380,20 @@ export class GmModuleControllerClassCreateBySqlDynamicLeId extends GmModuleAbstr
 
 
 export class GmModuleControllerClassUpdateBySqlDynamicLeId extends GmModuleAbstractControllerClass implements IGmModuleClass {
-
-
+    
+    
     private readonly validator: GmModuleValidator
     private readonly serviceCrud: GmModuleServiceClassUpdateBySqlDynamicLeId
     private readonly gmModuleUpdateDto: GmModuleUpdateDto
-    private readonly gmServiceSchemaValidatorType: GmServiceSchemaValidatorType
-    private readonly gmServiceValidator: GmServiceValidator
     private readonly gmAccessStructureMethodProcessorByDynamicLeId: GmAccessStructureMethodProcessor
-
+    
     constructor(config: GmCrudConfig,
     ) {
         super(
             config,
             `Update${StringCaseHelper.toPascalCase(config.dtoName.singular)}Controller`,
         )
+        const hasLeIdColumn = 'legal_entity_id' in this.getConfig().repository.columns
         this.validator = new GmModuleValidator(
             config,
             this.getValidatorVarName(),
@@ -419,25 +404,23 @@ export class GmModuleControllerClassUpdateBySqlDynamicLeId extends GmModuleAbstr
             {
                 initiatorOpenUserId: `${UPDATE_VAR_NAMES.userInfo}.open_user_id`,
                 updateDto: UPDATE_VAR_NAMES.body,
-                legalEntityId: `${UPDATE_VAR_NAMES.body}.legal_entity_id`,
+                legalEntityId: hasLeIdColumn ? `${UPDATE_VAR_NAMES.body}.legal_entity_id` : UPDATE_VAR_NAMES.legalEntityId,
                 id: UPDATE_VAR_NAMES.id,
             },
         )
         this.gmModuleUpdateDto = new GmModuleUpdateDto(config)
-        this.gmServiceSchemaValidatorType = new GmServiceSchemaValidatorType()
-        this.gmServiceValidator = new GmServiceValidator()
         this.gmAccessStructureMethodProcessorByDynamicLeId = new GmAccessStructureMethodProcessorByDynamicLeId(config)
-
+        
     }
-
+    
     public init(): void {
         super.init()
         this.addModule(this.validator)
         this.addModule(this.serviceCrud)
         this.addModule(this.gmModuleUpdateDto)
-        this.addService(this.gmServiceSchemaValidatorType)
-        this.addService(this.gmServiceValidator)
-
+        
+        const hasLeIdColumn = 'legal_entity_id' in this.getConfig().repository.columns
+        
         const methodUpdate = new GmModuleControllerMethodUpdate(
             this.getConfig(),
             this.serviceCrud.api,
@@ -445,58 +428,57 @@ export class GmModuleControllerClassUpdateBySqlDynamicLeId extends GmModuleAbstr
                 updateDto: UPDATE_VAR_NAMES.body,
                 userInfo: UPDATE_VAR_NAMES.userInfo,
                 updateDtoSchema: this.getValidatorUpdateBodyVarName(),
-                updateDtoType: this.getValidatorUpdateBodyTypeVarName(),
                 id: UPDATE_VAR_NAMES.id,
             },
         )
+        
+        if (!hasLeIdColumn) {
+            methodUpdate.addProp({
+                type: 'number',
+                varName: UPDATE_VAR_NAMES.legalEntityId,
+                callVarName: UPDATE_VAR_NAMES.legalEntityId,
+                decorator: new GmBodyParamNumDec('legal_entity_id'),
+            })
+        }
+        
         if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'update')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.update(methodUpdate)
         }
         this.addMethod(methodUpdate)
-
+        
         this.addConstructorProp({
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         })
-
+        
         this.addElementBeforeClass(`
             const ${this.getValidatorVarName()} = new ${this.validator.getPropertyName()}()
         `)
         this.addElementBeforeClass(`
-            type ${this.getValidatorUpdateBodyTypeVarName()} = ${this.gmModuleUpdateDto.getPropertyName()} & {
-                legal_entity_id:number
-            }
-            const ${this.getValidatorUpdateBodyVarName()}:${this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.getValidatorUpdateBodyTypeVarName())} = ${this.validator.api.getUpdateDtoSchema()}.merge(${this.gmServiceValidator.object({
-            legal_entity_id: this.gmServiceValidator.number(),
-        })})
+            const ${this.getValidatorUpdateBodyVarName()} = ${this.validator.api.getUpdateDtoSchema()}
         `)
     }
-
+    
     private getValidatorVarName() {
         return `${StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}Validator`
     }
-
+    
     private getValidatorUpdateBodyVarName(): string {
-        return `update${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}BodySchema`
+        return `update${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Schema`
     }
-
-    private getValidatorUpdateBodyTypeVarName(): string {
-        return `Update${this.getConfig().dtoName.singular}Body`
-    }
-
-
+    
     private getServiceVarName(): string {
         return `update${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Service`
     }
 }
 
 export class GmModuleControllerClassDeleteBySqlDynamicLeId extends GmModuleAbstractControllerClass implements IGmModuleClass {
-
+    
     private readonly serviceCrud: GmModuleServiceClassDeleteBySqlDynamicLeId
     private readonly gmAccessStructureMethodProcessorByDynamicLeId: GmAccessStructureMethodProcessor
-
+    
     constructor(config: GmCrudConfig,
     ) {
         super(
@@ -513,13 +495,13 @@ export class GmModuleControllerClassDeleteBySqlDynamicLeId extends GmModuleAbstr
             },
         )
         this.gmAccessStructureMethodProcessorByDynamicLeId = new GmAccessStructureMethodProcessorByDynamicLeId(config)
-
+        
     }
-
+    
     public init(): void {
         super.init()
         this.addModule(this.serviceCrud)
-
+        
         const methodDelete = new GmModuleControllerMethodDelete(
             this.getConfig(),
             this.serviceCrud.api,
@@ -536,18 +518,18 @@ export class GmModuleControllerClassDeleteBySqlDynamicLeId extends GmModuleAbstr
         if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'delete')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.delete(methodDelete)
         }
-
+        
         this.addMethod(methodDelete)
-
+        
         this.addConstructorProp({
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         })
     }
-
-
+    
+    
     private getServiceVarName(): string {
         return `delete${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Service`
     }
@@ -555,10 +537,10 @@ export class GmModuleControllerClassDeleteBySqlDynamicLeId extends GmModuleAbstr
 
 
 export class GmModuleControllerClassGetBySqlDynamicLeId extends GmModuleAbstractControllerClass implements IGmModuleClass {
-
+    
     private readonly serviceCrud: GmModuleServiceClassGetBySqlDynamicLeId
     private readonly gmAccessStructureMethodProcessorByDynamicLeId: GmAccessStructureMethodProcessor
-
+    
     constructor(config: GmCrudConfig,
     ) {
         super(
@@ -574,13 +556,13 @@ export class GmModuleControllerClassGetBySqlDynamicLeId extends GmModuleAbstract
             },
         )
         this.gmAccessStructureMethodProcessorByDynamicLeId = new GmAccessStructureMethodProcessorByDynamicLeId(config)
-
+        
     }
-
+    
     public init(): void {
         super.init()
         this.addModule(this.serviceCrud)
-
+        
         const methodGetById = new GmModuleControllerMethodGetById(
             this.getConfig(),
             this.serviceCrud.api,
@@ -594,22 +576,22 @@ export class GmModuleControllerClassGetBySqlDynamicLeId extends GmModuleAbstract
             type: 'number',
             decorator: new GmQueryParamNumDec('legal_entity_id'),
         })
-
+        
         if (GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'get')) {
             this.gmAccessStructureMethodProcessorByDynamicLeId.get(methodGetById)
         }
-
+        
         this.addMethod(methodGetById)
-
+        
         this.addConstructorProp({
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         })
     }
-
-
+    
+    
     private getServiceVarName(): string {
         return `get${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Service`
     }
@@ -617,12 +599,12 @@ export class GmModuleControllerClassGetBySqlDynamicLeId extends GmModuleAbstract
 
 
 export class GmModuleControllerClassGetAllBySqlDynamicLeId extends GmModuleAbstractControllerClass implements IGmModuleClass {
-
-
+    
+    
     private readonly validator: GmModuleValidator
     private readonly serviceCrud: GmModuleServiceClassGetAllBySqlDynamicLeId
     private readonly gmAccessStructureMethodProcessorByDynamicLeId: GmAccessStructureMethodProcessorByDynamicLeId
-
+    
     constructor(config: GmCrudConfig,
     ) {
         super(
@@ -642,14 +624,14 @@ export class GmModuleControllerClassGetAllBySqlDynamicLeId extends GmModuleAbstr
             },
         )
         this.gmAccessStructureMethodProcessorByDynamicLeId = new GmAccessStructureMethodProcessorByDynamicLeId(config)
-
+        
     }
-
+    
     public init(): void {
         super.init()
         this.addModule(this.validator)
         this.addModule(this.serviceCrud)
-
+        
         const methodPagination = new GmModuleControllerMethodGetPagination(
             this.getConfig(),
             this.serviceCrud.api,
@@ -668,14 +650,14 @@ export class GmModuleControllerClassGetAllBySqlDynamicLeId extends GmModuleAbstr
             this.gmAccessStructureMethodProcessorByDynamicLeId.list(methodPagination)
         }
         this.addMethod(methodPagination)
-
+        
         this.addConstructorProp({
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         })
-
+        
         this.addElementBeforeClass(`
             const ${this.getValidatorVarName()} = new ${this.validator.getPropertyName()}()
         `)
@@ -683,15 +665,15 @@ export class GmModuleControllerClassGetAllBySqlDynamicLeId extends GmModuleAbstr
             const ${this.getValidatorParamsDtoVarName()} = ${this.validator.api.getDtoPaginationQueryParamsSchema()}
         `)
     }
-
+    
     private getValidatorVarName() {
         return `${StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}Validator`
     }
-
+    
     private getValidatorParamsDtoVarName(): string {
         return `${StringCaseHelper.toCamelCase(this.getConfig().dtoName.singular)}DtoPaginationQueryParamsSchema`
     }
-
+    
     private getServiceVarName(): string {
         return `getAll${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Service`
     }

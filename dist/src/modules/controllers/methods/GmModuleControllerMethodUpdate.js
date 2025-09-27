@@ -27,7 +27,7 @@ class GmModuleControllerMethodUpdate extends GmAbstractModuleClassMethod_1.GmAbs
         this.gmModuleRoutePaths = new GmModuleRoutePaths_1.GmModuleRoutePaths(config);
     }
     getPropertyName() {
-        return `update${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}`;
+        return 'update';
     }
     init() {
         this.addModule(this.gmModuleUpdateDto);

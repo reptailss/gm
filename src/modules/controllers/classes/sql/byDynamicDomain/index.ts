@@ -80,7 +80,7 @@ class GmAccessStructureMethodProcessorByDynamicDomain extends GmAccessStructureM
             },
         })
     }
-
+    
     public add(method: IGmModuleClassMethod) {
         super.add(method)
         method.addImport({
@@ -92,9 +92,9 @@ class GmAccessStructureMethodProcessorByDynamicDomain extends GmAccessStructureM
             name: 'get le id',
             value: `const legalEntityId = await OsCoreLegalEntityService.getIdByDomain(${CREATE_VAR_NAMES.domain})`,
         })
-
+        
     }
-
+    
     public update(method: IGmModuleClassMethod) {
         super.update(method)
         method.addImport({
@@ -107,7 +107,7 @@ class GmAccessStructureMethodProcessorByDynamicDomain extends GmAccessStructureM
             value: `const legalEntityId = await OsCoreLegalEntityService.getIdByDomain(${UPDATE_VAR_NAMES.domain})`,
         })
     }
-
+    
     public delete(method: IGmModuleClassMethod) {
         super.delete(method)
         method.addImport({
@@ -119,9 +119,9 @@ class GmAccessStructureMethodProcessorByDynamicDomain extends GmAccessStructureM
             name: 'get le id',
             value: `const legalEntityId = await OsCoreLegalEntityService.getIdByDomain(${DELETE_VAR_NAMES.domain})`,
         })
-
+        
     }
-
+    
     public get(method: IGmModuleClassMethod) {
         super.get(method)
         method.addImport({
@@ -134,7 +134,7 @@ class GmAccessStructureMethodProcessorByDynamicDomain extends GmAccessStructureM
             value: `const legalEntityId = await OsCoreLegalEntityService.getIdByDomain(${GET_VAR_NAMES.domain})`,
         })
     }
-
+    
     public list(method: IGmModuleClassMethod) {
         super.list(method)
         method.addImport({
@@ -146,17 +146,17 @@ class GmAccessStructureMethodProcessorByDynamicDomain extends GmAccessStructureM
             name: 'get le id',
             value: `const legalEntityId = await OsCoreLegalEntityService.getIdByDomain(${GET_ALL_VAR_NAMES.domain})`,
         })
-
+        
     }
 }
 
 export class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstractControllerClass implements IGmModuleClass {
-
-
+    
+    
     private readonly validator: GmModuleValidator
     private readonly serviceCrud: GmModuleServiceClassCrudBySqlDynamicDomain
     private readonly gmAccessStructureMethodProcessorByDynamicDomain: GmAccessStructureMethodProcessorByDynamicDomain
-
+    
     constructor(config: GmCrudConfig,
     ) {
         super(
@@ -198,14 +198,14 @@ export class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstr
             },
         )
         this.gmAccessStructureMethodProcessorByDynamicDomain = new GmAccessStructureMethodProcessorByDynamicDomain(config)
-
+        
     }
-
+    
     public init(): void {
         super.init()
         this.addModule(this.validator)
         this.addModule(this.serviceCrud)
-
+        
         const methodCreate = new GmModuleControllerMethodCreate(
             this.getConfig(),
             this.serviceCrud.api,
@@ -299,9 +299,9 @@ export class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstr
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue:null,
         })
-
+        
         this.addElementBeforeClass(`
             const ${this.getValidatorVarName()} = new ${this.validator.getPropertyName()}()
             const ${this.getValidatorCreateDtoVarName()} = ${this.validator.api.getCreateDtoSchema()}
@@ -309,23 +309,23 @@ export class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstr
             const ${this.getValidatorParamsDtoVarName()} = ${this.validator.api.getDtoPaginationQueryParamsSchema()}
         `)
     }
-
+    
     private getValidatorVarName() {
         return `${StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}Validator`
     }
-
+    
     private getValidatorCreateDtoVarName(): string {
         return `create${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}DtoSchema`
     }
-
+    
     private getValidatorUpdateDtoVarName(): string {
         return `update${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}DtoSchema`
     }
-
+    
     private getValidatorParamsDtoVarName(): string {
         return `${StringCaseHelper.toCamelCase(this.getConfig().dtoName.singular)}DtoPaginationQueryParamsSchema`
     }
-
+    
     private getServiceVarName(): string {
         return `${StringCaseHelper.toCamelCase(this.getConfig().dtoName.singular)}Service`
     }
@@ -333,12 +333,12 @@ export class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstr
 
 
 export class GmModuleControllerClassCreateBySqlDynamicDomain extends GmModuleAbstractControllerClass implements IGmModuleClass {
-
-
+    
+    
     private readonly validator: GmModuleValidator
     private readonly serviceCrud: GmModuleServiceClassCreateBySqlDynamicDomain
     private readonly gmAccessStructureMethodProcessorByDynamicDomain: GmAccessStructureMethodProcessorByDynamicDomain
-
+    
     constructor(config: GmCrudConfig,
     ) {
         super(
@@ -359,14 +359,14 @@ export class GmModuleControllerClassCreateBySqlDynamicDomain extends GmModuleAbs
             },
         )
         this.gmAccessStructureMethodProcessorByDynamicDomain = new GmAccessStructureMethodProcessorByDynamicDomain(config)
-
+        
     }
-
+    
     public init(): void {
         super.init()
         this.addModule(this.validator)
         this.addModule(this.serviceCrud)
-
+        
         const methodCreate = new GmModuleControllerMethodCreate(
             this.getConfig(),
             this.serviceCrud.api,
@@ -385,14 +385,14 @@ export class GmModuleControllerClassCreateBySqlDynamicDomain extends GmModuleAbs
             this.gmAccessStructureMethodProcessorByDynamicDomain.add(methodCreate)
         }
         this.addMethod(methodCreate)
-
+        
         this.addConstructorProp({
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue:null,
         })
-
+        
         this.addElementBeforeClass(`
             const ${this.getValidatorVarName()} = new ${this.validator.getPropertyName()}()
         `)
@@ -400,15 +400,15 @@ export class GmModuleControllerClassCreateBySqlDynamicDomain extends GmModuleAbs
             const ${this.getValidatorCreateDtoVarName()} = ${this.validator.api.getCreateDtoSchema()}
         `)
     }
-
+    
     private getValidatorVarName() {
         return `${StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}Validator`
     }
-
+    
     private getValidatorCreateDtoVarName(): string {
         return `create${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}DtoSchema`
     }
-
+    
     private getServiceVarName(): string {
         return `create${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Service`
     }
@@ -416,12 +416,12 @@ export class GmModuleControllerClassCreateBySqlDynamicDomain extends GmModuleAbs
 
 
 export class GmModuleControllerClassUpdateBySqlDynamicDomain extends GmModuleAbstractControllerClass implements IGmModuleClass {
-
-
+    
+    
     private readonly validator: GmModuleValidator
     private readonly serviceCrud: GmModuleServiceClassUpdateBySqlDynamicDomain
     private readonly gmAccessStructureMethodProcessorByDynamicDomain: GmAccessStructureMethodProcessorByDynamicDomain
-
+    
     constructor(config: GmCrudConfig,
     ) {
         super(
@@ -443,15 +443,15 @@ export class GmModuleControllerClassUpdateBySqlDynamicDomain extends GmModuleAbs
             },
         )
         this.gmAccessStructureMethodProcessorByDynamicDomain = new GmAccessStructureMethodProcessorByDynamicDomain(config)
-
-
+        
+        
     }
-
+    
     public init(): void {
         super.init()
         this.addModule(this.validator)
         this.addModule(this.serviceCrud)
-
+        
         const methodUpdate = new GmModuleControllerMethodUpdate(
             this.getConfig(),
             this.serviceCrud.api,
@@ -471,14 +471,14 @@ export class GmModuleControllerClassUpdateBySqlDynamicDomain extends GmModuleAbs
             this.gmAccessStructureMethodProcessorByDynamicDomain.update(methodUpdate)
         }
         this.addMethod(methodUpdate)
-
+        
         this.addConstructorProp({
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue:null,
         })
-
+        
         this.addElementBeforeClass(`
             const ${this.getValidatorVarName()} = new ${this.validator.getPropertyName()}()
         `)
@@ -486,25 +486,25 @@ export class GmModuleControllerClassUpdateBySqlDynamicDomain extends GmModuleAbs
             const ${this.getValidatorUpdateDtoVarName()} = ${this.validator.api.getUpdateDtoSchema()}
         `)
     }
-
+    
     private getValidatorVarName() {
         return `${StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}Validator`
     }
-
+    
     private getValidatorUpdateDtoVarName(): string {
         return `update${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}DtoSchema`
     }
-
+    
     private getServiceVarName(): string {
         return `update${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Service`
     }
 }
 
 export class GmModuleControllerClassDeleteBySqlDynamicDomain extends GmModuleAbstractControllerClass implements IGmModuleClass {
-
+    
     private readonly serviceCrud: GmModuleServiceClassDeleteBySqlDynamicDomain
     private readonly gmAccessStructureMethodProcessorByDynamicDomain: GmAccessStructureMethodProcessorByDynamicDomain
-
+    
     constructor(config: GmCrudConfig,
     ) {
         super(
@@ -521,14 +521,14 @@ export class GmModuleControllerClassDeleteBySqlDynamicDomain extends GmModuleAbs
             },
         )
         this.gmAccessStructureMethodProcessorByDynamicDomain = new GmAccessStructureMethodProcessorByDynamicDomain(config)
-
-
+        
+        
     }
-
+    
     public init(): void {
         super.init()
         this.addModule(this.serviceCrud)
-
+        
         const methodDelete = new GmModuleControllerMethodDelete(
             this.getConfig(),
             this.serviceCrud.api,
@@ -546,16 +546,16 @@ export class GmModuleControllerClassDeleteBySqlDynamicDomain extends GmModuleAbs
             this.gmAccessStructureMethodProcessorByDynamicDomain.delete(methodDelete)
         }
         this.addMethod(methodDelete)
-
+        
         this.addConstructorProp({
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue:null,
         })
     }
-
-
+    
+    
     private getServiceVarName(): string {
         return `delete${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Service`
     }
@@ -563,10 +563,10 @@ export class GmModuleControllerClassDeleteBySqlDynamicDomain extends GmModuleAbs
 
 
 export class GmModuleControllerClassGetBySqlDynamicDomain extends GmModuleAbstractControllerClass implements IGmModuleClass {
-
+    
     private readonly serviceCrud: GmModuleServiceClassGetBySqlDynamicDomain
     private readonly gmAccessStructureMethodProcessorByDynamicDomain: GmAccessStructureMethodProcessorByDynamicDomain
-
+    
     constructor(config: GmCrudConfig,
     ) {
         super(
@@ -582,14 +582,14 @@ export class GmModuleControllerClassGetBySqlDynamicDomain extends GmModuleAbstra
             },
         )
         this.gmAccessStructureMethodProcessorByDynamicDomain = new GmAccessStructureMethodProcessorByDynamicDomain(config)
-
-
+        
+        
     }
-
+    
     public init(): void {
         super.init()
         this.addModule(this.serviceCrud)
-
+        
         const methodGetById = new GmModuleControllerMethodGetById(
             this.getConfig(),
             this.serviceCrud.api,
@@ -607,16 +607,16 @@ export class GmModuleControllerClassGetBySqlDynamicDomain extends GmModuleAbstra
             this.gmAccessStructureMethodProcessorByDynamicDomain.get(methodGetById)
         }
         this.addMethod(methodGetById)
-
+        
         this.addConstructorProp({
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue:null,
         })
     }
-
-
+    
+    
     private getServiceVarName(): string {
         return `get${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Service`
     }
@@ -624,12 +624,12 @@ export class GmModuleControllerClassGetBySqlDynamicDomain extends GmModuleAbstra
 
 
 export class GmModuleControllerClassGetAllBySqlDynamicDomain extends GmModuleAbstractControllerClass implements IGmModuleClass {
-
-
+    
+    
     private readonly validator: GmModuleValidator
     private readonly serviceCrud: GmModuleServiceClassGetAllBySqlDynamicDomain
     private readonly gmAccessStructureMethodProcessorByDynamicDomain: GmAccessStructureMethodProcessorByDynamicDomain
-
+    
     constructor(config: GmCrudConfig,
     ) {
         super(
@@ -649,15 +649,15 @@ export class GmModuleControllerClassGetAllBySqlDynamicDomain extends GmModuleAbs
             },
         )
         this.gmAccessStructureMethodProcessorByDynamicDomain = new GmAccessStructureMethodProcessorByDynamicDomain(config)
-
-
+        
+        
     }
-
+    
     public init(): void {
         super.init()
         this.addModule(this.validator)
         this.addModule(this.serviceCrud)
-
+        
         const methodPagination = new GmModuleControllerMethodGetPagination(
             this.getConfig(),
             this.serviceCrud.api,
@@ -676,14 +676,14 @@ export class GmModuleControllerClassGetAllBySqlDynamicDomain extends GmModuleAbs
             this.gmAccessStructureMethodProcessorByDynamicDomain.list(methodPagination)
         }
         this.addMethod(methodPagination)
-
+        
         this.addConstructorProp({
             varName: this.getServiceVarName(),
             type: this.serviceCrud.getPropertyName(),
             privateReadOnly: true,
-            defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
+            defaultValue: null,
         })
-
+        
         this.addElementBeforeClass(`
             const ${this.getValidatorVarName()} = new ${this.validator.getPropertyName()}()
         `)
@@ -691,15 +691,15 @@ export class GmModuleControllerClassGetAllBySqlDynamicDomain extends GmModuleAbs
             const ${this.getValidatorParamsDtoVarName()} = ${this.validator.api.getDtoPaginationQueryParamsSchema()}
         `)
     }
-
+    
     private getValidatorVarName() {
         return `${StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}Validator`
     }
-
+    
     private getValidatorParamsDtoVarName(): string {
         return `${StringCaseHelper.toCamelCase(this.getConfig().dtoName.singular)}DtoPaginationQueryParamsSchema`
     }
-
+    
     private getServiceVarName(): string {
         return `getAll${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Service`
     }

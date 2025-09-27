@@ -24,7 +24,7 @@ class GmModuleControllerMethodDelete extends GmAbstractModuleClassMethod_1.GmAbs
         this.gmModuleRoutePaths = new GmModuleRoutePaths_1.GmModuleRoutePaths(config);
     }
     getPropertyName() {
-        return `delete${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}`;
+        return 'delete';
     }
     init() {
         this.addModule(this.gmModuleRoutePaths);

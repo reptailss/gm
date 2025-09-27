@@ -1,6 +1,6 @@
 import { GmAbstractModuleType } from "../abstractModule/GmAbstractModuleType";
 import { IGmModuleType } from "../interfaces/gmModule";
-import { GmCrudConfig } from "../../os-core";
+import { GmCrudConfig } from 'os-core-ts';
 export declare class GmModuleEntityType extends GmAbstractModuleType implements IGmModuleType {
     private readonly gmModuleEntity;
     constructor(config: GmCrudConfig);

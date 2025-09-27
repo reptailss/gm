@@ -45,7 +45,7 @@ export class GmModuleControllerMethodCreate extends GmAbstractModuleClassMethod 
     }
 
     public getPropertyName(): string {
-        return `create${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}`
+        return 'create'
     }
 
     public init(): void {

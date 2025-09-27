@@ -22,6 +22,7 @@ export abstract class GmAbstractModuleClass extends GmAbstractModule implements 
     private decorators: IGmModuleClassDecorator[] = []
     private vars: GmModuleClassVar[] = []
     private elementsBeforeClass: string[] = []
+    private elementsConstructorBody: string[] = []
     
     private fileWriteModeGm: GmFileWriteMode = 'skipIfExists'
     private dirType: GmModuleDirType = 'modules'
@@ -83,7 +84,7 @@ export abstract class GmAbstractModuleClass extends GmAbstractModule implements 
         return super.addService(service)
     }
     
-    public getExport(): GmExport {
+    public getExport(): GmExport | null {
         const parentInfo = this.getParentInfo()
         if (!parentInfo?.dirName) {
             return {
@@ -152,6 +153,15 @@ export abstract class GmAbstractModuleClass extends GmAbstractModule implements 
     
     public getElementsBeforeClass(): string[] {
         return this.elementsBeforeClass
+    }
+    
+    public getElementsConstructorBody(): string[] {
+        return this.elementsConstructorBody
+    }
+    
+    public addElementConstructorBody(element: string) {
+        this.elementsConstructorBody.push(element)
+        return this
     }
     
 }
