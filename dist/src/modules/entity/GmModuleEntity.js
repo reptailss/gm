@@ -18,9 +18,9 @@ class EntityDec {
         };
     }
 }
-class EntityPrimaryKeyDec {
+class EntityPrimaryNumberKeyDec {
     getDecoratorName() {
-        return 'EntityPrimaryKey';
+        return 'EntityPrimaryNumberKey';
     }
     getProps() {
         return [''];
@@ -29,7 +29,7 @@ class EntityPrimaryKeyDec {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityPrimaryKey',
+            propertyName: 'EntityPrimaryNumberKey',
         };
     }
 }
@@ -320,7 +320,7 @@ class GmModuleEntity extends GmAbstractModuleClass_1.GmAbstractModuleClass {
         });
         this.addImport({
             path: 'os-core-ts',
-            propertyName: 'PrimaryKey',
+            propertyName: 'PrimaryNumberKey',
             isLibImport: true,
         });
         this.addImport({
@@ -334,14 +334,14 @@ class GmModuleEntity extends GmAbstractModuleClass_1.GmAbstractModuleClass {
             isLibImport: true,
         });
         this.addVar({
-            type: 'PrimaryKey',
+            type: 'PrimaryNumberKey',
             defaultValue: null,
             nullable: false,
             optional: false,
             readonly: false,
             scope: 'public',
             varName: `id!`,
-            decorator: new EntityPrimaryKeyDec(),
+            decorator: new EntityPrimaryNumberKeyDec(),
         });
         this.addVar({
             type: 'DateAdd',

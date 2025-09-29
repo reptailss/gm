@@ -25,9 +25,9 @@ class EntityDec implements IGmModuleClassDecorator {
     }
 }
 
-class EntityPrimaryKeyDec implements IGmModuleClassDecorator {
+class EntityPrimaryNumberKeyDec implements IGmModuleClassDecorator {
     public getDecoratorName(): string {
-        return 'EntityPrimaryKey'
+        return 'EntityPrimaryNumberKey'
     }
     
     public getProps(): string[] {
@@ -38,7 +38,7 @@ class EntityPrimaryKeyDec implements IGmModuleClassDecorator {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityPrimaryKey',
+            propertyName: 'EntityPrimaryNumberKey',
         }
     }
 }
@@ -433,7 +433,7 @@ export class GmModuleEntity extends GmAbstractModuleClass implements IGmModuleCl
         })
         this.addImport({
             path: 'os-core-ts',
-            propertyName: 'PrimaryKey',
+            propertyName: 'PrimaryNumberKey',
             isLibImport: true,
         })
         this.addImport({
@@ -447,14 +447,14 @@ export class GmModuleEntity extends GmAbstractModuleClass implements IGmModuleCl
             isLibImport: true,
         })
         this.addVar({
-            type: 'PrimaryKey',
+            type: 'PrimaryNumberKey',
             defaultValue: null,
             nullable: false,
             optional: false,
             readonly: false,
             scope: 'public',
             varName: `id!`,
-            decorator: new EntityPrimaryKeyDec(),
+            decorator: new EntityPrimaryNumberKeyDec(),
         })
         this.addVar({
             type: 'DateAdd',
