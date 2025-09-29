@@ -5,7 +5,7 @@ const StringCaseHelper_1 = require("../../helpers/StringCaseHelper");
 const GmAbstractModuleClass_1 = require("../abstractModule/GmAbstractModuleClass");
 class EntityDec {
     getDecoratorName() {
-        return 'EntityDec';
+        return 'EntityDb';
     }
     getProps() {
         return [''];
@@ -14,13 +14,13 @@ class EntityDec {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityDec',
+            propertyName: 'EntityDb',
         };
     }
 }
 class EntityPrimaryKeyDec {
     getDecoratorName() {
-        return 'EntityPrimaryKeyDec';
+        return 'EntityPrimaryKey';
     }
     getProps() {
         return [''];
@@ -29,13 +29,13 @@ class EntityPrimaryKeyDec {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityPrimaryKeyDec',
+            propertyName: 'EntityPrimaryKey',
         };
     }
 }
 class EntityDateAddDec {
     getDecoratorName() {
-        return 'EntityDateAddDec';
+        return 'EntityDateAdd';
     }
     getProps() {
         return [''];
@@ -44,13 +44,13 @@ class EntityDateAddDec {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityDateAddDec',
+            propertyName: 'EntityDateAdd',
         };
     }
 }
 class EntityDateUpdateDec {
     getDecoratorName() {
-        return 'EntityDateUpdateDec';
+        return 'EntityDateUpdate';
     }
     getProps() {
         return [''];
@@ -59,7 +59,7 @@ class EntityDateUpdateDec {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityDateUpdateDec',
+            propertyName: 'EntityDateUpdate',
         };
     }
 }
@@ -68,7 +68,7 @@ class EntityIntegerDec {
         this.column = column;
     }
     getDecoratorName() {
-        return 'EntityIntegerDec';
+        return 'EntityInteger';
     }
     getProps() {
         const obj = {};
@@ -90,7 +90,7 @@ class EntityIntegerDec {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityIntegerDec',
+            propertyName: 'EntityInteger',
         };
     }
 }
@@ -99,7 +99,7 @@ class EntityBigIntDec {
         this.column = column;
     }
     getDecoratorName() {
-        return 'EntityBigIntDec';
+        return 'EntityBigInt';
     }
     getProps() {
         const obj = {};
@@ -118,7 +118,7 @@ class EntityBigIntDec {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityBigIntDec',
+            propertyName: 'EntityBigInt',
         };
     }
 }
@@ -127,7 +127,7 @@ class EntityFloatDec {
         this.column = column;
     }
     getDecoratorName() {
-        return 'EntityFloatDec';
+        return 'EntityFloat';
     }
     getProps() {
         const obj = {};
@@ -146,7 +146,7 @@ class EntityFloatDec {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityFloatDec',
+            propertyName: 'EntityFloat',
         };
     }
 }
@@ -155,7 +155,7 @@ class EntityBooleanDec {
         this.column = column;
     }
     getDecoratorName() {
-        return 'EntityBooleanDec';
+        return 'EntityBoolean';
     }
     getProps() {
         const obj = {};
@@ -174,7 +174,7 @@ class EntityBooleanDec {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityBooleanDec',
+            propertyName: 'EntityBoolean',
         };
     }
 }
@@ -183,7 +183,7 @@ class EntityStringDec {
         this.column = column;
     }
     getDecoratorName() {
-        return 'EntityStringDec';
+        return 'EntityString';
     }
     getProps() {
         const obj = {};
@@ -208,7 +208,7 @@ class EntityStringDec {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityStringDec',
+            propertyName: 'EntityString',
         };
     }
 }
@@ -217,7 +217,7 @@ class EntityTextDec {
         this.column = column;
     }
     getDecoratorName() {
-        return 'EntityTextDec';
+        return 'EntityText';
     }
     getProps() {
         const obj = {};
@@ -242,7 +242,7 @@ class EntityTextDec {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityTextDec',
+            propertyName: 'EntityText',
         };
     }
 }
@@ -251,7 +251,7 @@ class EntityDateDec {
         this.column = column;
     }
     getDecoratorName() {
-        return 'EntityDateDec';
+        return 'EntityDate';
     }
     getProps() {
         const obj = {};
@@ -270,7 +270,7 @@ class EntityDateDec {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityDateDec',
+            propertyName: 'EntityDate',
         };
     }
 }
@@ -279,7 +279,7 @@ class EntityJsonDec {
         this.column = column;
     }
     getDecoratorName() {
-        return 'EntityJsonDec';
+        return 'EntityJson';
     }
     getProps() {
         const obj = {};
@@ -298,7 +298,7 @@ class EntityJsonDec {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityJsonDec',
+            propertyName: 'EntityJson',
         };
     }
 }
@@ -315,26 +315,26 @@ class GmModuleEntity extends GmAbstractModuleClass_1.GmAbstractModuleClass {
     init() {
         this.addImport({
             path: 'os-core-ts',
-            propertyName: 'EntityDec',
+            propertyName: 'Entity',
             isLibImport: true,
         });
         this.addImport({
             path: 'os-core-ts',
-            propertyName: 'EntityPrimaryKey',
+            propertyName: 'PrimaryKey',
             isLibImport: true,
         });
         this.addImport({
             path: 'os-core-ts',
-            propertyName: 'EntityDateAdd',
+            propertyName: 'DateAdd',
             isLibImport: true,
         });
         this.addImport({
             path: 'os-core-ts',
-            propertyName: 'EntityDateUpdate',
+            propertyName: 'DateUpdate',
             isLibImport: true,
         });
         this.addVar({
-            type: 'EntityPrimaryKey',
+            type: 'PrimaryKey',
             defaultValue: null,
             nullable: false,
             optional: false,
@@ -344,7 +344,7 @@ class GmModuleEntity extends GmAbstractModuleClass_1.GmAbstractModuleClass {
             decorator: new EntityPrimaryKeyDec(),
         });
         this.addVar({
-            type: 'EntityDateAdd',
+            type: 'DateAdd',
             defaultValue: null,
             nullable: false,
             optional: false,
@@ -354,7 +354,7 @@ class GmModuleEntity extends GmAbstractModuleClass_1.GmAbstractModuleClass {
             decorator: new EntityDateAddDec(),
         });
         this.addVar({
-            type: 'EntityDateUpdate',
+            type: 'DateUpdate',
             defaultValue: null,
             nullable: false,
             optional: false,

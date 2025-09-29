@@ -7,7 +7,7 @@ export class GmQueryParamNumDec implements IGmModuleClassMethodPropDecorator {
     }
 
     public getDecoratorName(): string {
-        return 'QueryParamNumDec'
+        return 'QueryParamNum'
     }
 
     public getProps(): string[] {
@@ -16,7 +16,7 @@ export class GmQueryParamNumDec implements IGmModuleClassMethodPropDecorator {
 
     public getImport(): GmImport {
         return {
-            propertyName: 'QueryParamNumDec',
+            propertyName: 'QueryParamNum',
             path: 'os-core-ts',
             isLibImport: true,
         }
@@ -28,7 +28,7 @@ export class GmQueryParamDec implements IGmModuleClassMethodPropDecorator {
     }
 
     public getDecoratorName(): string {
-        return 'QueryParamDec'
+        return 'QueryParam'
     }
 
     public getProps(): string[] {
@@ -37,7 +37,7 @@ export class GmQueryParamDec implements IGmModuleClassMethodPropDecorator {
 
     public getImport(): GmImport {
         return {
-            propertyName: 'QueryParamDec',
+            propertyName: 'QueryParam',
             path: 'os-core-ts',
             isLibImport: true,
         }
@@ -50,7 +50,7 @@ export class GmQueryParamDateDec implements IGmModuleClassMethodPropDecorator {
     }
 
     public getDecoratorName(): string {
-        return 'QueryParamDateDec'
+        return 'QueryParamDate'
     }
 
     public getProps(): string[] {
@@ -59,7 +59,7 @@ export class GmQueryParamDateDec implements IGmModuleClassMethodPropDecorator {
 
     public getImport(): GmImport {
         return {
-            propertyName: 'QueryParamDateDec',
+            propertyName: 'QueryParamDate',
             path: 'os-core-ts',
             isLibImport: true,
         }

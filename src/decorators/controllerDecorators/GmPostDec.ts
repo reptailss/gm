@@ -7,7 +7,7 @@ export class GmPostDec implements IGmModuleClassMethodDecorator {
     }
 
     public getDecoratorName(): string {
-        return 'PostDec'
+        return 'Post'
     }
 
     public getProps(): string[] {
@@ -16,7 +16,7 @@ export class GmPostDec implements IGmModuleClassMethodDecorator {
 
     public getImport(): GmImport {
         return {
-            propertyName: 'PostDec',
+            propertyName: 'Post',
             path: 'os-core-ts',
             isLibImport: true,
         }

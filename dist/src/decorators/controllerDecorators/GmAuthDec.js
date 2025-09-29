@@ -3,14 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GmAuthDec = void 0;
 class GmAuthDec {
     getDecoratorName() {
-        return 'AuthDec';
+        return 'User';
     }
     getProps() {
-        return [];
+        return [''];
     }
     getImport() {
         return {
-            propertyName: 'AuthDec',
+            propertyName: 'User',
             path: 'os-core-ts',
             isLibImport: true,
         };

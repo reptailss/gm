@@ -12,7 +12,7 @@ export declare class GmModuleControllerMethodGetById extends GmAbstractModuleCla
     private readonly gmServiceUserInfoType;
     private readonly gmModuleRoutePaths;
     constructor(config: GmCrudConfig, api: IGmModuleServiceApiGet, varNames: {
-        userInfo: string;
+        userDto: string;
         id: string;
     });
     getPropertyName(): string;

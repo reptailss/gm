@@ -6,7 +6,7 @@ export class GmDeleteDec implements IGmModuleClassMethodDecorator {
     }
 
     public getDecoratorName(): string {
-        return 'DeleteDec'
+        return 'Delete'
     }
 
     public getProps(): string[] {
@@ -15,7 +15,7 @@ export class GmDeleteDec implements IGmModuleClassMethodDecorator {
 
     public getImport(): GmImport {
         return {
-            propertyName: 'DeleteDec',
+            propertyName: 'Delete',
             path: 'os-core-ts',
             isLibImport: true,
         }

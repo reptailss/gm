@@ -6,14 +6,14 @@ class GmGetDec {
         this.url = url;
     }
     getDecoratorName() {
-        return 'GetDec';
+        return 'Get';
     }
     getProps() {
         return [this.url];
     }
     getImport() {
         return {
-            propertyName: 'GetDec',
+            propertyName: 'Get',
             path: 'os-core-ts',
             isLibImport: true,
         };

@@ -27,34 +27,34 @@ import {GmBodyParamNumDec} from '@decorators/controllerDecorators/GmBodyParamDec
 const CREATE_VAR_NAMES = {
     body: 'body',
     createDtoSchema: 'createDtoSchema',
-    userInfo: 'userInfo',
+    userDto: 'userDto',
     legalEntityId: 'legalEntityId',
 } as const
 
 const UPDATE_VAR_NAMES = {
     body: 'body',
     updateDtoSchema: 'createDtoSchema',
-    userInfo: 'userInfo',
+    userDto: 'userDto',
     id: 'id',
     legalEntityId: 'legalEntityId',
 } as const
 
 const DELETE_VAR_NAMES = {
     legalEntityId: 'legalEntityId',
-    userInfo: 'userInfo',
+    userDto: 'userDto',
     id: 'id',
 } as const
 
 const GET_VAR_NAMES = {
     legalEntityId: 'legalEntityId',
-    userInfo: 'userInfo',
+    userDto: 'userDto',
     id: 'id',
 } as const
 
 const GET_ALL_VAR_NAMES = {
     legalEntityId: 'legalEntityId',
     params: 'params',
-    userInfo: 'userInfo',
+    userDto: 'userDto',
 } as const
 
 
@@ -63,23 +63,23 @@ class GmAccessStructureMethodProcessorByDynamicLeId extends GmAccessStructureMet
         const hasLeIdColumn = 'legal_entity_id' in config.repository.columns
         super(config, {
             add: {
-                openUserId: `${CREATE_VAR_NAMES.userInfo}.open_user_id`,
+                openUserId: `${CREATE_VAR_NAMES.userDto}.open_user_id`,
                 legalEntityId: hasLeIdColumn ? `${CREATE_VAR_NAMES.body}.legal_entity_id` : CREATE_VAR_NAMES.legalEntityId,
             },
             update: {
-                openUserId: `${UPDATE_VAR_NAMES.userInfo}.open_user_id`,
+                openUserId: `${UPDATE_VAR_NAMES.userDto}.open_user_id`,
                 legalEntityId: hasLeIdColumn ? `${UPDATE_VAR_NAMES.body}.legal_entity_id` : UPDATE_VAR_NAMES.legalEntityId,
             },
             delete: {
-                openUserId: `${DELETE_VAR_NAMES.userInfo}.open_user_id`,
+                openUserId: `${DELETE_VAR_NAMES.userDto}.open_user_id`,
                 legalEntityId: DELETE_VAR_NAMES.legalEntityId,
             },
             get: {
-                openUserId: `${GET_VAR_NAMES.userInfo}.open_user_id`,
+                openUserId: `${GET_VAR_NAMES.userDto}.open_user_id`,
                 legalEntityId: GET_VAR_NAMES.legalEntityId,
             },
             list: {
-                openUserId: `${GET_ALL_VAR_NAMES.userInfo}.open_user_id`,
+                openUserId: `${GET_ALL_VAR_NAMES.userDto}.open_user_id`,
                 legalEntityId: GET_ALL_VAR_NAMES.legalEntityId,
             },
         })
@@ -113,18 +113,18 @@ export class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstrac
                 create: {
                     legalEntityId: hasLeIdColumn ? `${CREATE_VAR_NAMES.body}.legal_entity_id` : CREATE_VAR_NAMES.legalEntityId,
                     createDto: CREATE_VAR_NAMES.body,
-                    initiatorOpenUserId: `${CREATE_VAR_NAMES.userInfo}.open_user_id`,
+                    initiatorOpenUserId: `${CREATE_VAR_NAMES.userDto}.open_user_id`,
                 },
                 update: {
                     legalEntityId: hasLeIdColumn ? `${UPDATE_VAR_NAMES.body}.legal_entity_id` : UPDATE_VAR_NAMES.legalEntityId,
                     id: UPDATE_VAR_NAMES.id,
                     updateDto: UPDATE_VAR_NAMES.body,
-                    initiatorOpenUserId: `${UPDATE_VAR_NAMES.userInfo}.open_user_id`,
+                    initiatorOpenUserId: `${UPDATE_VAR_NAMES.userDto}.open_user_id`,
                 },
                 delete: {
                     legalEntityId: DELETE_VAR_NAMES.legalEntityId,
                     id: DELETE_VAR_NAMES.id,
-                    initiatorOpenUserId: `${DELETE_VAR_NAMES.userInfo}.open_user_id`,
+                    initiatorOpenUserId: `${DELETE_VAR_NAMES.userDto}.open_user_id`,
                 },
                 getById: {
                     legalEntityId: GET_VAR_NAMES.legalEntityId,
@@ -155,7 +155,7 @@ export class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstrac
             this.serviceCrud.api,
             {
                 createDto: CREATE_VAR_NAMES.body,
-                userInfo: CREATE_VAR_NAMES.userInfo,
+                userDto: CREATE_VAR_NAMES.userDto,
                 createDtoSchema: this.getValidatorCreateBodyVarName(),
             },
         )
@@ -175,7 +175,7 @@ export class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstrac
             this.serviceCrud.api,
             {
                 updateDto: UPDATE_VAR_NAMES.body,
-                userInfo: UPDATE_VAR_NAMES.userInfo,
+                userDto: UPDATE_VAR_NAMES.userDto,
                 updateDtoSchema: this.getValidatorUpdateBodyVarName(),
                 id: UPDATE_VAR_NAMES.id,
             },
@@ -195,7 +195,7 @@ export class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstrac
             this.getConfig(),
             this.serviceCrud.api,
             {
-                userInfo: DELETE_VAR_NAMES.userInfo,
+                userDto: DELETE_VAR_NAMES.userDto,
                 id: DELETE_VAR_NAMES.id,
             },
         ).addProp({
@@ -211,7 +211,7 @@ export class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstrac
             this.getConfig(),
             this.serviceCrud.api,
             {
-                userInfo: GET_VAR_NAMES.userInfo,
+                userDto: GET_VAR_NAMES.userDto,
                 id: GET_VAR_NAMES.id,
             },
         ).addProp({
@@ -228,7 +228,7 @@ export class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstrac
             this.serviceCrud.api,
             {
                 params: GET_ALL_VAR_NAMES.params,
-                userInfo: GET_ALL_VAR_NAMES.userInfo,
+                userDto: GET_ALL_VAR_NAMES.userDto,
                 paramsSchema: this.getValidatorParamsDtoVarName(),
             },
         ).addProp({
@@ -310,7 +310,7 @@ export class GmModuleControllerClassCreateBySqlDynamicLeId extends GmModuleAbstr
             config,
             `this.${this.getServiceVarName()}`,
             {
-                initiatorOpenUserId: `${CREATE_VAR_NAMES.userInfo}.open_user_id`,
+                initiatorOpenUserId: `${CREATE_VAR_NAMES.userDto}.open_user_id`,
                 createDto: CREATE_VAR_NAMES.body,
                 legalEntityId: hasLeIdColumn ? `${CREATE_VAR_NAMES.body}.legal_entity_id` : CREATE_VAR_NAMES.legalEntityId,
             },
@@ -332,7 +332,7 @@ export class GmModuleControllerClassCreateBySqlDynamicLeId extends GmModuleAbstr
             this.serviceCrud.api,
             {
                 createDto: CREATE_VAR_NAMES.body,
-                userInfo: CREATE_VAR_NAMES.userInfo,
+                userDto: CREATE_VAR_NAMES.userDto,
                 createDtoSchema: this.getValidatorCreateBodyVarName(),
             },
         )
@@ -402,7 +402,7 @@ export class GmModuleControllerClassUpdateBySqlDynamicLeId extends GmModuleAbstr
             config,
             `this.${this.getServiceVarName()}`,
             {
-                initiatorOpenUserId: `${UPDATE_VAR_NAMES.userInfo}.open_user_id`,
+                initiatorOpenUserId: `${UPDATE_VAR_NAMES.userDto}.open_user_id`,
                 updateDto: UPDATE_VAR_NAMES.body,
                 legalEntityId: hasLeIdColumn ? `${UPDATE_VAR_NAMES.body}.legal_entity_id` : UPDATE_VAR_NAMES.legalEntityId,
                 id: UPDATE_VAR_NAMES.id,
@@ -426,7 +426,7 @@ export class GmModuleControllerClassUpdateBySqlDynamicLeId extends GmModuleAbstr
             this.serviceCrud.api,
             {
                 updateDto: UPDATE_VAR_NAMES.body,
-                userInfo: UPDATE_VAR_NAMES.userInfo,
+                userDto: UPDATE_VAR_NAMES.userDto,
                 updateDtoSchema: this.getValidatorUpdateBodyVarName(),
                 id: UPDATE_VAR_NAMES.id,
             },
@@ -489,7 +489,7 @@ export class GmModuleControllerClassDeleteBySqlDynamicLeId extends GmModuleAbstr
             config,
             `this.${this.getServiceVarName()}`,
             {
-                initiatorOpenUserId: `${DELETE_VAR_NAMES.userInfo}.open_user_id`,
+                initiatorOpenUserId: `${DELETE_VAR_NAMES.userDto}.open_user_id`,
                 legalEntityId: DELETE_VAR_NAMES.legalEntityId,
                 id: DELETE_VAR_NAMES.id,
             },
@@ -506,7 +506,7 @@ export class GmModuleControllerClassDeleteBySqlDynamicLeId extends GmModuleAbstr
             this.getConfig(),
             this.serviceCrud.api,
             {
-                userInfo: DELETE_VAR_NAMES.userInfo,
+                userDto: DELETE_VAR_NAMES.userDto,
                 id: DELETE_VAR_NAMES.id,
             },
         ).addProp({
@@ -567,7 +567,7 @@ export class GmModuleControllerClassGetBySqlDynamicLeId extends GmModuleAbstract
             this.getConfig(),
             this.serviceCrud.api,
             {
-                userInfo: GET_VAR_NAMES.userInfo,
+                userDto: GET_VAR_NAMES.userDto,
                 id: GET_VAR_NAMES.id,
             },
         ).addProp({
@@ -637,7 +637,7 @@ export class GmModuleControllerClassGetAllBySqlDynamicLeId extends GmModuleAbstr
             this.serviceCrud.api,
             {
                 params: GET_ALL_VAR_NAMES.params,
-                userInfo: GET_ALL_VAR_NAMES.userInfo,
+                userDto: GET_ALL_VAR_NAMES.userDto,
                 paramsSchema: this.getValidatorParamsDtoVarName(),
             },
         ).addProp({

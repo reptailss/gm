@@ -3,14 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GmDomainDec = void 0;
 class GmDomainDec {
     getDecoratorName() {
-        return 'DomainDec';
+        return 'Domain';
     }
     getProps() {
-        return [];
+        return [''];
     }
     getImport() {
         return {
-            propertyName: 'DomainDec',
+            propertyName: 'Domain',
             path: 'os-core-ts',
             isLibImport: true,
         };

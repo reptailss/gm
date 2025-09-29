@@ -3,16 +3,16 @@ import {GmImport} from '@imports/types'
 
 export class GmControllerDec implements IGmModuleClassDecorator {
     public getDecoratorName(): string {
-        return 'ControllerDec()'
+        return 'Controller'
     }
 
     public getProps(): string[] {
-        return []
+        return ['']
     }
 
     public getImport(): GmImport {
         return {
-            propertyName: 'ControllerDec',
+            propertyName: 'Controller',
             path: 'os-core-ts',
             isLibImport: true,
         }

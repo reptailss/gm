@@ -3,14 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GmControllerDec = void 0;
 class GmControllerDec {
     getDecoratorName() {
-        return 'ControllerDec()';
+        return 'Controller';
     }
     getProps() {
-        return [];
+        return [''];
     }
     getImport() {
         return {
-            propertyName: 'ControllerDec',
+            propertyName: 'Controller',
             path: 'os-core-ts',
             isLibImport: true,
         };

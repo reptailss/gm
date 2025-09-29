@@ -6,14 +6,14 @@ class GmDeleteDec {
         this.url = url;
     }
     getDecoratorName() {
-        return 'DeleteDec';
+        return 'Delete';
     }
     getProps() {
         return [this.url];
     }
     getImport() {
         return {
-            propertyName: 'DeleteDec',
+            propertyName: 'Delete',
             path: 'os-core-ts',
             isLibImport: true,
         };

@@ -12,7 +12,7 @@ export declare class GmModuleControllerMethodUpdate extends GmAbstractModuleClas
     private readonly gmModuleRoutePaths;
     constructor(config: GmCrudConfig, api: IGmModuleServiceApiUpdate, varNames: {
         updateDto: string;
-        userInfo: string;
+        userDto: string;
         updateDtoSchema: string;
         id: string;
         updateDtoType?: string;

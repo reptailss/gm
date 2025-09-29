@@ -10,7 +10,7 @@ export declare class GmModuleControllerMethodDelete extends GmAbstractModuleClas
     private readonly gmServiceUserInfoType;
     private readonly gmModuleRoutePaths;
     constructor(config: GmCrudConfig, api: IGmModuleServiceApiDelete, varNames: {
-        userInfo: string;
+        userDto: string;
         id: string;
     });
     getPropertyName(): string;

@@ -8,7 +8,7 @@ export class GmBodyParamNumDec implements IGmModuleClassMethodPropDecorator {
     }
 
     public getDecoratorName(): string {
-        return 'BodyParamNumDec'
+        return 'BodyParamNum'
     }
 
     public getProps(): string[] {
@@ -17,7 +17,7 @@ export class GmBodyParamNumDec implements IGmModuleClassMethodPropDecorator {
 
     public getImport(): GmImport {
         return {
-            propertyName: 'BodyParamNumDec',
+            propertyName: 'BodyParamNum',
             path: 'os-core-ts',
             isLibImport: true,
         }
@@ -31,7 +31,7 @@ export class GmBodyParamDec implements IGmModuleClassMethodPropDecorator {
     }
 
     public getDecoratorName(): string {
-        return 'BodyParamDec'
+        return 'BodyParam'
     }
 
     public getProps(): string[] {
@@ -40,7 +40,7 @@ export class GmBodyParamDec implements IGmModuleClassMethodPropDecorator {
 
     public getImport(): GmImport {
         return {
-            propertyName: 'BodyParamDec',
+            propertyName: 'BodyParam',
             path: 'os-core-ts',
             isLibImport: true,
         }

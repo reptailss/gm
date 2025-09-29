@@ -4,7 +4,7 @@ import {GmServiceBuildResponseFormat} from '@services/buildResponseFormat/GmServ
 import {GmServicePaginationValues} from '@services/resultTypes/GmServicePaginationResultType'
 import {GmServicePaginationQueryParamsType} from '@services/paginationTypes/GmServicePaginationQueryParamsType'
 import {GmModuleDto} from '@modules/dto/GmModuleDto'
-import {GmServiceUserInfoType} from '@services/userInfo/GmServiceUserInfoType'
+import {GmServiceUserDtoType} from '@services/userDto/GmServiceUserDtoType'
 import {GmModuleRoutePaths} from '@modules/routePaths/GmModuleRoutePaths'
 import {GmCrudConfig} from 'os-core-ts'
 import {IGmModuleServiceApiGetPagination} from '@modules/services/interfaces/gmModuleServiceClassCurdApi'
@@ -22,14 +22,14 @@ export class GmModuleControllerMethodGetPagination extends GmAbstractModuleClass
     private readonly gmServicePaginationValues: GmServicePaginationValues
     private readonly gmServicePaginationQueryParamsType: GmServicePaginationQueryParamsType
     private readonly gmModuleDto: GmModuleDto
-    private readonly gmServiceUserInfoType: GmServiceUserInfoType
+    private readonly gmServiceUserInfoType: GmServiceUserDtoType
     private readonly gmModuleRoutePaths: GmModuleRoutePaths
     
     constructor(
         config: GmCrudConfig,
         private readonly api: IGmModuleServiceApiGetPagination,
         private readonly varNames: {
-            userInfo: string
+            userDto: string
             params: string
             paramsSchema: string
         },
@@ -38,7 +38,7 @@ export class GmModuleControllerMethodGetPagination extends GmAbstractModuleClass
         this.gmServiceBuildResponseFormat = new GmServiceBuildResponseFormat()
         this.gmServicePaginationValues = new GmServicePaginationValues()
         this.gmServicePaginationQueryParamsType = new GmServicePaginationQueryParamsType()
-        this.gmServiceUserInfoType = new GmServiceUserInfoType()
+        this.gmServiceUserInfoType = new GmServiceUserDtoType()
         this.gmModuleDto = new GmModuleDto(config)
         this.gmModuleRoutePaths = new GmModuleRoutePaths(config)
         
@@ -67,8 +67,8 @@ export class GmModuleControllerMethodGetPagination extends GmAbstractModuleClass
             this.addService(this.gmServiceUserInfoType)
             this.addProp({
                 type: this.gmServiceUserInfoType.getUserInfoType(),
-                varName: this.varNames.userInfo,
-                callVarName: this.varNames.userInfo,
+                varName: this.varNames.userDto,
+                callVarName: this.varNames.userDto,
                 decorator: new GmAuthDec(),
             })
         }

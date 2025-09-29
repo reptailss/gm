@@ -6,14 +6,14 @@ class GmQueryParamNumDec {
         this.key = key;
     }
     getDecoratorName() {
-        return 'QueryParamNumDec';
+        return 'QueryParamNum';
     }
     getProps() {
         return [`'${this.key}'`];
     }
     getImport() {
         return {
-            propertyName: 'QueryParamNumDec',
+            propertyName: 'QueryParamNum',
             path: 'os-core-ts',
             isLibImport: true,
         };
@@ -25,14 +25,14 @@ class GmQueryParamDec {
         this.key = key;
     }
     getDecoratorName() {
-        return 'QueryParamDec';
+        return 'QueryParam';
     }
     getProps() {
         return [`'${this.key}'`];
     }
     getImport() {
         return {
-            propertyName: 'QueryParamDec',
+            propertyName: 'QueryParam',
             path: 'os-core-ts',
             isLibImport: true,
         };
@@ -44,14 +44,14 @@ class GmQueryParamDateDec {
         this.key = key;
     }
     getDecoratorName() {
-        return 'QueryParamDateDec';
+        return 'QueryParamDate';
     }
     getProps() {
         return [`'${this.key}'`];
     }
     getImport() {
         return {
-            propertyName: 'QueryParamDateDec',
+            propertyName: 'QueryParamDate',
             path: 'os-core-ts',
             isLibImport: true,
         };

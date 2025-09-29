@@ -6,14 +6,14 @@ class GmBodyDec {
         this.schemaVarName = schemaVarName;
     }
     getDecoratorName() {
-        return 'BodyDec';
+        return 'Body';
     }
     getProps() {
         return [this.schemaVarName];
     }
     getImport() {
         return {
-            propertyName: 'BodyDec',
+            propertyName: 'Body',
             path: 'os-core-ts',
             isLibImport: true,
         };

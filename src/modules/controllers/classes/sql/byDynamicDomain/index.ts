@@ -25,33 +25,33 @@ const CREATE_VAR_NAMES = {
     domain: 'domain',
     createDto: 'createDto',
     createDtoSchema: 'createDtoSchema',
-    userInfo: 'userInfo',
+    userDto: 'userDto',
 } as const
 
 const UPDATE_VAR_NAMES = {
     domain: 'domain',
     updateDto: 'updateDto',
     updateDtoSchema: 'createDtoSchema',
-    userInfo: 'userInfo',
+    userDto: 'userDto',
     id: 'id',
 } as const
 
 const DELETE_VAR_NAMES = {
     domain: 'domain',
-    userInfo: 'userInfo',
+    userDto: 'userDto',
     id: 'id',
 } as const
 
 const GET_VAR_NAMES = {
     domain: 'domain',
-    userInfo: 'userInfo',
+    userDto: 'userDto',
     id: 'id',
 } as const
 
 const GET_ALL_VAR_NAMES = {
     domain: 'domain',
     params: 'params',
-    userInfo: 'userInfo',
+    userDto: 'userDto',
 } as const
 
 
@@ -59,23 +59,23 @@ class GmAccessStructureMethodProcessorByDynamicDomain extends GmAccessStructureM
     constructor(config: GmCrudConfig) {
         super(config, {
             add: {
-                openUserId: `${CREATE_VAR_NAMES.userInfo}.open_user_id`,
+                openUserId: `${CREATE_VAR_NAMES.userDto}.open_user_id`,
                 legalEntityId: 'legalEntityId',
             },
             update: {
-                openUserId: `${UPDATE_VAR_NAMES.userInfo}.open_user_id`,
+                openUserId: `${UPDATE_VAR_NAMES.userDto}.open_user_id`,
                 legalEntityId: 'legalEntityId',
             },
             delete: {
-                openUserId: `${DELETE_VAR_NAMES.userInfo}.open_user_id`,
+                openUserId: `${DELETE_VAR_NAMES.userDto}.open_user_id`,
                 legalEntityId: 'legalEntityId',
             },
             get: {
-                openUserId: `${GET_VAR_NAMES.userInfo}.open_user_id`,
+                openUserId: `${GET_VAR_NAMES.userDto}.open_user_id`,
                 legalEntityId: 'legalEntityId',
             },
             list: {
-                openUserId: `${GET_ALL_VAR_NAMES.userInfo}.open_user_id`,
+                openUserId: `${GET_ALL_VAR_NAMES.userDto}.open_user_id`,
                 legalEntityId: 'legalEntityId',
             },
         })
@@ -174,18 +174,18 @@ export class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstr
                 create: {
                     domain: CREATE_VAR_NAMES.domain,
                     createDto: CREATE_VAR_NAMES.createDto,
-                    initiatorOpenUserId: `${CREATE_VAR_NAMES.userInfo}.open_user_id`,
+                    initiatorOpenUserId: `${CREATE_VAR_NAMES.userDto}.open_user_id`,
                 },
                 update: {
                     domain: UPDATE_VAR_NAMES.domain,
                     id: UPDATE_VAR_NAMES.id,
                     updateDto: UPDATE_VAR_NAMES.updateDto,
-                    initiatorOpenUserId: `${UPDATE_VAR_NAMES.userInfo}.open_user_id`,
+                    initiatorOpenUserId: `${UPDATE_VAR_NAMES.userDto}.open_user_id`,
                 },
                 delete: {
                     domain: DELETE_VAR_NAMES.domain,
                     id: DELETE_VAR_NAMES.id,
-                    initiatorOpenUserId: `${DELETE_VAR_NAMES.userInfo}.open_user_id`,
+                    initiatorOpenUserId: `${DELETE_VAR_NAMES.userDto}.open_user_id`,
                 },
                 getById: {
                     domain: GET_VAR_NAMES.domain,
@@ -211,7 +211,7 @@ export class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstr
             this.serviceCrud.api,
             {
                 createDto: CREATE_VAR_NAMES.createDto,
-                userInfo: CREATE_VAR_NAMES.userInfo,
+                userDto: CREATE_VAR_NAMES.userDto,
                 createDtoSchema: this.getValidatorCreateDtoVarName(),
             },
         ).addProp({
@@ -228,7 +228,7 @@ export class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstr
             this.serviceCrud.api,
             {
                 updateDto: UPDATE_VAR_NAMES.updateDto,
-                userInfo: UPDATE_VAR_NAMES.userInfo,
+                userDto: UPDATE_VAR_NAMES.userDto,
                 updateDtoSchema: this.getValidatorUpdateDtoVarName(),
                 id: UPDATE_VAR_NAMES.id,
             },
@@ -245,7 +245,7 @@ export class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstr
             this.getConfig(),
             this.serviceCrud.api,
             {
-                userInfo: DELETE_VAR_NAMES.userInfo,
+                userDto: DELETE_VAR_NAMES.userDto,
                 id: DELETE_VAR_NAMES.id,
             },
         ).addProp({
@@ -261,7 +261,7 @@ export class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstr
             this.getConfig(),
             this.serviceCrud.api,
             {
-                userInfo: GET_VAR_NAMES.userInfo,
+                userDto: GET_VAR_NAMES.userDto,
                 id: GET_VAR_NAMES.id,
             },
         ).addProp({
@@ -278,7 +278,7 @@ export class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstr
             this.serviceCrud.api,
             {
                 params: GET_ALL_VAR_NAMES.params,
-                userInfo: GET_ALL_VAR_NAMES.userInfo,
+                userDto: GET_ALL_VAR_NAMES.userDto,
                 paramsSchema: this.getValidatorParamsDtoVarName(),
             },
         ).addProp({
@@ -353,7 +353,7 @@ export class GmModuleControllerClassCreateBySqlDynamicDomain extends GmModuleAbs
             config,
             `this.${this.getServiceVarName()}`,
             {
-                initiatorOpenUserId: `${CREATE_VAR_NAMES.userInfo}.open_user_id`,
+                initiatorOpenUserId: `${CREATE_VAR_NAMES.userDto}.open_user_id`,
                 createDto: CREATE_VAR_NAMES.createDto,
                 domain: CREATE_VAR_NAMES.domain,
             },
@@ -372,7 +372,7 @@ export class GmModuleControllerClassCreateBySqlDynamicDomain extends GmModuleAbs
             this.serviceCrud.api,
             {
                 createDto: CREATE_VAR_NAMES.createDto,
-                userInfo: CREATE_VAR_NAMES.userInfo,
+                userDto: CREATE_VAR_NAMES.userDto,
                 createDtoSchema: this.getValidatorCreateDtoVarName(),
             },
         ).addProp({
@@ -436,7 +436,7 @@ export class GmModuleControllerClassUpdateBySqlDynamicDomain extends GmModuleAbs
             config,
             `this.${this.getServiceVarName()}`,
             {
-                initiatorOpenUserId: `${UPDATE_VAR_NAMES.userInfo}.open_user_id`,
+                initiatorOpenUserId: `${UPDATE_VAR_NAMES.userDto}.open_user_id`,
                 updateDto: UPDATE_VAR_NAMES.updateDto,
                 domain: UPDATE_VAR_NAMES.domain,
                 id: UPDATE_VAR_NAMES.id,
@@ -457,7 +457,7 @@ export class GmModuleControllerClassUpdateBySqlDynamicDomain extends GmModuleAbs
             this.serviceCrud.api,
             {
                 updateDto: UPDATE_VAR_NAMES.updateDto,
-                userInfo: UPDATE_VAR_NAMES.userInfo,
+                userDto: UPDATE_VAR_NAMES.userDto,
                 updateDtoSchema: this.getValidatorUpdateDtoVarName(),
                 id: UPDATE_VAR_NAMES.id,
             },
@@ -515,7 +515,7 @@ export class GmModuleControllerClassDeleteBySqlDynamicDomain extends GmModuleAbs
             config,
             `this.${this.getServiceVarName()}`,
             {
-                initiatorOpenUserId: `${DELETE_VAR_NAMES.userInfo}.open_user_id`,
+                initiatorOpenUserId: `${DELETE_VAR_NAMES.userDto}.open_user_id`,
                 domain: DELETE_VAR_NAMES.domain,
                 id: DELETE_VAR_NAMES.id,
             },
@@ -533,7 +533,7 @@ export class GmModuleControllerClassDeleteBySqlDynamicDomain extends GmModuleAbs
             this.getConfig(),
             this.serviceCrud.api,
             {
-                userInfo: DELETE_VAR_NAMES.userInfo,
+                userDto: DELETE_VAR_NAMES.userDto,
                 id: DELETE_VAR_NAMES.id,
             },
         ).addProp({
@@ -594,7 +594,7 @@ export class GmModuleControllerClassGetBySqlDynamicDomain extends GmModuleAbstra
             this.getConfig(),
             this.serviceCrud.api,
             {
-                userInfo: GET_VAR_NAMES.userInfo,
+                userDto: GET_VAR_NAMES.userDto,
                 id: GET_VAR_NAMES.id,
             },
         ).addProp({
@@ -663,7 +663,7 @@ export class GmModuleControllerClassGetAllBySqlDynamicDomain extends GmModuleAbs
             this.serviceCrud.api,
             {
                 params: GET_ALL_VAR_NAMES.params,
-                userInfo: GET_ALL_VAR_NAMES.userInfo,
+                userDto: GET_ALL_VAR_NAMES.userDto,
                 paramsSchema: this.getValidatorParamsDtoVarName(),
             },
         ).addProp({

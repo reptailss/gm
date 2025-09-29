@@ -6,14 +6,14 @@ class GmSwaggerInfoDec {
         this.summary = summary;
     }
     getDecoratorName() {
-        return 'SwaggerInfoDec';
+        return 'SwaggerInfo';
     }
     getProps() {
         return [`{ summary:'${this.summary}'}`];
     }
     getImport() {
         return {
-            propertyName: 'SwaggerInfoDec',
+            propertyName: 'SwaggerInfo',
             path: 'os-core-ts',
             isLibImport: true,
         };

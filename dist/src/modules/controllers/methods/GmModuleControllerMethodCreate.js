@@ -5,7 +5,7 @@ const GmAbstractModuleClassMethod_1 = require("../../abstractModule/GmAbstractMo
 const GmServiceBuildResponseFormat_1 = require("../../../services/buildResponseFormat/GmServiceBuildResponseFormat");
 const GmServiceMutateRowResultType_1 = require("../../../services/resultTypes/GmServiceMutateRowResultType");
 const GmModuleCreateDto_1 = require("../../dto/GmModuleCreateDto");
-const GmServiceUserInfoType_1 = require("../../../services/userInfo/GmServiceUserInfoType");
+const GmServiceUserDtoType_1 = require("../../../services/userDto/GmServiceUserDtoType");
 const GmModuleRoutePaths_1 = require("../../routePaths/GmModuleRoutePaths");
 const StringCaseHelper_1 = require("../../../helpers/StringCaseHelper");
 const GmModuleDtoHelper_1 = require("../../dto/helper/GmModuleDtoHelper");
@@ -21,7 +21,7 @@ class GmModuleControllerMethodCreate extends GmAbstractModuleClassMethod_1.GmAbs
         this.varNames = varNames;
         this.gmServiceBuildResponseFormat = new GmServiceBuildResponseFormat_1.GmServiceBuildResponseFormat();
         this.gmServiceMutateRowResultType = new GmServiceMutateRowResultType_1.GmServiceMutateRowResultType();
-        this.gmServiceUserInfoType = new GmServiceUserInfoType_1.GmServiceUserInfoType();
+        this.gmServiceUserInfoType = new GmServiceUserDtoType_1.GmServiceUserDtoType();
         this.gmModuleCreateDto = new GmModuleCreateDto_1.GmModuleCreateDto(config);
         this.gmModuleRoutePaths = new GmModuleRoutePaths_1.GmModuleRoutePaths(config);
     }
@@ -48,8 +48,8 @@ class GmModuleControllerMethodCreate extends GmAbstractModuleClassMethod_1.GmAbs
             this.addService(this.gmServiceUserInfoType);
             this.addProp({
                 type: this.gmServiceUserInfoType.getUserInfoType(),
-                varName: this.varNames.userInfo,
-                callVarName: this.varNames.userInfo,
+                varName: this.varNames.userDto,
+                callVarName: this.varNames.userDto,
                 decorator: new GmAuthDec_1.GmAuthDec(),
             });
         }

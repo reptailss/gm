@@ -6,14 +6,14 @@ class GmImportStructureServiceEndpointDec {
         this.name = name;
     }
     getDecoratorName() {
-        return 'ImportStructureServiceEndpointDec';
+        return 'ImportStructureServiceEndpoint';
     }
     getProps() {
         return [`'${this.name}'`];
     }
     getImport() {
         return {
-            propertyName: 'ImportStructureServiceEndpointDec',
+            propertyName: 'ImportStructureServiceEndpoint',
             path: 'os-core-ts',
             isLibImport: true,
         };

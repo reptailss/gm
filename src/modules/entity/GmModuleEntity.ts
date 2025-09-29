@@ -9,7 +9,7 @@ import {IGmModuleClassMethodPropDecorator} from '@decorators/interfaces/gmModule
 
 class EntityDec implements IGmModuleClassDecorator {
     public getDecoratorName(): string {
-        return 'EntityDec'
+        return 'EntityDb'
     }
     
     public getProps(): string[] {
@@ -20,14 +20,14 @@ class EntityDec implements IGmModuleClassDecorator {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityDec',
+            propertyName: 'EntityDb',
         }
     }
 }
 
 class EntityPrimaryKeyDec implements IGmModuleClassDecorator {
     public getDecoratorName(): string {
-        return 'EntityPrimaryKeyDec'
+        return 'EntityPrimaryKey'
     }
     
     public getProps(): string[] {
@@ -38,14 +38,14 @@ class EntityPrimaryKeyDec implements IGmModuleClassDecorator {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityPrimaryKeyDec',
+            propertyName: 'EntityPrimaryKey',
         }
     }
 }
 
 class EntityDateAddDec implements IGmModuleClassDecorator {
     public getDecoratorName(): string {
-        return 'EntityDateAddDec'
+        return 'EntityDateAdd'
     }
     
     public getProps(): string[] {
@@ -56,14 +56,14 @@ class EntityDateAddDec implements IGmModuleClassDecorator {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityDateAddDec',
+            propertyName: 'EntityDateAdd',
         }
     }
 }
 
 class EntityDateUpdateDec implements IGmModuleClassDecorator {
     public getDecoratorName(): string {
-        return 'EntityDateUpdateDec'
+        return 'EntityDateUpdate'
     }
     
     public getProps(): string[] {
@@ -74,7 +74,7 @@ class EntityDateUpdateDec implements IGmModuleClassDecorator {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityDateUpdateDec',
+            propertyName: 'EntityDateUpdate',
         }
     }
 }
@@ -85,7 +85,7 @@ class EntityIntegerDec implements IGmModuleClassDecorator {
     }
     
     public getDecoratorName(): string {
-        return 'EntityIntegerDec'
+        return 'EntityInteger'
     }
     
     public getProps(): string[] {
@@ -117,7 +117,7 @@ class EntityIntegerDec implements IGmModuleClassDecorator {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityIntegerDec',
+            propertyName: 'EntityInteger',
         }
     }
 }
@@ -129,7 +129,7 @@ class EntityBigIntDec implements IGmModuleClassDecorator {
     
     
     public getDecoratorName(): string {
-        return 'EntityBigIntDec'
+        return 'EntityBigInt'
     }
     
     public getProps(): string[] {
@@ -156,7 +156,7 @@ class EntityBigIntDec implements IGmModuleClassDecorator {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityBigIntDec',
+            propertyName: 'EntityBigInt',
         }
     }
 }
@@ -168,7 +168,7 @@ class EntityFloatDec implements IGmModuleClassDecorator {
     
     
     public getDecoratorName(): string {
-        return 'EntityFloatDec'
+        return 'EntityFloat'
     }
     
     public getProps(): string[] {
@@ -195,7 +195,7 @@ class EntityFloatDec implements IGmModuleClassDecorator {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityFloatDec',
+            propertyName: 'EntityFloat',
         }
     }
 }
@@ -206,7 +206,7 @@ class EntityBooleanDec implements IGmModuleClassDecorator {
     
     
     public getDecoratorName(): string {
-        return 'EntityBooleanDec'
+        return 'EntityBoolean'
     }
     
     public getProps(): string[] {
@@ -233,7 +233,7 @@ class EntityBooleanDec implements IGmModuleClassDecorator {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityBooleanDec',
+            propertyName: 'EntityBoolean',
         }
     }
 }
@@ -244,7 +244,7 @@ class EntityStringDec implements IGmModuleClassDecorator {
     
     
     public getDecoratorName(): string {
-        return 'EntityStringDec'
+        return 'EntityString'
     }
     
     public getProps(): string[] {
@@ -281,7 +281,7 @@ class EntityStringDec implements IGmModuleClassDecorator {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityStringDec',
+            propertyName: 'EntityString',
         }
     }
 }
@@ -292,7 +292,7 @@ class EntityTextDec implements IGmModuleClassDecorator {
     }
     
     public getDecoratorName(): string {
-        return 'EntityTextDec'
+        return 'EntityText'
     }
     
     public getProps(): string[] {
@@ -329,7 +329,7 @@ class EntityTextDec implements IGmModuleClassDecorator {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityTextDec',
+            propertyName: 'EntityText',
         }
     }
 }
@@ -340,7 +340,7 @@ class EntityDateDec implements IGmModuleClassDecorator {
     
     
     public getDecoratorName(): string {
-        return 'EntityDateDec'
+        return 'EntityDate'
     }
     
     public getProps(): string[] {
@@ -367,7 +367,7 @@ class EntityDateDec implements IGmModuleClassDecorator {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityDateDec',
+            propertyName: 'EntityDate',
         }
     }
 }
@@ -378,7 +378,7 @@ class EntityJsonDec implements IGmModuleClassDecorator {
     }
     
     public getDecoratorName(): string {
-        return 'EntityJsonDec'
+        return 'EntityJson'
     }
     
     public getProps(): string[] {
@@ -405,7 +405,7 @@ class EntityJsonDec implements IGmModuleClassDecorator {
         return {
             isLibImport: true,
             path: 'os-core-ts',
-            propertyName: 'EntityJsonDec',
+            propertyName: 'EntityJson',
         }
     }
 }
@@ -428,26 +428,26 @@ export class GmModuleEntity extends GmAbstractModuleClass implements IGmModuleCl
     public init(): void {
         this.addImport({
             path: 'os-core-ts',
-            propertyName: 'EntityDec',
+            propertyName: 'Entity',
             isLibImport: true,
         })
         this.addImport({
             path: 'os-core-ts',
-            propertyName: 'EntityPrimaryKey',
+            propertyName: 'PrimaryKey',
             isLibImport: true,
         })
         this.addImport({
             path: 'os-core-ts',
-            propertyName: 'EntityDateAdd',
+            propertyName: 'DateAdd',
             isLibImport: true,
         })
         this.addImport({
             path: 'os-core-ts',
-            propertyName: 'EntityDateUpdate',
+            propertyName: 'DateUpdate',
             isLibImport: true,
         })
         this.addVar({
-            type: 'EntityPrimaryKey',
+            type: 'PrimaryKey',
             defaultValue: null,
             nullable: false,
             optional: false,
@@ -457,7 +457,7 @@ export class GmModuleEntity extends GmAbstractModuleClass implements IGmModuleCl
             decorator: new EntityPrimaryKeyDec(),
         })
         this.addVar({
-            type: 'EntityDateAdd',
+            type: 'DateAdd',
             defaultValue: null,
             nullable: false,
             optional: false,
@@ -467,7 +467,7 @@ export class GmModuleEntity extends GmAbstractModuleClass implements IGmModuleCl
             decorator: new EntityDateAddDec(),
         })
         this.addVar({
-            type: 'EntityDateUpdate',
+            type: 'DateUpdate',
             defaultValue: null,
             nullable: false,
             optional: false,

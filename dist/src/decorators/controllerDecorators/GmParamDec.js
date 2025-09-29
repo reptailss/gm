@@ -6,14 +6,14 @@ class GmParamNumDec {
         this.key = key;
     }
     getDecoratorName() {
-        return 'ParamNumDec';
+        return 'ParamNum';
     }
     getProps() {
         return [`'${this.key}'`];
     }
     getImport() {
         return {
-            propertyName: 'ParamNumDec',
+            propertyName: 'ParamNum',
             path: 'os-core-ts',
             isLibImport: true,
         };
@@ -25,14 +25,14 @@ class GmParamDec {
         this.key = key;
     }
     getDecoratorName() {
-        return 'ParamDec';
+        return 'Param';
     }
     getProps() {
         return [`'${this.key}'`];
     }
     getImport() {
         return {
-            propertyName: 'ParamDec',
+            propertyName: 'Param',
             path: 'os-core-ts',
             isLibImport: true,
         };

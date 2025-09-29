@@ -7,7 +7,7 @@ export class GmPaginationQueryParamsDec implements IGmModuleClassMethodDecorator
     }
 
     public getDecoratorName(): string {
-        return 'PaginationQueryParamsDec'
+        return 'PaginationParams'
     }
 
     public getProps(): string[] {
@@ -16,7 +16,7 @@ export class GmPaginationQueryParamsDec implements IGmModuleClassMethodDecorator
 
     public getImport(): GmImport {
         return {
-            propertyName: 'PaginationQueryParamsDec',
+            propertyName: 'PaginationParams',
             path: 'os-core-ts',
             isLibImport: true,
         }

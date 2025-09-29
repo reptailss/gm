@@ -4,7 +4,7 @@ import {GmServiceBuildResponseFormat} from '@services/buildResponseFormat/GmServ
 import {GmServiceRowResultType} from '@services/resultTypes/GmServiceRowResultType'
 import {GmServiceThrowAppError} from '@services/errors/GmServiceThrowAppError'
 import {GmModuleDto} from '@modules/dto/GmModuleDto'
-import {GmServiceUserInfoType} from '@services/userInfo/GmServiceUserInfoType'
+import {GmServiceUserDtoType} from '@services/userDto/GmServiceUserDtoType'
 import {GmModuleRoutePaths} from '@modules/routePaths/GmModuleRoutePaths'
 import {GmCrudConfig} from 'os-core-ts'
 import {IGmModuleServiceApiGet} from '@modules/services/interfaces/gmModuleServiceClassCurdApi'
@@ -23,21 +23,21 @@ export class GmModuleControllerMethodGetById extends GmAbstractModuleClassMethod
     private readonly gmServiceRowResultType: GmServiceRowResultType
     private readonly gmServiceThrowAppError: GmServiceThrowAppError
     private readonly gmModuleDto: GmModuleDto
-    private readonly gmServiceUserInfoType: GmServiceUserInfoType
+    private readonly gmServiceUserInfoType: GmServiceUserDtoType
     private readonly gmModuleRoutePaths: GmModuleRoutePaths
     
     constructor(
         config: GmCrudConfig,
         private readonly api: IGmModuleServiceApiGet,
         private readonly varNames: {
-            userInfo: string
+            userDto: string
             id: string
         },
     ) {
         super(config)
         this.gmServiceBuildResponseFormat = new GmServiceBuildResponseFormat()
         this.gmServiceRowResultType = new GmServiceRowResultType()
-        this.gmServiceUserInfoType = new GmServiceUserInfoType()
+        this.gmServiceUserInfoType = new GmServiceUserDtoType()
         this.gmServiceThrowAppError = new GmServiceThrowAppError()
         this.gmModuleDto = new GmModuleDto(config)
         this.gmModuleRoutePaths = new GmModuleRoutePaths(config)
@@ -66,8 +66,8 @@ export class GmModuleControllerMethodGetById extends GmAbstractModuleClassMethod
             this.addService(this.gmServiceUserInfoType)
             this.addProp({
                 type: this.gmServiceUserInfoType.getUserInfoType(),
-                varName: this.varNames.userInfo,
-                callVarName: this.varNames.userInfo,
+                varName: this.varNames.userDto,
+                callVarName: this.varNames.userDto,
                 decorator: new GmAuthDec(),
             })
         }

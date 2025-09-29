@@ -4,16 +4,16 @@ import {GmImport} from '@imports/types'
 export class GmAuthDec implements IGmModuleClassMethodPropDecorator {
 
     public getDecoratorName(): string {
-        return 'AuthDec'
+        return 'User'
     }
 
     public getProps(): string[] {
-        return []
+        return ['']
     }
 
     public getImport(): GmImport {
         return {
-            propertyName: 'AuthDec',
+            propertyName: 'User',
             path: 'os-core-ts',
             isLibImport: true,
         }

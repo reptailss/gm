@@ -7,7 +7,7 @@ export class GmImportStructureServiceEndpointDec implements IGmModuleClassMethod
     }
 
     public getDecoratorName(): string {
-        return 'ImportStructureServiceEndpointDec'
+        return 'ImportStructureServiceEndpoint'
     }
 
     public getProps(): string[] {
@@ -16,7 +16,7 @@ export class GmImportStructureServiceEndpointDec implements IGmModuleClassMethod
 
     public getImport(): GmImport {
         return {
-            propertyName: 'ImportStructureServiceEndpointDec',
+            propertyName: 'ImportStructureServiceEndpoint',
             path: 'os-core-ts',
             isLibImport: true,
         }

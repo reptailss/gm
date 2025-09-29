@@ -18,13 +18,13 @@ class GmGetVarNamesByMonthAndYear {
     constructor(config) {
         this.config = config;
     }
-    userInfo() {
-        return 'userInfo';
+    userDto() {
+        return 'userDto';
     }
     add() {
         const createBody = 'body';
         return {
-            openUserId: `${this.userInfo()}.open_user_id`,
+            openUserId: `${this.userDto()}.open_user_id`,
             createBody,
             createBodySchema: `create${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.config.dtoName.singular)}BodySchema`,
             legalEntityId: `${createBody}.legal_entity_id`,
@@ -39,7 +39,7 @@ class GmGetVarNamesByMonthAndYear {
             updateBody,
             updateBodySchema: `update${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.config.dtoName.singular)}BodySchema`,
             id: 'id',
-            openUserId: `${this.userInfo()}.open_user_id`,
+            openUserId: `${this.userDto()}.open_user_id`,
             legalEntityId: `${updateBody}.legal_entity_id`,
             updateBodyType: GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.config, 'update') ? `Update${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.config.dtoName.singular)}Body` : undefined,
         };
@@ -47,14 +47,14 @@ class GmGetVarNamesByMonthAndYear {
     delete() {
         return {
             id: 'id',
-            openUserId: `${this.userInfo()}.open_user_id`,
+            openUserId: `${this.userDto()}.open_user_id`,
             legalEntityId: 'legalEntityId',
         };
     }
     get() {
         return {
             id: 'id',
-            openUserId: `${this.userInfo()}.open_user_id`,
+            openUserId: `${this.userDto()}.open_user_id`,
             legalEntityId: 'legalEntityId',
         };
     }
@@ -64,7 +64,7 @@ class GmGetVarNamesByMonthAndYear {
             dateStart: 'dateStart',
             dateEnd: 'dateEnd',
             paramsSchema: `${StringCaseHelper_1.StringCaseHelper.toCamelCase(this.config.dtoName.singular)}DtoPaginationQueryParamsSchema`,
-            openUserId: `${this.userInfo()}.open_user_id`,
+            openUserId: `${this.userDto()}.open_user_id`,
             legalEntityId: 'legalEntityId',
         };
     }
@@ -177,7 +177,7 @@ class GmModuleControllerClassCrudByNoSqlMonthAndYear extends GmModuleAbstractCon
         const methodCreate = new GmModuleControllerMethodCreate_1.GmModuleControllerMethodCreate(this.getConfig(), this.serviceCrud.api, {
             createDto: this.gmGetVarNames.add().createBody,
             createDtoType: this.gmGetVarNames.add().createBodyType,
-            userInfo: this.gmGetVarNames.userInfo(),
+            userDto: this.gmGetVarNames.userDto(),
             createDtoSchema: this.gmGetVarNames.add().createBodySchema,
         });
         if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
@@ -185,7 +185,7 @@ class GmModuleControllerClassCrudByNoSqlMonthAndYear extends GmModuleAbstractCon
         }
         const methodPagination = new GmModuleControllerMethodGetPagination_1.GmModuleControllerMethodGetPagination(this.getConfig(), this.serviceCrud.api, {
             params: this.gmGetVarNames.list().params,
-            userInfo: this.gmGetVarNames.userInfo(),
+            userDto: this.gmGetVarNames.userDto(),
             paramsSchema: this.gmGetVarNames.list().paramsSchema,
         }).addProp({
             type: 'Date',
@@ -260,7 +260,7 @@ class GmModuleControllerClassCreateByNoSqlMonthAndYear extends GmModuleAbstractC
         const methodCreate = new GmModuleControllerMethodCreate_1.GmModuleControllerMethodCreate(this.getConfig(), this.serviceCrud.api, {
             createDto: this.gmGetVarNames.add().createBody,
             createDtoType: this.gmGetVarNames.add().createBodyType,
-            userInfo: this.gmGetVarNames.userInfo(),
+            userDto: this.gmGetVarNames.userDto(),
             createDtoSchema: this.gmGetVarNames.add().createBodySchema,
         });
         if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.getConfig(), 'add')) {
@@ -312,7 +312,7 @@ class GmModuleControllerClassGetAllByNoSqlMonthAndYear extends GmModuleAbstractC
         this.addModule(this.serviceCrud);
         const methodPagination = new GmModuleControllerMethodGetPagination_1.GmModuleControllerMethodGetPagination(this.getConfig(), this.serviceCrud.api, {
             params: this.gmGetVarNames.list().params,
-            userInfo: this.gmGetVarNames.userInfo(),
+            userDto: this.gmGetVarNames.userDto(),
             paramsSchema: this.gmGetVarNames.list().paramsSchema,
         }).addProp({
             type: 'Date',

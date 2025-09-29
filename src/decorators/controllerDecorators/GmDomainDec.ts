@@ -4,16 +4,16 @@ import {GmImport} from '@imports/types'
 export class GmDomainDec implements IGmModuleClassMethodDecorator {
 
     public getDecoratorName(): string {
-        return 'DomainDec'
+        return 'Domain'
     }
 
     public getProps(): string[] {
-        return []
+        return ['']
     }
 
     public getImport(): GmImport {
         return {
-            propertyName: 'DomainDec',
+            propertyName: 'Domain',
             path: 'os-core-ts',
             isLibImport: true,
         }

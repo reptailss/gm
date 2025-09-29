@@ -3,7 +3,7 @@ import {IGmModuleClassMethod} from '@modules/interfaces/gmModule'
 import {GmServiceBuildResponseFormat} from '@services/buildResponseFormat/GmServiceBuildResponseFormat'
 import {GmServiceMutateRowResultType} from '@services/resultTypes/GmServiceMutateRowResultType'
 import {GmModuleCreateDto} from '@modules/dto/GmModuleCreateDto'
-import {GmServiceUserInfoType} from '@services/userInfo/GmServiceUserInfoType'
+import {GmServiceUserDtoType} from '@services/userDto/GmServiceUserDtoType'
 import {GmModuleRoutePaths} from '@modules/routePaths/GmModuleRoutePaths'
 import {GmCrudConfig} from 'os-core-ts'
 import {IGmModuleServiceApiCreate} from '@modules/services/interfaces/gmModuleServiceClassCurdApi'
@@ -21,7 +21,7 @@ export class GmModuleControllerMethodCreate extends GmAbstractModuleClassMethod 
     private readonly gmServiceBuildResponseFormat: GmServiceBuildResponseFormat
     private readonly gmServiceMutateRowResultType: GmServiceMutateRowResultType
     private readonly gmModuleCreateDto: GmModuleCreateDto
-    private readonly gmServiceUserInfoType: GmServiceUserInfoType
+    private readonly gmServiceUserInfoType: GmServiceUserDtoType
     private readonly gmModuleRoutePaths: GmModuleRoutePaths
 
     constructor(
@@ -29,7 +29,7 @@ export class GmModuleControllerMethodCreate extends GmAbstractModuleClassMethod 
         private readonly api: IGmModuleServiceApiCreate,
         private readonly varNames: {
             createDto: string
-            userInfo: string
+            userDto: string
             createDtoSchema: string
             createDtoType?:string
         },
@@ -37,7 +37,7 @@ export class GmModuleControllerMethodCreate extends GmAbstractModuleClassMethod 
         super(config)
         this.gmServiceBuildResponseFormat = new GmServiceBuildResponseFormat()
         this.gmServiceMutateRowResultType = new GmServiceMutateRowResultType()
-        this.gmServiceUserInfoType = new GmServiceUserInfoType()
+        this.gmServiceUserInfoType = new GmServiceUserDtoType()
         this.gmModuleCreateDto = new GmModuleCreateDto(config)
         this.gmModuleRoutePaths = new GmModuleRoutePaths(config)
 
@@ -70,8 +70,8 @@ export class GmModuleControllerMethodCreate extends GmAbstractModuleClassMethod 
             this.addService(this.gmServiceUserInfoType)
             this.addProp({
                 type: this.gmServiceUserInfoType.getUserInfoType(),
-                varName: this.varNames.userInfo,
-                callVarName: this.varNames.userInfo,
+                varName: this.varNames.userDto,
+                callVarName: this.varNames.userDto,
                 decorator: new GmAuthDec(),
             })
         }

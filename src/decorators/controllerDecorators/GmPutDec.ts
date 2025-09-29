@@ -7,7 +7,7 @@ export class GmPutDec implements IGmModuleClassMethodDecorator {
     }
 
     public getDecoratorName(): string {
-        return 'PutDec'
+        return 'Put'
     }
 
     public getProps(): string[] {
@@ -16,7 +16,7 @@ export class GmPutDec implements IGmModuleClassMethodDecorator {
 
     public getImport(): GmImport {
         return {
-            propertyName: 'PutDec',
+            propertyName: 'Put',
             path: 'os-core-ts',
             isLibImport: true,
         }

@@ -19,53 +19,53 @@ const GmBodyParamDec_1 = require("../../../../../decorators/controllerDecorators
 const CREATE_VAR_NAMES = {
     body: 'body',
     createDtoSchema: 'createDtoSchema',
-    userInfo: 'userInfo',
+    userDto: 'userDto',
     legalEntityId: 'legalEntityId',
 };
 const UPDATE_VAR_NAMES = {
     body: 'body',
     updateDtoSchema: 'createDtoSchema',
-    userInfo: 'userInfo',
+    userDto: 'userDto',
     id: 'id',
     legalEntityId: 'legalEntityId',
 };
 const DELETE_VAR_NAMES = {
     legalEntityId: 'legalEntityId',
-    userInfo: 'userInfo',
+    userDto: 'userDto',
     id: 'id',
 };
 const GET_VAR_NAMES = {
     legalEntityId: 'legalEntityId',
-    userInfo: 'userInfo',
+    userDto: 'userDto',
     id: 'id',
 };
 const GET_ALL_VAR_NAMES = {
     legalEntityId: 'legalEntityId',
     params: 'params',
-    userInfo: 'userInfo',
+    userDto: 'userDto',
 };
 class GmAccessStructureMethodProcessorByDynamicLeId extends GmAccessStructureMethodProcessor_1.GmAccessStructureMethodProcessor {
     constructor(config) {
         const hasLeIdColumn = 'legal_entity_id' in config.repository.columns;
         super(config, {
             add: {
-                openUserId: `${CREATE_VAR_NAMES.userInfo}.open_user_id`,
+                openUserId: `${CREATE_VAR_NAMES.userDto}.open_user_id`,
                 legalEntityId: hasLeIdColumn ? `${CREATE_VAR_NAMES.body}.legal_entity_id` : CREATE_VAR_NAMES.legalEntityId,
             },
             update: {
-                openUserId: `${UPDATE_VAR_NAMES.userInfo}.open_user_id`,
+                openUserId: `${UPDATE_VAR_NAMES.userDto}.open_user_id`,
                 legalEntityId: hasLeIdColumn ? `${UPDATE_VAR_NAMES.body}.legal_entity_id` : UPDATE_VAR_NAMES.legalEntityId,
             },
             delete: {
-                openUserId: `${DELETE_VAR_NAMES.userInfo}.open_user_id`,
+                openUserId: `${DELETE_VAR_NAMES.userDto}.open_user_id`,
                 legalEntityId: DELETE_VAR_NAMES.legalEntityId,
             },
             get: {
-                openUserId: `${GET_VAR_NAMES.userInfo}.open_user_id`,
+                openUserId: `${GET_VAR_NAMES.userDto}.open_user_id`,
                 legalEntityId: GET_VAR_NAMES.legalEntityId,
             },
             list: {
-                openUserId: `${GET_ALL_VAR_NAMES.userInfo}.open_user_id`,
+                openUserId: `${GET_ALL_VAR_NAMES.userDto}.open_user_id`,
                 legalEntityId: GET_ALL_VAR_NAMES.legalEntityId,
             },
         });
@@ -80,18 +80,18 @@ class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstractContro
             create: {
                 legalEntityId: hasLeIdColumn ? `${CREATE_VAR_NAMES.body}.legal_entity_id` : CREATE_VAR_NAMES.legalEntityId,
                 createDto: CREATE_VAR_NAMES.body,
-                initiatorOpenUserId: `${CREATE_VAR_NAMES.userInfo}.open_user_id`,
+                initiatorOpenUserId: `${CREATE_VAR_NAMES.userDto}.open_user_id`,
             },
             update: {
                 legalEntityId: hasLeIdColumn ? `${UPDATE_VAR_NAMES.body}.legal_entity_id` : UPDATE_VAR_NAMES.legalEntityId,
                 id: UPDATE_VAR_NAMES.id,
                 updateDto: UPDATE_VAR_NAMES.body,
-                initiatorOpenUserId: `${UPDATE_VAR_NAMES.userInfo}.open_user_id`,
+                initiatorOpenUserId: `${UPDATE_VAR_NAMES.userDto}.open_user_id`,
             },
             delete: {
                 legalEntityId: DELETE_VAR_NAMES.legalEntityId,
                 id: DELETE_VAR_NAMES.id,
-                initiatorOpenUserId: `${DELETE_VAR_NAMES.userInfo}.open_user_id`,
+                initiatorOpenUserId: `${DELETE_VAR_NAMES.userDto}.open_user_id`,
             },
             getById: {
                 legalEntityId: GET_VAR_NAMES.legalEntityId,
@@ -115,7 +115,7 @@ class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstractContro
         const hasLeIdColumn = 'legal_entity_id' in this.getConfig().repository.columns;
         const methodCreate = new GmModuleControllerMethodCreate_1.GmModuleControllerMethodCreate(this.getConfig(), this.serviceCrud.api, {
             createDto: CREATE_VAR_NAMES.body,
-            userInfo: CREATE_VAR_NAMES.userInfo,
+            userDto: CREATE_VAR_NAMES.userDto,
             createDtoSchema: this.getValidatorCreateBodyVarName(),
         });
         if (!hasLeIdColumn) {
@@ -131,7 +131,7 @@ class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstractContro
         }
         const methodUpdate = new GmModuleControllerMethodUpdate_1.GmModuleControllerMethodUpdate(this.getConfig(), this.serviceCrud.api, {
             updateDto: UPDATE_VAR_NAMES.body,
-            userInfo: UPDATE_VAR_NAMES.userInfo,
+            userDto: UPDATE_VAR_NAMES.userDto,
             updateDtoSchema: this.getValidatorUpdateBodyVarName(),
             id: UPDATE_VAR_NAMES.id,
         });
@@ -147,7 +147,7 @@ class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstractContro
             this.gmAccessStructureMethodProcessorByDynamicLeId.update(methodUpdate);
         }
         const methodDelete = new GmModuleControllerMethodDelete_1.GmModuleControllerMethodDelete(this.getConfig(), this.serviceCrud.api, {
-            userInfo: DELETE_VAR_NAMES.userInfo,
+            userDto: DELETE_VAR_NAMES.userDto,
             id: DELETE_VAR_NAMES.id,
         }).addProp({
             varName: DELETE_VAR_NAMES.legalEntityId,
@@ -159,7 +159,7 @@ class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstractContro
             this.gmAccessStructureMethodProcessorByDynamicLeId.delete(methodDelete);
         }
         const methodGetById = new GmModuleControllerMethodGetById_1.GmModuleControllerMethodGetById(this.getConfig(), this.serviceCrud.api, {
-            userInfo: GET_VAR_NAMES.userInfo,
+            userDto: GET_VAR_NAMES.userDto,
             id: GET_VAR_NAMES.id,
         }).addProp({
             varName: GET_VAR_NAMES.legalEntityId,
@@ -172,7 +172,7 @@ class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstractContro
         }
         const methodPagination = new GmModuleControllerMethodGetPagination_1.GmModuleControllerMethodGetPagination(this.getConfig(), this.serviceCrud.api, {
             params: GET_ALL_VAR_NAMES.params,
-            userInfo: GET_ALL_VAR_NAMES.userInfo,
+            userDto: GET_ALL_VAR_NAMES.userDto,
             paramsSchema: this.getValidatorParamsDtoVarName(),
         }).addProp({
             varName: GET_ALL_VAR_NAMES.legalEntityId,
@@ -228,7 +228,7 @@ class GmModuleControllerClassCreateBySqlDynamicLeId extends GmModuleAbstractCont
         const hasLeIdColumn = 'legal_entity_id' in this.getConfig().repository.columns;
         this.validator = new GmModuleValidator_1.GmModuleValidator(config, this.getValidatorVarName());
         this.serviceCrud = new byDynamicLeId_1.GmModuleServiceClassCreateBySqlDynamicLeId(config, `this.${this.getServiceVarName()}`, {
-            initiatorOpenUserId: `${CREATE_VAR_NAMES.userInfo}.open_user_id`,
+            initiatorOpenUserId: `${CREATE_VAR_NAMES.userDto}.open_user_id`,
             createDto: CREATE_VAR_NAMES.body,
             legalEntityId: hasLeIdColumn ? `${CREATE_VAR_NAMES.body}.legal_entity_id` : CREATE_VAR_NAMES.legalEntityId,
         });
@@ -243,7 +243,7 @@ class GmModuleControllerClassCreateBySqlDynamicLeId extends GmModuleAbstractCont
         const hasLeIdColumn = 'legal_entity_id' in this.getConfig().repository.columns;
         const methodCreate = new GmModuleControllerMethodCreate_1.GmModuleControllerMethodCreate(this.getConfig(), this.serviceCrud.api, {
             createDto: CREATE_VAR_NAMES.body,
-            userInfo: CREATE_VAR_NAMES.userInfo,
+            userDto: CREATE_VAR_NAMES.userDto,
             createDtoSchema: this.getValidatorCreateBodyVarName(),
         });
         if (!hasLeIdColumn) {
@@ -288,7 +288,7 @@ class GmModuleControllerClassUpdateBySqlDynamicLeId extends GmModuleAbstractCont
         const hasLeIdColumn = 'legal_entity_id' in this.getConfig().repository.columns;
         this.validator = new GmModuleValidator_1.GmModuleValidator(config, this.getValidatorVarName());
         this.serviceCrud = new byDynamicLeId_1.GmModuleServiceClassUpdateBySqlDynamicLeId(config, `this.${this.getServiceVarName()}`, {
-            initiatorOpenUserId: `${UPDATE_VAR_NAMES.userInfo}.open_user_id`,
+            initiatorOpenUserId: `${UPDATE_VAR_NAMES.userDto}.open_user_id`,
             updateDto: UPDATE_VAR_NAMES.body,
             legalEntityId: hasLeIdColumn ? `${UPDATE_VAR_NAMES.body}.legal_entity_id` : UPDATE_VAR_NAMES.legalEntityId,
             id: UPDATE_VAR_NAMES.id,
@@ -304,7 +304,7 @@ class GmModuleControllerClassUpdateBySqlDynamicLeId extends GmModuleAbstractCont
         const hasLeIdColumn = 'legal_entity_id' in this.getConfig().repository.columns;
         const methodUpdate = new GmModuleControllerMethodUpdate_1.GmModuleControllerMethodUpdate(this.getConfig(), this.serviceCrud.api, {
             updateDto: UPDATE_VAR_NAMES.body,
-            userInfo: UPDATE_VAR_NAMES.userInfo,
+            userDto: UPDATE_VAR_NAMES.userDto,
             updateDtoSchema: this.getValidatorUpdateBodyVarName(),
             id: UPDATE_VAR_NAMES.id,
         });
@@ -348,7 +348,7 @@ class GmModuleControllerClassDeleteBySqlDynamicLeId extends GmModuleAbstractCont
     constructor(config) {
         super(config, `Delete${StringCaseHelper_1.StringCaseHelper.toPascalCase(config.dtoName.singular)}Controller`);
         this.serviceCrud = new byDynamicLeId_1.GmModuleServiceClassDeleteBySqlDynamicLeId(config, `this.${this.getServiceVarName()}`, {
-            initiatorOpenUserId: `${DELETE_VAR_NAMES.userInfo}.open_user_id`,
+            initiatorOpenUserId: `${DELETE_VAR_NAMES.userDto}.open_user_id`,
             legalEntityId: DELETE_VAR_NAMES.legalEntityId,
             id: DELETE_VAR_NAMES.id,
         });
@@ -358,7 +358,7 @@ class GmModuleControllerClassDeleteBySqlDynamicLeId extends GmModuleAbstractCont
         super.init();
         this.addModule(this.serviceCrud);
         const methodDelete = new GmModuleControllerMethodDelete_1.GmModuleControllerMethodDelete(this.getConfig(), this.serviceCrud.api, {
-            userInfo: DELETE_VAR_NAMES.userInfo,
+            userDto: DELETE_VAR_NAMES.userDto,
             id: DELETE_VAR_NAMES.id,
         }).addProp({
             varName: DELETE_VAR_NAMES.legalEntityId,
@@ -395,7 +395,7 @@ class GmModuleControllerClassGetBySqlDynamicLeId extends GmModuleAbstractControl
         super.init();
         this.addModule(this.serviceCrud);
         const methodGetById = new GmModuleControllerMethodGetById_1.GmModuleControllerMethodGetById(this.getConfig(), this.serviceCrud.api, {
-            userInfo: GET_VAR_NAMES.userInfo,
+            userDto: GET_VAR_NAMES.userDto,
             id: GET_VAR_NAMES.id,
         }).addProp({
             varName: GET_VAR_NAMES.legalEntityId,
@@ -435,7 +435,7 @@ class GmModuleControllerClassGetAllBySqlDynamicLeId extends GmModuleAbstractCont
         this.addModule(this.serviceCrud);
         const methodPagination = new GmModuleControllerMethodGetPagination_1.GmModuleControllerMethodGetPagination(this.getConfig(), this.serviceCrud.api, {
             params: GET_ALL_VAR_NAMES.params,
-            userInfo: GET_ALL_VAR_NAMES.userInfo,
+            userDto: GET_ALL_VAR_NAMES.userDto,
             paramsSchema: this.getValidatorParamsDtoVarName(),
         }).addProp({
             varName: GET_ALL_VAR_NAMES.legalEntityId,

@@ -6,14 +6,14 @@ class GmPaginationQueryParamsDec {
         this.schemaVarName = schemaVarName;
     }
     getDecoratorName() {
-        return 'PaginationQueryParamsDec';
+        return 'PaginationParams';
     }
     getProps() {
         return [this.schemaVarName];
     }
     getImport() {
         return {
-            propertyName: 'PaginationQueryParamsDec',
+            propertyName: 'PaginationParams',
             path: 'os-core-ts',
             isLibImport: true,
         };

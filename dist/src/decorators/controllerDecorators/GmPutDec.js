@@ -6,14 +6,14 @@ class GmPutDec {
         this.url = url;
     }
     getDecoratorName() {
-        return 'PutDec';
+        return 'Put';
     }
     getProps() {
         return [this.url];
     }
     getImport() {
         return {
-            propertyName: 'PutDec',
+            propertyName: 'Put',
             path: 'os-core-ts',
             isLibImport: true,
         };

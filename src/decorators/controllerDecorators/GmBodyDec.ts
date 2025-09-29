@@ -7,7 +7,7 @@ export class GmBodyDec implements IGmModuleClassMethodPropDecorator {
     }
 
     public getDecoratorName(): string {
-        return 'BodyDec'
+        return 'Body'
     }
 
     public getProps(): string[] {
@@ -16,7 +16,7 @@ export class GmBodyDec implements IGmModuleClassMethodPropDecorator {
 
     public getImport(): GmImport {
         return {
-            propertyName: 'BodyDec',
+            propertyName: 'Body',
             path: 'os-core-ts',
             isLibImport: true,
         }

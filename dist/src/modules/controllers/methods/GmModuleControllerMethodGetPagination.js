@@ -6,7 +6,7 @@ const GmServiceBuildResponseFormat_1 = require("../../../services/buildResponseF
 const GmServicePaginationResultType_1 = require("../../../services/resultTypes/GmServicePaginationResultType");
 const GmServicePaginationQueryParamsType_1 = require("../../../services/paginationTypes/GmServicePaginationQueryParamsType");
 const GmModuleDto_1 = require("../../dto/GmModuleDto");
-const GmServiceUserInfoType_1 = require("../../../services/userInfo/GmServiceUserInfoType");
+const GmServiceUserDtoType_1 = require("../../../services/userDto/GmServiceUserDtoType");
 const GmModuleRoutePaths_1 = require("../../routePaths/GmModuleRoutePaths");
 const StringCaseHelper_1 = require("../../../helpers/StringCaseHelper");
 const GmSwaggerInfoDec_1 = require("../../../decorators/controllerDecorators/GmSwaggerInfoDec");
@@ -22,7 +22,7 @@ class GmModuleControllerMethodGetPagination extends GmAbstractModuleClassMethod_
         this.gmServiceBuildResponseFormat = new GmServiceBuildResponseFormat_1.GmServiceBuildResponseFormat();
         this.gmServicePaginationValues = new GmServicePaginationResultType_1.GmServicePaginationValues();
         this.gmServicePaginationQueryParamsType = new GmServicePaginationQueryParamsType_1.GmServicePaginationQueryParamsType();
-        this.gmServiceUserInfoType = new GmServiceUserInfoType_1.GmServiceUserInfoType();
+        this.gmServiceUserInfoType = new GmServiceUserDtoType_1.GmServiceUserDtoType();
         this.gmModuleDto = new GmModuleDto_1.GmModuleDto(config);
         this.gmModuleRoutePaths = new GmModuleRoutePaths_1.GmModuleRoutePaths(config);
     }
@@ -44,8 +44,8 @@ class GmModuleControllerMethodGetPagination extends GmAbstractModuleClassMethod_
             this.addService(this.gmServiceUserInfoType);
             this.addProp({
                 type: this.gmServiceUserInfoType.getUserInfoType(),
-                varName: this.varNames.userInfo,
-                callVarName: this.varNames.userInfo,
+                varName: this.varNames.userDto,
+                callVarName: this.varNames.userDto,
                 decorator: new GmAuthDec_1.GmAuthDec(),
             });
         }

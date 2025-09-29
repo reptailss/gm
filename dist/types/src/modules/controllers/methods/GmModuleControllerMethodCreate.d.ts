@@ -12,7 +12,7 @@ export declare class GmModuleControllerMethodCreate extends GmAbstractModuleClas
     private readonly gmModuleRoutePaths;
     constructor(config: GmCrudConfig, api: IGmModuleServiceApiCreate, varNames: {
         createDto: string;
-        userInfo: string;
+        userDto: string;
         createDtoSchema: string;
         createDtoType?: string;
     });

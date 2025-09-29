@@ -27,14 +27,14 @@ class GmGetVarNamesByStaticDb {
     constructor(private readonly config: GmCrudConfig) {
     }
     
-    public userInfo() {
-        return 'userInfo'
+    public userDto() {
+        return 'userDto'
     }
     
     public add() {
         const createBody = 'body'
         return {
-            openUserId: `${this.userInfo()}.open_user_id`,
+            openUserId: `${this.userDto()}.open_user_id`,
             createBody,
             createBodySchema: `create${StringCaseHelper.toPascalCase(this.config.dtoName.singular)}Schema`,
             legalEntityId: 'legalEntityId',
@@ -47,7 +47,7 @@ class GmGetVarNamesByStaticDb {
             updateBody,
             updateBodySchema: `update${StringCaseHelper.toPascalCase(this.config.dtoName.singular)}Schema`,
             id: 'id',
-            openUserId: `${this.userInfo()}.open_user_id`,
+            openUserId: `${this.userDto()}.open_user_id`,
             legalEntityId: 'legalEntityId',
         }
     }
@@ -55,7 +55,7 @@ class GmGetVarNamesByStaticDb {
     public delete() {
         return {
             id: 'id',
-            openUserId: `${this.userInfo()}.open_user_id`,
+            openUserId: `${this.userDto()}.open_user_id`,
             legalEntityId: 'legalEntityId',
             
         }
@@ -64,7 +64,7 @@ class GmGetVarNamesByStaticDb {
     public get() {
         return {
             id: 'id',
-            openUserId: `${this.userInfo()}.open_user_id`,
+            openUserId: `${this.userDto()}.open_user_id`,
             legalEntityId: 'legalEntityId',
         }
     }
@@ -73,7 +73,7 @@ class GmGetVarNamesByStaticDb {
         return {
             params: 'params',
             paramsSchema: `${StringCaseHelper.toCamelCase(this.config.dtoName.singular)}DtoPaginationQueryParamsSchema`,
-            openUserId: `${this.userInfo()}.open_user_id`,
+            openUserId: `${this.userDto()}.open_user_id`,
             legalEntityId: 'legalEntityId',
         }
     }
@@ -257,7 +257,7 @@ export class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractCo
             this.serviceCrud.api,
             {
                 createDto: this.gmGetVarNames.add().createBody,
-                userInfo: this.gmGetVarNames.userInfo(),
+                userDto: this.gmGetVarNames.userDto(),
                 createDtoSchema: this.gmGetVarNames.add().createBodySchema,
             },
         )
@@ -269,7 +269,7 @@ export class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractCo
             this.serviceCrud.api,
             {
                 updateDto: this.gmGetVarNames.update().updateBody,
-                userInfo: this.gmGetVarNames.userInfo(),
+                userDto: this.gmGetVarNames.userDto(),
                 updateDtoSchema: this.gmGetVarNames.update().updateBodySchema,
                 id: this.gmGetVarNames.update().id,
             },
@@ -281,7 +281,7 @@ export class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractCo
             this.getConfig(),
             this.serviceCrud.api,
             {
-                userInfo: this.gmGetVarNames.userInfo(),
+                userDto: this.gmGetVarNames.userDto(),
                 id: this.gmGetVarNames.delete().id,
             },
         )
@@ -292,7 +292,7 @@ export class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractCo
             this.getConfig(),
             this.serviceCrud.api,
             {
-                userInfo: this.gmGetVarNames.userInfo(),
+                userDto: this.gmGetVarNames.userDto(),
                 id: this.gmGetVarNames.get().id,
             },
         )
@@ -304,7 +304,7 @@ export class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractCo
             this.serviceCrud.api,
             {
                 params: this.gmGetVarNames.list().params,
-                userInfo: this.gmGetVarNames.userInfo(),
+                userDto: this.gmGetVarNames.userDto(),
                 paramsSchema: this.gmGetVarNames.list().paramsSchema,
             },
         )
@@ -394,7 +394,7 @@ export class GmModuleControllerClassCreateBySqlStaticDb extends GmModuleAbstract
             this.serviceCrud.api,
             {
                 createDto: this.gmGetVarNames.add().createBody,
-                userInfo: this.gmGetVarNames.userInfo(),
+                userDto: this.gmGetVarNames.userDto(),
                 createDtoSchema: this.gmGetVarNames.add().createBodySchema,
             },
         )
@@ -479,7 +479,7 @@ export class GmModuleControllerClassUpdateBySqlStaticDb extends GmModuleAbstract
             this.serviceCrud.api,
             {
                 updateDto: this.gmGetVarNames.update().updateBody,
-                userInfo: this.gmGetVarNames.userInfo(),
+                userDto: this.gmGetVarNames.userDto(),
                 updateDtoSchema: this.gmGetVarNames.update().updateBodySchema,
                 id: this.gmGetVarNames.update().id,
             },
@@ -547,7 +547,7 @@ export class GmModuleControllerClassDeleteBySqlStaticDb extends GmModuleAbstract
             this.getConfig(),
             this.serviceCrud.api,
             {
-                userInfo: this.gmGetVarNames.userInfo(),
+                userDto: this.gmGetVarNames.userDto(),
                 id: this.gmGetVarNames.delete().id,
             },
         )
@@ -604,7 +604,7 @@ export class GmModuleControllerClassGetBySqlStaticDb extends GmModuleAbstractCon
             this.getConfig(),
             this.serviceCrud.api,
             {
-                userInfo: this.gmGetVarNames.userInfo(),
+                userDto: this.gmGetVarNames.userDto(),
                 id: this.gmGetVarNames.get().id,
             },
         )
@@ -677,7 +677,7 @@ export class GmModuleControllerClassGetAllBySqlStaticDb extends GmModuleAbstract
             this.serviceCrud.api,
             {
                 params: this.gmGetVarNames.list().params,
-                userInfo: this.gmGetVarNames.userInfo(),
+                userDto: this.gmGetVarNames.userDto(),
                 paramsSchema: this.gmGetVarNames.list().paramsSchema,
             },
         )

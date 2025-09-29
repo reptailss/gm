@@ -7,7 +7,7 @@ export class GmSwaggerInfoDec implements IGmModuleClassMethodDecorator {
     }
 
     public getDecoratorName(): string {
-        return 'SwaggerInfoDec'
+        return 'SwaggerInfo'
     }
 
     public getProps(): string[] {
@@ -16,7 +16,7 @@ export class GmSwaggerInfoDec implements IGmModuleClassMethodDecorator {
 
     public getImport(): GmImport {
         return {
-            propertyName: 'SwaggerInfoDec',
+            propertyName: 'SwaggerInfo',
             path: 'os-core-ts',
             isLibImport: true,
         }

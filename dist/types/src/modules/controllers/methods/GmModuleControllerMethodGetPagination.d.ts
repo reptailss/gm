@@ -12,7 +12,7 @@ export declare class GmModuleControllerMethodGetPagination extends GmAbstractMod
     private readonly gmServiceUserInfoType;
     private readonly gmModuleRoutePaths;
     constructor(config: GmCrudConfig, api: IGmModuleServiceApiGetPagination, varNames: {
-        userInfo: string;
+        userDto: string;
         params: string;
         paramsSchema: string;
     });

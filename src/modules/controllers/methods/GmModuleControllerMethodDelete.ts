@@ -2,7 +2,7 @@ import {GmAbstractModuleClassMethod} from '@modules/abstractModule/GmAbstractMod
 import {IGmModuleClassMethod} from '@modules/interfaces/gmModule'
 import {GmServiceBuildResponseFormat} from '@services/buildResponseFormat/GmServiceBuildResponseFormat'
 import {GmServiceMutateRowResultType} from '@services/resultTypes/GmServiceMutateRowResultType'
-import {GmServiceUserInfoType} from '@services/userInfo/GmServiceUserInfoType'
+import {GmServiceUserDtoType} from '@services/userDto/GmServiceUserDtoType'
 import {GmModuleRoutePaths} from '@modules/routePaths/GmModuleRoutePaths'
 import {GmCrudConfig} from 'os-core-ts'
 import {IGmModuleServiceApiDelete} from '@modules/services/interfaces/gmModuleServiceClassCurdApi'
@@ -19,21 +19,21 @@ export class GmModuleControllerMethodDelete extends GmAbstractModuleClassMethod 
 
     private readonly gmServiceBuildResponseFormat: GmServiceBuildResponseFormat
     private readonly gmServiceMutateRowResultType: GmServiceMutateRowResultType
-    private readonly gmServiceUserInfoType: GmServiceUserInfoType
+    private readonly gmServiceUserInfoType: GmServiceUserDtoType
     private readonly gmModuleRoutePaths: GmModuleRoutePaths
 
     constructor(
         config: GmCrudConfig,
         private readonly api: IGmModuleServiceApiDelete,
         private readonly varNames: {
-            userInfo: string
+            userDto: string
             id: string
         },
     ) {
         super(config)
         this.gmServiceBuildResponseFormat = new GmServiceBuildResponseFormat()
         this.gmServiceMutateRowResultType = new GmServiceMutateRowResultType()
-        this.gmServiceUserInfoType = new GmServiceUserInfoType()
+        this.gmServiceUserInfoType = new GmServiceUserDtoType()
         this.gmModuleRoutePaths = new GmModuleRoutePaths(config)
 
 
@@ -61,8 +61,8 @@ export class GmModuleControllerMethodDelete extends GmAbstractModuleClassMethod 
             this.addService(this.gmServiceUserInfoType)
             this.addProp({
                 type: this.gmServiceUserInfoType.getUserInfoType(),
-                varName: this.varNames.userInfo,
-                callVarName: this.varNames.userInfo,
+                varName: this.varNames.userDto,
+                callVarName: this.varNames.userDto,
                 decorator: new GmAuthDec(),
             })
         }

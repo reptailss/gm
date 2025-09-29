@@ -6,14 +6,14 @@ class GmBodyParamNumDec {
         this.key = key;
     }
     getDecoratorName() {
-        return 'BodyParamNumDec';
+        return 'BodyParamNum';
     }
     getProps() {
         return [`'${this.key}'`];
     }
     getImport() {
         return {
-            propertyName: 'BodyParamNumDec',
+            propertyName: 'BodyParamNum',
             path: 'os-core-ts',
             isLibImport: true,
         };
@@ -25,14 +25,14 @@ class GmBodyParamDec {
         this.key = key;
     }
     getDecoratorName() {
-        return 'BodyParamDec';
+        return 'BodyParam';
     }
     getProps() {
         return [`'${this.key}'`];
     }
     getImport() {
         return {
-            propertyName: 'BodyParamDec',
+            propertyName: 'BodyParam',
             path: 'os-core-ts',
             isLibImport: true,
         };

@@ -17,51 +17,51 @@ const CREATE_VAR_NAMES = {
     domain: 'domain',
     createDto: 'createDto',
     createDtoSchema: 'createDtoSchema',
-    userInfo: 'userInfo',
+    userDto: 'userDto',
 };
 const UPDATE_VAR_NAMES = {
     domain: 'domain',
     updateDto: 'updateDto',
     updateDtoSchema: 'createDtoSchema',
-    userInfo: 'userInfo',
+    userDto: 'userDto',
     id: 'id',
 };
 const DELETE_VAR_NAMES = {
     domain: 'domain',
-    userInfo: 'userInfo',
+    userDto: 'userDto',
     id: 'id',
 };
 const GET_VAR_NAMES = {
     domain: 'domain',
-    userInfo: 'userInfo',
+    userDto: 'userDto',
     id: 'id',
 };
 const GET_ALL_VAR_NAMES = {
     domain: 'domain',
     params: 'params',
-    userInfo: 'userInfo',
+    userDto: 'userDto',
 };
 class GmAccessStructureMethodProcessorByDynamicDomain extends GmAccessStructureMethodProcessor_1.GmAccessStructureMethodProcessor {
     constructor(config) {
         super(config, {
             add: {
-                openUserId: `${CREATE_VAR_NAMES.userInfo}.open_user_id`,
+                openUserId: `${CREATE_VAR_NAMES.userDto}.open_user_id`,
                 legalEntityId: 'legalEntityId',
             },
             update: {
-                openUserId: `${UPDATE_VAR_NAMES.userInfo}.open_user_id`,
+                openUserId: `${UPDATE_VAR_NAMES.userDto}.open_user_id`,
                 legalEntityId: 'legalEntityId',
             },
             delete: {
-                openUserId: `${DELETE_VAR_NAMES.userInfo}.open_user_id`,
+                openUserId: `${DELETE_VAR_NAMES.userDto}.open_user_id`,
                 legalEntityId: 'legalEntityId',
             },
             get: {
-                openUserId: `${GET_VAR_NAMES.userInfo}.open_user_id`,
+                openUserId: `${GET_VAR_NAMES.userDto}.open_user_id`,
                 legalEntityId: 'legalEntityId',
             },
             list: {
-                openUserId: `${GET_ALL_VAR_NAMES.userInfo}.open_user_id`,
+                openUserId: `${GET_ALL_VAR_NAMES.userDto}.open_user_id`,
                 legalEntityId: 'legalEntityId',
             },
         });
@@ -135,18 +135,18 @@ class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstractCont
             create: {
                 domain: CREATE_VAR_NAMES.domain,
                 createDto: CREATE_VAR_NAMES.createDto,
-                initiatorOpenUserId: `${CREATE_VAR_NAMES.userInfo}.open_user_id`,
+                initiatorOpenUserId: `${CREATE_VAR_NAMES.userDto}.open_user_id`,
             },
             update: {
                 domain: UPDATE_VAR_NAMES.domain,
                 id: UPDATE_VAR_NAMES.id,
                 updateDto: UPDATE_VAR_NAMES.updateDto,
-                initiatorOpenUserId: `${UPDATE_VAR_NAMES.userInfo}.open_user_id`,
+                initiatorOpenUserId: `${UPDATE_VAR_NAMES.userDto}.open_user_id`,
             },
             delete: {
                 domain: DELETE_VAR_NAMES.domain,
                 id: DELETE_VAR_NAMES.id,
-                initiatorOpenUserId: `${DELETE_VAR_NAMES.userInfo}.open_user_id`,
+                initiatorOpenUserId: `${DELETE_VAR_NAMES.userDto}.open_user_id`,
             },
             getById: {
                 domain: GET_VAR_NAMES.domain,
@@ -165,7 +165,7 @@ class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstractCont
         this.addModule(this.serviceCrud);
         const methodCreate = new GmModuleControllerMethodCreate_1.GmModuleControllerMethodCreate(this.getConfig(), this.serviceCrud.api, {
             createDto: CREATE_VAR_NAMES.createDto,
-            userInfo: CREATE_VAR_NAMES.userInfo,
+            userDto: CREATE_VAR_NAMES.userDto,
             createDtoSchema: this.getValidatorCreateDtoVarName(),
         }).addProp({
             varName: CREATE_VAR_NAMES.domain,
@@ -178,7 +178,7 @@ class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstractCont
         }
         const methodUpdate = new GmModuleControllerMethodUpdate_1.GmModuleControllerMethodUpdate(this.getConfig(), this.serviceCrud.api, {
             updateDto: UPDATE_VAR_NAMES.updateDto,
-            userInfo: UPDATE_VAR_NAMES.userInfo,
+            userDto: UPDATE_VAR_NAMES.userDto,
             updateDtoSchema: this.getValidatorUpdateDtoVarName(),
             id: UPDATE_VAR_NAMES.id,
         }).addProp({
@@ -191,7 +191,7 @@ class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstractCont
             this.gmAccessStructureMethodProcessorByDynamicDomain.update(methodUpdate);
         }
         const methodDelete = new GmModuleControllerMethodDelete_1.GmModuleControllerMethodDelete(this.getConfig(), this.serviceCrud.api, {
-            userInfo: DELETE_VAR_NAMES.userInfo,
+            userDto: DELETE_VAR_NAMES.userDto,
             id: DELETE_VAR_NAMES.id,
         }).addProp({
             varName: DELETE_VAR_NAMES.domain,
@@ -203,7 +203,7 @@ class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstractCont
             this.gmAccessStructureMethodProcessorByDynamicDomain.delete(methodDelete);
         }
         const methodGetById = new GmModuleControllerMethodGetById_1.GmModuleControllerMethodGetById(this.getConfig(), this.serviceCrud.api, {
-            userInfo: GET_VAR_NAMES.userInfo,
+            userDto: GET_VAR_NAMES.userDto,
             id: GET_VAR_NAMES.id,
         }).addProp({
             varName: GET_VAR_NAMES.domain,
@@ -216,7 +216,7 @@ class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstractCont
         }
         const methodPagination = new GmModuleControllerMethodGetPagination_1.GmModuleControllerMethodGetPagination(this.getConfig(), this.serviceCrud.api, {
             params: GET_ALL_VAR_NAMES.params,
-            userInfo: GET_ALL_VAR_NAMES.userInfo,
+            userDto: GET_ALL_VAR_NAMES.userDto,
             paramsSchema: this.getValidatorParamsDtoVarName(),
         }).addProp({
             varName: GET_ALL_VAR_NAMES.domain,
@@ -267,7 +267,7 @@ class GmModuleControllerClassCreateBySqlDynamicDomain extends GmModuleAbstractCo
         super(config, `Create${StringCaseHelper_1.StringCaseHelper.toPascalCase(config.dtoName.singular)}Controller`);
         this.validator = new GmModuleValidator_1.GmModuleValidator(config, this.getValidatorVarName());
         this.serviceCrud = new byDynamicDomain_1.GmModuleServiceClassCreateBySqlDynamicDomain(config, `this.${this.getServiceVarName()}`, {
-            initiatorOpenUserId: `${CREATE_VAR_NAMES.userInfo}.open_user_id`,
+            initiatorOpenUserId: `${CREATE_VAR_NAMES.userDto}.open_user_id`,
             createDto: CREATE_VAR_NAMES.createDto,
             domain: CREATE_VAR_NAMES.domain,
         });
@@ -279,7 +279,7 @@ class GmModuleControllerClassCreateBySqlDynamicDomain extends GmModuleAbstractCo
         this.addModule(this.serviceCrud);
         const methodCreate = new GmModuleControllerMethodCreate_1.GmModuleControllerMethodCreate(this.getConfig(), this.serviceCrud.api, {
             createDto: CREATE_VAR_NAMES.createDto,
-            userInfo: CREATE_VAR_NAMES.userInfo,
+            userDto: CREATE_VAR_NAMES.userDto,
             createDtoSchema: this.getValidatorCreateDtoVarName(),
         }).addProp({
             varName: CREATE_VAR_NAMES.domain,
@@ -320,7 +320,7 @@ class GmModuleControllerClassUpdateBySqlDynamicDomain extends GmModuleAbstractCo
         super(config, `Update${StringCaseHelper_1.StringCaseHelper.toPascalCase(config.dtoName.singular)}Controller`);
         this.validator = new GmModuleValidator_1.GmModuleValidator(config, this.getValidatorVarName());
         this.serviceCrud = new byDynamicDomain_1.GmModuleServiceClassUpdateBySqlDynamicDomain(config, `this.${this.getServiceVarName()}`, {
-            initiatorOpenUserId: `${UPDATE_VAR_NAMES.userInfo}.open_user_id`,
+            initiatorOpenUserId: `${UPDATE_VAR_NAMES.userDto}.open_user_id`,
             updateDto: UPDATE_VAR_NAMES.updateDto,
             domain: UPDATE_VAR_NAMES.domain,
             id: UPDATE_VAR_NAMES.id,
@@ -333,7 +333,7 @@ class GmModuleControllerClassUpdateBySqlDynamicDomain extends GmModuleAbstractCo
         this.addModule(this.serviceCrud);
         const methodUpdate = new GmModuleControllerMethodUpdate_1.GmModuleControllerMethodUpdate(this.getConfig(), this.serviceCrud.api, {
             updateDto: UPDATE_VAR_NAMES.updateDto,
-            userInfo: UPDATE_VAR_NAMES.userInfo,
+            userDto: UPDATE_VAR_NAMES.userDto,
             updateDtoSchema: this.getValidatorUpdateDtoVarName(),
             id: UPDATE_VAR_NAMES.id,
         }).addProp({
@@ -374,7 +374,7 @@ class GmModuleControllerClassDeleteBySqlDynamicDomain extends GmModuleAbstractCo
     constructor(config) {
         super(config, `Delete${StringCaseHelper_1.StringCaseHelper.toPascalCase(config.dtoName.singular)}Controller`);
         this.serviceCrud = new byDynamicDomain_1.GmModuleServiceClassDeleteBySqlDynamicDomain(config, `this.${this.getServiceVarName()}`, {
-            initiatorOpenUserId: `${DELETE_VAR_NAMES.userInfo}.open_user_id`,
+            initiatorOpenUserId: `${DELETE_VAR_NAMES.userDto}.open_user_id`,
             domain: DELETE_VAR_NAMES.domain,
             id: DELETE_VAR_NAMES.id,
         });
@@ -384,7 +384,7 @@ class GmModuleControllerClassDeleteBySqlDynamicDomain extends GmModuleAbstractCo
         super.init();
         this.addModule(this.serviceCrud);
         const methodDelete = new GmModuleControllerMethodDelete_1.GmModuleControllerMethodDelete(this.getConfig(), this.serviceCrud.api, {
-            userInfo: DELETE_VAR_NAMES.userInfo,
+            userDto: DELETE_VAR_NAMES.userDto,
             id: DELETE_VAR_NAMES.id,
         }).addProp({
             varName: DELETE_VAR_NAMES.domain,
@@ -421,7 +421,7 @@ class GmModuleControllerClassGetBySqlDynamicDomain extends GmModuleAbstractContr
         super.init();
         this.addModule(this.serviceCrud);
         const methodGetById = new GmModuleControllerMethodGetById_1.GmModuleControllerMethodGetById(this.getConfig(), this.serviceCrud.api, {
-            userInfo: GET_VAR_NAMES.userInfo,
+            userDto: GET_VAR_NAMES.userDto,
             id: GET_VAR_NAMES.id,
         }).addProp({
             varName: GET_VAR_NAMES.domain,
@@ -461,7 +461,7 @@ class GmModuleControllerClassGetAllBySqlDynamicDomain extends GmModuleAbstractCo
         this.addModule(this.serviceCrud);
         const methodPagination = new GmModuleControllerMethodGetPagination_1.GmModuleControllerMethodGetPagination(this.getConfig(), this.serviceCrud.api, {
             params: GET_ALL_VAR_NAMES.params,
-            userInfo: GET_ALL_VAR_NAMES.userInfo,
+            userDto: GET_ALL_VAR_NAMES.userDto,
             paramsSchema: this.getValidatorParamsDtoVarName(),
         }).addProp({
             varName: GET_ALL_VAR_NAMES.domain,
