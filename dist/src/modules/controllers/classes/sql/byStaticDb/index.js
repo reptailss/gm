@@ -132,14 +132,10 @@ class GmAccessStructureMethodProcessorByStaticDb extends GmAccessStructureMethod
     }
 }
 class GmValidatorBuilderByStaticDb {
-    constructor(config, validatorVarName, validator) {
+    constructor(config, validator) {
         this.config = config;
-        this.validatorVarName = validatorVarName;
         this.validator = validator;
         this.gmGetVarNames = new GmGetVarNamesByStaticDb(config);
-    }
-    initValidator() {
-        return `const ${this.validatorVarName} = new ${this.validator.getPropertyName()}()`;
     }
     add() {
         return `const ${this.gmGetVarNames.add().createBodySchema} = ${this.validator.api.getCreateDtoSchema()}`;
@@ -154,8 +150,8 @@ class GmValidatorBuilderByStaticDb {
 class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractControllerClass_1.GmModuleAbstractControllerClass {
     constructor(config) {
         super(config, `${StringCaseHelper_1.StringCaseHelper.toPascalCase(config.dtoName.plural)}Controller`);
-        this.validator = new GmModuleValidator_1.GmModuleValidator(config, this.getValidatorVarName());
-        this.gmValidatorBuilder = new GmValidatorBuilderByStaticDb(config, this.getValidatorVarName(), this.validator);
+        this.validator = new GmModuleValidator_1.GmModuleValidator(config);
+        this.gmValidatorBuilder = new GmValidatorBuilderByStaticDb(config, this.validator);
         const gmGetVarNames = new GmGetVarNamesByStaticDb(config);
         this.serviceCrud = new byStaticDb_1.GmModuleServiceClassCrudBySqlStaticDb(config, `this.${this.getServiceVarName()}`, {
             create: {
@@ -236,17 +232,12 @@ class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractControlle
             defaultValue: null,
         });
         this.addElementBeforeClass(`
-            ${this.gmValidatorBuilder.initValidator()}
-            
             ${this.gmValidatorBuilder.add()}
             
             ${this.gmValidatorBuilder.update()}
             
             ${this.gmValidatorBuilder.list()}
         `);
-    }
-    getValidatorVarName() {
-        return `${StringCaseHelper_1.StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}Validator`;
     }
     getServiceVarName() {
         return `${StringCaseHelper_1.StringCaseHelper.toCamelCase(this.getConfig().dtoName.singular)}Service`;
@@ -256,8 +247,8 @@ exports.GmModuleControllerClassCrudBySqlStaticDb = GmModuleControllerClassCrudBy
 class GmModuleControllerClassCreateBySqlStaticDb extends GmModuleAbstractControllerClass_1.GmModuleAbstractControllerClass {
     constructor(config) {
         super(config, `Create${StringCaseHelper_1.StringCaseHelper.toPascalCase(config.dtoName.singular)}Controller`);
-        this.validator = new GmModuleValidator_1.GmModuleValidator(config, this.getValidatorVarName());
-        this.gmValidatorBuilder = new GmValidatorBuilderByStaticDb(config, this.getValidatorVarName(), this.validator);
+        this.validator = new GmModuleValidator_1.GmModuleValidator(config);
+        this.gmValidatorBuilder = new GmValidatorBuilderByStaticDb(config, this.validator);
         const gmGetVarNames = new GmGetVarNamesByStaticDb(config);
         this.serviceCrud = new byStaticDb_1.GmModuleServiceClassCreateBySqlStaticDb(config, `this.${this.getServiceVarName()}`, {
             createDto: gmGetVarNames.add().createBody,
@@ -286,8 +277,6 @@ class GmModuleControllerClassCreateBySqlStaticDb extends GmModuleAbstractControl
             defaultValue: null,
         });
         this.addElementBeforeClass(`
-            ${this.gmValidatorBuilder.initValidator()}
-            
             ${this.gmValidatorBuilder.add()}
         `);
     }
@@ -302,8 +291,8 @@ exports.GmModuleControllerClassCreateBySqlStaticDb = GmModuleControllerClassCrea
 class GmModuleControllerClassUpdateBySqlStaticDb extends GmModuleAbstractControllerClass_1.GmModuleAbstractControllerClass {
     constructor(config) {
         super(config, `Update${StringCaseHelper_1.StringCaseHelper.toPascalCase(config.dtoName.singular)}Controller`);
-        this.validator = new GmModuleValidator_1.GmModuleValidator(config, this.getValidatorVarName());
-        this.gmValidatorBuilder = new GmValidatorBuilderByStaticDb(config, this.getValidatorVarName(), this.validator);
+        this.validator = new GmModuleValidator_1.GmModuleValidator(config);
+        this.gmValidatorBuilder = new GmValidatorBuilderByStaticDb(config, this.validator);
         const gmGetVarNames = new GmGetVarNamesByStaticDb(config);
         this.serviceCrud = new byStaticDb_1.GmModuleServiceClassUpdateBySqlStaticDb(config, `this.${this.getServiceVarName()}`, {
             id: gmGetVarNames.update().id,
@@ -336,8 +325,6 @@ class GmModuleControllerClassUpdateBySqlStaticDb extends GmModuleAbstractControl
             defaultValue: null,
         });
         this.addElementBeforeClass(`
-            ${this.gmValidatorBuilder.initValidator()}
-          
             ${this.gmValidatorBuilder.update()}
         `);
     }
@@ -419,8 +406,8 @@ exports.GmModuleControllerClassGetBySqlStaticDb = GmModuleControllerClassGetBySq
 class GmModuleControllerClassGetAllBySqlStaticDb extends GmModuleAbstractControllerClass_1.GmModuleAbstractControllerClass {
     constructor(config) {
         super(config, `GetAll${StringCaseHelper_1.StringCaseHelper.toPascalCase(config.dtoName.singular)}Controller`);
-        this.validator = new GmModuleValidator_1.GmModuleValidator(config, this.getValidatorVarName());
-        this.gmValidatorBuilder = new GmValidatorBuilderByStaticDb(config, this.getValidatorVarName(), this.validator);
+        this.validator = new GmModuleValidator_1.GmModuleValidator(config);
+        this.gmValidatorBuilder = new GmValidatorBuilderByStaticDb(config, this.validator);
         const gmGetVarNames = new GmGetVarNamesByStaticDb(config);
         this.serviceCrud = new byStaticDb_1.GmModuleServiceClassGetAllBySqlStaticDb(config, `this.${this.getServiceVarName()}`, {
             params: gmGetVarNames.list().params,
@@ -448,12 +435,8 @@ class GmModuleControllerClassGetAllBySqlStaticDb extends GmModuleAbstractControl
             defaultValue: null,
         });
         this.addElementBeforeClass(`
-            ${this.gmValidatorBuilder.initValidator()}
             ${this.gmValidatorBuilder.list()}
         `);
-    }
-    getValidatorVarName() {
-        return `${StringCaseHelper_1.StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}Validator`;
     }
     getServiceVarName() {
         return `getAll${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Service`;

@@ -164,8 +164,7 @@ export class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstr
             `${StringCaseHelper.toPascalCase(config.dtoName.plural)}Controller`,
         )
         this.validator = new GmModuleValidator(
-            config,
-            this.getValidatorVarName(),
+            config
         )
         this.serviceCrud = new GmModuleServiceClassCrudBySqlDynamicDomain(
             config,
@@ -303,15 +302,10 @@ export class GmModuleControllerClassCrudBySqlDynamicDomain extends GmModuleAbstr
         })
         
         this.addElementBeforeClass(`
-            const ${this.getValidatorVarName()} = new ${this.validator.getPropertyName()}()
             const ${this.getValidatorCreateDtoVarName()} = ${this.validator.api.getCreateDtoSchema()}
             const ${this.getValidatorUpdateDtoVarName()} = ${this.validator.api.getUpdateDtoSchema()}
             const ${this.getValidatorParamsDtoVarName()} = ${this.validator.api.getDtoPaginationQueryParamsSchema()}
         `)
-    }
-    
-    private getValidatorVarName() {
-        return `${StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}Validator`
     }
     
     private getValidatorCreateDtoVarName(): string {
@@ -346,8 +340,7 @@ export class GmModuleControllerClassCreateBySqlDynamicDomain extends GmModuleAbs
             `Create${StringCaseHelper.toPascalCase(config.dtoName.singular)}Controller`,
         )
         this.validator = new GmModuleValidator(
-            config,
-            this.getValidatorVarName(),
+            config
         )
         this.serviceCrud = new GmModuleServiceClassCreateBySqlDynamicDomain(
             config,
@@ -394,15 +387,8 @@ export class GmModuleControllerClassCreateBySqlDynamicDomain extends GmModuleAbs
         })
         
         this.addElementBeforeClass(`
-            const ${this.getValidatorVarName()} = new ${this.validator.getPropertyName()}()
-        `)
-        this.addElementBeforeClass(`
             const ${this.getValidatorCreateDtoVarName()} = ${this.validator.api.getCreateDtoSchema()}
         `)
-    }
-    
-    private getValidatorVarName() {
-        return `${StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}Validator`
     }
     
     private getValidatorCreateDtoVarName(): string {
@@ -429,8 +415,7 @@ export class GmModuleControllerClassUpdateBySqlDynamicDomain extends GmModuleAbs
             `Update${StringCaseHelper.toPascalCase(config.dtoName.singular)}Controller`,
         )
         this.validator = new GmModuleValidator(
-            config,
-            this.getValidatorVarName(),
+            config
         )
         this.serviceCrud = new GmModuleServiceClassUpdateBySqlDynamicDomain(
             config,
@@ -480,15 +465,8 @@ export class GmModuleControllerClassUpdateBySqlDynamicDomain extends GmModuleAbs
         })
         
         this.addElementBeforeClass(`
-            const ${this.getValidatorVarName()} = new ${this.validator.getPropertyName()}()
-        `)
-        this.addElementBeforeClass(`
             const ${this.getValidatorUpdateDtoVarName()} = ${this.validator.api.getUpdateDtoSchema()}
         `)
-    }
-    
-    private getValidatorVarName() {
-        return `${StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}Validator`
     }
     
     private getValidatorUpdateDtoVarName(): string {
@@ -637,8 +615,7 @@ export class GmModuleControllerClassGetAllBySqlDynamicDomain extends GmModuleAbs
             `GetAll${StringCaseHelper.toPascalCase(config.dtoName.singular)}Controller`,
         )
         this.validator = new GmModuleValidator(
-            config,
-            this.getValidatorVarName(),
+            config
         )
         this.serviceCrud = new GmModuleServiceClassGetAllBySqlDynamicDomain(
             config,
@@ -685,15 +662,8 @@ export class GmModuleControllerClassGetAllBySqlDynamicDomain extends GmModuleAbs
         })
         
         this.addElementBeforeClass(`
-            const ${this.getValidatorVarName()} = new ${this.validator.getPropertyName()}()
-        `)
-        this.addElementBeforeClass(`
             const ${this.getValidatorParamsDtoVarName()} = ${this.validator.api.getDtoPaginationQueryParamsSchema()}
         `)
-    }
-    
-    private getValidatorVarName() {
-        return `${StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}Validator`
     }
     
     private getValidatorParamsDtoVarName(): string {

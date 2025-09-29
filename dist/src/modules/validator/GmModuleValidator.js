@@ -14,23 +14,22 @@ const GmModuleDtoHelper_1 = require("../dto/helper/GmModuleDtoHelper");
 const GmServicePaginationQueryParamsType_1 = require("../../services/paginationTypes/GmServicePaginationQueryParamsType");
 const GmServicePaginationQueryParamsValidator_1 = require("../../services/validator/GmServicePaginationQueryParamsValidator");
 class GmModuleValidator extends GmAbstractModuleClass_1.GmAbstractModuleClass {
-    constructor(config, schemaVarName) {
+    constructor(config) {
         super(config);
-        this.schemaVarName = schemaVarName;
         this.api = {
             getCreateDtoSchema: () => {
-                return `${this.schemaVarName}.${this.getMethodByIndex(0).renderMethodCall()}`;
+                return `${this.getPropertyName()}.${this.getMethodByIndex(0).renderMethodCall()}`;
             },
             getUpdateDtoSchema: () => {
-                return `${this.schemaVarName}.${this.getMethodByIndex(1).renderMethodCall()}`;
+                return `${this.getPropertyName()}.${this.getMethodByIndex(1).renderMethodCall()}`;
             },
             getDtoPaginationQueryParamsSchema: () => {
-                return `${this.schemaVarName}.${this.getMethodByIndex(3).renderMethodCall()}`;
+                return `${this.getPropertyName()}.${this.getMethodByIndex(3).renderMethodCall()}`;
             },
         };
     }
     getPropertyName() {
-        return `${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.plural)}Validator`;
+        return `${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.plural)}ValidatorFactory`;
     }
     getDirName() {
         return 'validator';
@@ -62,6 +61,7 @@ class GmModuleValidatorGetCreateDtoMethod extends GmAbstractModuleClassMethod_1.
         this.addService(this.gmServiceObjectSchemaValidatorType);
         this.addService(this.gmServiceValidator);
         this.setReturnType(this.gmServiceObjectSchemaValidatorType.getSchemaValidatorType(this.gmModuleCreateDto.getPropertyName()));
+        this.setMethodScope('static');
         this.appendBodyElement({
             name: 'return validator',
             value: `return ${this.gmServiceValidator.object(this.buildSchemaByColumns())}`,
@@ -121,6 +121,7 @@ class GmModuleValidatorGetUpdateDtoMethod extends GmAbstractModuleClassMethod_1.
         this.addModule(this.gmModuleCreateDto);
         this.addService(this.gmServiceObjectSchemaValidatorType);
         this.setReturnType(this.gmServiceObjectSchemaValidatorType.getSchemaValidatorType(this.gmModuleUpdateDto.getPropertyName()));
+        this.setMethodScope('static');
         this.appendBodyElement({
             name: 'return schema',
             value: `return this.${this.getCreatePropertyName()}().partial()`,
@@ -145,6 +146,7 @@ class GmModuleValidatorGetDtoMethod extends GmAbstractModuleClassMethod_1.GmAbst
         this.addModule(this.gmModuleDto);
         this.addService(this.gmServiceSchemaValidatorType);
         this.setReturnType(this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.gmModuleDto.getPropertyName()));
+        this.setMethodScope('static');
         this.appendBodyElement({
             name: 'return schema',
             value: `return this.${this.getCreatePropertyName()}().merge(${this.gmServiceValidator.object({
@@ -174,6 +176,7 @@ class GmModuleValidatorGetPaginationMethod extends GmAbstractModuleClassMethod_1
         this.addService(this.gmServicePaginationQueryParamsType);
         this.addService(this.gmServiceSchemaValidatorType);
         this.addService(this.gmServicePaginationQueryParamsValidator);
+        this.setMethodScope('static');
         this.setReturnType(this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.gmServicePaginationQueryParamsType.getPaginationQueryParamsType(this.gmModuleDto.getPropertyName())));
         this.appendBodyElement({
             name: 'return schema',

@@ -163,16 +163,11 @@ class GmValidatorBuilderByStaticDb {
     
     constructor(
         private readonly config: GmCrudConfig,
-        private readonly validatorVarName: string,
         private readonly validator: GmModuleValidator,
     ) {
         this.gmGetVarNames = new GmGetVarNamesByStaticDb(config)
     }
     
-    
-    public initValidator(): string {
-        return `const ${this.validatorVarName} = new ${this.validator.getPropertyName()}()`
-    }
     
     public add() {
         return `const ${this.gmGetVarNames.add().createBodySchema} = ${this.validator.api.getCreateDtoSchema()}`
@@ -206,11 +201,9 @@ export class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractCo
         )
         this.validator = new GmModuleValidator(
             config,
-            this.getValidatorVarName(),
         )
         this.gmValidatorBuilder = new GmValidatorBuilderByStaticDb(
             config,
-            this.getValidatorVarName(),
             this.validator,
         )
         
@@ -324,18 +317,12 @@ export class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAbstractCo
         })
         
         this.addElementBeforeClass(`
-            ${this.gmValidatorBuilder.initValidator()}
-            
             ${this.gmValidatorBuilder.add()}
             
             ${this.gmValidatorBuilder.update()}
             
             ${this.gmValidatorBuilder.list()}
         `)
-    }
-    
-    private getValidatorVarName() {
-        return `${StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}Validator`
     }
     
     private getServiceVarName(): string {
@@ -360,12 +347,10 @@ export class GmModuleControllerClassCreateBySqlStaticDb extends GmModuleAbstract
             `Create${StringCaseHelper.toPascalCase(config.dtoName.singular)}Controller`,
         )
         this.validator = new GmModuleValidator(
-            config,
-            this.getValidatorVarName(),
+            config
         )
         this.gmValidatorBuilder = new GmValidatorBuilderByStaticDb(
             config,
-            this.getValidatorVarName(),
             this.validator,
         )
         const gmGetVarNames = new GmGetVarNamesByStaticDb(config)
@@ -411,8 +396,6 @@ export class GmModuleControllerClassCreateBySqlStaticDb extends GmModuleAbstract
         })
         
         this.addElementBeforeClass(`
-            ${this.gmValidatorBuilder.initValidator()}
-            
             ${this.gmValidatorBuilder.add()}
         `)
     }
@@ -445,11 +428,9 @@ export class GmModuleControllerClassUpdateBySqlStaticDb extends GmModuleAbstract
         )
         this.validator = new GmModuleValidator(
             config,
-            this.getValidatorVarName(),
         )
         this.gmValidatorBuilder = new GmValidatorBuilderByStaticDb(
             config,
-            this.getValidatorVarName(),
             this.validator,
         )
         const gmGetVarNames = new GmGetVarNamesByStaticDb(config)
@@ -499,8 +480,6 @@ export class GmModuleControllerClassUpdateBySqlStaticDb extends GmModuleAbstract
         
         
         this.addElementBeforeClass(`
-            ${this.gmValidatorBuilder.initValidator()}
-          
             ${this.gmValidatorBuilder.update()}
         `)
     }
@@ -644,13 +623,11 @@ export class GmModuleControllerClassGetAllBySqlStaticDb extends GmModuleAbstract
             `GetAll${StringCaseHelper.toPascalCase(config.dtoName.singular)}Controller`,
         )
         this.validator = new GmModuleValidator(
-            config,
-            this.getValidatorVarName(),
+            config
         )
         
         this.gmValidatorBuilder = new GmValidatorBuilderByStaticDb(
             config,
-            this.getValidatorVarName(),
             this.validator,
         )
         
@@ -694,14 +671,10 @@ export class GmModuleControllerClassGetAllBySqlStaticDb extends GmModuleAbstract
         })
         
         this.addElementBeforeClass(`
-            ${this.gmValidatorBuilder.initValidator()}
             ${this.gmValidatorBuilder.list()}
         `)
     }
     
-    private getValidatorVarName() {
-        return `${StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}Validator`
-    }
     
     private getServiceVarName(): string {
         return `getAll${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Service`

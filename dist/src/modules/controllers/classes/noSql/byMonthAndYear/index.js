@@ -28,9 +28,6 @@ class GmGetVarNamesByMonthAndYear {
             createBody,
             createBodySchema: `create${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.config.dtoName.singular)}BodySchema`,
             legalEntityId: `${createBody}.legal_entity_id`,
-            createBodyType: !GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.config, 'add') ||
-                GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.config, 'add') && this.checkHasLeIdColumn()
-                ? undefined : `Create${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.config.dtoName.singular)}Body`,
         };
     }
     update() {
@@ -41,7 +38,6 @@ class GmGetVarNamesByMonthAndYear {
             id: 'id',
             openUserId: `${this.userDto()}.open_user_id`,
             legalEntityId: `${updateBody}.legal_entity_id`,
-            updateBodyType: GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.config, 'update') ? `Update${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.config.dtoName.singular)}Body` : undefined,
         };
     }
     delete() {
@@ -110,28 +106,13 @@ class GmAccessStructureMethodProcessorByMonthAndYear extends GmAccessStructureMe
     }
 }
 class GmValidatorBuilderByMonthAndYear {
-    constructor(config, validatorVarName, validator) {
+    constructor(config, validator) {
         this.config = config;
-        this.validatorVarName = validatorVarName;
         this.validator = validator;
         this.gmGetVarNames = new GmGetVarNamesByMonthAndYear(config);
-        this.gmServiceValidator = new GmServiceValidator_1.GmServiceValidator();
-        this.gmServiceSchemaValidatorType = new GmServiceSchemaValidatorType_1.GmServiceSchemaValidatorType();
-    }
-    initValidator() {
-        return `const ${this.validatorVarName} = new ${this.validator.getPropertyName()}()`;
     }
     add() {
-        const schemaTypeStr = this.gmGetVarNames.add().createBodyType ? ` :${this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.gmGetVarNames.add().createBodyType || '')}` : '';
-        if (!GmCrudConfigChecker_1.GmCrudConfigChecker.hasStructureAccess(this.config, 'add')) {
-            return `const ${this.gmGetVarNames.add().createBodySchema}${schemaTypeStr} = ${this.validator.api.getCreateDtoSchema()}`;
-        }
-        if (this.gmGetVarNames.checkHasLeIdColumn()) {
-            return `const ${this.gmGetVarNames.add().createBodySchema}${schemaTypeStr} = ${this.validator.api.getCreateDtoSchema()}`;
-        }
-        return `const ${this.gmGetVarNames.add().createBodySchema}${schemaTypeStr} = ${this.validator.api.getCreateDtoSchema()}.merge(${this.gmServiceValidator.object({
-            legal_entity_id: this.gmServiceValidator.number(),
-        })})`;
+        return `const ${this.gmGetVarNames.add().createBodySchema} = ${this.validator.api.getCreateDtoSchema()}`;
     }
     list() {
         return `const ${this.gmGetVarNames.list().paramsSchema} = ${this.validator.api.getDtoPaginationQueryParamsSchema()}`;
@@ -144,8 +125,8 @@ class GmModuleControllerClassCrudByNoSqlMonthAndYear extends GmModuleAbstractCon
     constructor(config) {
         super(config, `${StringCaseHelper_1.StringCaseHelper.toPascalCase(config.dtoName.singular)}Controller`);
         this.gmServiceDateHelper = new GmServiceDateHelper_1.GmServiceDateHelper();
-        this.validator = new GmModuleValidator_1.GmModuleValidator(config, this.getValidatorVarName());
-        this.gmValidatorBuilder = new GmValidatorBuilderByMonthAndYear(config, this.getValidatorVarName(), this.validator);
+        this.validator = new GmModuleValidator_1.GmModuleValidator(config);
+        this.gmValidatorBuilder = new GmValidatorBuilderByMonthAndYear(config, this.validator);
         const gmGetVarNames = new GmGetVarNamesByMonthAndYear(config);
         this.serviceCrud = new byMonthAndYear_1.GmModuleServiceClassCrudByNoSqlMonthAndYear(config, `this.${this.getServiceVarName()}`, {
             create: {
@@ -176,7 +157,6 @@ class GmModuleControllerClassCrudByNoSqlMonthAndYear extends GmModuleAbstractCon
         }
         const methodCreate = new GmModuleControllerMethodCreate_1.GmModuleControllerMethodCreate(this.getConfig(), this.serviceCrud.api, {
             createDto: this.gmGetVarNames.add().createBody,
-            createDtoType: this.gmGetVarNames.add().createBodyType,
             userDto: this.gmGetVarNames.userDto(),
             createDtoSchema: this.gmGetVarNames.add().createBodySchema,
         });
@@ -209,21 +189,13 @@ class GmModuleControllerClassCrudByNoSqlMonthAndYear extends GmModuleAbstractCon
             privateReadOnly: true,
             defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
         });
-        if (this.gmGetVarNames.add().createBodyType) {
-            this.addElementBeforeClass(`
-                type ${this.gmGetVarNames.add().createBodyType} = ${this.gmModuleCreateDto.getPropertyName()} & {legal_entity_id:number}
-            `);
-        }
         this.addElementBeforeClass(`
-            ${this.gmValidatorBuilder.initValidator()}
-             
+       
+            
             ${this.gmValidatorBuilder.add()}
               
             ${this.gmValidatorBuilder.list()}
         `);
-    }
-    getValidatorVarName() {
-        return `${StringCaseHelper_1.StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}Validator`;
     }
     getServiceVarName() {
         return `${StringCaseHelper_1.StringCaseHelper.toCamelCase(this.getConfig().dtoName.singular)}Service`;
@@ -234,8 +206,8 @@ class GmModuleControllerClassCreateByNoSqlMonthAndYear extends GmModuleAbstractC
     constructor(config) {
         super(config, `Create${StringCaseHelper_1.StringCaseHelper.toPascalCase(config.dtoName.singular)}Controller`);
         this.gmServiceDateHelper = new GmServiceDateHelper_1.GmServiceDateHelper();
-        this.validator = new GmModuleValidator_1.GmModuleValidator(config, this.getValidatorVarName());
-        this.gmValidatorBuilder = new GmValidatorBuilderByMonthAndYear(config, this.getValidatorVarName(), this.validator);
+        this.validator = new GmModuleValidator_1.GmModuleValidator(config);
+        this.gmValidatorBuilder = new GmValidatorBuilderByMonthAndYear(config, this.validator);
         const gmGetVarNames = new GmGetVarNamesByMonthAndYear(config);
         this.serviceCrud = new byMonthAndYear_1.GmModuleServiceClassCreateByNoSqlMonthAndYear(config, `this.${this.getServiceVarName()}`, {
             createDto: gmGetVarNames.add().createBody,
@@ -259,7 +231,6 @@ class GmModuleControllerClassCreateByNoSqlMonthAndYear extends GmModuleAbstractC
         }
         const methodCreate = new GmModuleControllerMethodCreate_1.GmModuleControllerMethodCreate(this.getConfig(), this.serviceCrud.api, {
             createDto: this.gmGetVarNames.add().createBody,
-            createDtoType: this.gmGetVarNames.add().createBodyType,
             userDto: this.gmGetVarNames.userDto(),
             createDtoSchema: this.gmGetVarNames.add().createBodySchema,
         });
@@ -273,19 +244,9 @@ class GmModuleControllerClassCreateByNoSqlMonthAndYear extends GmModuleAbstractC
             privateReadOnly: true,
             defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
         });
-        if (this.gmGetVarNames.add().createBodyType) {
-            this.addElementBeforeClass(`
-                type ${this.gmGetVarNames.add().createBodyType} = ${this.gmModuleCreateDto.getPropertyName()} & {legal_entity_id:number}
-            `);
-        }
         this.addElementBeforeClass(`
-            ${this.gmValidatorBuilder.initValidator()}
-             
             ${this.gmValidatorBuilder.add()}
         `);
-    }
-    getValidatorVarName() {
-        return `${StringCaseHelper_1.StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}Validator`;
     }
     getServiceVarName() {
         return `create${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Service`;
@@ -295,8 +256,8 @@ exports.GmModuleControllerClassCreateByNoSqlMonthAndYear = GmModuleControllerCla
 class GmModuleControllerClassGetAllByNoSqlMonthAndYear extends GmModuleAbstractControllerClass_1.GmModuleAbstractControllerClass {
     constructor(config) {
         super(config, `GetAll${StringCaseHelper_1.StringCaseHelper.toPascalCase(config.dtoName.singular)}Controller`);
-        this.validator = new GmModuleValidator_1.GmModuleValidator(config, this.getValidatorVarName());
-        this.gmValidatorBuilder = new GmValidatorBuilderByMonthAndYear(config, this.getValidatorVarName(), this.validator);
+        this.validator = new GmModuleValidator_1.GmModuleValidator(config);
+        this.gmValidatorBuilder = new GmValidatorBuilderByMonthAndYear(config, this.validator);
         const gmGetVarNames = new GmGetVarNamesByMonthAndYear(config);
         this.serviceCrud = new byMonthAndYear_1.GmModuleServiceClassGetAllByNoSqlMonthAndYear(config, `this.${this.getServiceVarName()}`, {
             params: gmGetVarNames.list().params,
@@ -336,13 +297,8 @@ class GmModuleControllerClassGetAllByNoSqlMonthAndYear extends GmModuleAbstractC
             defaultValue: `new ${this.serviceCrud.getPropertyName()}()`,
         });
         this.addElementBeforeClass(`
-            ${this.gmValidatorBuilder.initValidator()}
-             
             ${this.gmValidatorBuilder.list()}
         `);
-    }
-    getValidatorVarName() {
-        return `${StringCaseHelper_1.StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}Validator`;
     }
     getServiceVarName() {
         return `getAll${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Service`;

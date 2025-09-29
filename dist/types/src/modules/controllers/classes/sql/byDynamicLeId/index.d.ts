@@ -9,7 +9,6 @@ export declare class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModul
     private readonly gmAccessStructureMethodProcessorByDynamicLeId;
     constructor(config: GmCrudConfig);
     init(): void;
-    private getValidatorVarName;
     private getValidatorCreateBodyVarName;
     private getValidatorUpdateBodyVarName;
     private getValidatorParamsDtoVarName;
@@ -22,7 +21,6 @@ export declare class GmModuleControllerClassCreateBySqlDynamicLeId extends GmMod
     private readonly gmAccessStructureMethodProcessorByDynamicLeId;
     constructor(config: GmCrudConfig);
     init(): void;
-    private getValidatorVarName;
     private getValidatorCreateBodyVarName;
     private getServiceVarName;
 }
@@ -33,7 +31,6 @@ export declare class GmModuleControllerClassUpdateBySqlDynamicLeId extends GmMod
     private readonly gmAccessStructureMethodProcessorByDynamicLeId;
     constructor(config: GmCrudConfig);
     init(): void;
-    private getValidatorVarName;
     private getValidatorUpdateBodyVarName;
     private getServiceVarName;
 }
@@ -57,7 +54,6 @@ export declare class GmModuleControllerClassGetAllBySqlDynamicLeId extends GmMod
     private readonly gmAccessStructureMethodProcessorByDynamicLeId;
     constructor(config: GmCrudConfig);
     init(): void;
-    private getValidatorVarName;
     private getValidatorParamsDtoVarName;
     private getServiceVarName;
 }

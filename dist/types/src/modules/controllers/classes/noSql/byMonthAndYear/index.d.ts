@@ -11,7 +11,6 @@ export declare class GmModuleControllerClassCrudByNoSqlMonthAndYear extends GmMo
     private readonly gmModuleCreateDto;
     constructor(config: GmCrudConfig);
     init(): void;
-    private getValidatorVarName;
     private getServiceVarName;
 }
 export declare class GmModuleControllerClassCreateByNoSqlMonthAndYear extends GmModuleAbstractControllerClass implements IGmModuleClass {
@@ -24,7 +23,6 @@ export declare class GmModuleControllerClassCreateByNoSqlMonthAndYear extends Gm
     private readonly gmModuleCreateDto;
     constructor(config: GmCrudConfig);
     init(): void;
-    private getValidatorVarName;
     private getServiceVarName;
 }
 export declare class GmModuleControllerClassGetAllByNoSqlMonthAndYear extends GmModuleAbstractControllerClass implements IGmModuleClass {
@@ -35,6 +33,5 @@ export declare class GmModuleControllerClassGetAllByNoSqlMonthAndYear extends Gm
     private readonly gmValidatorBuilder;
     constructor(config: GmCrudConfig);
     init(): void;
-    private getValidatorVarName;
     private getServiceVarName;
 }

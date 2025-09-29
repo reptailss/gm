@@ -9,7 +9,6 @@ export declare class GmModuleControllerClassCrudBySqlStaticDb extends GmModuleAb
     private readonly gmValidatorBuilder;
     constructor(config: GmCrudConfig);
     init(): void;
-    private getValidatorVarName;
     private getServiceVarName;
 }
 export declare class GmModuleControllerClassCreateBySqlStaticDb extends GmModuleAbstractControllerClass implements IGmModuleClass {
@@ -59,6 +58,5 @@ export declare class GmModuleControllerClassGetAllBySqlStaticDb extends GmModule
     private readonly gmValidatorBuilder;
     constructor(config: GmCrudConfig);
     init(): void;
-    private getValidatorVarName;
     private getServiceVarName;
 }
