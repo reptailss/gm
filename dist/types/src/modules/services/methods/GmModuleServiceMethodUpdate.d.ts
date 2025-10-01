@@ -21,6 +21,6 @@ export declare class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMe
     private checkHasRow;
     private updateRow;
     private getNewEntityVarName;
-    private getOldDtoVarName;
+    private getOldEntityVarName;
 }
 export {};

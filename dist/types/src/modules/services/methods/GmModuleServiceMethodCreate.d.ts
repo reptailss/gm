@@ -18,6 +18,6 @@ export declare class GmModuleServiceMethodCreate extends GmAbstractModuleClassMe
     getPropertyName(): string;
     init(): void;
     private createRow;
-    private getNewDtoPropertyVarName;
+    private getNewEntityPropertyVarName;
 }
 export {};

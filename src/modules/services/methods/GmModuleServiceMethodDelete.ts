@@ -78,7 +78,7 @@ export class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod imp
     private checkHasOldDto() {
         this.appendBodyElement({
             name: 'foundRow',
-            value: `const ${this.getOldDtoVarName()} = await ${this.gmModuleRepository.api.findOne({
+            value: `const ${this.getOldEntityVarName()} = await ${this.gmModuleRepository.api.findOne({
                 where: {
                     [GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).key]: PROPS_VAR_NAMES.id,
                 },
@@ -89,7 +89,7 @@ export class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod imp
             value: this.gmServiceThrowAppError.throwAppError({
                 message: 'Not found',
                 errorKey: 'NOT_FOUND_ERROR',
-                ifConstruction: `!${this.getOldDtoVarName()}`,
+                ifConstruction: `!${this.getOldEntityVarName()}`,
             }),
         })
     }
@@ -112,7 +112,7 @@ export class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod imp
                 name: 'SendActionSystemLogService',
                 value: `await ${this.gmServiceSendActionSystemLog.logDeleteAction({
                     rowId: PROPS_VAR_NAMES.id,
-                    oldValue: this.getOldDtoVarName(),
+                    oldValue: this.getOldEntityVarName(),
                     config: this.gmModuleRepository.api.getConfig(),
                     initiatorOpenUserId: PROPS_VAR_NAMES.initiatorOpenUserId,
                 })}`,
@@ -121,14 +121,14 @@ export class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod imp
         }
         
         this.appendBodyElement({
-            name: 'return oldDto',
-            value: `return ${this.getOldDtoVarName()}`,
+            name: 'return oldEntity',
+            value: `return ${this.getOldEntityVarName()}`,
         })
     }
     
     
-    private getOldDtoVarName(): string {
-        return 'oldDto'
+    private getOldEntityVarName(): string {
+        return 'oldEntity'
     }
     
 }

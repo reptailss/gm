@@ -51,7 +51,7 @@ class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod_1.GmAbstra
     checkHasOldDto() {
         this.appendBodyElement({
             name: 'foundRow',
-            value: `const ${this.getOldDtoVarName()} = await ${this.gmModuleRepository.api.findOne({
+            value: `const ${this.getOldEntityVarName()} = await ${this.gmModuleRepository.api.findOne({
                 where: {
                     [GmModuleDtoHelper_1.GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).key]: PROPS_VAR_NAMES.id,
                 },
@@ -62,7 +62,7 @@ class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod_1.GmAbstra
             value: this.gmServiceThrowAppError.throwAppError({
                 message: 'Not found',
                 errorKey: 'NOT_FOUND_ERROR',
-                ifConstruction: `!${this.getOldDtoVarName()}`,
+                ifConstruction: `!${this.getOldEntityVarName()}`,
             }),
         });
     }
@@ -81,7 +81,7 @@ class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod_1.GmAbstra
                 name: 'SendActionSystemLogService',
                 value: `await ${this.gmServiceSendActionSystemLog.logDeleteAction({
                     rowId: PROPS_VAR_NAMES.id,
-                    oldValue: this.getOldDtoVarName(),
+                    oldValue: this.getOldEntityVarName(),
                     config: this.gmModuleRepository.api.getConfig(),
                     initiatorOpenUserId: PROPS_VAR_NAMES.initiatorOpenUserId,
                 })}`,
@@ -89,12 +89,12 @@ class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod_1.GmAbstra
             });
         }
         this.appendBodyElement({
-            name: 'return oldDto',
-            value: `return ${this.getOldDtoVarName()}`,
+            name: 'return oldEntity',
+            value: `return ${this.getOldEntityVarName()}`,
         });
     }
-    getOldDtoVarName() {
-        return 'oldDto';
+    getOldEntityVarName() {
+        return 'oldEntity';
     }
 }
 exports.GmModuleServiceMethodDelete = GmModuleServiceMethodDelete;

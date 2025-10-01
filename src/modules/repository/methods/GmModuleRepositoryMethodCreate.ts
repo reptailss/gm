@@ -8,8 +8,6 @@ import {GmModuleCreateDto} from '@modules/dto/GmModuleCreateDto'
 export class GmModuleRepositoryMethodCreate extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {
     
     public readonly gmModuleEntity: GmModuleEntity
-    public readonly gmModuleDto: GmModuleDto
-    public readonly gmModuleCreateDto: GmModuleCreateDto
     
     constructor(
         config: GmCrudConfig,
@@ -17,8 +15,6 @@ export class GmModuleRepositoryMethodCreate extends GmAbstractModuleClassMethod 
     ) {
         super(config)
         this.gmModuleEntity = new GmModuleEntity(config)
-        this.gmModuleDto = new GmModuleDto(config)
-        this.gmModuleCreateDto = new GmModuleCreateDto(config)
     }
     
     public getPropertyName(): string {
@@ -27,27 +23,30 @@ export class GmModuleRepositoryMethodCreate extends GmAbstractModuleClassMethod 
     
     public init() {
         this.addModule(this.gmModuleEntity)
-        this.addModule(this.gmModuleDto)
-        this.addModule(this.gmModuleCreateDto)
         this.addImport({
             path: 'os-core-ts',
             isLibImport: true,
             propertyName: 'Entity',
         })
+        this.addImport({
+            path: 'os-core-ts',
+            isLibImport: true,
+            propertyName: 'CreateEntity',
+        })
         this.addProp({
-            type: this.gmModuleCreateDto.getPropertyName(),
-            varName: 'createDto',
-            callVarName: 'where',
+            type: `CreateEntity<${this.gmModuleEntity.getPropertyName()}>`,
+            varName: 'createEntity',
+            callVarName: 'createEntity',
             decorator: null,
         })
         
         this.appendBodyElement({
             name: 'return res',
-            value: `return ${this.repositoryVarName}.create(createDto)`,
+            value: `return ${this.repositoryVarName}.create(createEntity)`,
         })
         
         this.setAsyncType('async')
-        this.setReturnType(`Promise<${this.gmModuleDto.getPropertyName()}>`)
+        this.setReturnType(`Promise<Entity<${this.gmModuleEntity.getPropertyName()}>>`)
     }
     
 }

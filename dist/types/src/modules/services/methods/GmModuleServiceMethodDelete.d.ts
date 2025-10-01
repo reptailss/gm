@@ -18,6 +18,6 @@ export declare class GmModuleServiceMethodDelete extends GmAbstractModuleClassMe
     init(): void;
     private checkHasOldDto;
     private deleteRow;
-    private getOldDtoVarName;
+    private getOldEntityVarName;
 }
 export {};

@@ -60,14 +60,14 @@ class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMethod_1.GmAbstra
     checkHasRow() {
         this.appendBodyElement({
             name: 'getOldRow',
-            value: `const ${this.getOldDtoVarName()}  = await ${this.gmModuleRepository.api.findByPk(PROPS_VAR_NAMES.id)}`,
+            value: `const ${this.getOldEntityVarName()}  = await ${this.gmModuleRepository.api.findByPk(PROPS_VAR_NAMES.id)}`,
         });
         this.appendBodyElement({
             name: 'checkOldRow',
             value: this.gmServiceThrowAppError.throwAppError({
                 message: 'Not found.',
                 errorKey: 'NOT_FOUND_ERROR',
-                ifConstruction: `!${this.getOldDtoVarName()}`,
+                ifConstruction: `!${this.getOldEntityVarName()}`,
             }),
             hasEmptyLineAtEnd: true,
         });
@@ -98,7 +98,7 @@ class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMethod_1.GmAbstra
             name: 'SendActionSystemLogService',
             value: `await ${this.gmServiceSendActionSystemLog.logUpdateAction({
                 rowId: PROPS_VAR_NAMES.id,
-                oldValue: this.getOldDtoVarName(),
+                oldValue: this.getOldEntityVarName(),
                 newValue: this.getNewEntityVarName(),
                 config: this.gmModuleRepository.api.getConfig(),
                 initiatorOpenUserId: PROPS_VAR_NAMES.initiatorOpenUserId,
@@ -111,10 +111,10 @@ class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMethod_1.GmAbstra
         });
     }
     getNewEntityVarName() {
-        return 'newDto';
+        return 'newEntity';
     }
-    getOldDtoVarName() {
-        return 'oldDto';
+    getOldEntityVarName() {
+        return 'oldEntity';
     }
 }
 exports.GmModuleServiceMethodUpdate = GmModuleServiceMethodUpdate;

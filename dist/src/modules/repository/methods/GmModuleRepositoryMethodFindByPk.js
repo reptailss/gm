@@ -3,20 +3,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GmModuleRepositoryMethodFindByPk = void 0;
 const GmAbstractModuleClassMethod_1 = require("../../abstractModule/GmAbstractModuleClassMethod");
 const GmModuleEntity_1 = require("../../entity/GmModuleEntity");
-const GmModuleDto_1 = require("../../dto/GmModuleDto");
 class GmModuleRepositoryMethodFindByPk extends GmAbstractModuleClassMethod_1.GmAbstractModuleClassMethod {
     constructor(config, repositoryVarName) {
         super(config);
         this.repositoryVarName = repositoryVarName;
         this.gmModuleEntity = new GmModuleEntity_1.GmModuleEntity(config);
-        this.gmModuleDto = new GmModuleDto_1.GmModuleDto(config);
     }
     getPropertyName() {
         return 'findByPk';
     }
     init() {
         this.addModule(this.gmModuleEntity);
-        this.addModule(this.gmModuleDto);
         this.addImport({
             path: 'os-core-ts',
             isLibImport: true,
@@ -33,7 +30,7 @@ class GmModuleRepositoryMethodFindByPk extends GmAbstractModuleClassMethod_1.GmA
             value: `return ${this.repositoryVarName}.findByPk(id)`,
         });
         this.setAsyncType('async');
-        this.setReturnType(`Promise<${this.gmModuleDto.getPropertyName()} | null>`);
+        this.setReturnType(`Promise<Entity<${this.gmModuleEntity.getPropertyName()}> | null>`);
     }
 }
 exports.GmModuleRepositoryMethodFindByPk = GmModuleRepositoryMethodFindByPk;

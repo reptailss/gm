@@ -58,7 +58,7 @@ class GmGetVarNamesByStaticDb {
     list() {
         return {
             params: 'params',
-            paramsSchema: `${StringCaseHelper_1.StringCaseHelper.toCamelCase(this.config.dtoName.singular)}DtoPaginationQueryParamsSchema`,
+            paramsSchema: `${StringCaseHelper_1.StringCaseHelper.toCamelCase(this.config.dtoName.singular)}DtoPaginationParamsSchema`,
             openUserId: `${this.userDto()}.open_user_id`,
             legalEntityId: 'legalEntityId',
         };

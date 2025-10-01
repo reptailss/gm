@@ -7,7 +7,6 @@ import {GmModuleDto} from '@modules/dto/GmModuleDto'
 export class GmModuleRepositoryMethodFindOne extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {
     
     public readonly gmModuleEntity: GmModuleEntity
-    public readonly gmModuleDto: GmModuleDto
     
     constructor(
         config: GmCrudConfig,
@@ -15,7 +14,6 @@ export class GmModuleRepositoryMethodFindOne extends GmAbstractModuleClassMethod
     ) {
         super(config)
         this.gmModuleEntity = new GmModuleEntity(config)
-        this.gmModuleDto = new GmModuleDto(config)
     }
     
     public getPropertyName(): string {
@@ -24,7 +22,6 @@ export class GmModuleRepositoryMethodFindOne extends GmAbstractModuleClassMethod
     
     public init() {
         this.addModule(this.gmModuleEntity)
-        this.addModule(this.gmModuleDto)
         this.addImport({
             path: 'os-core-ts',
             isLibImport: true,
@@ -48,7 +45,7 @@ export class GmModuleRepositoryMethodFindOne extends GmAbstractModuleClassMethod
         })
         
         this.setAsyncType('async')
-        this.setReturnType(`Promise<${this.gmModuleDto.getPropertyName()} | null>`)
+        this.setReturnType(`Promise<Entity<${this.gmModuleEntity.getPropertyName()}> | null>`)
     }
     
 }

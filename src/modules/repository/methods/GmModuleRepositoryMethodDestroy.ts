@@ -2,12 +2,10 @@ import {IGmModuleClassMethod} from '@modules/interfaces/gmModule'
 import {GmAbstractModuleClassMethod} from '@modules/abstractModule/GmAbstractModuleClassMethod'
 import {GmCrudConfig} from 'os-core-ts'
 import {GmModuleEntity} from '@modules/entity/GmModuleEntity'
-import {GmModuleDto} from '@modules/dto/GmModuleDto'
 
 export class GmModuleRepositoryMethodDestroy extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {
     
     public readonly gmModuleEntity: GmModuleEntity
-    public readonly gmModuleDto: GmModuleDto
     
     constructor(
         config: GmCrudConfig,
@@ -15,7 +13,6 @@ export class GmModuleRepositoryMethodDestroy extends GmAbstractModuleClassMethod
     ) {
         super(config)
         this.gmModuleEntity = new GmModuleEntity(config)
-        this.gmModuleDto = new GmModuleDto(config)
     }
     
     public getPropertyName(): string {
@@ -24,7 +21,6 @@ export class GmModuleRepositoryMethodDestroy extends GmAbstractModuleClassMethod
     
     public init() {
         this.addModule(this.gmModuleEntity)
-        this.addModule(this.gmModuleDto)
         this.addImport({
             path: 'os-core-ts',
             isLibImport: true,

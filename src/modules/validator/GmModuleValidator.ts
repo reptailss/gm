@@ -218,7 +218,7 @@ class GmModuleValidatorGetPaginationMethod extends GmAbstractModuleClassMethod i
     }
     
     public getPropertyName(): string {
-        return `get${this.gmModuleDto.getPropertyName()}PaginationQueryParamsSchema`
+        return `get${this.gmModuleDto.getPropertyName()}PaginationParamsSchema`
     }
     
     public getDtoPropertyName(): string {

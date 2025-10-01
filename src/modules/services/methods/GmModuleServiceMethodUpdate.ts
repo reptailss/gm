@@ -91,7 +91,7 @@ export class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMethod imp
         
         this.appendBodyElement({
             name: 'getOldRow',
-            value: `const ${this.getOldDtoVarName()}  = await ${this.gmModuleRepository.api.findByPk(PROPS_VAR_NAMES.id)}`,
+            value: `const ${this.getOldEntityVarName()}  = await ${this.gmModuleRepository.api.findByPk(PROPS_VAR_NAMES.id)}`,
         })
         
         this.appendBodyElement({
@@ -99,7 +99,7 @@ export class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMethod imp
             value: this.gmServiceThrowAppError.throwAppError({
                 message: 'Not found.',
                 errorKey: 'NOT_FOUND_ERROR',
-                ifConstruction: `!${this.getOldDtoVarName()}`,
+                ifConstruction: `!${this.getOldEntityVarName()}`,
             }),
             hasEmptyLineAtEnd: true,
         })
@@ -134,7 +134,7 @@ export class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMethod imp
             name: 'SendActionSystemLogService',
             value: `await ${this.gmServiceSendActionSystemLog.logUpdateAction({
                 rowId: PROPS_VAR_NAMES.id,
-                oldValue: this.getOldDtoVarName(),
+                oldValue: this.getOldEntityVarName(),
                 newValue: this.getNewEntityVarName(),
                 config: this.gmModuleRepository.api.getConfig(),
                 initiatorOpenUserId: PROPS_VAR_NAMES.initiatorOpenUserId,
@@ -149,10 +149,10 @@ export class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMethod imp
     }
     
     private getNewEntityVarName(): string {
-        return 'newDto'
+        return 'newEntity'
     }
     
-    private getOldDtoVarName(): string {
-        return 'oldDto'
+    private getOldEntityVarName(): string {
+        return 'oldEntity'
     }
 }
