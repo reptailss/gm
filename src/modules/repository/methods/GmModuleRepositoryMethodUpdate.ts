@@ -26,6 +26,11 @@ export class GmModuleRepositoryMethodUpdate extends GmAbstractModuleClassMethod 
             isLibImport: true,
             propertyName: 'Entity',
         })
+        this.addImport({
+            path: 'os-core-ts',
+            isLibImport: true,
+            propertyName: 'UpdateEntity',
+        })
         this.addProp({
             type: `UpdateEntity<${this.gmModuleEntity.getPropertyName()}>`,
             varName: 'updateEntity',
