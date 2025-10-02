@@ -43,6 +43,24 @@ class EntityPrimaryNumberKeyDec implements IGmModuleClassDecorator {
     }
 }
 
+class EntityPrimaryStringKeyDec implements IGmModuleClassDecorator {
+    public getDecoratorName(): string {
+        return 'EntityPrimaryStringKey'
+    }
+    
+    public getProps(): string[] {
+        return ['']
+    }
+    
+    public getImport(): GmImport {
+        return {
+            isLibImport: true,
+            path: 'os-core-ts',
+            propertyName: 'EntityPrimaryStringKey',
+        }
+    }
+}
+
 class EntityDateAddDec implements IGmModuleClassDecorator {
     public getDecoratorName(): string {
         return 'EntityDateAdd'
@@ -426,16 +444,41 @@ export class GmModuleEntity extends GmAbstractModuleClass implements IGmModuleCl
     }
     
     public init(): void {
-        this.addImport({
-            path: 'os-core-ts',
-            propertyName: 'Entity',
-            isLibImport: true,
-        })
-        this.addImport({
-            path: 'os-core-ts',
-            propertyName: 'PrimaryNumberKey',
-            isLibImport: true,
-        })
+        
+        if(this.getConfig().repository.dbType === 'noSql'){
+            this.addVar({
+                type: 'PrimaryStringKey',
+                defaultValue: null,
+                nullable: false,
+                optional: false,
+                readonly: false,
+                scope: 'public',
+                varName: `_id!`,
+                decorator: new EntityPrimaryStringKeyDec(),
+            })
+            this.addImport({
+                path: 'os-core-ts',
+                propertyName: 'PrimaryStringKey',
+                isLibImport: true,
+            })
+        }else{
+            this.addVar({
+                type: 'PrimaryNumberKey',
+                defaultValue: null,
+                nullable: false,
+                optional: false,
+                readonly: false,
+                scope: 'public',
+                varName: `id!`,
+                decorator: new EntityPrimaryNumberKeyDec(),
+            })
+            this.addImport({
+                path: 'os-core-ts',
+                propertyName: 'PrimaryNumberKey',
+                isLibImport: true,
+            })
+        }
+        
         this.addImport({
             path: 'os-core-ts',
             propertyName: 'DateAdd',
@@ -445,16 +488,6 @@ export class GmModuleEntity extends GmAbstractModuleClass implements IGmModuleCl
             path: 'os-core-ts',
             propertyName: 'DateUpdate',
             isLibImport: true,
-        })
-        this.addVar({
-            type: 'PrimaryNumberKey',
-            defaultValue: null,
-            nullable: false,
-            optional: false,
-            readonly: false,
-            scope: 'public',
-            varName: `id!`,
-            decorator: new EntityPrimaryNumberKeyDec(),
         })
         this.addVar({
             type: 'DateAdd',

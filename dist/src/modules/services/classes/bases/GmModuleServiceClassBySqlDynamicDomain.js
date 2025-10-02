@@ -6,7 +6,7 @@ const GmModuleRepositorySqlByDynamicDomain_1 = require("../../../repository/GmMo
 const GmInjectableDec_1 = require("../../../../decorators/controllerDecorators/GmInjectableDec");
 const PROP_NAMES = {
     repository: 'repository',
-    getRepositoryCb: 'loaderRepository',
+    loaderRepository: 'loaderRepository',
     domain: 'domain',
 };
 class GmModuleServiceClassBySqlDynamicDomain extends GmModuleAbstractServiceClass_1.GmModuleAbstractServiceClass {
@@ -14,7 +14,7 @@ class GmModuleServiceClassBySqlDynamicDomain extends GmModuleAbstractServiceClas
         super(config, serviceName);
         this.gmModuleRepositorySqlByDynamicDomain = new GmModuleRepositorySqlByDynamicDomain_1.GmModuleRepositorySqlByDynamicDomain(config, {
             repositoryVarName: PROP_NAMES.repository,
-            getRepositoryCbVarName: `this.${PROP_NAMES.getRepositoryCb}`,
+            loaderRepositoryVarName: `this.${PROP_NAMES.loaderRepository}`,
             domainVarName: PROP_NAMES.domain,
         });
     }
@@ -39,7 +39,7 @@ class GmModuleServiceClassBySqlDynamicDomain extends GmModuleAbstractServiceClas
     init() {
         this.addModule(this.gmModuleRepositorySqlByDynamicDomain);
         this.addConstructorProp({
-            varName: PROP_NAMES.getRepositoryCb,
+            varName: PROP_NAMES.loaderRepository,
             type: this.gmModuleRepositorySqlByDynamicDomain.getPropertyName(),
             defaultValue: null,
             privateReadOnly: true,

@@ -1,6 +1,6 @@
 import { IGmModuleClassMethod } from "../../interfaces/gmModule";
 import { GmAbstractModuleClassMethod } from "../../abstractModule/GmAbstractModuleClassMethod";
-import { GmCrudConfig } from "../../../os-core";
+import { GmCrudConfig } from 'os-core-ts';
 import { GmModuleEntity } from "../../entity/GmModuleEntity";
 export declare class GmModuleRepositoryMethodUpdate extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {
     private readonly repositoryVarName;

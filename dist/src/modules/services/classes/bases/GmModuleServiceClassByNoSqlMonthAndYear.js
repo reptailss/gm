@@ -3,27 +3,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GmModuleServiceClassByNoSqlMonthAndYear = void 0;
 const GmModuleAbstractServiceClass_1 = require("../abstract/GmModuleAbstractServiceClass");
 const GmModuleRepositoryByNoSqlMonthAndYear_1 = require("../../../repository/GmModuleRepositoryByNoSqlMonthAndYear");
-const GmModuleEntityType_1 = require("../../../repository/GmModuleEntityType");
 const GmInjectableDec_1 = require("../../../../decorators/controllerDecorators/GmInjectableDec");
 const PROP_NAMES = {
     repository: 'repository',
-    getRepositoryCb: 'loaderRepository',
+    loaderRepository: 'loaderRepository',
     month: 'month',
     year: 'year',
 };
 class GmModuleServiceClassByNoSqlMonthAndYear extends GmModuleAbstractServiceClass_1.GmModuleAbstractServiceClass {
     constructor(config, className) {
         super(config, className);
-        this.repository = new GmModuleRepositoryByNoSqlMonthAndYear_1.GmModuleRepositoryByNoSqlMonthAndYear(config, {
+        this.gmModuleRepositoryByNoSqlMonthAndYear = new GmModuleRepositoryByNoSqlMonthAndYear_1.GmModuleRepositoryByNoSqlMonthAndYear(config, {
             repositoryVarName: PROP_NAMES.repository,
-            getRepositoryCbVarName: `this.${PROP_NAMES.getRepositoryCb}`,
+            loaderRepositoryVarName: `this.${PROP_NAMES.loaderRepository}`,
             monthVarName: PROP_NAMES.month,
             yearVarName: PROP_NAMES.year,
         });
-        this.entityType = new GmModuleEntityType_1.GmModuleEntityType(config);
     }
     getModuleRepository() {
-        return this.repository;
+        return this.gmModuleRepositoryByNoSqlMonthAndYear;
+    }
+    getLoaderRepositoryVarName() {
+        return `this.${PROP_NAMES.loaderRepository}`;
     }
     addAndInitMethod(method, monthVarName, yearVarName) {
         method.prependBodyElement({
@@ -31,13 +32,13 @@ class GmModuleServiceClassByNoSqlMonthAndYear extends GmModuleAbstractServiceCla
             value: this.renderInitRepository(),
         });
         method.addProp({
-            varName: PROP_NAMES.year,
+            varName: PROP_NAMES.month,
             callVarName: monthVarName,
             decorator: null,
             type: 'number',
         });
         method.addProp({
-            varName: PROP_NAMES.month,
+            varName: PROP_NAMES.year,
             callVarName: yearVarName,
             decorator: null,
             type: 'number',
@@ -47,15 +48,14 @@ class GmModuleServiceClassByNoSqlMonthAndYear extends GmModuleAbstractServiceCla
         return this;
     }
     renderInitRepository() {
-        return `const ${PROP_NAMES.repository} = await ${this.repository.getInitRepository()}`;
+        return `const ${PROP_NAMES.repository} = await ${this.gmModuleRepositoryByNoSqlMonthAndYear.getInitRepository()}`;
     }
     init() {
-        this.addModule(this.repository);
-        this.addModule(this.entityType);
+        this.addModule(this.gmModuleRepositoryByNoSqlMonthAndYear);
         this.addConstructorProp({
-            varName: PROP_NAMES.getRepositoryCb,
-            type: this.entityType.getPropertyName(),
-            defaultValue: this.repository.getPropertyName(),
+            varName: PROP_NAMES.loaderRepository,
+            type: this.gmModuleRepositoryByNoSqlMonthAndYear.getPropertyName(),
+            defaultValue: null,
             privateReadOnly: true,
         });
         this.addDecorator(new GmInjectableDec_1.GmInjectableDec());

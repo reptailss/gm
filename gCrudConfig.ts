@@ -40,7 +40,7 @@ export default function buildGmCrudConfig(): GmCrudConfig {
             plural: 'Test',
         },
         moduleName: 'Test',
-        repository: sqlByDynamicDomain,
+        repository: noSqlByYearAndMonth,
         hasSeparated: true,
         endpoints: {
             add: {hasActionLogger: true, hasAuth: true, hasStructureAccess: true},
@@ -49,6 +49,5 @@ export default function buildGmCrudConfig(): GmCrudConfig {
             get: {hasAuth: false, hasStructureAccess: true},
             list: {hasAuth: false, hasStructureAccess: true},
         },
-        rootDir: 'src/test',
     }
 }

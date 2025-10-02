@@ -114,7 +114,7 @@ export class GmModuleRepositorySqlByDynamicLeId extends GmAbstractModuleClass im
     
     public api: IGmModuleRepositoryApi
     
-    private getRepositoryCbVarName: string
+    private loaderRepositoryVarName: string
     private leIdVarName: string
     private loaderRepository: LoaderRepository
     
@@ -122,16 +122,16 @@ export class GmModuleRepositorySqlByDynamicLeId extends GmAbstractModuleClass im
         config: GmCrudConfig,
         {
             repositoryVarName,
-            getRepositoryCbVarName,
+            loaderRepositoryVarName,
             leIdVarName,
         }: {
             repositoryVarName: string,
-            getRepositoryCbVarName: string,
+            loaderRepositoryVarName: string,
             leIdVarName: string,
         },
     ) {
         super(config)
-        this.getRepositoryCbVarName = getRepositoryCbVarName
+        this.loaderRepositoryVarName = loaderRepositoryVarName
         this.leIdVarName = leIdVarName
         this.api = new GmModuleRepositoryApiSql(repositoryVarName)
         this.loaderRepository = new LoaderRepository(this.getConfig(), `this.${PROP_VAR_NAMES.loaderSqlRepository}`)
@@ -150,7 +150,7 @@ export class GmModuleRepositorySqlByDynamicLeId extends GmAbstractModuleClass im
     }
     
     public getInitRepository(): string {
-        return `${this.getRepositoryCbVarName}.${this.loaderRepository.getPropertyName()}(${this.leIdVarName})`
+        return `${this.loaderRepositoryVarName}.${this.loaderRepository.getPropertyName()}(${this.leIdVarName})`
     }
     
     

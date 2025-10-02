@@ -75,6 +75,7 @@ export class GmModuleServiceClassCrudByNoSqlMonthAndYear extends GmModuleService
             this.getConfig(),
             this.getModuleRepository(),
             this.allCallVarNames.getPagination,
+            this.getLoaderRepositoryVarName()
         ))
 
         this.api = new GmModuleServiceClassApiAll(
@@ -148,6 +149,7 @@ export class GmModuleServiceClassGetAllByNoSqlMonthAndYear extends GmModuleServi
             this.getConfig(),
             this.getModuleRepository(),
             this.callVarNames,
+            this.getLoaderRepositoryVarName()
         ))
 
         this.api = new GmModuleServiceClassApiGetPagination(

@@ -1,15 +1,15 @@
 import {IGmModuleClass} from '@modules/interfaces/gmModule'
 import {GmCrudConfig} from 'os-core-ts'
 import {GmAbstractModuleClass} from '@modules/abstractModule/GmAbstractModuleClass'
-import {GmModuleRepositoryMethodFindAll} from '@modules/repository/methods/GmModuleRepositoryMethodFindAll'
+import {GmModuleSqlRepositoryMethodFindAll} from '@modules/repository/sqlMethods/GmModuleSqlRepositoryMethodFindAll'
 import {GmModuleEntity} from '@modules/entity/GmModuleEntity'
-import {GmModuleRepositoryMethodFindOne} from '@modules/repository/methods/GmModuleRepositoryMethodFindOne'
-import {GmModuleRepositoryMethodFindByPk} from '@modules/repository/methods/GmModuleRepositoryMethodFindByPk'
-import {GmModuleRepositoryMethodCreate} from '@modules/repository/methods/GmModuleRepositoryMethodCreate'
-import {GmModuleRepositoryMethodUpdate} from '@modules/repository/methods/GmModuleRepositoryMethodUpdate'
-import {GmModuleRepositoryMethodGetConfig} from '@modules/repository/methods/GmModuleRepositoryMethodGetConfig'
-import {GmModuleRepositoryMethodPagination} from '@modules/repository/methods/GmModuleRepositoryMethodPagination'
-import {GmModuleRepositoryMethodDestroy} from '@modules/repository/methods/GmModuleRepositoryMethodDestroy'
+import {GmModuleSqlRepositoryMethodFindOne} from '@modules/repository/sqlMethods/GmModuleSqlRepositoryMethodFindOne'
+import {GmModuleSqlRepositoryMethodFindByPk} from '@modules/repository/sqlMethods/GmModuleSqlRepositoryMethodFindByPk'
+import {GmModuleSqlRepositoryMethodCreate} from '@modules/repository/sqlMethods/GmModuleSqlRepositoryMethodCreate'
+import {GmModuleSqlRepositoryMethodUpdate} from '@modules/repository/sqlMethods/GmModuleSqlRepositoryMethodUpdate'
+import {GmModuleSqlRepositoryMethodGetConfig} from '@modules/repository/sqlMethods/GmModuleSqlRepositoryMethodGetConfig'
+import {GmModuleSqlRepositoryMethodPagination} from '@modules/repository/sqlMethods/GmModuleSqlRepositoryMethodPagination'
+import {GmModuleSqlRepositoryMethodDestroy} from '@modules/repository/sqlMethods/GmModuleSqlRepositoryMethodDestroy'
 
 
 export abstract class GmAbstractModuleClassRepositorySql extends GmAbstractModuleClass implements IGmModuleClass {
@@ -46,40 +46,40 @@ export abstract class GmAbstractModuleClassRepositorySql extends GmAbstractModul
     public init() {
         this.addModule(this.gmModuleEntity)
         
-        this.addMethod(new GmModuleRepositoryMethodCreate(
+        this.addMethod(new GmModuleSqlRepositoryMethodCreate(
             this.getConfig(),
             this.repositoryVarName,
         ))
-        this.addMethod(new GmModuleRepositoryMethodUpdate(
-            this.getConfig(),
-            this.repositoryVarName,
-        ))
-        
-        this.addMethod(new GmModuleRepositoryMethodDestroy(
+        this.addMethod(new GmModuleSqlRepositoryMethodUpdate(
             this.getConfig(),
             this.repositoryVarName,
         ))
         
-        this.addMethod(new GmModuleRepositoryMethodFindOne(
-            this.getConfig(),
-            this.repositoryVarName,
-        ))
-        this.addMethod(new GmModuleRepositoryMethodFindByPk(
+        this.addMethod(new GmModuleSqlRepositoryMethodDestroy(
             this.getConfig(),
             this.repositoryVarName,
         ))
         
-        this.addMethod(new GmModuleRepositoryMethodFindAll(
+        this.addMethod(new GmModuleSqlRepositoryMethodFindOne(
+            this.getConfig(),
+            this.repositoryVarName,
+        ))
+        this.addMethod(new GmModuleSqlRepositoryMethodFindByPk(
             this.getConfig(),
             this.repositoryVarName,
         ))
         
-        this.addMethod(new GmModuleRepositoryMethodPagination(
+        this.addMethod(new GmModuleSqlRepositoryMethodFindAll(
             this.getConfig(),
             this.repositoryVarName,
         ))
         
-        this.addMethod(new GmModuleRepositoryMethodGetConfig(
+        this.addMethod(new GmModuleSqlRepositoryMethodPagination(
+            this.getConfig(),
+            this.repositoryVarName,
+        ))
+        
+        this.addMethod(new GmModuleSqlRepositoryMethodGetConfig(
             this.getConfig(),
             this.repositoryVarName,
         ))

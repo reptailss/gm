@@ -18,7 +18,7 @@ class GmModuleServiceClassCrudByNoSqlMonthAndYear extends GmModuleServiceClassBy
         super.init();
         this.addService(this.actionsLoggerService);
         this.addAndInitMethod(new GmModuleServiceMethodCreate_1.GmModuleServiceMethodCreate(this.getConfig(), this.getModuleRepository(), this.actionsLoggerService, this.allCallVarNames.create), this.allCallVarNames.create.month, this.allCallVarNames.create.year);
-        this.addMethod(new GmModuleServiceMethodGetPaginationNoSql_1.GmModuleServiceMethodGetPaginationNoSql(this.getConfig(), this.getModuleRepository(), this.allCallVarNames.getPagination));
+        this.addMethod(new GmModuleServiceMethodGetPaginationNoSql_1.GmModuleServiceMethodGetPaginationNoSql(this.getConfig(), this.getModuleRepository(), this.allCallVarNames.getPagination, this.getLoaderRepositoryVarName()));
         this.api = new GmModuleServiceClassCurdApi_1.GmModuleServiceClassApiAll(this.serviceVarName, this.getMethodByIndex(0), this.getMethodByIndex(1), this.getMethodByIndex(1), this.getMethodByIndex(1), this.getMethodByIndex(1));
     }
 }
@@ -46,7 +46,7 @@ class GmModuleServiceClassGetAllByNoSqlMonthAndYear extends GmModuleServiceClass
     }
     init() {
         super.init();
-        this.addMethod(new GmModuleServiceMethodGetPaginationNoSql_1.GmModuleServiceMethodGetPaginationNoSql(this.getConfig(), this.getModuleRepository(), this.callVarNames));
+        this.addMethod(new GmModuleServiceMethodGetPaginationNoSql_1.GmModuleServiceMethodGetPaginationNoSql(this.getConfig(), this.getModuleRepository(), this.callVarNames, this.getLoaderRepositoryVarName()));
         this.api = new GmModuleServiceClassCurdApi_1.GmModuleServiceClassApiGetPagination(this.serviceVarName, this.getMethodByIndex(0));
     }
 }

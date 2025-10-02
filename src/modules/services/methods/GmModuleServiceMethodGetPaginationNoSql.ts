@@ -26,6 +26,7 @@ export class GmModuleServiceMethodGetPaginationNoSql extends GmAbstractModuleCla
         config: GmCrudConfig,
         gmModuleRepository: IGmModuleRepository,
         callVarNames: typeof PROPS_VAR_NAMES,
+        private readonly loadRepositoryVarName:string
     ) {
         super(config)
         this.gmModuleDto = new GmModuleDto(config)
@@ -78,7 +79,7 @@ export class GmModuleServiceMethodGetPaginationNoSql extends GmAbstractModuleCla
                 paramsVarName: PROPS_VAR_NAMES.params,
                 dateStartVarName: PROPS_VAR_NAMES.dateStart,
                 dateEndVarName: PROPS_VAR_NAMES.dateEnd,
-                getRepositoryCbVarName: 'this.getRepositoryCb',
+                loaderRepositoryVarName: this.loadRepositoryVarName,
             })}`,
         })
     }

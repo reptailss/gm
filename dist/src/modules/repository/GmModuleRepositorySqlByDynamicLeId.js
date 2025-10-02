@@ -77,9 +77,9 @@ class LoaderRepository extends GmAbstractModuleClassMethod_1.GmAbstractModuleCla
     }
 }
 class GmModuleRepositorySqlByDynamicLeId extends GmAbstractModuleClass_1.GmAbstractModuleClass {
-    constructor(config, { repositoryVarName, getRepositoryCbVarName, leIdVarName, }) {
+    constructor(config, { repositoryVarName, loaderRepositoryVarName, leIdVarName, }) {
         super(config);
-        this.getRepositoryCbVarName = getRepositoryCbVarName;
+        this.loaderRepositoryVarName = loaderRepositoryVarName;
         this.leIdVarName = leIdVarName;
         this.api = new GmModuleRepositoryApiSql_1.GmModuleRepositoryApiSql(repositoryVarName);
         this.loaderRepository = new LoaderRepository(this.getConfig(), `this.${PROP_VAR_NAMES.loaderSqlRepository}`);
@@ -94,7 +94,7 @@ class GmModuleRepositorySqlByDynamicLeId extends GmAbstractModuleClass_1.GmAbstr
         return `Loader${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.plural)}Repository`;
     }
     getInitRepository() {
-        return `${this.getRepositoryCbVarName}.${this.loaderRepository.getPropertyName()}(${this.leIdVarName})`;
+        return `${this.loaderRepositoryVarName}.${this.loaderRepository.getPropertyName()}(${this.leIdVarName})`;
     }
     init() {
         this.setFileWriteMode('appendAfter');

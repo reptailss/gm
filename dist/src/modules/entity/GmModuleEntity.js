@@ -33,6 +33,21 @@ class EntityPrimaryNumberKeyDec {
         };
     }
 }
+class EntityPrimaryStringKeyDec {
+    getDecoratorName() {
+        return 'EntityPrimaryStringKey';
+    }
+    getProps() {
+        return [''];
+    }
+    getImport() {
+        return {
+            isLibImport: true,
+            path: 'os-core-ts',
+            propertyName: 'EntityPrimaryStringKey',
+        };
+    }
+}
 class EntityDateAddDec {
     getDecoratorName() {
         return 'EntityDateAdd';
@@ -313,16 +328,40 @@ class GmModuleEntity extends GmAbstractModuleClass_1.GmAbstractModuleClass {
         return 'entity.ts';
     }
     init() {
-        this.addImport({
-            path: 'os-core-ts',
-            propertyName: 'Entity',
-            isLibImport: true,
-        });
-        this.addImport({
-            path: 'os-core-ts',
-            propertyName: 'PrimaryNumberKey',
-            isLibImport: true,
-        });
+        if (this.getConfig().repository.dbType === 'noSql') {
+            this.addVar({
+                type: 'PrimaryStringKey',
+                defaultValue: null,
+                nullable: false,
+                optional: false,
+                readonly: false,
+                scope: 'public',
+                varName: `_id!`,
+                decorator: new EntityPrimaryStringKeyDec(),
+            });
+            this.addImport({
+                path: 'os-core-ts',
+                propertyName: 'PrimaryStringKey',
+                isLibImport: true,
+            });
+        }
+        else {
+            this.addVar({
+                type: 'PrimaryNumberKey',
+                defaultValue: null,
+                nullable: false,
+                optional: false,
+                readonly: false,
+                scope: 'public',
+                varName: `id!`,
+                decorator: new EntityPrimaryNumberKeyDec(),
+            });
+            this.addImport({
+                path: 'os-core-ts',
+                propertyName: 'PrimaryNumberKey',
+                isLibImport: true,
+            });
+        }
         this.addImport({
             path: 'os-core-ts',
             propertyName: 'DateAdd',
@@ -332,16 +371,6 @@ class GmModuleEntity extends GmAbstractModuleClass_1.GmAbstractModuleClass {
             path: 'os-core-ts',
             propertyName: 'DateUpdate',
             isLibImport: true,
-        });
-        this.addVar({
-            type: 'PrimaryNumberKey',
-            defaultValue: null,
-            nullable: false,
-            optional: false,
-            readonly: false,
-            scope: 'public',
-            varName: `id!`,
-            decorator: new EntityPrimaryNumberKeyDec(),
         });
         this.addVar({
             type: 'DateAdd',

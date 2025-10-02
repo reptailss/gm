@@ -4,12 +4,12 @@ import { GmCrudConfig } from "../../os-core";
 import { GmAbstractModuleClass } from "../abstractModule/GmAbstractModuleClass";
 export declare class GmModuleRepositorySqlByDynamicDomain extends GmAbstractModuleClass implements IGmModuleRepository {
     api: IGmModuleRepositoryApi;
-    private getRepositoryCbVarName;
+    private loaderRepositoryVarName;
     private domainVarName;
     private loaderRepository;
-    constructor(config: GmCrudConfig, { repositoryVarName, domainVarName, getRepositoryCbVarName, }: {
+    constructor(config: GmCrudConfig, { repositoryVarName, domainVarName, loaderRepositoryVarName, }: {
         repositoryVarName: string;
-        getRepositoryCbVarName: string;
+        loaderRepositoryVarName: string;
         domainVarName: string;
     });
     getDirName(): string;

@@ -1,18 +1,23 @@
-import { GmAbstractModuleFnRepositoryNoSql } from "./abstractRepository/GmAbstractModuleFnRepositoryNoSql";
 import { IGmModuleRepository } from "./interfaces/gmModuleRepository";
 import { IGmModuleRepositoryApi } from "./interfaces/gmModuleRepositoryApi";
 import { GmCrudConfig } from "../../os-core";
-export declare class GmModuleRepositoryByNoSqlMonthAndYear extends GmAbstractModuleFnRepositoryNoSql implements IGmModuleRepository {
+import { GmAbstractModuleClass } from "../abstractModule/GmAbstractModuleClass";
+import { GmModuleEntity } from "../entity/GmModuleEntity";
+export declare class GmModuleRepositoryByNoSqlMonthAndYear extends GmAbstractModuleClass implements IGmModuleRepository {
     private monthVarName;
     private yearVarName;
-    private getRepositoryCbVarName;
+    private loaderRepositoryVarName;
+    private loaderRepository;
+    readonly gmModuleEntity: GmModuleEntity;
     api: IGmModuleRepositoryApi;
-    constructor(config: GmCrudConfig, { repositoryVarName, getRepositoryCbVarName, monthVarName, yearVarName, }: {
+    constructor(config: GmCrudConfig, { repositoryVarName, loaderRepositoryVarName, monthVarName, yearVarName, }: {
         repositoryVarName: string;
-        getRepositoryCbVarName: string;
+        loaderRepositoryVarName: string;
         monthVarName: string;
         yearVarName: string;
     });
+    getDirName(): string;
+    getFileName(): string;
     getPropertyName(): string;
     getInitRepository(): string;
     init(): void;

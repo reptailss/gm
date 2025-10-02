@@ -2,15 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GmAbstractModuleClassRepositorySql = void 0;
 const GmAbstractModuleClass_1 = require("../../abstractModule/GmAbstractModuleClass");
-const GmModuleRepositoryMethodFindAll_1 = require("../methods/GmModuleRepositoryMethodFindAll");
+const GmModuleSqlRepositoryMethodFindAll_1 = require("../sqlMethods/GmModuleSqlRepositoryMethodFindAll");
 const GmModuleEntity_1 = require("../../entity/GmModuleEntity");
-const GmModuleRepositoryMethodFindOne_1 = require("../methods/GmModuleRepositoryMethodFindOne");
-const GmModuleRepositoryMethodFindByPk_1 = require("../methods/GmModuleRepositoryMethodFindByPk");
-const GmModuleRepositoryMethodCreate_1 = require("../methods/GmModuleRepositoryMethodCreate");
-const GmModuleRepositoryMethodUpdate_1 = require("../methods/GmModuleRepositoryMethodUpdate");
-const GmModuleRepositoryMethodGetConfig_1 = require("../methods/GmModuleRepositoryMethodGetConfig");
-const GmModuleRepositoryMethodPagination_1 = require("../methods/GmModuleRepositoryMethodPagination");
-const GmModuleRepositoryMethodDestroy_1 = require("../methods/GmModuleRepositoryMethodDestroy");
+const GmModuleSqlRepositoryMethodFindOne_1 = require("../sqlMethods/GmModuleSqlRepositoryMethodFindOne");
+const GmModuleSqlRepositoryMethodFindByPk_1 = require("../sqlMethods/GmModuleSqlRepositoryMethodFindByPk");
+const GmModuleSqlRepositoryMethodCreate_1 = require("../sqlMethods/GmModuleSqlRepositoryMethodCreate");
+const GmModuleSqlRepositoryMethodUpdate_1 = require("../sqlMethods/GmModuleSqlRepositoryMethodUpdate");
+const GmModuleSqlRepositoryMethodGetConfig_1 = require("../sqlMethods/GmModuleSqlRepositoryMethodGetConfig");
+const GmModuleSqlRepositoryMethodPagination_1 = require("../sqlMethods/GmModuleSqlRepositoryMethodPagination");
+const GmModuleSqlRepositoryMethodDestroy_1 = require("../sqlMethods/GmModuleSqlRepositoryMethodDestroy");
 class GmAbstractModuleClassRepositorySql extends GmAbstractModuleClass_1.GmAbstractModuleClass {
     constructor(config, repositoryVarName) {
         super(config);
@@ -31,14 +31,14 @@ class GmAbstractModuleClassRepositorySql extends GmAbstractModuleClass_1.GmAbstr
     }
     init() {
         this.addModule(this.gmModuleEntity);
-        this.addMethod(new GmModuleRepositoryMethodCreate_1.GmModuleRepositoryMethodCreate(this.getConfig(), this.repositoryVarName));
-        this.addMethod(new GmModuleRepositoryMethodUpdate_1.GmModuleRepositoryMethodUpdate(this.getConfig(), this.repositoryVarName));
-        this.addMethod(new GmModuleRepositoryMethodDestroy_1.GmModuleRepositoryMethodDestroy(this.getConfig(), this.repositoryVarName));
-        this.addMethod(new GmModuleRepositoryMethodFindOne_1.GmModuleRepositoryMethodFindOne(this.getConfig(), this.repositoryVarName));
-        this.addMethod(new GmModuleRepositoryMethodFindByPk_1.GmModuleRepositoryMethodFindByPk(this.getConfig(), this.repositoryVarName));
-        this.addMethod(new GmModuleRepositoryMethodFindAll_1.GmModuleRepositoryMethodFindAll(this.getConfig(), this.repositoryVarName));
-        this.addMethod(new GmModuleRepositoryMethodPagination_1.GmModuleRepositoryMethodPagination(this.getConfig(), this.repositoryVarName));
-        this.addMethod(new GmModuleRepositoryMethodGetConfig_1.GmModuleRepositoryMethodGetConfig(this.getConfig(), this.repositoryVarName));
+        this.addMethod(new GmModuleSqlRepositoryMethodCreate_1.GmModuleSqlRepositoryMethodCreate(this.getConfig(), this.repositoryVarName));
+        this.addMethod(new GmModuleSqlRepositoryMethodUpdate_1.GmModuleSqlRepositoryMethodUpdate(this.getConfig(), this.repositoryVarName));
+        this.addMethod(new GmModuleSqlRepositoryMethodDestroy_1.GmModuleSqlRepositoryMethodDestroy(this.getConfig(), this.repositoryVarName));
+        this.addMethod(new GmModuleSqlRepositoryMethodFindOne_1.GmModuleSqlRepositoryMethodFindOne(this.getConfig(), this.repositoryVarName));
+        this.addMethod(new GmModuleSqlRepositoryMethodFindByPk_1.GmModuleSqlRepositoryMethodFindByPk(this.getConfig(), this.repositoryVarName));
+        this.addMethod(new GmModuleSqlRepositoryMethodFindAll_1.GmModuleSqlRepositoryMethodFindAll(this.getConfig(), this.repositoryVarName));
+        this.addMethod(new GmModuleSqlRepositoryMethodPagination_1.GmModuleSqlRepositoryMethodPagination(this.getConfig(), this.repositoryVarName));
+        this.addMethod(new GmModuleSqlRepositoryMethodGetConfig_1.GmModuleSqlRepositoryMethodGetConfig(this.getConfig(), this.repositoryVarName));
     }
 }
 exports.GmAbstractModuleClassRepositorySql = GmAbstractModuleClassRepositorySql;

@@ -3,10 +3,10 @@ import { IGmModuleClass, IGmModuleClassMethod } from "../../../interfaces/gmModu
 import { GmCrudConfig } from "../../../../os-core";
 import { IGmModuleRepository } from "../../../repository/interfaces/gmModuleRepository";
 export declare class GmModuleServiceClassByNoSqlMonthAndYear extends GmModuleAbstractServiceClass implements IGmModuleClass {
-    private readonly repository;
-    private readonly entityType;
+    private readonly gmModuleRepositoryByNoSqlMonthAndYear;
     constructor(config: GmCrudConfig, className: string);
     getModuleRepository(): IGmModuleRepository;
+    getLoaderRepositoryVarName(): string;
     addAndInitMethod(method: IGmModuleClassMethod, monthVarName: string, yearVarName: string): this;
     renderInitRepository(): string;
     init(): void;

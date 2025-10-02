@@ -8,12 +8,13 @@ declare const PROPS_VAR_NAMES: {
     dateEnd: string;
 };
 export declare class GmModuleServiceMethodGetPaginationNoSql extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {
+    private readonly loadRepositoryVarName;
     private readonly gmModuleDto;
     private readonly gmServicePaginationQueryParamsType;
     private readonly gmServicePaginationValuesType;
     private readonly gmServicePaginationNoSql;
     private readonly callVarNames;
-    constructor(config: GmCrudConfig, gmModuleRepository: IGmModuleRepository, callVarNames: typeof PROPS_VAR_NAMES);
+    constructor(config: GmCrudConfig, gmModuleRepository: IGmModuleRepository, callVarNames: typeof PROPS_VAR_NAMES, loadRepositoryVarName: string);
     getPropertyName(): string;
     init(): void;
 }

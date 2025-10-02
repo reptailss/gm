@@ -116,7 +116,7 @@ export class GmModuleRepositorySqlByDynamicDomain extends GmAbstractModuleClass 
     
     public api: IGmModuleRepositoryApi
     
-    private getRepositoryCbVarName: string
+    private loaderRepositoryVarName: string
     private domainVarName: string
     private loaderRepository: LoaderRepository
     
@@ -125,15 +125,15 @@ export class GmModuleRepositorySqlByDynamicDomain extends GmAbstractModuleClass 
         {
             repositoryVarName,
             domainVarName,
-            getRepositoryCbVarName,
+            loaderRepositoryVarName,
         }: {
             repositoryVarName: string,
-            getRepositoryCbVarName: string,
+            loaderRepositoryVarName: string,
             domainVarName: string,
         },
     ) {
         super(config)
-        this.getRepositoryCbVarName = getRepositoryCbVarName
+        this.loaderRepositoryVarName = loaderRepositoryVarName
         this.domainVarName = domainVarName
         this.api = new GmModuleRepositoryApiSql(repositoryVarName)
         this.loaderRepository = new LoaderRepository(this.getConfig(), `this.${PROP_VAR_NAMES.loaderSqlRepository}`)
@@ -152,7 +152,7 @@ export class GmModuleRepositorySqlByDynamicDomain extends GmAbstractModuleClass 
     }
     
     public getInitRepository(): string {
-        return `${this.getRepositoryCbVarName}.${this.loaderRepository.getPropertyName()}(${this.domainVarName})`
+        return `${this.loaderRepositoryVarName}.${this.loaderRepository.getPropertyName()}(${this.domainVarName})`
     }
     
     public init() {

@@ -12,8 +12,9 @@ const PROPS_VAR_NAMES = {
     dateEnd: 'dateEnd',
 };
 class GmModuleServiceMethodGetPaginationNoSql extends GmAbstractModuleClassMethod_1.GmAbstractModuleClassMethod {
-    constructor(config, gmModuleRepository, callVarNames) {
+    constructor(config, gmModuleRepository, callVarNames, loadRepositoryVarName) {
         super(config);
+        this.loadRepositoryVarName = loadRepositoryVarName;
         this.gmModuleDto = new GmModuleDto_1.GmModuleDto(config);
         this.gmServicePaginationQueryParamsType = new GmServicePaginationQueryParamsType_1.GmServicePaginationQueryParamsType();
         this.gmServicePaginationValuesType = new GmServicePaginationValuesType_1.GmServicePaginationValuesType();
@@ -55,7 +56,7 @@ class GmModuleServiceMethodGetPaginationNoSql extends GmAbstractModuleClassMetho
                 paramsVarName: PROPS_VAR_NAMES.params,
                 dateStartVarName: PROPS_VAR_NAMES.dateStart,
                 dateEndVarName: PROPS_VAR_NAMES.dateEnd,
-                getRepositoryCbVarName: 'this.getRepositoryCb',
+                loaderRepositoryVarName: this.loadRepositoryVarName,
             })}`,
         });
     }

@@ -8,7 +8,7 @@ import {GmInjectableDec} from '@decorators/controllerDecorators/GmInjectableDec'
 
 const PROP_NAMES = {
     repository: 'repository',
-    getRepositoryCb: 'loaderRepository',
+    loaderRepository: 'loaderRepository',
     legalEntityId: 'legalEntityId',
 }
 
@@ -25,7 +25,7 @@ export class GmModuleServiceClassBySqlDynamicLeId extends GmModuleAbstractServic
             config,
             {
                 repositoryVarName: PROP_NAMES.repository,
-                getRepositoryCbVarName: `this.${PROP_NAMES.getRepositoryCb}`,
+                loaderRepositoryVarName: `this.${PROP_NAMES.loaderRepository}`,
                 leIdVarName: PROP_NAMES.legalEntityId,
             },
         )
@@ -58,7 +58,7 @@ export class GmModuleServiceClassBySqlDynamicLeId extends GmModuleAbstractServic
         this.addModule(this.gmModuleRepositorySqlByDynamicLeId)
         
         this.addConstructorProp({
-            varName: PROP_NAMES.getRepositoryCb,
+            varName: PROP_NAMES.loaderRepository,
             type: this.gmModuleRepositorySqlByDynamicLeId.getPropertyName(),
             defaultValue: null,
             privateReadOnly: true,

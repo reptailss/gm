@@ -1,6 +1,6 @@
 import { GmAbstractModuleFn } from "../../abstractModule/GmAbstractModuleFn";
 import { IGmModuleFn } from "../../interfaces/gmModule";
-import { GmCrudConfig } from "../../../os-core";
+import { GmCrudConfig } from 'os-core-ts';
 export declare abstract class GmAbstractModuleFnRepositorySql extends GmAbstractModuleFn implements IGmModuleFn {
     private readonly entityType;
     private readonly gmModuleEntityInstance;

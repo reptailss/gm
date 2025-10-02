@@ -7,13 +7,13 @@ export class GmServicePaginationNoSql extends GmAbstractServiceFn implements IGm
     public getExport(): GmExport {
         return {
             path: 'os-core-ts',
-            propertyName: 'RepositoryNoSqlPagination',
+            propertyName: 'MultiCollectionPaginationNoSqlRepository',
             isLibImport: true,
         }
     }
     
     public getServiceName(): string {
-        return 'RepositoryNoSqlPagination'
+        return 'MultiCollectionPaginationNoSqlRepository'
     }
     
     
@@ -21,22 +21,22 @@ export class GmServicePaginationNoSql extends GmAbstractServiceFn implements IGm
                              paramsVarName,
                              dateStartVarName,
                              dateEndVarName,
-                             getRepositoryCbVarName,
+                             loaderRepositoryVarName,
                          }: {
         paramsVarName: string,
         dateStartVarName: string,
         dateEndVarName: string,
-        getRepositoryCbVarName: string,
+        loaderRepositoryVarName: string,
     }): string {
         const paramsStr = paramsVarName === 'params' ? paramsVarName : `params:${paramsVarName}`
         const dateStartStr = dateStartVarName === 'dateStart' ? dateStartVarName : `dateStart:${dateStartVarName}`
         const dateEndStr = dateEndVarName === 'dateEnd' ? dateEndVarName : `dateEnd:${dateEndVarName}`
-        const getRepositoryCbStr = getRepositoryCbVarName === 'getRepositoryCb' ? getRepositoryCbVarName : `getRepositoryCb:${getRepositoryCbVarName}`
-        return `RepositoryNoSqlPagination.byYearAndMoth({
+        const loaderRepositoryStr = loaderRepositoryVarName === 'loaderRepository' ? loaderRepositoryVarName : `loaderRepository:${loaderRepositoryVarName}`
+        return `MultiCollectionPaginationNoSqlRepository.byYearAndMoth({
             ${paramsStr},
             ${dateStartStr},
             ${dateEndStr},
-            ${getRepositoryCbStr}
+            ${loaderRepositoryStr}
         })
         `
     }
