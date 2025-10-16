@@ -25,7 +25,7 @@ class CreateAppEnvModule {
         if (this.config.hasMongo) {
             res.push({ key: 'INIT_MONGODB_PROTOCOL', value: this.getEnvValue('INIT_MONGODB_PROTOCOL') }, { key: 'INIT_MONGODB_HOST', value: this.getEnvValue('INIT_MONGODB_HOST') }, { key: 'INIT_MONGODB_PORT', value: this.getEnvValue('INIT_MONGODB_PORT') }, { key: 'INIT_MONGODB_USER', value: this.getEnvValue('INIT_MONGODB_USER') }, { key: 'INIT_MONGODB_PASSWORD', value: this.getEnvValue('INIT_MONGODB_PASSWORD') }, { key: 'INIT_MONGODB_OPTIONS', value: this.getEnvValue('INIT_MONGODB_OPTIONS') });
         }
-        if (this.config.hasStaticRedis) {
+        if (this.config.hasStaticRedis || (this.config.hasStructureAccess && this.config.hasDynamicSql)) {
             res.push({ key: 'INIT_REDIS_STATIC_HOST', value: this.getEnvValue('INIT_REDIS_STATIC_HOST') }, { key: 'INIT_REDIS_STATIC_PORT', value: this.getEnvValue('INIT_REDIS_STATIC_PORT') }, { key: 'INIT_REDIS_STATIC_PASSWORD', value: this.getEnvValue('INIT_REDIS_STATIC_PASSWORD') });
         }
         if (this.config.hasDynamicSql) {

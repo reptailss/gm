@@ -51,7 +51,7 @@ export class CreateAppEnvModule {
             )
         }
         
-        if(this.config.hasStaticRedis){
+        if(this.config.hasStaticRedis || (this.config.hasStructureAccess && this.config.hasDynamicSql)){
             res.push(
                 { key: 'INIT_REDIS_STATIC_HOST', value: this.getEnvValue('INIT_REDIS_STATIC_HOST') },
                 { key: 'INIT_REDIS_STATIC_PORT', value: this.getEnvValue('INIT_REDIS_STATIC_PORT') },

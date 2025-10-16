@@ -13,7 +13,7 @@ export class CreateAppPackageJsonModule {
         const rootDir = process.cwd()
         const packageJsonPath = path.join(rootDir, this.packageName, 'package.json')
         
-        const osCoreKey = 'INIT_OS_CORE_LIB' in this.config.env ? this.config.env.INIT_OS_CORE_LIB : 'git+https://{key}/{user}/node-core-framework-typescript.git#v2.0.0'
+        const osCoreKey = 'INIT_OS_CORE_LIB' in this.config.env ? this.config.env.INIT_OS_CORE_LIB : 'git+https://{key}/{user}/node-core-framework-typescript.git#v3.0.0'
         const packageJsonContent = {
             name: this.packageName,
             version: '1.0.0',
