@@ -17,7 +17,6 @@ export class GmModuleRepositoryApiSql implements IGmModuleRepositoryApi {
     
     public update(updateDtoVarName: string, props: {
         where: Record<string, string>
-        returning: boolean
     }): string {
         return `${this.repositoryVarName}.update(${updateDtoVarName},${GmObjectStringifyHelper.objectOptionsToString(props.where)})`
     }
@@ -25,7 +24,6 @@ export class GmModuleRepositoryApiSql implements IGmModuleRepositoryApi {
     public destroy(props: {
         where: Record<string, string>,
     }): string {
-        
         return `${this.repositoryVarName}.destroy(${GmObjectStringifyHelper.objectOptionsToString(props.where)})`
     }
     

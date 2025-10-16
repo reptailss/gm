@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GmModuleRepositorySqlByStaticDb = void 0;
-const GmModuleDbConnectionSql_1 = require("../dbConnectionSql/GmModuleDbConnectionSql");
+const GmModuleDbConnectionSql_1 = require("../dbConnection/GmModuleDbConnectionSql");
 const GmModuleRepositoryApiSql_1 = require("./api/GmModuleRepositoryApiSql");
 const StringCaseHelper_1 = require("../../helpers/StringCaseHelper");
 const GmAbstractModuleClassRepositorySql_1 = require("./abstractRepository/GmAbstractModuleClassRepositorySql");

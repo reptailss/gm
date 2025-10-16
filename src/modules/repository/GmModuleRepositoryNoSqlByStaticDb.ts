@@ -8,23 +8,28 @@ import {
     GmAbstractModuleClassRepositorySql,
 } from '@modules/repository/abstractRepository/GmAbstractModuleClassRepositorySql'
 import {GmInjectableDec} from '@decorators/controllerDecorators/GmInjectableDec'
+import {GmModuleRepositoryApiNoSql} from '@modules/repository/api/GmModuleRepositoryApiNoSql'
+import {GmModuleDbConnectionNoSql} from '@modules/dbConnection/GmModuleDbConnectionNoSql'
+import {
+    GmAbstractModuleClassRepositoryNoSql
+} from '@modules/repository/abstractRepository/GmAbstractModuleClassRepositoryNoSql'
 
 const VAR_NAMES = {
     repository: 'repository',
 }
 
-export class GmModuleRepositorySqlByStaticDb extends GmAbstractModuleClassRepositorySql implements IGmModuleRepository {
+export class GmModuleRepositoryNoSqlByStaticDb extends GmAbstractModuleClassRepositoryNoSql implements IGmModuleRepository {
     
     public api: IGmModuleRepositoryApi
-    private readonly gmModuleDbConnectionSql: GmModuleDbConnectionSql
+    private readonly gmModuleDbConnectionNoSql: GmModuleDbConnectionNoSql
     
     constructor(
         config: GmCrudConfig,
         repositoryVarName: string,
     ) {
         super(config, `this.${VAR_NAMES.repository}`)
-        this.gmModuleDbConnectionSql = new GmModuleDbConnectionSql(config)
-        this.api = new GmModuleRepositoryApiSql(repositoryVarName)
+        this.gmModuleDbConnectionNoSql = new GmModuleDbConnectionNoSql(config)
+        this.api = new GmModuleRepositoryApiNoSql(repositoryVarName)
         
     }
     
@@ -40,35 +45,36 @@ export class GmModuleRepositorySqlByStaticDb extends GmAbstractModuleClassReposi
         
         this.addImport({
             path: 'os-core-ts',
-            propertyName: 'LoaderSqlRepository',
+            propertyName: 'LoaderNoSqlRepository',
             isLibImport: true,
         })
         this.addImport({
             path: 'os-core-ts',
-            propertyName: 'ISqlRepository',
+            propertyName: 'INoSqlRepository',
             isLibImport: true,
         })
         this.addVar({
             varName: VAR_NAMES.repository,
             scope: 'private',
-            type: `ISqlRepository<${this.getEntityName()}>`,
+            type: `INoSqlRepository<${this.getEntityName()}>`,
             readonly: true,
             defaultValue: null,
         })
         this.addConstructorProp({
-            varName: 'loaderSqlRepository',
+            varName: 'loaderNoSqlRepository',
             privateReadOnly: false,
-            type: 'LoaderSqlRepository',
+            type: 'LoaderNoSqlRepository',
             defaultValue: null,
         })
-        this.addModule(this.gmModuleDbConnectionSql)
+        this.addModule(this.gmModuleDbConnectionNoSql)
         
         
         this.addElementConstructorBody(`
-        this.${VAR_NAMES.repository} = loaderSqlRepository.staticByDbConnection({
+        this.${VAR_NAMES.repository} = LoaderNoSqlRepository.staticByDbConnection({
             entity:${this.getEntityInstance()},
-            dbConnection:${this.gmModuleDbConnectionSql.getPropertyName()},
-            tableName:'${StringCaseHelper.toSnakeCase(this.getConfig().moduleName)}',
+            dbConnection:${this.gmModuleDbConnectionNoSql.getPropertyName()},
+            databaseName:'${StringCaseHelper.toSnakeCase(this.getConfig().moduleName)}',
+            collectionName:'${StringCaseHelper.toSnakeCase(this.getConfig().moduleName)}',
         })
         `)
         

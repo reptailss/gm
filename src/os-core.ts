@@ -119,7 +119,7 @@ export type GmCrudSqlRepositoryConfig = {
 export type GmCrudNoSqlRepositoryConfig = {
     columns: Record<string, GmRepositoryNoSqlColumn>
     dbType: 'noSql'
-    type: 'byDatabaseNameAndYearMonth'
+    type: 'byDatabaseNameAndYearMonth' | 'staticByDbConnection'
 }
 
 

@@ -5,7 +5,6 @@ export declare class GmModuleRepositoryApiSql implements IGmModuleRepositoryApi 
     create(createDtoVarName: string): string;
     update(updateDtoVarName: string, props: {
         where: Record<string, string>;
-        returning: boolean;
     }): string;
     destroy(props: {
         where: Record<string, string>;

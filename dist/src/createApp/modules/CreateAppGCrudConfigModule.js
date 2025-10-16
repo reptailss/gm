@@ -15,10 +15,16 @@ class CreateAppGCrudConfigModule {
         const packageJsonPath = path_1.default.join(rootDir, this.packageName, 'gCrudConfig.ts');
         const content = `
 
-import { GmCrudConfig, GmCrudNoSqlRepositoryConfig, GmCrudSqlRepositoryConfig } from 'os-core-ts'
+import { GmCrudConfig, GmCrudNoSqlRepositoryConfig, GmCrudSqlRepositoryConfig,GmCrudNoSqlRepositoryConfig } from 'os-core-ts'
 
-const sqlByStaticDb: GmCrudSqlRepositoryConfig = {
+const sqlByStaticDb: GmCrudNoSqlRepositoryConfig = {
     dbType: 'sql',
+    type: 'staticByDbConnection',
+    columns: { title: { type: 'STRING' }, description: { type: 'STRING' } }
+}
+
+const noSqlByStaticDb: GmCrudSqlRepositoryConfig = {
+    dbType: 'noSql',
     type: 'staticByDbConnection',
     columns: { title: { type: 'STRING' }, description: { type: 'STRING' } }
 }

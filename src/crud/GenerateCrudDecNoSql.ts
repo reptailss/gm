@@ -5,14 +5,27 @@ import {
     GmModuleControllerClassCreateByNoSqlMonthAndYear, GmModuleControllerClassCrudByNoSqlMonthAndYear,
     GmModuleControllerClassGetAllByNoSqlMonthAndYear,
 } from '@modules/controllers/classes/noSql/byMonthAndYear'
+import {
+    GmModuleControllerClassCreateBySqlStaticDb, GmModuleControllerClassCrudBySqlStaticDb,
+    GmModuleControllerClassDeleteBySqlStaticDb, GmModuleControllerClassGetAllBySqlStaticDb,
+    GmModuleControllerClassGetBySqlStaticDb,
+    GmModuleControllerClassUpdateBySqlStaticDb,
+} from '@modules/controllers/classes/sql/byStaticDb'
+import {
+    GmModuleControllerClassCreateByNoSqlStaticDb, GmModuleControllerClassCrudByNoSqlStaticDb,
+    GmModuleControllerClassDeleteByNoSqlStaticDb, GmModuleControllerClassGetAllByNoSqlStaticDb,
+    GmModuleControllerClassGetByNoSqlStaticDb,
+    GmModuleControllerClassUpdateByNoSqlStaticDb,
+} from '@modules/controllers/classes/noSql/byStaticDb'
 
 
 export class GmGenerateCrudDecNoSql extends GmGenerateAbstractCrudDec {
 
 
     constructor(config: GmCrudConfig) {
-
+        
         const controllers: IGmModuleClass[] = []
+        
         if (config.hasSeparated) {
             switch (config.repository.type) {
                 case 'byDatabaseNameAndYearMonth': {
@@ -20,9 +33,21 @@ export class GmGenerateCrudDecNoSql extends GmGenerateAbstractCrudDec {
                     controllers.push(new GmModuleControllerClassGetAllByNoSqlMonthAndYear(config))
                     break
                 }
+                case 'staticByDbConnection':{
+                    controllers.push(new GmModuleControllerClassCreateByNoSqlStaticDb(config))
+                    controllers.push(new GmModuleControllerClassUpdateByNoSqlStaticDb(config))
+                    controllers.push(new GmModuleControllerClassDeleteByNoSqlStaticDb(config))
+                    controllers.push(new GmModuleControllerClassGetByNoSqlStaticDb(config))
+                    controllers.push(new GmModuleControllerClassGetAllByNoSqlStaticDb(config))
+                    break
+                }
             }
         } else {
             switch (config.repository.type) {
+                case 'staticByDbConnection': {
+                    controllers.push(new GmModuleControllerClassCrudByNoSqlStaticDb(config))
+                    break
+                }
                 case 'byDatabaseNameAndYearMonth': {
                     controllers.push(new GmModuleControllerClassCrudByNoSqlMonthAndYear(config))
                     break

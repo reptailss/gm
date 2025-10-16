@@ -17,33 +17,22 @@ export class GmModuleRepositoryApiNoSql implements IGmModuleRepositoryApi {
     
     public update(updateDtoVarName: string, props: {
         where: Record<string, string>
-        returning: boolean
     }): string {
-        return `${this.repositoryVarName}.update(${updateDtoVarName},
-                     {
-                           where:${GmObjectStringifyHelper.objectOptionsToString(props.where)},
-                           returning:}
-                      },
-                      ${props.returning ? 'true' : 'false'}
-                )`
+        return `${this.repositoryVarName}.update(${updateDtoVarName},${GmObjectStringifyHelper.objectOptionsToString(props.where)})`
     }
     
     public destroy(props: {
         where: Record<string, string>,
     }): string {
-        
-        return `${this.repositoryVarName}.destroy({
-                           where:${GmObjectStringifyHelper.objectOptionsToString(props.where)}
-                      })`
+        return `${this.repositoryVarName}.destroy(${GmObjectStringifyHelper.objectOptionsToString(props.where)})`
     }
     
     public findOne(props: {
         where: Record<string, string>
     }): string {
-        return `${this.repositoryVarName}.findOne({
-                           where:${GmObjectStringifyHelper.objectOptionsToString(props.where)}
-                      })`
+        return `${this.repositoryVarName}.findOne(${GmObjectStringifyHelper.objectOptionsToString(props.where)})`
     }
+    
     
     public findByPk(idVarName: string): string {
         return `${this.repositoryVarName}.findByPk(${idVarName})`
@@ -52,7 +41,6 @@ export class GmModuleRepositoryApiNoSql implements IGmModuleRepositoryApi {
     public pagination(paramsVarName: string): string {
         return `${this.repositoryVarName}.pagination(${paramsVarName})`
     }
-    
     
     public getConfig(): string {
         return `${this.repositoryVarName}.getConfig()`

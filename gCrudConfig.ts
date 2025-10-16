@@ -15,6 +15,17 @@ const sqlByStaticDb: GmCrudSqlRepositoryConfig = {
     },
 }
 
+const noSqlByStaticDb: GmCrudNoSqlRepositoryConfig = {
+    dbType: 'noSql',
+    type: 'staticByDbConnection',
+    columns: {
+        title: {
+            type: 'STRING',
+            defaultValue: 'test',
+        }, description: {type: 'INTEGER'},
+    },
+}
+
 const sqlByDynamicDomain: GmCrudSqlRepositoryConfig = {
     dbType: 'sql',
     type: 'dynamicByDomain',
@@ -36,11 +47,11 @@ const noSqlByYearAndMonth: GmCrudNoSqlRepositoryConfig = {
 export default function buildGmCrudConfig(): GmCrudConfig {
     return {
         dtoName: {
-            singular: 'Test',
-            plural: 'Test',
+            singular: 'Test2',
+            plural: 'Test2',
         },
-        moduleName: 'Test',
-        repository: noSqlByYearAndMonth,
+        moduleName: 'Test2',
+        repository: noSqlByStaticDb,
         hasSeparated: true,
         endpoints: {
             add: {hasActionLogger: true, hasAuth: true, hasStructureAccess: true},
@@ -49,5 +60,6 @@ export default function buildGmCrudConfig(): GmCrudConfig {
             get: {hasAuth: false, hasStructureAccess: true},
             list: {hasAuth: false, hasStructureAccess: true},
         },
+        rootDir:'test'
     }
 }

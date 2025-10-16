@@ -5,7 +5,6 @@ export declare class GmModuleRepositoryApiNoSql implements IGmModuleRepositoryAp
     create(createDtoVarName: string): string;
     update(updateDtoVarName: string, props: {
         where: Record<string, string>;
-        returning: boolean;
     }): string;
     destroy(props: {
         where: Record<string, string>;

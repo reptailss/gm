@@ -10,23 +10,13 @@ class GmModuleRepositoryApiNoSql {
         return `${this.repositoryVarName}.create(${createDtoVarName})`;
     }
     update(updateDtoVarName, props) {
-        return `${this.repositoryVarName}.update(${updateDtoVarName},
-                     {
-                           where:${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectOptionsToString(props.where)},
-                           returning:}
-                      },
-                      ${props.returning ? 'true' : 'false'}
-                )`;
+        return `${this.repositoryVarName}.update(${updateDtoVarName},${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectOptionsToString(props.where)})`;
     }
     destroy(props) {
-        return `${this.repositoryVarName}.destroy({
-                           where:${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectOptionsToString(props.where)}
-                      })`;
+        return `${this.repositoryVarName}.destroy(${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectOptionsToString(props.where)})`;
     }
     findOne(props) {
-        return `${this.repositoryVarName}.findOne({
-                           where:${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectOptionsToString(props.where)}
-                      })`;
+        return `${this.repositoryVarName}.findOne(${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectOptionsToString(props.where)})`;
     }
     findByPk(idVarName) {
         return `${this.repositoryVarName}.findByPk(${idVarName})`;
