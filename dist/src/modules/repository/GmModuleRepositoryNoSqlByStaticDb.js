@@ -49,7 +49,6 @@ class GmModuleRepositoryNoSqlByStaticDb extends GmAbstractModuleClassRepositoryN
         this.${VAR_NAMES.repository} = loaderNoSqlRepository.staticByDbConnection({
             entity:${this.getEntityInstance()},
             dbConnection:${this.gmModuleDbConnectionNoSql.getPropertyName()},
-            databaseName:'${StringCaseHelper_1.StringCaseHelper.toSnakeCase(this.getConfig().moduleName)}',
             collectionName:'${StringCaseHelper_1.StringCaseHelper.toSnakeCase(this.getConfig().moduleName)}',
         })
         `);
