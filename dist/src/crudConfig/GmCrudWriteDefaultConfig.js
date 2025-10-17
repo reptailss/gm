@@ -18,6 +18,8 @@ class GmCrudWriteDefaultConfig {
         const baseInfo = `
     
     const sqlByStaticDb:GmCrudSqlRepositoryConfig = ${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectToString(gmCrudDefaultConfig_1.gmCrudDefaultConfig.sqlByStaticDbConnection)}
+    
+    const noSqlByStaticDb:GmCrudNoSqlRepositoryConfig = ${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectToString(gmCrudDefaultConfig_1.gmCrudDefaultConfig.noSqlByStaticDbConnection)}
    
     const sqlByDynamicDomain:GmCrudSqlRepositoryConfig = ${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectToString(gmCrudDefaultConfig_1.gmCrudDefaultConfig.sqlByDynamicDomain)}
     
@@ -37,7 +39,7 @@ class GmCrudWriteDefaultConfig {
                          plural:'Users',
                     },
                     moduleName: 'Users',
-                    repository: sqlByDynamicDomain,
+                    repository: sqlByStaticDb,
                     hasSeparated:true,
                     endpoints:${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectToString(gmCrudDefaultConfig_1.gmCrudDefaultConfig.baseEndpoints)},
                     rootDir:'src',

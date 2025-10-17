@@ -3,6 +3,7 @@ export declare const gmCrudDefaultConfig: {
     readonly default: GmCrudConfig;
     readonly baseEndpoints: GmCrudEndpointsConfig;
     readonly sqlByStaticDbConnection: GmCrudSqlRepositoryConfig;
+    readonly noSqlByStaticDbConnection: GmCrudNoSqlRepositoryConfig;
     readonly sqlByDynamicDomain: GmCrudSqlRepositoryConfig;
     readonly sqlByDynamicLeId: GmCrudSqlRepositoryConfig;
     readonly noSqlByYearAndMonth: GmCrudNoSqlRepositoryConfig;

@@ -17,13 +17,13 @@ class CreateAppGCrudConfigModule {
 
 import { GmCrudConfig, GmCrudNoSqlRepositoryConfig, GmCrudSqlRepositoryConfig,GmCrudNoSqlRepositoryConfig } from 'os-core-ts'
 
-const sqlByStaticDb: GmCrudNoSqlRepositoryConfig = {
+const sqlByStaticDb:GmCrudSqlRepositoryConfig  = {
     dbType: 'sql',
     type: 'staticByDbConnection',
     columns: { title: { type: 'STRING' }, description: { type: 'STRING' } }
 }
 
-const noSqlByStaticDb: GmCrudSqlRepositoryConfig = {
+const noSqlByStaticDb: GmCrudNoSqlRepositoryConfig = {
     dbType: 'noSql',
     type: 'staticByDbConnection',
     columns: { title: { type: 'STRING' }, description: { type: 'STRING' } }

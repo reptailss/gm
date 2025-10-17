@@ -74,6 +74,18 @@ const GM_MODEL_SQL_STATIC_BY_DB_CONNECTION_CONFIG = {
         },
     },
 };
+const GM_MODEL_NO_SQL_STATIC_BY_DB_CONNECTION_CONFIG = {
+    dbType: 'noSql',
+    type: 'staticByDbConnection',
+    columns: {
+        title: {
+            type: 'STRING',
+        },
+        description: {
+            type: 'STRING',
+        },
+    },
+};
 const GM_DEFAULT_CONFIG = {
     dtoName: {
         singular: 'User',
@@ -89,6 +101,7 @@ exports.gmCrudDefaultConfig = {
     default: GM_DEFAULT_CONFIG,
     baseEndpoints: GM_BASE_ENDPOINTS_CONFIG,
     sqlByStaticDbConnection: GM_MODEL_SQL_STATIC_BY_DB_CONNECTION_CONFIG,
+    noSqlByStaticDbConnection: GM_MODEL_NO_SQL_STATIC_BY_DB_CONNECTION_CONFIG,
     sqlByDynamicDomain: GM_MODEL_SQL_DYNAMIC_BY_DOMAIN_CONFIG,
     sqlByDynamicLeId: GM_MODEL_SQL_DYNAMIC_BY_LE_ID_CONFIG,
     noSqlByYearAndMonth: GM_MODEL_NO_SQL_YEAR_AND_MONTH_CONFIG,
