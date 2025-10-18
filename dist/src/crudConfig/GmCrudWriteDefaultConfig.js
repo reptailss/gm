@@ -19,17 +19,17 @@ class GmCrudWriteDefaultConfig {
     
     const sqlByStaticDb:GmCrudSqlRepositoryConfig = ${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectToString(gmCrudDefaultConfig_1.gmCrudDefaultConfig.sqlByStaticDbConnection)}
     
-    const noSqlByStaticDb:GmCrudNoSqlRepositoryConfig = ${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectToString(gmCrudDefaultConfig_1.gmCrudDefaultConfig.noSqlByStaticDbConnection)}
-   
     const sqlByDynamicDomain:GmCrudSqlRepositoryConfig = ${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectToString(gmCrudDefaultConfig_1.gmCrudDefaultConfig.sqlByDynamicDomain)}
     
     const sqlByLeId:GmCrudSqlRepositoryConfig = ${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectToString(gmCrudDefaultConfig_1.gmCrudDefaultConfig.sqlByDynamicLeId)}
+    
+    const noSqlByStaticDb:GmCrudNoSqlRepositoryConfig = ${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectToString(gmCrudDefaultConfig_1.gmCrudDefaultConfig.noSqlByStaticDbConnection)}
     
     const noSqlByYearAndMonth:GmCrudNoSqlRepositoryConfig = ${GmObjectStringifyHelper_1.GmObjectStringifyHelper.objectToString(gmCrudDefaultConfig_1.gmCrudDefaultConfig.noSqlByYearAndMonth)}
     
     `;
         const file = `
-    import {GmCrudConfig, GmCrudSqlRepositoryConfig, GmCrudNoSqlRepositoryConfig, GmCrudEndpointsConfig} from 'os-core-ts' \n${baseInfo}
+    import {GmCrudConfig, GmCrudSqlRepositoryConfig, GmCrudNoSqlRepositoryConfig} from 'os-core-ts' \n${baseInfo}
     
   
     export default function buildGmCrudConfig(): GmCrudConfig {

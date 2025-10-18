@@ -18,18 +18,18 @@ export class GmCrudWriteDefaultConfig {
     
     const sqlByStaticDb:GmCrudSqlRepositoryConfig = ${GmObjectStringifyHelper.objectToString(gmCrudDefaultConfig.sqlByStaticDbConnection)}
     
-    const noSqlByStaticDb:GmCrudNoSqlRepositoryConfig = ${GmObjectStringifyHelper.objectToString(gmCrudDefaultConfig.noSqlByStaticDbConnection)}
-   
     const sqlByDynamicDomain:GmCrudSqlRepositoryConfig = ${GmObjectStringifyHelper.objectToString(gmCrudDefaultConfig.sqlByDynamicDomain)}
     
     const sqlByLeId:GmCrudSqlRepositoryConfig = ${GmObjectStringifyHelper.objectToString(gmCrudDefaultConfig.sqlByDynamicLeId)}
+    
+    const noSqlByStaticDb:GmCrudNoSqlRepositoryConfig = ${GmObjectStringifyHelper.objectToString(gmCrudDefaultConfig.noSqlByStaticDbConnection)}
     
     const noSqlByYearAndMonth:GmCrudNoSqlRepositoryConfig = ${GmObjectStringifyHelper.objectToString(gmCrudDefaultConfig.noSqlByYearAndMonth)}
     
     `
 
         const file = `
-    import {GmCrudConfig, GmCrudSqlRepositoryConfig, GmCrudNoSqlRepositoryConfig, GmCrudEndpointsConfig} from 'os-core-ts' \n${baseInfo}
+    import {GmCrudConfig, GmCrudSqlRepositoryConfig, GmCrudNoSqlRepositoryConfig} from 'os-core-ts' \n${baseInfo}
     
   
     export default function buildGmCrudConfig(): GmCrudConfig {

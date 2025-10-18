@@ -15,16 +15,10 @@ export class CreateAppGCrudConfigModule {
         const content =
             `
 
-import { GmCrudConfig, GmCrudNoSqlRepositoryConfig, GmCrudSqlRepositoryConfig,GmCrudNoSqlRepositoryConfig } from 'os-core-ts'
+import { GmCrudConfig, GmCrudNoSqlRepositoryConfig, GmCrudSqlRepositoryConfig } from 'os-core-ts'
 
 const sqlByStaticDb:GmCrudSqlRepositoryConfig  = {
     dbType: 'sql',
-    type: 'staticByDbConnection',
-    columns: { title: { type: 'STRING' }, description: { type: 'STRING' } }
-}
-
-const noSqlByStaticDb: GmCrudNoSqlRepositoryConfig = {
-    dbType: 'noSql',
     type: 'staticByDbConnection',
     columns: { title: { type: 'STRING' }, description: { type: 'STRING' } }
 }
@@ -41,6 +35,12 @@ const sqlByLeId: GmCrudSqlRepositoryConfig = {
     columns: { title: { type: 'STRING' }, user_id: { type: 'INTEGER' } }
 }
 
+const noSqlByStaticDb: GmCrudNoSqlRepositoryConfig = {
+    dbType: 'noSql',
+    type: 'staticByDbConnection',
+    columns: { title: { type: 'STRING' }, description: { type: 'STRING' } }
+}
+
 const noSqlByYearAndMonth: GmCrudNoSqlRepositoryConfig = {
     dbType: 'noSql',
     type: 'byDatabaseNameAndYearMonth',
@@ -54,7 +54,7 @@ export default function buildGmCrudConfig(): GmCrudConfig {
             plural: 'Posts'
         },
         moduleName: 'Posts',
-        repository: sqlByDynamicDomain,
+        repository: sqlByStaticDb,
         hasSeparated: true,
         endpoints: {
             add: { hasActionLogger: true, hasAuth: true, hasStructureAccess: true },
