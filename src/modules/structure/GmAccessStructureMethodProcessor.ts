@@ -4,8 +4,6 @@ import {GmCrudConfig} from 'os-core-ts'
 import {IGmModuleClassMethod} from '@modules/interfaces/gmModule'
 import {GmImportStructureServiceEndpointDec} from '@decorators/controllerDecorators/GmImportStructureServiceEndpointDec'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
-import {GmBodyParamNumDec} from '@decorators/controllerDecorators/GmBodyParamDec'
-import {GmQueryParamNumDec} from '@decorators/controllerDecorators/GmQueryParamDec'
 
 
 type CallVarNames = {
@@ -49,7 +47,7 @@ export class GmAccessStructureMethodProcessor {
             })}`,
         })
         
-     
+        
     }
     
     public update(method: IGmModuleClassMethod) {
@@ -64,7 +62,7 @@ export class GmAccessStructureMethodProcessor {
             })}`,
         })
         
-      
+        
     }
     
     public delete(method: IGmModuleClassMethod) {
@@ -80,7 +78,7 @@ export class GmAccessStructureMethodProcessor {
             })}`,
         })
         
-      
+        
     }
     
     public get(method: IGmModuleClassMethod) {
@@ -96,7 +94,7 @@ export class GmAccessStructureMethodProcessor {
             })}`,
         })
         
-      
+        
     }
     
     public list(method: IGmModuleClassMethod) {

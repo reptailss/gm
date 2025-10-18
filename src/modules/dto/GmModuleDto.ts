@@ -1,46 +1,55 @@
 import {GmAbstractModuleType} from '@modules/abstractModule/GmAbstractModuleType'
 import {IGmModuleType} from '@modules/interfaces/gmModule'
-import {GmModuleCreateDto} from '@modules/dto/GmModuleCreateDto'
 import {GmCrudConfig} from 'os-core-ts'
 import {StringCaseHelper} from '@helpers/StringCaseHelper'
 import {GmModuleDtoHelper} from '@modules/dto/helper/GmModuleDtoHelper'
+import {GmModuleDtoField} from '@modules/dto/types'
 
 
 export class GmModuleDto extends GmAbstractModuleType implements IGmModuleType {
-
-    private readonly gmModuleCreateDto: GmModuleCreateDto
-
+    
+    
     constructor(
         config: GmCrudConfig,
     ) {
         super(config)
-        this.gmModuleCreateDto = new GmModuleCreateDto(config)
     }
-
+    
     public getPropertyName(): string {
         return `${StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Dto`
     }
-
-
+    
     public getDirName(): string {
-        return this.gmModuleCreateDto.getDirName()
+        return 'dto'
     }
-
+    
     public getFileName(): string {
-        return this.gmModuleCreateDto.getFileName()
+        return 'index.ts'
     }
-
-
+    
     public init(): void {
-        this.addModule(this.gmModuleCreateDto, {
-            hasAddImport: false,
-        })
         this.setFileWriteMode('appendBefore')
-        this.setBody(`
-        ${this.gmModuleCreateDto.getPropertyName()} & {
+        this.setBody(`{
             ${GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).key}:${GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).type},
             date_add:Date,
             date_update:Date,
+           ${this.generateDtoByColumns().map((field) => {
+            return `${field.key}:${field.type}`
+        })?.join('\n')},
         }`)
+    }
+    
+    private generateDtoByColumns = (): GmModuleDtoField[] => {
+        const res: GmModuleDtoField[] = []
+        
+        for (const key in this.getConfig().repository.columns) {
+            const column = this.getConfig().repository.columns[key]
+            res.push({
+                key,
+                type: GmModuleDtoHelper.getTypeByColumn(column.type),
+                columnType: column.type,
+            })
+        }
+        return res
     }
 }

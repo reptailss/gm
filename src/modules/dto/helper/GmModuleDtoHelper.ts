@@ -23,7 +23,6 @@ export class GmModuleDtoHelper {
         }
     }
     
-    
     static getTypeByColumn = (
         type: 'INTEGER' |
             'BIGINT' |

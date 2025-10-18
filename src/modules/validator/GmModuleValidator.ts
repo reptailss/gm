@@ -18,7 +18,7 @@ export class GmModuleValidator extends GmAbstractModuleClass implements IGmModul
     
     
     constructor(
-        config: GmCrudConfig
+        config: GmCrudConfig,
     ) {
         super(config)
     }
@@ -131,42 +131,75 @@ class GmModuleValidatorGetCreateDtoMethod extends GmAbstractModuleClassMethod im
 class GmModuleValidatorGetUpdateDtoMethod extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {
     
     private readonly gmModuleUpdateDto: GmModuleUpdateDto
-    private readonly gmModuleCreateDto: GmModuleCreateDto
+    private readonly gmServiceValidator: GmServiceValidator
     private readonly gmServiceObjectSchemaValidatorType: GmServiceObjectSchemaValidatorType
     
     constructor(config: GmCrudConfig) {
         super(config)
         this.gmModuleUpdateDto = new GmModuleUpdateDto(config)
-        this.gmModuleCreateDto = new GmModuleCreateDto(config)
         this.gmServiceObjectSchemaValidatorType = new GmServiceObjectSchemaValidatorType()
+        this.gmServiceValidator = new GmServiceValidator()
     }
     
     public getPropertyName(): string {
         return `get${this.gmModuleUpdateDto.getPropertyName()}Schema`
     }
     
-    public getCreatePropertyName(): string {
-        return `get${this.gmModuleCreateDto.getPropertyName()}Schema`
-    }
-    
     
     public init(): void {
         this.addModule(this.gmModuleUpdateDto)
-        this.addModule(this.gmModuleCreateDto)
         this.addService(this.gmServiceObjectSchemaValidatorType)
         this.setReturnType(this.gmServiceObjectSchemaValidatorType.getSchemaValidatorType(this.gmModuleUpdateDto.getPropertyName()))
         this.setMethodScope('static')
         this.appendBodyElement({
-            name: 'return schema',
-            value: `return this.${this.getCreatePropertyName()}().partial()`,
+            name: 'return validator',
+            value: `return ${this.gmServiceValidator.object(this.buildSchemaByColumns())}`,
         })
+    }
+    
+    private buildSchemaByColumns(): Record<string, string> {
+        
+        const res: Record<string, string> = {}
+        
+        for (const key in this.getConfig().repository.columns) {
+            switch (this.getConfig().repository.columns[key].type) {
+                case 'INTEGER':
+                    res[key] = `${this.gmServiceValidator.number()}.optional()`
+                    break
+                case 'BIGINT':
+                    res[key] = `${this.gmServiceValidator.number()}.optional()`
+                    break
+                case 'FLOAT':
+                    res[key] = `${this.gmServiceValidator.number()}.optional()`
+                    break
+                case 'BOOLEAN':
+                    res[key] = `${this.gmServiceValidator.boolean()}.optional()`
+                    break
+                case 'STRING':
+                    res[key] = `${this.gmServiceValidator.string(0, 255)}.optional()`
+                    break
+                case 'TEXT':
+                    res[key] = `${this.gmServiceValidator.string()}.optional()`
+                    break
+                case 'DATETIME':
+                    res[key] = `${this.gmServiceValidator.date()}.optional()`
+                    break
+                case 'JSON':
+                    res[key] = `${this.gmServiceValidator.object({})}.optional()`
+                    break
+                case 'OBJECT':
+                    res[key] = `${this.gmServiceValidator.object({})}.optional()`
+                    break
+            }
+        }
+        
+        return res
     }
 }
 
 class GmModuleValidatorGetDtoMethod extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {
     
     private readonly gmModuleDto: GmModuleDto
-    private readonly gmModuleCreateDto: GmModuleCreateDto
     private readonly gmServiceSchemaValidatorType: GmServiceSchemaValidatorType
     private readonly gmServiceValidator: GmServiceValidator
     
@@ -175,16 +208,12 @@ class GmModuleValidatorGetDtoMethod extends GmAbstractModuleClassMethod implemen
         this.gmModuleDto = new GmModuleDto(config)
         this.gmServiceSchemaValidatorType = new GmServiceSchemaValidatorType()
         this.gmServiceValidator = new GmServiceValidator()
-        this.gmModuleCreateDto = new GmModuleCreateDto(config)
     }
     
     public getPropertyName(): string {
         return `get${this.gmModuleDto.getPropertyName()}Schema`
     }
     
-    public getCreatePropertyName(): string {
-        return `get${this.gmModuleCreateDto.getPropertyName()}Schema`
-    }
     
     public init(): void {
         this.addModule(this.gmModuleDto)
@@ -192,13 +221,52 @@ class GmModuleValidatorGetDtoMethod extends GmAbstractModuleClassMethod implemen
         this.setReturnType(this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.gmModuleDto.getPropertyName()))
         this.setMethodScope('static')
         this.appendBodyElement({
-            name: 'return schema',
-            value: `return this.${this.getCreatePropertyName()}().merge(${this.gmServiceValidator.object({
-                date_add: this.gmServiceValidator.date(),
-                date_update: this.gmServiceValidator.date(),
-                [GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).key]: GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).type === 'number' ? this.gmServiceValidator.number() : this.gmServiceValidator.string(),
-            })})`,
+            name: 'return validator',
+            value: `return ${this.gmServiceValidator.object(this.buildSchemaByColumns())}`,
         })
+    }
+    
+    private buildSchemaByColumns(): Record<string, string> {
+        
+        const res: Record<string, string> = {
+            [GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).key]: GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).type === 'number' ? this.gmServiceValidator.number() : this.gmServiceValidator.string(),
+            date_add: this.gmServiceValidator.date(),
+            date_update: this.gmServiceValidator.date(),
+        }
+        
+        for (const key in this.getConfig().repository.columns) {
+            switch (this.getConfig().repository.columns[key].type) {
+                case 'INTEGER':
+                    res[key] = this.gmServiceValidator.number()
+                    break
+                case 'BIGINT':
+                    res[key] = this.gmServiceValidator.number()
+                    break
+                case 'FLOAT':
+                    res[key] = this.gmServiceValidator.number()
+                    break
+                case 'BOOLEAN':
+                    res[key] = this.gmServiceValidator.boolean()
+                    break
+                case 'STRING':
+                    res[key] = this.gmServiceValidator.string(0, 255)
+                    break
+                case 'TEXT':
+                    res[key] = this.gmServiceValidator.string()
+                    break
+                case 'DATETIME':
+                    res[key] = this.gmServiceValidator.date()
+                    break
+                case 'JSON':
+                    res[key] = this.gmServiceValidator.object({})
+                    break
+                case 'OBJECT':
+                    res[key] = this.gmServiceValidator.object({})
+                    break
+            }
+        }
+        
+        return res
     }
 }
 
@@ -218,7 +286,7 @@ class GmModuleValidatorGetPaginationMethod extends GmAbstractModuleClassMethod i
     }
     
     public getPropertyName(): string {
-        return `get${this.gmModuleDto.getPropertyName()}PaginationParamsSchema`
+        return `get${this.getConfig().dtoName.plural}PaginationParamsSchema`
     }
     
     public getDtoPropertyName(): string {

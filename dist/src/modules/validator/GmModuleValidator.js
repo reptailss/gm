@@ -107,25 +107,56 @@ class GmModuleValidatorGetUpdateDtoMethod extends GmAbstractModuleClassMethod_1.
     constructor(config) {
         super(config);
         this.gmModuleUpdateDto = new GmModuleUpdateDto_1.GmModuleUpdateDto(config);
-        this.gmModuleCreateDto = new GmModuleCreateDto_1.GmModuleCreateDto(config);
         this.gmServiceObjectSchemaValidatorType = new GmServiceObjectSchemaValidatorType_1.GmServiceObjectSchemaValidatorType();
+        this.gmServiceValidator = new GmServiceValidator_1.GmServiceValidator();
     }
     getPropertyName() {
         return `get${this.gmModuleUpdateDto.getPropertyName()}Schema`;
     }
-    getCreatePropertyName() {
-        return `get${this.gmModuleCreateDto.getPropertyName()}Schema`;
-    }
     init() {
         this.addModule(this.gmModuleUpdateDto);
-        this.addModule(this.gmModuleCreateDto);
         this.addService(this.gmServiceObjectSchemaValidatorType);
         this.setReturnType(this.gmServiceObjectSchemaValidatorType.getSchemaValidatorType(this.gmModuleUpdateDto.getPropertyName()));
         this.setMethodScope('static');
         this.appendBodyElement({
-            name: 'return schema',
-            value: `return this.${this.getCreatePropertyName()}().partial()`,
+            name: 'return validator',
+            value: `return ${this.gmServiceValidator.object(this.buildSchemaByColumns())}`,
         });
+    }
+    buildSchemaByColumns() {
+        const res = {};
+        for (const key in this.getConfig().repository.columns) {
+            switch (this.getConfig().repository.columns[key].type) {
+                case 'INTEGER':
+                    res[key] = `${this.gmServiceValidator.number()}.optional()`;
+                    break;
+                case 'BIGINT':
+                    res[key] = `${this.gmServiceValidator.number()}.optional()`;
+                    break;
+                case 'FLOAT':
+                    res[key] = `${this.gmServiceValidator.number()}.optional()`;
+                    break;
+                case 'BOOLEAN':
+                    res[key] = `${this.gmServiceValidator.boolean()}.optional()`;
+                    break;
+                case 'STRING':
+                    res[key] = `${this.gmServiceValidator.string(0, 255)}.optional()`;
+                    break;
+                case 'TEXT':
+                    res[key] = `${this.gmServiceValidator.string()}.optional()`;
+                    break;
+                case 'DATETIME':
+                    res[key] = `${this.gmServiceValidator.date()}.optional()`;
+                    break;
+                case 'JSON':
+                    res[key] = `${this.gmServiceValidator.object({})}.optional()`;
+                    break;
+                case 'OBJECT':
+                    res[key] = `${this.gmServiceValidator.object({})}.optional()`;
+                    break;
+            }
+        }
+        return res;
     }
 }
 class GmModuleValidatorGetDtoMethod extends GmAbstractModuleClassMethod_1.GmAbstractModuleClassMethod {
@@ -134,13 +165,9 @@ class GmModuleValidatorGetDtoMethod extends GmAbstractModuleClassMethod_1.GmAbst
         this.gmModuleDto = new GmModuleDto_1.GmModuleDto(config);
         this.gmServiceSchemaValidatorType = new GmServiceSchemaValidatorType_1.GmServiceSchemaValidatorType();
         this.gmServiceValidator = new GmServiceValidator_1.GmServiceValidator();
-        this.gmModuleCreateDto = new GmModuleCreateDto_1.GmModuleCreateDto(config);
     }
     getPropertyName() {
         return `get${this.gmModuleDto.getPropertyName()}Schema`;
-    }
-    getCreatePropertyName() {
-        return `get${this.gmModuleCreateDto.getPropertyName()}Schema`;
     }
     init() {
         this.addModule(this.gmModuleDto);
@@ -148,13 +175,48 @@ class GmModuleValidatorGetDtoMethod extends GmAbstractModuleClassMethod_1.GmAbst
         this.setReturnType(this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.gmModuleDto.getPropertyName()));
         this.setMethodScope('static');
         this.appendBodyElement({
-            name: 'return schema',
-            value: `return this.${this.getCreatePropertyName()}().merge(${this.gmServiceValidator.object({
-                date_add: this.gmServiceValidator.date(),
-                date_update: this.gmServiceValidator.date(),
-                [GmModuleDtoHelper_1.GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).key]: GmModuleDtoHelper_1.GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).type === 'number' ? this.gmServiceValidator.number() : this.gmServiceValidator.string(),
-            })})`,
+            name: 'return validator',
+            value: `return ${this.gmServiceValidator.object(this.buildSchemaByColumns())}`,
         });
+    }
+    buildSchemaByColumns() {
+        const res = {
+            [GmModuleDtoHelper_1.GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).key]: GmModuleDtoHelper_1.GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).type === 'number' ? this.gmServiceValidator.number() : this.gmServiceValidator.string(),
+            date_add: this.gmServiceValidator.date(),
+            date_update: this.gmServiceValidator.date(),
+        };
+        for (const key in this.getConfig().repository.columns) {
+            switch (this.getConfig().repository.columns[key].type) {
+                case 'INTEGER':
+                    res[key] = this.gmServiceValidator.number();
+                    break;
+                case 'BIGINT':
+                    res[key] = this.gmServiceValidator.number();
+                    break;
+                case 'FLOAT':
+                    res[key] = this.gmServiceValidator.number();
+                    break;
+                case 'BOOLEAN':
+                    res[key] = this.gmServiceValidator.boolean();
+                    break;
+                case 'STRING':
+                    res[key] = this.gmServiceValidator.string(0, 255);
+                    break;
+                case 'TEXT':
+                    res[key] = this.gmServiceValidator.string();
+                    break;
+                case 'DATETIME':
+                    res[key] = this.gmServiceValidator.date();
+                    break;
+                case 'JSON':
+                    res[key] = this.gmServiceValidator.object({});
+                    break;
+                case 'OBJECT':
+                    res[key] = this.gmServiceValidator.object({});
+                    break;
+            }
+        }
+        return res;
     }
 }
 class GmModuleValidatorGetPaginationMethod extends GmAbstractModuleClassMethod_1.GmAbstractModuleClassMethod {
@@ -166,7 +228,7 @@ class GmModuleValidatorGetPaginationMethod extends GmAbstractModuleClassMethod_1
         this.gmServicePaginationQueryParamsValidator = new GmServicePaginationQueryParamsValidator_1.GmServicePaginationQueryParamsValidator();
     }
     getPropertyName() {
-        return `get${this.gmModuleDto.getPropertyName()}PaginationParamsSchema`;
+        return `get${this.getConfig().dtoName.plural}PaginationParamsSchema`;
     }
     getDtoPropertyName() {
         return `get${this.gmModuleDto.getPropertyName()}Schema`;

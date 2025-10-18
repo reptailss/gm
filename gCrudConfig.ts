@@ -47,10 +47,10 @@ const noSqlByYearAndMonth: GmCrudNoSqlRepositoryConfig = {
 export default function buildGmCrudConfig(): GmCrudConfig {
     return {
         dtoName: {
-            singular: 'Test2',
-            plural: 'Test2',
+            singular: 'User',
+            plural: 'Users',
         },
-        moduleName: 'Test2',
+        moduleName: 'Users',
         repository: noSqlByStaticDb,
         hasSeparated: true,
         endpoints: {

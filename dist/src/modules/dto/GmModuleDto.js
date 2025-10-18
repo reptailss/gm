@@ -2,33 +2,43 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GmModuleDto = void 0;
 const GmAbstractModuleType_1 = require("../abstractModule/GmAbstractModuleType");
-const GmModuleCreateDto_1 = require("./GmModuleCreateDto");
 const StringCaseHelper_1 = require("../../helpers/StringCaseHelper");
 const GmModuleDtoHelper_1 = require("./helper/GmModuleDtoHelper");
 class GmModuleDto extends GmAbstractModuleType_1.GmAbstractModuleType {
     constructor(config) {
         super(config);
-        this.gmModuleCreateDto = new GmModuleCreateDto_1.GmModuleCreateDto(config);
+        this.generateDtoByColumns = () => {
+            const res = [];
+            for (const key in this.getConfig().repository.columns) {
+                const column = this.getConfig().repository.columns[key];
+                res.push({
+                    key,
+                    type: GmModuleDtoHelper_1.GmModuleDtoHelper.getTypeByColumn(column.type),
+                    columnType: column.type,
+                });
+            }
+            return res;
+        };
     }
     getPropertyName() {
         return `${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Dto`;
     }
     getDirName() {
-        return this.gmModuleCreateDto.getDirName();
+        return 'dto';
     }
     getFileName() {
-        return this.gmModuleCreateDto.getFileName();
+        return 'index.ts';
     }
     init() {
-        this.addModule(this.gmModuleCreateDto, {
-            hasAddImport: false,
-        });
+        var _a;
         this.setFileWriteMode('appendBefore');
-        this.setBody(`
-        ${this.gmModuleCreateDto.getPropertyName()} & {
+        this.setBody(`{
             ${GmModuleDtoHelper_1.GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).key}:${GmModuleDtoHelper_1.GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).type},
             date_add:Date,
             date_update:Date,
+           ${(_a = this.generateDtoByColumns().map((field) => {
+            return `${field.key}:${field.type}`;
+        })) === null || _a === void 0 ? void 0 : _a.join('\n')},
         }`);
     }
 }

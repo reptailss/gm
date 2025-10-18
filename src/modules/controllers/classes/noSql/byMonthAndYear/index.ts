@@ -69,7 +69,7 @@ class GmGetVarNamesByMonthAndYear {
             params: 'params',
             dateStart: 'dateStart',
             dateEnd: 'dateEnd',
-            paramsSchema: `${StringCaseHelper.toCamelCase(this.config.dtoName.singular)}DtoPaginationParamsSchema`,
+            paramsSchema: `${StringCaseHelper.toCamelCase(this.config.dtoName.plural)}PaginationParamsSchema`,
             openUserId: `${this.userDto()}.open_user_id`,
             legalEntityId: 'legalEntityId',
         }

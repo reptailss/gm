@@ -270,7 +270,7 @@ export class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstrac
     
     
     private getValidatorParamsDtoVarName(): string {
-        return `${StringCaseHelper.toCamelCase(this.getConfig().dtoName.singular)}DtoPaginationParamsSchema`
+        return `${StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}PaginationParamsSchema`
     }
     
     private getServiceVarName(): string {
@@ -640,7 +640,7 @@ export class GmModuleControllerClassGetAllBySqlDynamicLeId extends GmModuleAbstr
     
     
     private getValidatorParamsDtoVarName(): string {
-        return `${StringCaseHelper.toCamelCase(this.getConfig().dtoName.singular)}DtoPaginationParamsSchema`
+        return `${StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}PaginationParamsSchema`
     }
     
     private getServiceVarName(): string {

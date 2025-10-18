@@ -209,7 +209,7 @@ class GmModuleControllerClassCrudBySqlDynamicLeId extends GmModuleAbstractContro
         return `update${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Schema`;
     }
     getValidatorParamsDtoVarName() {
-        return `${StringCaseHelper_1.StringCaseHelper.toCamelCase(this.getConfig().dtoName.singular)}DtoPaginationParamsSchema`;
+        return `${StringCaseHelper_1.StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}PaginationParamsSchema`;
     }
     getServiceVarName() {
         return `${StringCaseHelper_1.StringCaseHelper.toCamelCase(this.getConfig().dtoName.singular)}Service`;
@@ -440,7 +440,7 @@ class GmModuleControllerClassGetAllBySqlDynamicLeId extends GmModuleAbstractCont
         `);
     }
     getValidatorParamsDtoVarName() {
-        return `${StringCaseHelper_1.StringCaseHelper.toCamelCase(this.getConfig().dtoName.singular)}DtoPaginationParamsSchema`;
+        return `${StringCaseHelper_1.StringCaseHelper.toCamelCase(this.getConfig().dtoName.plural)}PaginationParamsSchema`;
     }
     getServiceVarName() {
         return `getAll${StringCaseHelper_1.StringCaseHelper.toPascalCase(this.getConfig().dtoName.singular)}Service`;
