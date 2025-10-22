@@ -14,8 +14,10 @@ export declare class GmModuleServiceMethodGetPaginationNoSql extends GmAbstractM
     private readonly gmServicePaginationValuesType;
     private readonly gmServicePaginationNoSql;
     private readonly callVarNames;
+    private readonly gmModuleMapper;
     constructor(config: GmCrudConfig, gmModuleRepository: IGmModuleRepository, callVarNames: typeof PROPS_VAR_NAMES, loadRepositoryVarName: string);
     getPropertyName(): string;
     init(): void;
+    private getEntityVarName;
 }
 export {};

@@ -9,9 +9,11 @@ export declare class GmModuleServiceMethodGetById extends GmAbstractModuleClassM
     private readonly gmModuleDto;
     private readonly gmModuleRepository;
     private readonly callVarNames;
+    private readonly gmModuleMapper;
     constructor(config: GmCrudConfig, gmModuleRepository: IGmModuleRepository, callVarNames: typeof PROPS_VAR_NAMES);
     getPropertyName(): string;
     init(): void;
     private initGetRow;
+    private getEntityVarName;
 }
 export {};

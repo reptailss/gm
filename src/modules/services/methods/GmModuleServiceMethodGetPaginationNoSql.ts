@@ -6,6 +6,7 @@ import {GmServicePaginationValuesType} from '@services/paginationTypes/GmService
 import {GmServicePaginationNoSql} from '@services/pagination/GmServicePaginationNoSql'
 import {GmCrudConfig} from 'os-core-ts'
 import {IGmModuleRepository} from '@modules/repository/interfaces/gmModuleRepository'
+import {GmModuleMapper} from '@modules/mapper/GmModuleMapper'
 
 
 const PROPS_VAR_NAMES = {
@@ -21,6 +22,7 @@ export class GmModuleServiceMethodGetPaginationNoSql extends GmAbstractModuleCla
     private readonly gmServicePaginationValuesType: GmServicePaginationValuesType
     private readonly gmServicePaginationNoSql: GmServicePaginationNoSql
     private readonly callVarNames: typeof PROPS_VAR_NAMES
+    private readonly gmModuleMapper: GmModuleMapper
     
     constructor(
         config: GmCrudConfig,
@@ -35,6 +37,12 @@ export class GmModuleServiceMethodGetPaginationNoSql extends GmAbstractModuleCla
         this.gmServicePaginationNoSql = new GmServicePaginationNoSql()
         this.callVarNames = callVarNames
         
+        this.gmModuleMapper = new GmModuleMapper(config, {
+            createDto: '',
+            entity: this.getEntityVarName(),
+            updateDto: '',
+        })
+        
     }
     
     public getPropertyName(): string {
@@ -46,6 +54,10 @@ export class GmModuleServiceMethodGetPaginationNoSql extends GmAbstractModuleCla
         this.addService(this.gmServicePaginationQueryParamsType)
         this.addService(this.gmServicePaginationValuesType)
         this.addService(this.gmServicePaginationNoSql)
+        
+        if (this.getConfig().hasMapper) {
+            this.addModule(this.gmModuleMapper)
+        }
         
         this.setMethodScope('public')
         this.setAsyncType('async')
@@ -73,14 +85,45 @@ export class GmModuleServiceMethodGetPaginationNoSql extends GmAbstractModuleCla
         
         this.setReturnType(`Promise<${this.gmServicePaginationValuesType.getPaginationValuesType(this.gmModuleDto.getPropertyName())}>`)
         
-        this.appendBodyElement({
-            name: 'returnPagination',
-            value: `return ${this.gmServicePaginationNoSql.getPagination({
-                paramsVarName: PROPS_VAR_NAMES.params,
-                dateStartVarName: PROPS_VAR_NAMES.dateStart,
-                dateEndVarName: PROPS_VAR_NAMES.dateEnd,
-                loaderRepositoryVarName: this.loadRepositoryVarName,
-            })}`,
-        })
+        
+        if (this.getConfig().hasMapper) {
+            
+            this.appendBodyElement({
+                name: 'create pagination',
+                value: `const pagination = await ${this.gmServicePaginationNoSql.getPagination({
+                    paramsVarName: PROPS_VAR_NAMES.params,
+                    dateStartVarName: PROPS_VAR_NAMES.dateStart,
+                    dateEndVarName: PROPS_VAR_NAMES.dateEnd,
+                    loaderRepositoryVarName: this.loadRepositoryVarName,
+                })}`,
+            })
+            this.appendBodyElement({
+                name: 'returnPagination',
+                value: `return {
+                    per_page: pagination.per_page,
+                    all_pages: pagination.all_pages,
+                    page: pagination.page,
+                    all_rows: pagination.all_rows,
+                    rows: pagination.rows.map((${this.getEntityVarName()}) => ${this.gmModuleMapper.api.entityToDto()})
+        }`,
+            })
+            
+        } else {
+            this.appendBodyElement({
+                name: 'returnPagination',
+                value: `return ${this.gmServicePaginationNoSql.getPagination({
+                    paramsVarName: PROPS_VAR_NAMES.params,
+                    dateStartVarName: PROPS_VAR_NAMES.dateStart,
+                    dateEndVarName: PROPS_VAR_NAMES.dateEnd,
+                    loaderRepositoryVarName: this.loadRepositoryVarName,
+                })}`,
+            })
+        }
+        
+       
+    }
+    
+    private getEntityVarName(): string {
+        return 'entity'
     }
 }

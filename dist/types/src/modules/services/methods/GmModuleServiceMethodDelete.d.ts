@@ -13,11 +13,14 @@ export declare class GmModuleServiceMethodDelete extends GmAbstractModuleClassMe
     private readonly gmServiceSendActionSystemLog;
     private readonly gmModuleRepository;
     private readonly callVarNames;
+    private readonly gmModuleMapper;
     constructor(config: GmCrudConfig, gmModuleRepository: IGmModuleRepository, gmServiceSendActionSystemLog: GmServiceActionsLoggerService, callVarNames: typeof PROPS_VAR_NAMES);
     getPropertyName(): string;
     init(): void;
     private checkHasOldDto;
     private deleteRow;
+    private getOldDto;
+    private getOldDtoVarName;
     private getOldEntityVarName;
 }
 export {};

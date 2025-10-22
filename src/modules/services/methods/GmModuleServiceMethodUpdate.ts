@@ -8,6 +8,7 @@ import {IGmModuleRepository} from '@modules/repository/interfaces/gmModuleReposi
 import {GmCrudConfig} from 'os-core-ts'
 import {GmCrudConfigChecker} from '@crudConfig/GmCrudConfigChecker'
 import {GmModuleDtoHelper} from '@modules/dto/helper/GmModuleDtoHelper'
+import {GmModuleMapper} from '@modules/mapper/GmModuleMapper'
 
 
 const PROPS_VAR_NAMES = {
@@ -24,6 +25,8 @@ export class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMethod imp
     private readonly gmServiceSendActionSystemLog: GmServiceActionsLoggerService
     private readonly gmModuleRepository: IGmModuleRepository
     private readonly callVarNames: typeof PROPS_VAR_NAMES
+    private readonly gmModuleMapper: GmModuleMapper
+    private readonly gmOldDtoModuleMapper: GmModuleMapper
     
     constructor(
         config: GmCrudConfig,
@@ -39,6 +42,16 @@ export class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMethod imp
         this.gmServiceSendActionSystemLog = gmServiceSendActionSystemLog
         this.gmModuleRepository = gmModuleRepository
         this.callVarNames = callVarNames
+        this.gmModuleMapper = new GmModuleMapper(config, {
+            createDto: '',
+            entity: this.getNewEntityVarName(),
+            updateDto: PROPS_VAR_NAMES.updateDto,
+        })
+        this.gmOldDtoModuleMapper = new GmModuleMapper(config, {
+            createDto: '',
+            entity: this.getOldEntityVarName(),
+            updateDto: '',
+        })
     }
     
     
@@ -50,6 +63,10 @@ export class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMethod imp
         
         this.addModule(this.gmModuleDto)
         this.addModule(this.gmModuleUpdateDto)
+        if (this.getConfig().hasMapper) {
+            this.addModule(this.gmModuleMapper)
+            this.addModule(this.gmOldDtoModuleMapper)
+        }
         this.addService(this.gmServiceThrowAppError)
         
         this.setMethodScope('public')
@@ -108,9 +125,25 @@ export class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMethod imp
     
     private updateRow() {
         if (!GmCrudConfigChecker.hasActionLogger(this.getConfig(), 'add')) {
+            if (this.getConfig().hasMapper) {
+                this.appendBodyElement({
+                    name: 'create',
+                    value: `const ${this.getNewEntityVarName()} = await  ${this.gmModuleRepository.api.update(this.getUpdateEntityPropertyVarName(), {
+                        where: {
+                            [GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).key]: PROPS_VAR_NAMES.id,
+                        },
+                        returning: true,
+                    })}`,
+                })
+                this.appendBodyElement({
+                    name: 'return row',
+                    value: `return ${this.gmModuleMapper.api.entityToDto()}`,
+                })
+                return
+            }
             this.appendBodyElement({
                 name: 'returnNewRow',
-                value: `return ${this.gmModuleRepository.api.update(PROPS_VAR_NAMES.updateDto, {
+                value: `return ${this.gmModuleRepository.api.update(this.getUpdateEntityPropertyVarName(), {
                     where: {
                         [GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).key]: PROPS_VAR_NAMES.id,
                     },
@@ -121,8 +154,8 @@ export class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMethod imp
         }
         
         this.appendBodyElement({
-            name: 'returnNewRow',
-            value: `const ${this.getNewEntityVarName()} = await ${this.gmModuleRepository.api.update(PROPS_VAR_NAMES.updateDto, {
+            name: 'create row',
+            value: `const ${this.getNewEntityVarName()} = await ${this.gmModuleRepository.api.update(this.getUpdateEntityPropertyVarName(), {
                 where: {
                     [GmModuleDtoHelper.getDtoPrimaryKeyByConfig(this.getConfig()).key]: PROPS_VAR_NAMES.id,
                 },
@@ -130,12 +163,21 @@ export class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMethod imp
             })}`,
         })
         
+        if (this.getConfig().hasMapper) {
+            if (this.getConfig().hasMapper) {
+                this.appendBodyElement({
+                    name: 'newEntity to dto',
+                    value: `const ${this.getNewDtoVarName()} = ${this.gmModuleMapper.api.entityToDto()}`,
+                })
+            }
+        }
+        
         this.appendBodyElement({
             name: 'SendActionSystemLogService',
             value: `await ${this.gmServiceSendActionSystemLog.logUpdateAction({
                 rowId: PROPS_VAR_NAMES.id,
-                oldValue: this.getOldEntityVarName(),
-                newValue: this.getNewEntityVarName(),
+                oldValue: this.getConfig().hasMapper ? this.gmOldDtoModuleMapper.api.entityToDto() : this.getOldEntityVarName(),
+                newValue: this.getNewDtoPropVarName(),
                 config: this.gmModuleRepository.api.getConfig(),
                 initiatorOpenUserId: PROPS_VAR_NAMES.initiatorOpenUserId,
             })}`,
@@ -144,13 +186,33 @@ export class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMethod imp
         
         this.appendBodyElement({
             name: 'return row',
-            value: `return ${this.getNewEntityVarName()}`,
+            value: `return ${this.getNewDtoPropVarName()}`,
         })
+    }
+    
+    
+    private getUpdateEntityPropertyVarName(): string {
+        if (this.getConfig().hasMapper) {
+            return this.gmModuleMapper.api.updateDtoToEntity()
+        }
+        return PROPS_VAR_NAMES.updateDto
+    }
+    
+    private getNewDtoPropVarName(): string {
+        if (this.getConfig().hasMapper) {
+            return this.getNewDtoVarName()
+        }
+        return this.getNewEntityVarName()
+    }
+    
+    private getNewDtoVarName(): string {
+        return 'newDto'
     }
     
     private getNewEntityVarName(): string {
         return 'newEntity'
     }
+    
     
     private getOldEntityVarName(): string {
         return 'oldEntity'

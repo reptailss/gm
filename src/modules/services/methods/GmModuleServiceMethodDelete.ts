@@ -7,6 +7,7 @@ import {IGmModuleRepository} from '@modules/repository/interfaces/gmModuleReposi
 import {GmCrudConfig} from 'os-core-ts'
 import {GmCrudConfigChecker} from '@crudConfig/GmCrudConfigChecker'
 import {GmModuleDtoHelper} from '@modules/dto/helper/GmModuleDtoHelper'
+import {GmModuleMapper} from '@modules/mapper/GmModuleMapper'
 
 
 const PROPS_VAR_NAMES = {
@@ -21,6 +22,7 @@ export class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod imp
     private readonly gmServiceSendActionSystemLog: GmServiceActionsLoggerService
     private readonly gmModuleRepository: IGmModuleRepository
     private readonly callVarNames: typeof PROPS_VAR_NAMES
+    private readonly gmModuleMapper: GmModuleMapper
     
     constructor(
         config: GmCrudConfig,
@@ -36,6 +38,11 @@ export class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod imp
         this.gmServiceSendActionSystemLog = gmServiceSendActionSystemLog
         this.gmModuleRepository = gmModuleRepository
         this.callVarNames = callVarNames
+        this.gmModuleMapper = new GmModuleMapper(config, {
+            createDto: '',
+            entity: this.getOldEntityVarName(),
+            updateDto: '',
+        })
     }
     
     public getPropertyName(): string {
@@ -46,7 +53,9 @@ export class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod imp
         
         this.addModule(this.gmModuleDto)
         this.addService(this.gmServiceThrowAppError)
-        
+        if (this.getConfig().hasMapper) {
+            this.addModule(this.gmModuleMapper)
+        }
         this.setMethodScope('public')
         this.setAsyncType('async')
         
@@ -106,26 +115,72 @@ export class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod imp
             hasEmptyLineAtEnd: true,
         })
         
+        
         if (GmCrudConfigChecker.hasActionLogger(this.getConfig(), 'delete')) {
+            if (this.getConfig().hasMapper) {
+                this.appendBodyElement({
+                    name: 'entity to dto',
+                    value: `const ${this.getOldDtoVarName()} = ${this.gmModuleMapper.api.entityToDto()}`,
+                })
+                this.appendBodyElement({
+                    name: 'SendActionSystemLogService',
+                    value: `await ${this.gmServiceSendActionSystemLog.logDeleteAction({
+                        rowId: PROPS_VAR_NAMES.id,
+                        oldValue: this.getOldDto(),
+                        config: this.gmModuleRepository.api.getConfig(),
+                        initiatorOpenUserId: PROPS_VAR_NAMES.initiatorOpenUserId,
+                    })}`,
+                    hasEmptyLineAtEnd: true,
+                })
+                this.appendBodyElement({
+                    name: 'return oldEntity',
+                    value: `return ${this.getOldDto()}`,
+                })
+                return
+            }
             
             this.appendBodyElement({
                 name: 'SendActionSystemLogService',
                 value: `await ${this.gmServiceSendActionSystemLog.logDeleteAction({
                     rowId: PROPS_VAR_NAMES.id,
-                    oldValue: this.getOldEntityVarName(),
+                    oldValue: this.getOldDto(),
                     config: this.gmModuleRepository.api.getConfig(),
                     initiatorOpenUserId: PROPS_VAR_NAMES.initiatorOpenUserId,
                 })}`,
                 hasEmptyLineAtEnd: true,
             })
+            this.appendBodyElement({
+                name: 'return oldEntity',
+                value: `return ${this.getOldDto()}`,
+            })
+            return
+        }
+        
+        if (this.getConfig().hasMapper) {
+            this.appendBodyElement({
+                name: 'return',
+                value: `return ${this.gmModuleMapper.api.entityToDto()}`,
+            })
+            return
         }
         
         this.appendBodyElement({
             name: 'return oldEntity',
-            value: `return ${this.getOldEntityVarName()}`,
+            value: `return ${this.getOldDto()}`,
         })
     }
     
+    
+    private getOldDto() {
+        if (this.getConfig().hasMapper) {
+            return this.getOldDtoVarName()
+        }
+        return this.getOldEntityVarName()
+    }
+    
+    private getOldDtoVarName(): string {
+        return 'oldDto'
+    }
     
     private getOldEntityVarName(): string {
         return 'oldEntity'

@@ -60,6 +60,7 @@ export default function buildGmCrudConfig(): GmCrudConfig {
             get: {hasAuth: false, hasStructureAccess: true},
             list: {hasAuth: false, hasStructureAccess: true},
         },
-        rootDir:'test'
+        rootDir:'test',
+        hasMapper:true
     }
 }

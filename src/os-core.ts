@@ -105,6 +105,7 @@ export type GmCrudConfig = {
     hasSeparated: boolean
     rootDir?: string
     modulesDir?:string
+    hasMapper?:boolean
 }
 
 

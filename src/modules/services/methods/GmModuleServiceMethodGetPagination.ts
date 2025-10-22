@@ -5,6 +5,7 @@ import {GmServicePaginationQueryParamsType} from '@services/paginationTypes/GmSe
 import {GmServicePaginationValuesType} from '@services/paginationTypes/GmServicePaginationValuesType'
 import {IGmModuleRepository} from '@modules/repository/interfaces/gmModuleRepository'
 import {GmCrudConfig} from 'os-core-ts'
+import {GmModuleMapper} from '@modules/mapper/GmModuleMapper'
 
 
 const PROPS_VAR_NAMES = {
@@ -18,6 +19,7 @@ export class GmModuleServiceMethodGetPagination extends GmAbstractModuleClassMet
     private readonly gmServicePaginationValuesType: GmServicePaginationValuesType
     private readonly gmModuleRepository: IGmModuleRepository
     private readonly callVarNames: typeof PROPS_VAR_NAMES
+    private readonly gmModuleMapper: GmModuleMapper
     
     constructor(
         config: GmCrudConfig,
@@ -30,6 +32,11 @@ export class GmModuleServiceMethodGetPagination extends GmAbstractModuleClassMet
         this.gmServicePaginationQueryParamsType = new GmServicePaginationQueryParamsType()
         this.gmServicePaginationValuesType = new GmServicePaginationValuesType()
         this.callVarNames = callVarNames
+        this.gmModuleMapper = new GmModuleMapper(config, {
+            createDto: '',
+            entity: this.getEntityVarName(),
+            updateDto: '',
+        })
     }
     
     public getPropertyName(): string {
@@ -38,6 +45,9 @@ export class GmModuleServiceMethodGetPagination extends GmAbstractModuleClassMet
     
     public init(): void {
         this.addModule(this.gmModuleDto)
+        if (this.getConfig().hasMapper) {
+            this.addModule(this.gmModuleMapper)
+        }
         this.addService(this.gmServicePaginationQueryParamsType)
         this.addService(this.gmServicePaginationValuesType)
         
@@ -53,9 +63,33 @@ export class GmModuleServiceMethodGetPagination extends GmAbstractModuleClassMet
         
         this.setReturnType(`Promise<${this.gmServicePaginationValuesType.getPaginationValuesType(this.gmModuleDto.getPropertyName())}>`)
         
-        this.appendBodyElement({
-            name: 'returnPagination',
-            value: `return ${this.gmModuleRepository.api.pagination(PROPS_VAR_NAMES.params)}`,
-        })
+        
+        if (this.getConfig().hasMapper) {
+            this.appendBodyElement({
+                name: 'create pagination',
+                value: `const pagination = await ${this.gmModuleRepository.api.pagination(PROPS_VAR_NAMES.params)}`,
+            })
+            this.appendBodyElement({
+                name: 'returnPagination',
+                value: `return {
+                    per_page: pagination.per_page,
+                    all_pages: pagination.all_pages,
+                    page: pagination.page,
+                    all_rows: pagination.all_rows,
+                    rows: pagination.rows.map((${this.getEntityVarName()}) => ${this.gmModuleMapper.api.entityToDto()})
+        }`,
+            })
+            
+        } else {
+            this.appendBodyElement({
+                name: 'returnPagination',
+                value: `return ${this.gmModuleRepository.api.pagination(PROPS_VAR_NAMES.params)}`,
+            })
+        }
+        
+    }
+    
+    private getEntityVarName(): string {
+        return 'entity'
     }
 }

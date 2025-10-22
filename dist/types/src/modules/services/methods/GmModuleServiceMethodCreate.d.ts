@@ -13,11 +13,15 @@ export declare class GmModuleServiceMethodCreate extends GmAbstractModuleClassMe
     private readonly gmServiceThrowAppError;
     private readonly gmServiceSendActionSystemLog;
     private readonly gmModuleRepository;
+    private readonly gmModuleMapper;
     private readonly callVarNames;
     constructor(config: GmCrudConfig, gmModuleRepository: IGmModuleRepository, gmServiceSendActionSystemLog: GmServiceActionsLoggerService, callVarNames: typeof PROPS_VAR_NAMES);
     getPropertyName(): string;
     init(): void;
     private createRow;
+    private getCreateEntityPropertyVarName;
+    private getDtoPropVarName;
+    private getNewDtoVarName;
     private getNewEntityPropertyVarName;
 }
 export {};

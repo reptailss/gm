@@ -7,6 +7,7 @@ const GmServiceThrowAppError_1 = require("../../../services/errors/GmServiceThro
 const GmServiceActionsLoggerService_1 = require("../../../services/sendActionSystemLog/GmServiceActionsLoggerService");
 const GmCrudConfigChecker_1 = require("../../../crudConfig/GmCrudConfigChecker");
 const GmModuleDtoHelper_1 = require("../../dto/helper/GmModuleDtoHelper");
+const GmModuleMapper_1 = require("../../mapper/GmModuleMapper");
 const PROPS_VAR_NAMES = {
     initiatorOpenUserId: 'initiatorOpenUserId',
     id: 'id',
@@ -20,6 +21,11 @@ class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod_1.GmAbstra
         this.gmServiceSendActionSystemLog = gmServiceSendActionSystemLog;
         this.gmModuleRepository = gmModuleRepository;
         this.callVarNames = callVarNames;
+        this.gmModuleMapper = new GmModuleMapper_1.GmModuleMapper(config, {
+            createDto: '',
+            entity: this.getOldEntityVarName(),
+            updateDto: '',
+        });
     }
     getPropertyName() {
         return 'delete';
@@ -27,6 +33,9 @@ class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod_1.GmAbstra
     init() {
         this.addModule(this.gmModuleDto);
         this.addService(this.gmServiceThrowAppError);
+        if (this.getConfig().hasMapper) {
+            this.addModule(this.gmModuleMapper);
+        }
         this.setMethodScope('public');
         this.setAsyncType('async');
         if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasActionLogger(this.getConfig(), 'delete')) {
@@ -77,21 +86,63 @@ class GmModuleServiceMethodDelete extends GmAbstractModuleClassMethod_1.GmAbstra
             hasEmptyLineAtEnd: true,
         });
         if (GmCrudConfigChecker_1.GmCrudConfigChecker.hasActionLogger(this.getConfig(), 'delete')) {
+            if (this.getConfig().hasMapper) {
+                this.appendBodyElement({
+                    name: 'entity to dto',
+                    value: `const ${this.getOldDtoVarName()} = ${this.gmModuleMapper.api.entityToDto()}`,
+                });
+                this.appendBodyElement({
+                    name: 'SendActionSystemLogService',
+                    value: `await ${this.gmServiceSendActionSystemLog.logDeleteAction({
+                        rowId: PROPS_VAR_NAMES.id,
+                        oldValue: this.getOldDto(),
+                        config: this.gmModuleRepository.api.getConfig(),
+                        initiatorOpenUserId: PROPS_VAR_NAMES.initiatorOpenUserId,
+                    })}`,
+                    hasEmptyLineAtEnd: true,
+                });
+                this.appendBodyElement({
+                    name: 'return oldEntity',
+                    value: `return ${this.getOldDto()}`,
+                });
+                return;
+            }
             this.appendBodyElement({
                 name: 'SendActionSystemLogService',
                 value: `await ${this.gmServiceSendActionSystemLog.logDeleteAction({
                     rowId: PROPS_VAR_NAMES.id,
-                    oldValue: this.getOldEntityVarName(),
+                    oldValue: this.getOldDto(),
                     config: this.gmModuleRepository.api.getConfig(),
                     initiatorOpenUserId: PROPS_VAR_NAMES.initiatorOpenUserId,
                 })}`,
                 hasEmptyLineAtEnd: true,
             });
+            this.appendBodyElement({
+                name: 'return oldEntity',
+                value: `return ${this.getOldDto()}`,
+            });
+            return;
+        }
+        if (this.getConfig().hasMapper) {
+            this.appendBodyElement({
+                name: 'return',
+                value: `return ${this.gmModuleMapper.api.entityToDto()}`,
+            });
+            return;
         }
         this.appendBodyElement({
             name: 'return oldEntity',
-            value: `return ${this.getOldEntityVarName()}`,
+            value: `return ${this.getOldDto()}`,
         });
+    }
+    getOldDto() {
+        if (this.getConfig().hasMapper) {
+            return this.getOldDtoVarName();
+        }
+        return this.getOldEntityVarName();
+    }
+    getOldDtoVarName() {
+        return 'oldDto';
     }
     getOldEntityVarName() {
         return 'oldEntity';

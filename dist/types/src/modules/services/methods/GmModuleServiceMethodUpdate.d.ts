@@ -15,11 +15,16 @@ export declare class GmModuleServiceMethodUpdate extends GmAbstractModuleClassMe
     private readonly gmServiceSendActionSystemLog;
     private readonly gmModuleRepository;
     private readonly callVarNames;
+    private readonly gmModuleMapper;
+    private readonly gmOldDtoModuleMapper;
     constructor(config: GmCrudConfig, gmModuleRepository: IGmModuleRepository, gmServiceSendActionSystemLog: GmServiceActionsLoggerService, callVarNames: typeof PROPS_VAR_NAMES);
     getPropertyName(): string;
     init(): void;
     private checkHasRow;
     private updateRow;
+    private getUpdateEntityPropertyVarName;
+    private getNewDtoPropVarName;
+    private getNewDtoVarName;
     private getNewEntityVarName;
     private getOldEntityVarName;
 }
