@@ -8,11 +8,11 @@ const GmModuleCreateDto_1 = require("../dto/GmModuleCreateDto");
 const GmServiceValidator_1 = require("../../services/validator/GmServiceValidator");
 const GmServiceObjectSchemaValidatorType_1 = require("../../services/schemaValidator/GmServiceObjectSchemaValidatorType");
 const GmModuleUpdateDto_1 = require("../dto/GmModuleUpdateDto");
-const GmModuleDto_1 = require("../dto/GmModuleDto");
 const GmServiceSchemaValidatorType_1 = require("../../services/schemaValidator/GmServiceSchemaValidatorType");
 const GmModuleDtoHelper_1 = require("../dto/helper/GmModuleDtoHelper");
 const GmServicePaginationQueryParamsType_1 = require("../../services/paginationTypes/GmServicePaginationQueryParamsType");
 const GmServicePaginationQueryParamsValidator_1 = require("../../services/validator/GmServicePaginationQueryParamsValidator");
+const GmModuleFilterDto_1 = require("../dto/GmModuleFilterDto");
 class GmModuleValidator extends GmAbstractModuleClass_1.GmAbstractModuleClass {
     constructor(config) {
         super(config);
@@ -38,11 +38,12 @@ class GmModuleValidator extends GmAbstractModuleClass_1.GmAbstractModuleClass {
         return `${this.getPropertyName()}.ts`;
     }
     init() {
+        const gmModuleValidatorGetFilterDtoMethod = new GmModuleValidatorGetFilterDtoMethod(this.getConfig());
         this
             .addMethod(new GmModuleValidatorGetCreateDtoMethod(this.getConfig()))
             .addMethod(new GmModuleValidatorGetUpdateDtoMethod(this.getConfig()))
-            .addMethod(new GmModuleValidatorGetDtoMethod(this.getConfig()))
-            .addMethod(new GmModuleValidatorGetPaginationMethod(this.getConfig()));
+            .addMethod(gmModuleValidatorGetFilterDtoMethod)
+            .addMethod(new GmModuleValidatorGetPaginationMethod(this.getConfig(), gmModuleValidatorGetFilterDtoMethod.getPropertyName()));
     }
 }
 exports.GmModuleValidator = GmModuleValidator;
@@ -159,20 +160,20 @@ class GmModuleValidatorGetUpdateDtoMethod extends GmAbstractModuleClassMethod_1.
         return res;
     }
 }
-class GmModuleValidatorGetDtoMethod extends GmAbstractModuleClassMethod_1.GmAbstractModuleClassMethod {
+class GmModuleValidatorGetFilterDtoMethod extends GmAbstractModuleClassMethod_1.GmAbstractModuleClassMethod {
     constructor(config) {
         super(config);
-        this.gmModuleDto = new GmModuleDto_1.GmModuleDto(config);
+        this.gmModuleFilterDto = new GmModuleFilterDto_1.GmModuleFilterDto(config);
         this.gmServiceSchemaValidatorType = new GmServiceSchemaValidatorType_1.GmServiceSchemaValidatorType();
         this.gmServiceValidator = new GmServiceValidator_1.GmServiceValidator();
     }
     getPropertyName() {
-        return `get${this.gmModuleDto.getPropertyName()}Schema`;
+        return `get${this.gmModuleFilterDto.getPropertyName()}Schema`;
     }
     init() {
-        this.addModule(this.gmModuleDto);
+        this.addModule(this.gmModuleFilterDto);
         this.addService(this.gmServiceSchemaValidatorType);
-        this.setReturnType(this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.gmModuleDto.getPropertyName()));
+        this.setReturnType(this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.gmModuleFilterDto.getPropertyName()));
         this.setMethodScope('static');
         this.appendBodyElement({
             name: 'return validator',
@@ -208,21 +209,16 @@ class GmModuleValidatorGetDtoMethod extends GmAbstractModuleClassMethod_1.GmAbst
                 case 'DATETIME':
                     res[key] = this.gmServiceValidator.date();
                     break;
-                case 'JSON':
-                    res[key] = this.gmServiceValidator.object({});
-                    break;
-                case 'OBJECT':
-                    res[key] = this.gmServiceValidator.object({});
-                    break;
             }
         }
         return res;
     }
 }
 class GmModuleValidatorGetPaginationMethod extends GmAbstractModuleClassMethod_1.GmAbstractModuleClassMethod {
-    constructor(config) {
+    constructor(config, getFilterDtoCallPropVarName) {
         super(config);
-        this.gmModuleDto = new GmModuleDto_1.GmModuleDto(config);
+        this.getFilterDtoCallPropVarName = getFilterDtoCallPropVarName;
+        this.gmModuleFilterDto = new GmModuleFilterDto_1.GmModuleFilterDto(config);
         this.gmServiceSchemaValidatorType = new GmServiceSchemaValidatorType_1.GmServiceSchemaValidatorType();
         this.gmServicePaginationQueryParamsType = new GmServicePaginationQueryParamsType_1.GmServicePaginationQueryParamsType();
         this.gmServicePaginationQueryParamsValidator = new GmServicePaginationQueryParamsValidator_1.GmServicePaginationQueryParamsValidator();
@@ -230,19 +226,16 @@ class GmModuleValidatorGetPaginationMethod extends GmAbstractModuleClassMethod_1
     getPropertyName() {
         return `get${this.getConfig().dtoName.plural}PaginationParamsSchema`;
     }
-    getDtoPropertyName() {
-        return `get${this.gmModuleDto.getPropertyName()}Schema`;
-    }
     init() {
-        this.addModule(this.gmModuleDto);
+        this.addModule(this.gmModuleFilterDto);
         this.addService(this.gmServicePaginationQueryParamsType);
         this.addService(this.gmServiceSchemaValidatorType);
         this.addService(this.gmServicePaginationQueryParamsValidator);
         this.setMethodScope('static');
-        this.setReturnType(this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.gmServicePaginationQueryParamsType.getPaginationQueryParamsType(this.gmModuleDto.getPropertyName())));
+        this.setReturnType(this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.gmServicePaginationQueryParamsType.getPaginationQueryParamsType(this.gmModuleFilterDto.getPropertyName())));
         this.appendBodyElement({
             name: 'return schema',
-            value: `return ${this.gmServicePaginationQueryParamsValidator.getSchema(`this.${this.getDtoPropertyName()}()`)}`,
+            value: `return ${this.gmServicePaginationQueryParamsValidator.getSchema(`this.${this.getFilterDtoCallPropVarName}()`)}`,
         });
     }
 }

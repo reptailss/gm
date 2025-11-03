@@ -42,10 +42,6 @@ GmModuleDtoHelper.getTypeByColumn = (type) => {
             return 'object';
         case 'DATETIME':
             return 'Date';
-        case 'FILE':
-            return 'string';
-        case 'OPEN_USER_ID':
-            return 'number';
         default:
             return 'string';
     }

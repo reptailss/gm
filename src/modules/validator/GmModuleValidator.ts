@@ -7,11 +7,11 @@ import {GmModuleCreateDto} from '@modules/dto/GmModuleCreateDto'
 import {GmServiceValidator} from '@services/validator/GmServiceValidator'
 import {GmServiceObjectSchemaValidatorType} from '@services/schemaValidator/GmServiceObjectSchemaValidatorType'
 import {GmModuleUpdateDto} from '@modules/dto/GmModuleUpdateDto'
-import {GmModuleDto} from '@modules/dto/GmModuleDto'
 import {GmServiceSchemaValidatorType} from '@services/schemaValidator/GmServiceSchemaValidatorType'
 import {GmModuleDtoHelper} from '@modules/dto/helper/GmModuleDtoHelper'
 import {GmServicePaginationQueryParamsType} from '@services/paginationTypes/GmServicePaginationQueryParamsType'
 import {GmServicePaginationQueryParamsValidator} from '@services/validator/GmServicePaginationQueryParamsValidator'
+import {GmModuleFilterDto} from '@modules/dto/GmModuleFilterDto'
 
 
 export class GmModuleValidator extends GmAbstractModuleClass implements IGmModuleClass {
@@ -36,11 +36,14 @@ export class GmModuleValidator extends GmAbstractModuleClass implements IGmModul
     }
     
     public init(): void {
+        
+        const gmModuleValidatorGetFilterDtoMethod = new GmModuleValidatorGetFilterDtoMethod(this.getConfig())
+        
         this
             .addMethod(new GmModuleValidatorGetCreateDtoMethod(this.getConfig()))
             .addMethod(new GmModuleValidatorGetUpdateDtoMethod(this.getConfig()))
-            .addMethod(new GmModuleValidatorGetDtoMethod(this.getConfig()))
-            .addMethod(new GmModuleValidatorGetPaginationMethod(this.getConfig()))
+            .addMethod(gmModuleValidatorGetFilterDtoMethod)
+            .addMethod(new GmModuleValidatorGetPaginationMethod(this.getConfig(), gmModuleValidatorGetFilterDtoMethod.getPropertyName()))
     }
     
     public api = {
@@ -197,28 +200,28 @@ class GmModuleValidatorGetUpdateDtoMethod extends GmAbstractModuleClassMethod im
     }
 }
 
-class GmModuleValidatorGetDtoMethod extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {
+class GmModuleValidatorGetFilterDtoMethod extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {
     
-    private readonly gmModuleDto: GmModuleDto
+    private readonly gmModuleFilterDto: GmModuleFilterDto
     private readonly gmServiceSchemaValidatorType: GmServiceSchemaValidatorType
     private readonly gmServiceValidator: GmServiceValidator
     
     constructor(config: GmCrudConfig) {
         super(config)
-        this.gmModuleDto = new GmModuleDto(config)
+        this.gmModuleFilterDto = new GmModuleFilterDto(config)
         this.gmServiceSchemaValidatorType = new GmServiceSchemaValidatorType()
         this.gmServiceValidator = new GmServiceValidator()
     }
     
     public getPropertyName(): string {
-        return `get${this.gmModuleDto.getPropertyName()}Schema`
+        return `get${this.gmModuleFilterDto.getPropertyName()}Schema`
     }
     
     
     public init(): void {
-        this.addModule(this.gmModuleDto)
+        this.addModule(this.gmModuleFilterDto)
         this.addService(this.gmServiceSchemaValidatorType)
-        this.setReturnType(this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.gmModuleDto.getPropertyName()))
+        this.setReturnType(this.gmServiceSchemaValidatorType.getSchemaValidatorType(this.gmModuleFilterDto.getPropertyName()))
         this.setMethodScope('static')
         this.appendBodyElement({
             name: 'return validator',
@@ -257,12 +260,6 @@ class GmModuleValidatorGetDtoMethod extends GmAbstractModuleClassMethod implemen
                 case 'DATETIME':
                     res[key] = this.gmServiceValidator.date()
                     break
-                case 'JSON':
-                    res[key] = this.gmServiceValidator.object({})
-                    break
-                case 'OBJECT':
-                    res[key] = this.gmServiceValidator.object({})
-                    break
             }
         }
         
@@ -272,14 +269,17 @@ class GmModuleValidatorGetDtoMethod extends GmAbstractModuleClassMethod implemen
 
 class GmModuleValidatorGetPaginationMethod extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {
     
-    private readonly gmModuleDto: GmModuleDto
+    private readonly gmModuleFilterDto: GmModuleFilterDto
     private readonly gmServicePaginationQueryParamsType: GmServicePaginationQueryParamsType
     private readonly gmServiceSchemaValidatorType: GmServiceSchemaValidatorType
     private readonly gmServicePaginationQueryParamsValidator: GmServicePaginationQueryParamsValidator
     
-    constructor(config: GmCrudConfig) {
+    constructor(
+        config: GmCrudConfig,
+        private readonly getFilterDtoCallPropVarName: string,
+    ) {
         super(config)
-        this.gmModuleDto = new GmModuleDto(config)
+        this.gmModuleFilterDto = new GmModuleFilterDto(config)
         this.gmServiceSchemaValidatorType = new GmServiceSchemaValidatorType()
         this.gmServicePaginationQueryParamsType = new GmServicePaginationQueryParamsType()
         this.gmServicePaginationQueryParamsValidator = new GmServicePaginationQueryParamsValidator()
@@ -289,24 +289,21 @@ class GmModuleValidatorGetPaginationMethod extends GmAbstractModuleClassMethod i
         return `get${this.getConfig().dtoName.plural}PaginationParamsSchema`
     }
     
-    public getDtoPropertyName(): string {
-        return `get${this.gmModuleDto.getPropertyName()}Schema`
-    }
     
     public init(): void {
-        this.addModule(this.gmModuleDto)
+        this.addModule(this.gmModuleFilterDto)
         this.addService(this.gmServicePaginationQueryParamsType)
         this.addService(this.gmServiceSchemaValidatorType)
         this.addService(this.gmServicePaginationQueryParamsValidator)
         this.setMethodScope('static')
         this.setReturnType(
             this.gmServiceSchemaValidatorType.getSchemaValidatorType(
-                this.gmServicePaginationQueryParamsType.getPaginationQueryParamsType(this.gmModuleDto.getPropertyName()),
+                this.gmServicePaginationQueryParamsType.getPaginationQueryParamsType(this.gmModuleFilterDto.getPropertyName()),
             ),
         )
         this.appendBodyElement({
             name: 'return schema',
-            value: `return ${this.gmServicePaginationQueryParamsValidator.getSchema(`this.${this.getDtoPropertyName()}()`)}`,
+            value: `return ${this.gmServicePaginationQueryParamsValidator.getSchema(`this.${this.getFilterDtoCallPropVarName}()`)}`,
         })
     }
 }

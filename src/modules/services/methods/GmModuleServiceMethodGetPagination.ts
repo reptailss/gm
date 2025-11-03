@@ -6,6 +6,7 @@ import {GmServicePaginationValuesType} from '@services/paginationTypes/GmService
 import {IGmModuleRepository} from '@modules/repository/interfaces/gmModuleRepository'
 import {GmCrudConfig} from 'os-core-ts'
 import {GmModuleMapper} from '@modules/mapper/GmModuleMapper'
+import {GmModuleFilterDto} from '@modules/dto/GmModuleFilterDto'
 
 
 const PROPS_VAR_NAMES = {
@@ -15,6 +16,7 @@ const PROPS_VAR_NAMES = {
 export class GmModuleServiceMethodGetPagination extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {
     
     private readonly gmModuleDto: GmModuleDto
+    private readonly gmModuleFilterDto: GmModuleFilterDto
     private readonly gmServicePaginationQueryParamsType: GmServicePaginationQueryParamsType
     private readonly gmServicePaginationValuesType: GmServicePaginationValuesType
     private readonly gmModuleRepository: IGmModuleRepository
@@ -28,6 +30,7 @@ export class GmModuleServiceMethodGetPagination extends GmAbstractModuleClassMet
     ) {
         super(config)
         this.gmModuleDto = new GmModuleDto(config)
+        this.gmModuleFilterDto = new GmModuleFilterDto(config)
         this.gmModuleRepository = gmModuleRepository
         this.gmServicePaginationQueryParamsType = new GmServicePaginationQueryParamsType()
         this.gmServicePaginationValuesType = new GmServicePaginationValuesType()
@@ -45,6 +48,7 @@ export class GmModuleServiceMethodGetPagination extends GmAbstractModuleClassMet
     
     public init(): void {
         this.addModule(this.gmModuleDto)
+        this.addModule(this.gmModuleFilterDto)
         if (this.getConfig().hasMapper) {
             this.addModule(this.gmModuleMapper)
         }
@@ -57,7 +61,7 @@ export class GmModuleServiceMethodGetPagination extends GmAbstractModuleClassMet
         this.addProp({
             varName: PROPS_VAR_NAMES.params,
             callVarName: this.callVarNames.params,
-            type: this.gmServicePaginationQueryParamsType.getPaginationQueryParamsType(this.gmModuleDto.getPropertyName()),
+            type: this.gmServicePaginationQueryParamsType.getPaginationQueryParamsType(this.gmModuleFilterDto.getPropertyName()),
             decorator: null,
         })
         

@@ -32,9 +32,7 @@ export class GmModuleDtoHelper {
             'JSON' |
             'DATETIME' |
             'BOOLEAN' |
-            'FILE' |
-            'OBJECT' |
-            'OPEN_USER_ID',
+            'OBJECT'
     ): GmModuleDtoField['type'] => {
         switch (type) {
             case 'INTEGER':
@@ -56,11 +54,6 @@ export class GmModuleDtoHelper {
                 return 'object'
             case 'DATETIME':
                 return 'Date'
-            case 'FILE' :
-                return 'string'
-            case 'OPEN_USER_ID' :
-                return 'number'
-            
             default:
                 return 'string'
         }

@@ -7,6 +7,7 @@ const GmServicePaginationQueryParamsType_1 = require("../../../services/paginati
 const GmServicePaginationValuesType_1 = require("../../../services/paginationTypes/GmServicePaginationValuesType");
 const GmServicePaginationNoSql_1 = require("../../../services/pagination/GmServicePaginationNoSql");
 const GmModuleMapper_1 = require("../../mapper/GmModuleMapper");
+const GmModuleFilterDto_1 = require("../../dto/GmModuleFilterDto");
 const PROPS_VAR_NAMES = {
     params: 'params',
     dateStart: 'dateStart',
@@ -20,6 +21,7 @@ class GmModuleServiceMethodGetPaginationNoSql extends GmAbstractModuleClassMetho
         this.gmServicePaginationQueryParamsType = new GmServicePaginationQueryParamsType_1.GmServicePaginationQueryParamsType();
         this.gmServicePaginationValuesType = new GmServicePaginationValuesType_1.GmServicePaginationValuesType();
         this.gmServicePaginationNoSql = new GmServicePaginationNoSql_1.GmServicePaginationNoSql();
+        this.gmModuleFilterDto = new GmModuleFilterDto_1.GmModuleFilterDto(config);
         this.callVarNames = callVarNames;
         this.gmModuleMapper = new GmModuleMapper_1.GmModuleMapper(config, {
             createDto: '',
@@ -32,6 +34,7 @@ class GmModuleServiceMethodGetPaginationNoSql extends GmAbstractModuleClassMetho
     }
     init() {
         this.addModule(this.gmModuleDto);
+        this.addModule(this.gmModuleFilterDto);
         this.addService(this.gmServicePaginationQueryParamsType);
         this.addService(this.gmServicePaginationValuesType);
         this.addService(this.gmServicePaginationNoSql);
@@ -43,7 +46,7 @@ class GmModuleServiceMethodGetPaginationNoSql extends GmAbstractModuleClassMetho
         this.addProp({
             varName: PROPS_VAR_NAMES.params,
             callVarName: this.callVarNames.params,
-            type: this.gmServicePaginationQueryParamsType.getPaginationQueryParamsType(this.gmModuleDto.getPropertyName()),
+            type: this.gmServicePaginationQueryParamsType.getPaginationQueryParamsType(this.gmModuleFilterDto.getPropertyName()),
             decorator: null,
         });
         this.addProp({

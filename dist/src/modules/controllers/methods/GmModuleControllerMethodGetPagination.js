@@ -14,6 +14,7 @@ const GmGetDec_1 = require("../../../decorators/controllerDecorators/GmGetDec");
 const GmCrudConfigChecker_1 = require("../../../crudConfig/GmCrudConfigChecker");
 const GmAuthDec_1 = require("../../../decorators/controllerDecorators/GmAuthDec");
 const GmPaginationQueryParamsDec_1 = require("../../../decorators/controllerDecorators/GmPaginationQueryParamsDec");
+const GmModuleFilterDto_1 = require("../../dto/GmModuleFilterDto");
 class GmModuleControllerMethodGetPagination extends GmAbstractModuleClassMethod_1.GmAbstractModuleClassMethod {
     constructor(config, api, varNames) {
         super(config);
@@ -24,6 +25,7 @@ class GmModuleControllerMethodGetPagination extends GmAbstractModuleClassMethod_
         this.gmServicePaginationQueryParamsType = new GmServicePaginationQueryParamsType_1.GmServicePaginationQueryParamsType();
         this.gmServiceUserInfoType = new GmServiceUserDtoType_1.GmServiceUserDtoType();
         this.gmModuleDto = new GmModuleDto_1.GmModuleDto(config);
+        this.gmModuleFilterDto = new GmModuleFilterDto_1.GmModuleFilterDto(config);
         this.gmModuleRoutePaths = new GmModuleRoutePaths_1.GmModuleRoutePaths(config);
     }
     getPropertyName() {
@@ -31,6 +33,7 @@ class GmModuleControllerMethodGetPagination extends GmAbstractModuleClassMethod_
     }
     init() {
         this.addModule(this.gmModuleDto);
+        this.addModule(this.gmModuleFilterDto);
         this.addModule(this.gmModuleRoutePaths);
         this.addService(this.gmServiceBuildResponseFormat);
         this.addService(this.gmServicePaginationValues);
@@ -50,7 +53,7 @@ class GmModuleControllerMethodGetPagination extends GmAbstractModuleClassMethod_
             });
         }
         this.addProp({
-            type: this.gmServicePaginationQueryParamsType.getPaginationQueryParamsType(this.gmModuleDto.getPropertyName()),
+            type: this.gmServicePaginationQueryParamsType.getPaginationQueryParamsType(this.gmModuleFilterDto.getPropertyName()),
             decorator: new GmPaginationQueryParamsDec_1.GmPaginationQueryParamsDec(this.varNames.paramsSchema),
             callVarName: this.varNames.params,
             varName: this.varNames.params,

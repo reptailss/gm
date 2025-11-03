@@ -7,6 +7,7 @@ declare const PROPS_VAR_NAMES: {
 };
 export declare class GmModuleServiceMethodGetPagination extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {
     private readonly gmModuleDto;
+    private readonly gmModuleFilterDto;
     private readonly gmServicePaginationQueryParamsType;
     private readonly gmServicePaginationValuesType;
     private readonly gmModuleRepository;

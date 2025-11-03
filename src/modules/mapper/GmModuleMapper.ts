@@ -140,7 +140,7 @@ class EntityDtoToDto extends GmAbstractModuleClassMethod implements IGmModuleCla
             propertyName: 'Entity',
         })
         this.addProp({
-            type: this.gmModuleDto.getPropertyName(),
+            type: `Entity<${this.gmModuleEntity.getPropertyName()}>`,
             varName: 'entity',
             callVarName: this.callVarName,
             decorator: null,
