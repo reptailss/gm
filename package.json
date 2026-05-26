@@ -1,6 +1,6 @@
 {
 	"name": "os-gm",
-	"version": "1.3.8",
+	"version": "1.3.9",
 	"description": "Gm code generator",
 	"main": "dist/index.js",
 	"types": "dist/types/index.d.ts",
@@ -19,7 +19,7 @@
 		"os-gm": "cli.js"
 	},
 	"type": "commonjs",
-	"author": "One soft",
+	"author": "reptailss",
 	"license": "ISC",
 	"dependencies": {
 		"@prettier/sync": "0.4.0",

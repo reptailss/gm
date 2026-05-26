@@ -27,7 +27,7 @@ class GmModuleUpdateDto extends GmAbstractModuleType_1.GmAbstractModuleType {
         return 'dto';
     }
     getFileName() {
-        return 'index.ts';
+        return `${StringCaseHelper_1.StringCaseHelper.toCamelCase(this.getPropertyName())}.ts`;
     }
     init() {
         var _a;

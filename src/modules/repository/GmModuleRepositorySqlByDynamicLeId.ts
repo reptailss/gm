@@ -60,15 +60,14 @@ class SqlRepository extends GmAbstractModuleClassRepositorySql implements IGmMod
 
 class LoaderRepository extends GmAbstractModuleClassMethod implements IGmModuleClassMethod {
     
-    public readonly gmModuleEntity: GmModuleEntity
     public readonly sqlRepository: SqlRepository
     
     constructor(
         config: GmCrudConfig,
         private readonly loaderSqlRepository: string,
+        private readonly entityVarName: string,
     ) {
         super(config)
-        this.gmModuleEntity = new GmModuleEntity(config)
         this.sqlRepository = new SqlRepository(config, `this.${PROP_VAR_NAMES.repository}`)
     }
     
@@ -77,7 +76,6 @@ class LoaderRepository extends GmAbstractModuleClassMethod implements IGmModuleC
     }
     
     public init() {
-        this.addModule(this.gmModuleEntity)
         this.addModule(this.sqlRepository)
         
         this.addProp({
@@ -92,8 +90,7 @@ class LoaderRepository extends GmAbstractModuleClassMethod implements IGmModuleC
             name: 'get repository',
             value: `
             const ${PROP_VAR_NAMES.repository} = await ${this.loaderSqlRepository}.dynamicDbConfigByLegalEntityId({
-                entity:new ${this.gmModuleEntity.getPropertyName()}(),
-                tableName:'${StringCaseHelper.toSnakeCase(this.getConfig().moduleName)}',
+                entity:${this.entityVarName},
                 ${PROP_VAR_NAMES.legalEntityId},
             })
             `,
@@ -117,6 +114,7 @@ export class GmModuleRepositorySqlByDynamicLeId extends GmAbstractModuleClass im
     private loaderRepositoryVarName: string
     private leIdVarName: string
     private loaderRepository: LoaderRepository
+    private readonly gmModuleEntity: GmModuleEntity
     
     constructor(
         config: GmCrudConfig,
@@ -134,7 +132,13 @@ export class GmModuleRepositorySqlByDynamicLeId extends GmAbstractModuleClass im
         this.loaderRepositoryVarName = loaderRepositoryVarName
         this.leIdVarName = leIdVarName
         this.api = new GmModuleRepositoryApiSql(repositoryVarName)
-        this.loaderRepository = new LoaderRepository(this.getConfig(), `this.${PROP_VAR_NAMES.loaderSqlRepository}`)
+        this.gmModuleEntity = new GmModuleEntity(config)
+        this.loaderRepository = new LoaderRepository(
+            this.getConfig(),
+            `this.${PROP_VAR_NAMES.loaderSqlRepository}`,
+            `this.${this.getEntityVarName()}`
+        )
+       
     }
     
     public getDirName(): string {
@@ -156,7 +160,7 @@ export class GmModuleRepositorySqlByDynamicLeId extends GmAbstractModuleClass im
     
     public init() {
         this.setFileWriteMode('appendAfter')
-        
+        this.addModule(this.gmModuleEntity)
         this.addImport({
             path: 'os-core-ts',
             propertyName: 'LoaderSqlRepository',
@@ -165,14 +169,25 @@ export class GmModuleRepositorySqlByDynamicLeId extends GmAbstractModuleClass im
         
         this.addConstructorProp({
             varName: PROP_VAR_NAMES.loaderSqlRepository,
-            privateReadOnly: true,
             type: 'LoaderSqlRepository',
+            privateReadOnly: true,
             defaultValue: null,
         })
+        this.addConstructorProp({
+            varName: this.getEntityVarName(),
+            type: this.gmModuleEntity.getPropertyName(),
+            privateReadOnly: true,
+            defaultValue: null,
+        })
+        
         
         this.addMethod(this.loaderRepository)
         this.addDecorator(new GmInjectableDec())
         
+    }
+    
+    private getEntityVarName():string {
+        return this.gmModuleEntity.getPropertyName().toLowerCase()
     }
     
 }

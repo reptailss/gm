@@ -44,12 +44,17 @@ class GmModuleRepositorySqlByStaticDb extends GmAbstractModuleClassRepositorySql
             type: 'LoaderSqlRepository',
             defaultValue: null,
         });
+        this.addConstructorProp({
+            varName: this.getEntityInstanceName(),
+            type: this.getEntityName(),
+            privateReadOnly: false,
+            defaultValue: null,
+        });
         this.addModule(this.gmModuleDbConnectionSql);
         this.addElementConstructorBody(`
         this.${VAR_NAMES.repository} = loaderSqlRepository.staticByDbConnection({
             entity:${this.getEntityInstance()},
             dbConnection:${this.gmModuleDbConnectionSql.getPropertyName()},
-            tableName:'${StringCaseHelper_1.StringCaseHelper.toSnakeCase(this.getConfig().moduleName)}',
         })
         `);
     }

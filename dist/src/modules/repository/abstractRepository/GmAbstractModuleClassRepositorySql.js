@@ -24,10 +24,13 @@ class GmAbstractModuleClassRepositorySql extends GmAbstractModuleClass_1.GmAbstr
         return 'index.ts';
     }
     getEntityInstance() {
-        return `new ${this.gmModuleEntity.getPropertyName()}()`;
+        return `${this.getEntityInstanceName()}`;
     }
     getEntityName() {
         return this.gmModuleEntity.getPropertyName();
+    }
+    getEntityInstanceName() {
+        return this.gmModuleEntity.getPropertyName().toLowerCase();
     }
     init() {
         this.addModule(this.gmModuleEntity);

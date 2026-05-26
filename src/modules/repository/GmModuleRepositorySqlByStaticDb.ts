@@ -61,6 +61,12 @@ export class GmModuleRepositorySqlByStaticDb extends GmAbstractModuleClassReposi
             type: 'LoaderSqlRepository',
             defaultValue: null,
         })
+        this.addConstructorProp({
+            varName: this.getEntityInstanceName(),
+            type: this.getEntityName(),
+            privateReadOnly: false,
+            defaultValue: null,
+        })
         this.addModule(this.gmModuleDbConnectionSql)
         
         
@@ -68,7 +74,6 @@ export class GmModuleRepositorySqlByStaticDb extends GmAbstractModuleClassReposi
         this.${VAR_NAMES.repository} = loaderSqlRepository.staticByDbConnection({
             entity:${this.getEntityInstance()},
             dbConnection:${this.gmModuleDbConnectionSql.getPropertyName()},
-            tableName:'${StringCaseHelper.toSnakeCase(this.getConfig().moduleName)}',
         })
         `)
         

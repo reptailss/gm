@@ -47,11 +47,11 @@ const noSqlByYearAndMonth: GmCrudNoSqlRepositoryConfig = {
 export default function buildGmCrudConfig(): GmCrudConfig {
     return {
         dtoName: {
-            singular: 'User',
-            plural: 'Users',
+            singular: 'User2',
+            plural: 'Users2',
         },
-        moduleName: 'Users',
-        repository: noSqlByStaticDb,
+        moduleName: 'Users2',
+        repository: sqlByLeId,
         hasSeparated: true,
         endpoints: {
             add: {hasActionLogger: true, hasAuth: true, hasStructureAccess: true},

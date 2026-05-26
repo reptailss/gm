@@ -5,15 +5,22 @@ import {GmAbstractModuleClass} from '@modules/abstractModule/GmAbstractModuleCla
 import {IGmModuleClassDecorator} from '@decorators/interfaces/gmModuleClassDecorator'
 import {GmImport} from '@imports/types'
 import {IGmModuleClassMethodPropDecorator} from '@decorators/interfaces/gmModuleClassMethodPropDecorator'
+import {GmInjectableDec} from '@decorators/controllerDecorators/GmInjectableDec'
 
 
 class EntityDec implements IGmModuleClassDecorator {
+    
+    constructor(
+        private readonly tableName:string
+    ) {
+    }
+    
     public getDecoratorName(): string {
         return 'EntityDb'
     }
     
     public getProps(): string[] {
-        return ['']
+        return [`'${this.tableName}'`]
     }
     
     public getImport(): GmImport {
@@ -477,6 +484,8 @@ export class GmModuleEntity extends GmAbstractModuleClass implements IGmModuleCl
                 propertyName: 'PrimaryNumberKey',
                 isLibImport: true,
             })
+            this.addDecorator(new GmInjectableDec())
+            this.addDecorator(new EntityDec(StringCaseHelper.toSnakeCase(this.getConfig().moduleName)))
         }
         
         this.addImport({
@@ -525,7 +534,6 @@ export class GmModuleEntity extends GmAbstractModuleClass implements IGmModuleCl
                 decorator: this.getDecoratorByColumn(column),
             })
         }
-        this.addDecorator(new EntityDec())
     }
     
     

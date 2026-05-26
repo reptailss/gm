@@ -40,17 +40,16 @@ class SqlRepository extends GmAbstractModuleClassRepositorySql_1.GmAbstractModul
     }
 }
 class LoaderRepository extends GmAbstractModuleClassMethod_1.GmAbstractModuleClassMethod {
-    constructor(config, loaderSqlRepository) {
+    constructor(config, loaderSqlRepository, entityVarName) {
         super(config);
         this.loaderSqlRepository = loaderSqlRepository;
-        this.gmModuleEntity = new GmModuleEntity_1.GmModuleEntity(config);
+        this.entityVarName = entityVarName;
         this.sqlRepository = new SqlRepository(config, `this.${PROP_VAR_NAMES.repository}`);
     }
     getPropertyName() {
         return 'load';
     }
     init() {
-        this.addModule(this.gmModuleEntity);
         this.addModule(this.sqlRepository);
         this.addProp({
             type: 'string',
@@ -62,8 +61,7 @@ class LoaderRepository extends GmAbstractModuleClassMethod_1.GmAbstractModuleCla
             name: 'get repository',
             value: `
             const ${PROP_VAR_NAMES.repository} = await ${this.loaderSqlRepository}.dynamicByDomain({
-                entity:new ${this.gmModuleEntity.getPropertyName()}(),
-                tableName:'${StringCaseHelper_1.StringCaseHelper.toSnakeCase(this.getConfig().moduleName)}',
+                entity:${this.entityVarName},
                 ${PROP_VAR_NAMES.domain},
             })
             `,
@@ -82,7 +80,8 @@ class GmModuleRepositorySqlByDynamicDomain extends GmAbstractModuleClass_1.GmAbs
         this.loaderRepositoryVarName = loaderRepositoryVarName;
         this.domainVarName = domainVarName;
         this.api = new GmModuleRepositoryApiSql_1.GmModuleRepositoryApiSql(repositoryVarName);
-        this.loaderRepository = new LoaderRepository(this.getConfig(), `this.${PROP_VAR_NAMES.loaderSqlRepository}`);
+        this.gmModuleEntity = new GmModuleEntity_1.GmModuleEntity(config);
+        this.loaderRepository = new LoaderRepository(this.getConfig(), `this.${PROP_VAR_NAMES.loaderSqlRepository}`, `this.${this.getEntityVarName()}`);
     }
     getDirName() {
         return 'repository';
@@ -98,6 +97,7 @@ class GmModuleRepositorySqlByDynamicDomain extends GmAbstractModuleClass_1.GmAbs
     }
     init() {
         this.setFileWriteMode('appendAfter');
+        this.addModule(this.gmModuleEntity);
         this.addImport({
             path: 'os-core-ts',
             propertyName: 'LoaderSqlRepository',
@@ -109,8 +109,17 @@ class GmModuleRepositorySqlByDynamicDomain extends GmAbstractModuleClass_1.GmAbs
             type: 'LoaderSqlRepository',
             defaultValue: null,
         });
+        this.addConstructorProp({
+            varName: this.getEntityVarName(),
+            type: this.gmModuleEntity.getPropertyName(),
+            privateReadOnly: true,
+            defaultValue: null,
+        });
         this.addMethod(this.loaderRepository);
         this.addDecorator(new GmInjectableDec_1.GmInjectableDec());
+    }
+    getEntityVarName() {
+        return this.gmModuleEntity.getPropertyName().toLowerCase();
     }
 }
 exports.GmModuleRepositorySqlByDynamicDomain = GmModuleRepositorySqlByDynamicDomain;

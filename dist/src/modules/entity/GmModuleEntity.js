@@ -3,12 +3,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GmModuleEntity = void 0;
 const StringCaseHelper_1 = require("../../helpers/StringCaseHelper");
 const GmAbstractModuleClass_1 = require("../abstractModule/GmAbstractModuleClass");
+const GmInjectableDec_1 = require("../../decorators/controllerDecorators/GmInjectableDec");
 class EntityDec {
+    constructor(tableName) {
+        this.tableName = tableName;
+    }
     getDecoratorName() {
         return 'EntityDb';
     }
     getProps() {
-        return [''];
+        return [`'${this.tableName}'`];
     }
     getImport() {
         return {
@@ -361,6 +365,8 @@ class GmModuleEntity extends GmAbstractModuleClass_1.GmAbstractModuleClass {
                 propertyName: 'PrimaryNumberKey',
                 isLibImport: true,
             });
+            this.addDecorator(new GmInjectableDec_1.GmInjectableDec());
+            this.addDecorator(new EntityDec(StringCaseHelper_1.StringCaseHelper.toSnakeCase(this.getConfig().moduleName)));
         }
         this.addImport({
             path: 'os-core-ts',
@@ -405,7 +411,6 @@ class GmModuleEntity extends GmAbstractModuleClass_1.GmAbstractModuleClass {
                 decorator: this.getDecoratorByColumn(column),
             });
         }
-        this.addDecorator(new EntityDec());
     }
     gmGetColumnRepositoryFromConfig() {
         const res = [];

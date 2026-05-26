@@ -24,7 +24,7 @@ export class GmModuleDto extends GmAbstractModuleType implements IGmModuleType {
     }
     
     public getFileName(): string {
-        return 'index.ts'
+        return `${StringCaseHelper.toCamelCase(this.getPropertyName())}.ts`
     }
     
     public init(): void {

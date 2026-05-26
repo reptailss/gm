@@ -10,5 +10,6 @@ export declare abstract class GmAbstractModuleClassRepositorySql extends GmAbstr
     getFileName(): string;
     getEntityInstance(): string;
     getEntityName(): string;
+    getEntityInstanceName(): string;
     init(): void;
 }

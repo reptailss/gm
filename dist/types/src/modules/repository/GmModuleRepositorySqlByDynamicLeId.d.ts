@@ -7,6 +7,7 @@ export declare class GmModuleRepositorySqlByDynamicLeId extends GmAbstractModule
     private loaderRepositoryVarName;
     private leIdVarName;
     private loaderRepository;
+    private readonly gmModuleEntity;
     constructor(config: GmCrudConfig, { repositoryVarName, loaderRepositoryVarName, leIdVarName, }: {
         repositoryVarName: string;
         loaderRepositoryVarName: string;
@@ -17,4 +18,5 @@ export declare class GmModuleRepositorySqlByDynamicLeId extends GmAbstractModule
     getPropertyName(): string;
     getInitRepository(): string;
     init(): void;
+    private getEntityVarName;
 }

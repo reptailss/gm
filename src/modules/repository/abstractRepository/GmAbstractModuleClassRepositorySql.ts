@@ -8,7 +8,9 @@ import {GmModuleSqlRepositoryMethodFindByPk} from '@modules/repository/sqlMethod
 import {GmModuleSqlRepositoryMethodCreate} from '@modules/repository/sqlMethods/GmModuleSqlRepositoryMethodCreate'
 import {GmModuleSqlRepositoryMethodUpdate} from '@modules/repository/sqlMethods/GmModuleSqlRepositoryMethodUpdate'
 import {GmModuleSqlRepositoryMethodGetConfig} from '@modules/repository/sqlMethods/GmModuleSqlRepositoryMethodGetConfig'
-import {GmModuleSqlRepositoryMethodPagination} from '@modules/repository/sqlMethods/GmModuleSqlRepositoryMethodPagination'
+import {
+    GmModuleSqlRepositoryMethodPagination,
+} from '@modules/repository/sqlMethods/GmModuleSqlRepositoryMethodPagination'
 import {GmModuleSqlRepositoryMethodDestroy} from '@modules/repository/sqlMethods/GmModuleSqlRepositoryMethodDestroy'
 
 
@@ -35,16 +37,21 @@ export abstract class GmAbstractModuleClassRepositorySql extends GmAbstractModul
     }
     
     public getEntityInstance(): string {
-        return `new ${this.gmModuleEntity.getPropertyName()}()`
+        return `${this.getEntityInstanceName()}`
     }
     
     public getEntityName(): string {
         return this.gmModuleEntity.getPropertyName()
     }
     
+    public getEntityInstanceName(): string {
+        return this.gmModuleEntity.getPropertyName().toLowerCase()
+    }
+    
     
     public init() {
         this.addModule(this.gmModuleEntity)
+   
         
         this.addMethod(new GmModuleSqlRepositoryMethodCreate(
             this.getConfig(),
